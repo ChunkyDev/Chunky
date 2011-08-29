@@ -19,11 +19,11 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.locale;
+package com.dumptruckman.chunky.locale;
 
-import com.dumptruckman.plugintemplate.ChunkyPlugin;
-import com.dumptruckman.plugintemplate.config.CommentedConfiguration;
-import com.dumptruckman.plugintemplate.config.Config;
+import com.dumptruckman.chunky.ChunkyPlugin;
+import com.dumptruckman.chunky.config.CommentedConfiguration;
+import com.dumptruckman.chunky.config.Config;
 
 import java.io.File;
 import java.io.IOException;

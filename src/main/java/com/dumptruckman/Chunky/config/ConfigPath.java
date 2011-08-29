@@ -19,7 +19,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.config;
+package com.dumptruckman.chunky.config;
 
 /**
  * @author dumptruckman

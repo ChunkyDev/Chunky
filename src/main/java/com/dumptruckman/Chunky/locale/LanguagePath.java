@@ -19,7 +19,7 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.locale;
+package com.dumptruckman.chunky.locale;
 
 /**
  * @author dumptruckman

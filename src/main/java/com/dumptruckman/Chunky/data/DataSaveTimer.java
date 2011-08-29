@@ -19,9 +19,9 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.data;
+package com.dumptruckman.chunky.data;
 
-import com.dumptruckman.plugintemplate.ChunkyPlugin;
+import com.dumptruckman.chunky.ChunkyPlugin;
 
 /**
  * @author dumptruckman

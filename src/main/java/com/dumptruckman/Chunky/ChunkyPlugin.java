@@ -19,11 +19,11 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate;
+package com.dumptruckman.chunky;
 
-import com.dumptruckman.plugintemplate.config.Config;
-import com.dumptruckman.plugintemplate.data.Data;
-import com.dumptruckman.plugintemplate.locale.PluginLanguage;
+import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.data.Data;
+import com.dumptruckman.chunky.locale.PluginLanguage;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;

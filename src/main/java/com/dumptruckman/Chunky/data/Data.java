@@ -19,12 +19,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.data;
+package com.dumptruckman.chunky.data;
 
-import com.dumptruckman.plugintemplate.ChunkyPlugin;
+import com.dumptruckman.chunky.ChunkyPlugin;
 
-import com.dumptruckman.plugintemplate.config.Config;
-import com.dumptruckman.plugintemplate.util.MinecraftTools;
+import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.util.MinecraftTools;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;

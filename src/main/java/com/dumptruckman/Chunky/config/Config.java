@@ -19,14 +19,14 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.dumptruckman.plugintemplate.config;
+package com.dumptruckman.chunky.config;
 
-import com.dumptruckman.plugintemplate.ChunkyPlugin;
+import com.dumptruckman.chunky.ChunkyPlugin;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.dumptruckman.plugintemplate.config.ConfigPath.*;
+import static com.dumptruckman.chunky.config.ConfigPath.*;
 
 /**
  * @author dumptruckman
