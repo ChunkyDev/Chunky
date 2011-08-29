@@ -21,16 +21,16 @@
 
 package com.dumptruckman.chunky.data;
 
-import com.dumptruckman.chunky.ChunkyPlugin;
+import com.dumptruckman.chunky.Chunky;
 
 /**
  * @author dumptruckman
  */
 public class DataSaveTimer implements Runnable {
 
-    private static ChunkyPlugin plugin;
+    private static Chunky plugin;
 
-    public DataSaveTimer(ChunkyPlugin plugin) {
+    public DataSaveTimer(Chunky plugin) {
         DataSaveTimer.plugin = plugin;
     }
 

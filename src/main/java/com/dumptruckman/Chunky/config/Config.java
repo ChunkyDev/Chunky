@@ -21,19 +21,20 @@
 
 package com.dumptruckman.chunky.config;
 
-import com.dumptruckman.chunky.ChunkyPlugin;
+import com.dumptruckman.chunky.Chunky;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.dumptruckman.chunky.config.ConfigPath.*;
+import static com.dumptruckman.chunky.config.ConfigPath.DATA_SAVE_PERIOD;
+import static com.dumptruckman.chunky.config.ConfigPath.LANGUAGE;
 
 /**
  * @author dumptruckman
  */
 public class Config {
 
-    private static ChunkyPlugin plugin;
+    private static Chunky plugin;
     private static CommentedConfiguration config;
 
     /**
@@ -41,7 +42,7 @@ public class Config {
      * @param plugin Your plugin
      * @throws IOException
      */
-    public static void load(ChunkyPlugin plugin) throws IOException {
+    public static void load(Chunky plugin) throws IOException {
         Config.plugin = plugin;
 
         // Make the data folders

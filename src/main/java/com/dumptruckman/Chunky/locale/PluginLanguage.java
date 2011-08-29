@@ -21,7 +21,7 @@
 
 package com.dumptruckman.chunky.locale;
 
-import com.dumptruckman.chunky.ChunkyPlugin;
+import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.config.CommentedConfiguration;
 import com.dumptruckman.chunky.config.Config;
 
@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class PluginLanguage {
 
-    private static ChunkyPlugin plugin;
+    private static Chunky plugin;
     private static CommentedConfiguration language;
 
     /**
@@ -43,7 +43,7 @@ public class PluginLanguage {
      * @param plugin Your plugin
      * @throws java.io.IOException
      */
-    public static void load(ChunkyPlugin plugin) throws IOException {
+    public static void load(Chunky plugin) throws IOException {
         PluginLanguage.plugin = plugin;
 
         // Make the data folders

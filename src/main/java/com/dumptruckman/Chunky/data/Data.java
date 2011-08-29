@@ -21,8 +21,7 @@
 
 package com.dumptruckman.chunky.data;
 
-import com.dumptruckman.chunky.ChunkyPlugin;
-
+import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.util.MinecraftTools;
 import org.bukkit.util.config.Configuration;
@@ -35,7 +34,7 @@ import java.io.IOException;
  */
 public class Data {
 
-    private static ChunkyPlugin plugin;
+    private static Chunky plugin;
     private static Configuration data;
     private static int dataSaveTaskId = -1;
 
@@ -44,7 +43,7 @@ public class Data {
      * @param plugin Your plugin
      * @throws java.io.IOException
      */
-    public static void load(ChunkyPlugin plugin) throws IOException {
+    public static void load(Chunky plugin) throws IOException {
         Data.plugin = plugin;
 
         // Make the data folders

@@ -24,6 +24,8 @@ package com.dumptruckman.chunky;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.data.Data;
 import com.dumptruckman.chunky.locale.PluginLanguage;
+import com.dumptruckman.chunky.plugin.ChunkyManager;
+import com.dumptruckman.chunky.plugin.SimpleChunkyManager;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,7 +36,7 @@ import java.util.logging.Logger;
 /**
  * @author dumptruckman
  */
-public class ChunkyPlugin extends JavaPlugin {
+public class Chunky extends JavaPlugin {
 
     final private static Logger LOG = Logger.getLogger("Minecraft.Chunky");
 
@@ -89,7 +91,7 @@ public class ChunkyPlugin extends JavaPlugin {
         registerEvents(pm);
 
         // Initialize ChunkyManager
-        CHUNKY_MANAGER = new ChunkyManager(this);
+        CHUNKY_MANAGER = new SimpleChunkyManager(this);
 
         // Display enable message/version info
         getLog().info(NAME_VERSION + "enabled.");
