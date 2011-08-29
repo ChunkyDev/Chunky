@@ -83,7 +83,7 @@ public class SimpleChunkyManager implements ChunkyManager {
         return eventListeners;
     }
 
-    public static ChunkyEventExecutor createExecutor(ChunkyEvent.Type type, ChunkyListener listener) {
+    protected static ChunkyEventExecutor createExecutor(ChunkyEvent.Type type, ChunkyListener listener) {
 
         switch (type) {
 
