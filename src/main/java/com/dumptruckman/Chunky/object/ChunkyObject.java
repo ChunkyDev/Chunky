@@ -6,7 +6,7 @@ import java.util.Observable;
 /**
  * @author dumptruckman
  */
-public class ChunkyObject extends Observable implements Serializable {
+public class ChunkyObject extends Observable {
 
     private String name;
 
