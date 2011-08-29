@@ -22,8 +22,8 @@
 package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.config.Config;
-import com.dumptruckman.chunky.data.Data;
 import com.dumptruckman.chunky.locale.PluginLanguage;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyManager;
 import com.dumptruckman.chunky.util.Logging;
@@ -43,7 +43,6 @@ public class Chunky extends JavaPlugin {
 
     final public void onDisable() {
         // Save the plugin data
-        Data.save(true);
 
         // Display disable message/version info
         Logging.info("Disabled.");
@@ -81,13 +80,11 @@ public class Chunky extends JavaPlugin {
             return;
         }
 
-        // Loads the data
-        try {
-            Data.load(this);
-        } catch (IOException e) {  // Catch errors loading the language file and exit out if found.
-            Logging.severe("Encountered an error while loading the data file.  Disabling...");
+        //Loads the data.
+        if(!DatabaseManager.load())
+        {
+            Logging.severe("Encoutered an error while loading data. Disabling...");
             pm.disablePlugin(this);
-            return;
         }
 
         // Register Events

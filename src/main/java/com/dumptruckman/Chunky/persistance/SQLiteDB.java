@@ -14,8 +14,31 @@ public class SQLiteDB implements Database {
     }
 
     public Boolean load() {
-        this.db = new SQLite(Logging.getLog(), Logging.getNameVersion(), "Data", plugin.getDataFolder().getPath());
-        if(!db.open()) return false;
+        Logging.info("Connecting to SQLite database.");
+        this.db = new SQLite(Logging.getLog(), Logging.getNameVersion(), "data", plugin.getDataFolder().getPath());
+        if(!db.open())
+        {
+            Logging.severe("Unable to access flatfile: " + db.name);
+            return false;
+        }
+        checkTables();
+        Logging.severe("Successfully connected to SQLite database.");
         return true;
     }
+
+    private void checkTables() {
+        if(!db.checkTable("chunky-chunks")) {
+            Logging.info("Creating chunky-chunks table.");
+            //TODO Figure out table stuff.
+        }
+
+        if(!db.checkTable("chunky-players")) {
+            Logging.info("Creating chunky-chunks table.");
+            //TODO Figure out table stuff.
+        }
+
+    }
+
+
+
 }

@@ -26,8 +26,7 @@ import com.dumptruckman.chunky.Chunky;
 import java.io.File;
 import java.io.IOException;
 
-import static com.dumptruckman.chunky.config.ConfigPath.DATA_SAVE_PERIOD;
-import static com.dumptruckman.chunky.config.ConfigPath.LANGUAGE;
+import static com.dumptruckman.chunky.config.ConfigPath.*;
 
 /**
  * @author dumptruckman
@@ -92,4 +91,25 @@ public class Config {
     public static int getDataSavePeriod() {
         return config.getInt(DATA_SAVE_PERIOD.getPath(), (Integer)DATA_SAVE_PERIOD.getDefault());
     }
+
+    public static Boolean isUsingMySQL() {
+        return config.getBoolean(USING_MYSQL.getPath(),(Boolean)USING_MYSQL.getDefault());
+    }
+
+    public static String getUsername() {
+        return config.getString(MYSQL_USERNAME.getPath(),MYSQL_USERNAME.getDefault().toString());
+    }
+
+    public static String getHost() {
+        return config.getString(MYSQL_HOST.getPath(),MYSQL_HOST.getDefault().toString());
+    }
+
+    public static String getDatabase() {
+        return config.getString(MYSQL_DATABASE.getPath(),MYSQL_DATABASE.getDefault().toString());
+    }
+
+    public static String getPassword() {
+        return config.getString(MYSQL_PASSWORD.getPath(),MYSQL_PASSWORD.getDefault().toString());
+    }
+
 }

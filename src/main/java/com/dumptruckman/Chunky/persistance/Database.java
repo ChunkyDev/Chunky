@@ -4,4 +4,5 @@ public interface Database {
 
     //Load database
     public Boolean load();
+
 }
