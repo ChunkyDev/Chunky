@@ -87,6 +87,11 @@ public class ChunkyEvent implements Serializable {
     public enum Category {
 
         /**
+         * Represents an Object Event
+         */
+        OBJECT,
+
+        /**
          * Represents any miscellaneous events
          */
         MISCELLANEOUS;
@@ -98,11 +103,20 @@ public class ChunkyEvent implements Serializable {
     public enum Type {
 
         /**
+         * OBJECT EVENTS
+         */
+
+        /**
+         * Represents an object's name change event
+         */
+        OBJECT_NAME (Category.OBJECT),
+
+        /**
          * MISCELLANEOUS EVENTS
          */
 
         /**
-         * Represents a custom event, isn't actually used
+         * Represents a custom event
          */
         CUSTOM_EVENT (Category.MISCELLANEOUS);
 

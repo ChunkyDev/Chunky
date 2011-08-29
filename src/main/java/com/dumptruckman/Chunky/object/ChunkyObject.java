@@ -1,6 +1,8 @@
 package com.dumptruckman.chunky.object;
 
-import java.io.Serializable;
+import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+
 import java.util.Observable;
 
 /**
@@ -23,6 +25,9 @@ public class ChunkyObject extends Observable {
     }
 
     public void setName(String name) {
+        ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
+        Chunky.getManager().callEvent(event);
+        if (event.isCancelled()) return;
         this.name = name;
         setChanged();
         notifyObservers(ChunkyObservableData.NAME_CHANGE);

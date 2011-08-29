@@ -32,7 +32,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * @author dumptruckman
@@ -115,7 +114,7 @@ public class Chunky extends JavaPlugin {
         // Event registering goes here
     }
 
-    final public ChunkyManager getManager() {
+    static public ChunkyManager getManager() {
         return CHUNKY_MANAGER;
     }
 
