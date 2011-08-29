@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.event.CustomChunkyEventListener;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.plugin.Plugin;
 
 import java.util.*;
@@ -45,7 +46,7 @@ public class SimpleChunkyManager implements ChunkyManager {
                 try {
                     registration.callEvent(event);
                 } catch (Throwable ex) {
-                    plugin.getLog().log(Level.SEVERE, "Could not pass event " + event.getType() + " to "
+                    Logging.getLog().log(Level.SEVERE, "Could not pass event " + event.getType() + " to "
                             + registration.getPlugin().getDescription().getName(), ex);
                 }
             }

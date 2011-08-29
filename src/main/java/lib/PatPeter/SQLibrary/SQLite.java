@@ -1,6 +1,6 @@
 /**
- * SQLite
- * Inherited subclass for reading and writing to and from an SQLite file.
+ * SQLiteDB
+ * Inherited subclass for reading and writing to and from an SQLiteDB file.
  * 
  * Date Created: 2011-08-26 19:08
  * @author PatPeter
@@ -8,7 +8,7 @@
 package lib.PatPeter.SQLibrary;
 
 /*
- * SQLite
+ * SQLiteDB
  */
 import java.io.File;
 import java.sql.DatabaseMetaData;

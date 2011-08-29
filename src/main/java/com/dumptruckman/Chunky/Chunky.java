@@ -26,6 +26,7 @@ import com.dumptruckman.chunky.data.Data;
 import com.dumptruckman.chunky.locale.PluginLanguage;
 import com.dumptruckman.chunky.plugin.ChunkyManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyManager;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,33 +39,36 @@ import java.util.logging.Logger;
  */
 public class Chunky extends JavaPlugin {
 
-    final private static Logger LOG = Logger.getLogger("Minecraft.Chunky");
-
+    private static Chunky instance;
     private static ChunkyManager CHUNKY_MANAGER;
-    private static String NAME_VERSION = "";
 
     final public void onDisable() {
         // Save the plugin data
         Data.save(true);
 
         // Display disable message/version info
-        getLog().info(NAME_VERSION + "disabled.");
+        Logging.info("Disabled.");
     }
 
     final public void onEnable() {
+        //Load instance for other classes.
+        instance = this;
+
+
         // Grab the PluginManager
         final PluginManager pm = getServer().getPluginManager();
 
+        //Load Logging class
+        Logging.load(this);
+
         // Grab the Plugin Description File
         PluginDescriptionFile pdf = getDescription();
-        // Create a name and version string
-        NAME_VERSION = pdf.getName() + " " + pdf.getVersion() + " ";
 
         // Loads the configuration
         try {
             Config.load(this);
         } catch (IOException e) {  // Catch errors loading the config file and exit out if found.
-            getLog().severe(NAME_VERSION + "Encountered an error while loading the configuration file.  Disabling...");
+            Logging.severe("Encountered an error while loading the configuration file.  Disabling...");
             pm.disablePlugin(this);
             return;
         }
@@ -73,7 +77,7 @@ public class Chunky extends JavaPlugin {
         try {
             PluginLanguage.load(this);
         } catch (IOException e) {  // Catch errors loading the language file and exit out if found.
-            getLog().severe(NAME_VERSION + "Encountered an error while loading the language file.  Disabling...");
+            Logging.severe("Encountered an error while loading the language file.  Disabling...");
             pm.disablePlugin(this);
             return;
         }
@@ -82,7 +86,7 @@ public class Chunky extends JavaPlugin {
         try {
             Data.load(this);
         } catch (IOException e) {  // Catch errors loading the language file and exit out if found.
-            getLog().severe(NAME_VERSION + "Encountered an error while loading the data file.  Disabling...");
+            Logging.severe("Encountered an error while loading the data file.  Disabling...");
             pm.disablePlugin(this);
             return;
         }
@@ -94,7 +98,7 @@ public class Chunky extends JavaPlugin {
         CHUNKY_MANAGER = new SimpleChunkyManager(this);
 
         // Display enable message/version info
-        getLog().info(NAME_VERSION + "enabled.");
+        Logging.info("Enabled.");
     }
 
     /**
@@ -102,8 +106,9 @@ public class Chunky extends JavaPlugin {
      *
      * @return The logger associated with this plugin
      */
-    final public Logger getLog() {
-        return LOG;
+    //Get instance of the plugin.
+    public static Chunky getInstance() {
+        return instance;
     }
 
     final public void registerEvents(PluginManager pm) {
@@ -113,4 +118,7 @@ public class Chunky extends JavaPlugin {
     final public ChunkyManager getManager() {
         return CHUNKY_MANAGER;
     }
+
+
+
 }
