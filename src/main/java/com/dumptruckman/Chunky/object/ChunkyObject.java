@@ -1,0 +1,21 @@
+package com.dumptruckman.chunky.object;
+
+import java.util.Observable;
+
+/**
+ * @author dumptruckman
+ */
+public class ChunkyObject extends Observable {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        setChanged();
+        notifyObservers(ChunkyObservableData.NAME_CHANGE);
+    }
+}
