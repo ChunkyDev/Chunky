@@ -43,7 +43,7 @@ public class ChunkyEvent implements Serializable {
      *
      * @return Name of this event
      */
-    public final String getName() {
+    protected final String getName() {
         return (type != Type.CUSTOM_EVENT) ? type.toString() : name;
     }
 

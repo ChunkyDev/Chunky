@@ -47,6 +47,15 @@ public class ChunkyObjectNameEvent extends ChunkyObjectEvent implements Cancella
     }
 
     /**
+     * Sets the new name for the object
+     *
+     * @param name New name for object
+     */
+    public final void setName(String name) {
+        this.newName = name;
+    }
+
+    /**
      * Gets the cancellation state of this event. A cancelled event will not
      * be executed in the server, but will still pass to other plugins
      *

@@ -28,7 +28,7 @@ public class ChunkyObject extends Observable {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
         Chunky.getManager().callEvent(event);
         if (event.isCancelled()) return;
-        this.name = name;
+        this.name = event.getNewName();
         setChanged();
         notifyObservers(ChunkyObservableData.NAME_CHANGE);
     }
