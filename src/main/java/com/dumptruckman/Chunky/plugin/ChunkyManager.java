@@ -10,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 public interface ChunkyManager {
 
     /**
-     * Calls a player related event with the given details
+     * Calls an event with the given details
      *
      * @param event Event details
      */
