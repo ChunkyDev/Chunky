@@ -2,7 +2,7 @@ package com.dumptruckman.chunky.exceptions;
 
 public class ChunkyException extends Exception {
 
-    private String error;
+    public String error;
 
     public ChunkyException(String error) {
         super(error);
