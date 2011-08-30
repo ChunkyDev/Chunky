@@ -2,3 +2,7 @@ name: ${project.name}
 main: ${project.groupId}.${project.name}
 version: ${project.version}
 author: dumptruckman, SwearWord
+
+commands:
+  chunky:
+    aliases: c

@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky;
 
+import com.dumptruckman.chunky.command.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.locale.Language;
@@ -33,7 +34,6 @@ public class Chunky extends JavaPlugin {
     final public void onEnable() {
         //Load instance for other classes.
         instance = this;
-
 
         // Grab the PluginManager
         final PluginManager pm = getServer().getPluginManager();
@@ -71,7 +71,8 @@ public class Chunky extends JavaPlugin {
 
         // Register Events
         registerEvents(pm);
-
+        // Register Commands
+        registerCommands();
 
         // Initialize ChunkyModuleManager
         CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
@@ -95,10 +96,12 @@ public class Chunky extends JavaPlugin {
         pm.registerEvent(Event.Type.PLAYER_MOVE,playerEvents, Event.Priority.Highest,this);
     }
 
+    final public void registerCommands() {
+        getCommand("chunky").setExecutor(new ChunkyCommandExecutor());
+    }
+
     static public ChunkyModuleManager getModuleManager() {
         return CHUNKY_MODULE_MANAGER;
     }
-
-
 
 }
