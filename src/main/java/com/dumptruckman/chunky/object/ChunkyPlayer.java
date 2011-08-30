@@ -8,9 +8,18 @@ import java.util.List;
  */
 public class ChunkyPlayer extends ChunkyEntity implements ChunkyChunkOwner {
     private ChunkyChunk lastChunk;
+    private String name;
 
-    public ChunkyPlayer() {
+    public ChunkyPlayer(String name) {
+        setName(name);
+    }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setLastChunk(ChunkyChunk chunk) {
