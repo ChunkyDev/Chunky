@@ -3,11 +3,15 @@ package com.dumptruckman.chunky.listeners;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
+import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
+import com.dumptruckman.chunky.locale.Language;
+import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import sun.plugin2.message.Message;
 
 /**
  * @author dumptruckman, SwearWord
@@ -30,8 +34,19 @@ public class PlayerEvents extends PlayerListener{
     }
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
-        ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk);
+        String message = "";
+        if(toChunk==null && fromChunk != null) message += LanguagePath.UNREGISTERED_CHUNK_NAME;
+        else if(toChunk != null) {
+            if(fromChunk != null && !fromChunk.getName().equals(toChunk.getName())) message += toChunk.getName();
+            else message += toChunk.getName();
+        }
+
+        ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
+        try {
+            chunkyPlayer.getPlayer().sendMessage(message);
+        } catch (ChunkyPlayerOfflineException ignored) {
+        }
         chunkyPlayer.setLastChunk(toChunk);
     }
 }
