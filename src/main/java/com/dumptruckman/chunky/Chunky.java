@@ -2,6 +2,7 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.listeners.BlockEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
@@ -22,7 +23,9 @@ public class Chunky extends JavaPlugin {
 
     private static Chunky instance;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
+    // Event listeners
     final private PlayerEvents playerEvents = new PlayerEvents();
+    final private BlockEvents blockEvents = new BlockEvents();
 
     final public void onDisable() {
         // Save the plugin data
@@ -94,6 +97,12 @@ public class Chunky extends JavaPlugin {
     final public void registerEvents(PluginManager pm) {
         // Player events.
         pm.registerEvent(Event.Type.PLAYER_MOVE,playerEvents, Event.Priority.Highest,this);
+        pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
+
+        // Block events.
+        pm.registerEvent(Event.Type.BLOCK_BREAK, blockEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.BLOCK_PLACE, blockEvents, Event.Priority.Normal, this);
+
     }
 
     final public void registerCommands() {

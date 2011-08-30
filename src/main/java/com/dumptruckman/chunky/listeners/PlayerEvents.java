@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -43,5 +44,10 @@ public class PlayerEvents extends PlayerListener{
         Chunky.getModuleManager().callEvent(event);
         Language.sendMessage(chunkyPlayer,event.getMessage());
         chunkyPlayer.setLastChunk(toChunk);
+    }
+
+    @Override
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
     }
 }
