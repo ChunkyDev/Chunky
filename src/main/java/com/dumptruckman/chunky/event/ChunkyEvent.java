@@ -130,6 +130,7 @@ public class ChunkyEvent implements Serializable {
          * Represents a player switching chunks
          */
         PLAYER_CHUNK_CHANGE (Category.PLAYER),
+        PLAYER_UNOWNED_BUILD (Category.PLAYER),
 
         /**
          * COMMAND EVENTS
