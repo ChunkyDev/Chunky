@@ -89,7 +89,7 @@ public class Language {
         List<String> message = new ArrayList<String>();
         // Parse each item in list
         for (int i = 0; i < list.size(); i++) {
-            String temp = formatString(list.get(i).toString());
+            String temp = formatString(list.get(i).toString(), args);
 
             // Pass the line into the line breaker
             List<String> lines = Font.splitString(temp);
