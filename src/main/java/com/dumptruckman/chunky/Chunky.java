@@ -27,7 +27,7 @@ public class Chunky extends JavaPlugin {
         // Save the plugin data
 
         // Display disable message/version info
-        Logging.info("Disabled.");
+        Logging.info("disabled.");
     }
 
     final public void onEnable() {
@@ -77,7 +77,7 @@ public class Chunky extends JavaPlugin {
         CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
 
         // Display enable message/version info
-        Logging.info("Enabled.");
+        Logging.info("enabled.");
     }
 
     /**
