@@ -119,4 +119,10 @@ public class Language {
             sendMessage(chunkyPlayer.getPlayer(), path, args);
         } catch (ChunkyPlayerOfflineException ignore) {}
     }
+
+    public static void sendMessage(ChunkyPlayer chunkyPlayer, String message) {
+        try {
+            chunkyPlayer.getPlayer().sendMessage(message);
+        } catch (ChunkyPlayerOfflineException ignore) {}
+    }
 }
