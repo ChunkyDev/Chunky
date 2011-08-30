@@ -5,9 +5,11 @@ import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
+import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import org.bukkit.Chunk;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -33,7 +35,7 @@ public class PlayerEvents extends PlayerListener{
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
         String message = "";
-        if(toChunk==null && fromChunk != null) message += LanguagePath.UNREGISTERED_CHUNK_NAME;
+        if(toChunk==null && fromChunk != null) message += Language.getString(LanguagePath.UNREGISTERED_CHUNK_NAME);
         else if(toChunk != null) {
             if(fromChunk != null && !fromChunk.getName().equals(toChunk.getName())) message += toChunk.getName();
             else message += toChunk.getName();
@@ -41,10 +43,7 @@ public class PlayerEvents extends PlayerListener{
 
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
-        try {
-            chunkyPlayer.getPlayer().sendMessage(event.getMessage());
-        } catch (ChunkyPlayerOfflineException ignored) {
-        }
+        Language.sendMessage(chunkyPlayer,message);
         chunkyPlayer.setLastChunk(toChunk);
     }
 }
