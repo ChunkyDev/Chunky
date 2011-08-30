@@ -1,4 +1,4 @@
-package com.dumptruckman.argahg.object;
+package com.dumptruckman.chunky.object;
 
 /**
  * @author dumptruckman, SwearWord

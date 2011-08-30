@@ -6,7 +6,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import java.util.logging.Logger;
 
 public class Logging {
-    final private static Logger LOG = Logger.getLogger("Minecraft.argahg");
+    final private static Logger LOG = Logger.getLogger("Minecraft.chunky");
     private static String NAME_VERSION = "";
 
     public static void load(Chunky chunky) {
