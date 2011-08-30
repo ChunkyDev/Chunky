@@ -5,13 +5,11 @@ import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
-import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import sun.plugin2.message.Message;
 
 /**
  * @author dumptruckman, SwearWord
