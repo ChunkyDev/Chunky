@@ -58,6 +58,19 @@ public class Language {
         }
     }
 
+    private static String formatString(String string, Object...args) {
+        // Replaces & with the Section character
+        string = string.replaceAll("&", Character.toString((char)167));
+        // If there are arguments, %n notations in the message will be
+        // replaced
+        if (args != null) {
+            for (int j = 0; j < args.length; j++) {
+                string = string.replace("%" + (j + 1), args[j].toString());
+            }
+        }
+        return string;
+    }
+
     /**
      * Gets a list of the messages for a given path.  Color codes will be
      * converted and any lines too long will be split into an extra element in
@@ -74,16 +87,8 @@ public class Language {
         List<String> message = new ArrayList<String>();
         // Parse each item in list
         for (int i = 0; i < list.size(); i++) {
-            String temp = list.get(i).toString();
-            // Replaces & with the Section character
-            temp = temp.replaceAll("&", Character.toString((char)167));
-            // If there are arguments, %n notations in the message will be
-            // replaced
-            if (args != null) {
-                for (int j = 0; j < args.length; j++) {
-                    temp = temp.replace("%" + (j + 1), args[j].toString());
-                }
-            }
+            String temp = formatString(list.get(i).toString());
+
             // Pass the line into the line breaker
             List<String> lines = Font.splitString(temp);
             // Add the broken up lines into the final message list to return
@@ -92,6 +97,12 @@ public class Language {
             }
         }
         return message;
+    }
+
+    public static String getString(LanguagePath path, Object...args) {
+        List<Object> list = language.getList(path.getPath());
+        if (list.isEmpty()) return "";
+        return (formatString(list.get(0).toString(), args));
     }
 
     public static void sendMessage(CommandSender sender, LanguagePath path, Object...args) {
