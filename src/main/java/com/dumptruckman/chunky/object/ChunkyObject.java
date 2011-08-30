@@ -6,7 +6,7 @@ import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import java.util.Observable;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class ChunkyObject extends Observable implements ChunkyEntity {
 
@@ -26,7 +26,7 @@ public class ChunkyObject extends Observable implements ChunkyEntity {
 
     public void setName(String name) {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
-        Chunky.getManager().callEvent(event);
+        Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return;
         this.name = event.getNewName();
         setChanged();

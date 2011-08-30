@@ -2,6 +2,9 @@ package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.config.Config;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class DatabaseManager {
 
     private static Database database;

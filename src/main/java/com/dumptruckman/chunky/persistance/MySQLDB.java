@@ -5,6 +5,9 @@ import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class MySQLDB implements Database {
 
     private MySQL db;

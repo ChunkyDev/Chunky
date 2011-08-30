@@ -5,9 +5,9 @@ import com.dumptruckman.chunky.event.ChunkyListener;
 import org.bukkit.plugin.Plugin;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
-public interface ChunkyManager {
+public interface ChunkyModuleManager {
 
     /**
      * Calls an event with the given details

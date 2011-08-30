@@ -5,7 +5,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import org.bukkit.event.Cancellable;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class ChunkyObjectNameEvent extends ChunkyObjectEvent implements Cancellable {
 

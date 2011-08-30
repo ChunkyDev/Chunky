@@ -4,6 +4,9 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.SQLite;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class SQLiteDB implements Database {
 
     private SQLite db;

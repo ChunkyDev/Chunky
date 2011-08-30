@@ -1,7 +1,7 @@
 package com.dumptruckman.chunky.event;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class CustomChunkyEventListener implements ChunkyListener {
 

@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.object;
 import java.util.HashSet;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class ChunkyChunk extends ChunkyObject {
 

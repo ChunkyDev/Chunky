@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.event;
 import java.io.Serializable;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class ChunkyEvent implements Serializable {
 

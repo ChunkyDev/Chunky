@@ -5,6 +5,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.util.logging.Logger;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class Logging {
     final private static Logger LOG = Logger.getLogger("Minecraft.chunky");
     private static String NAME_VERSION = "";

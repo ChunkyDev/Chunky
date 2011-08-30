@@ -4,6 +4,9 @@ package com.dumptruckman.chunky.event.object;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
 
     private ChunkyChunk toChunk;

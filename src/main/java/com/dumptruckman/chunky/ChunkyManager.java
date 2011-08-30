@@ -7,6 +7,9 @@ import org.bukkit.Location;
 
 import java.util.HashMap;
 
+/**
+ * @author dumptruckman, SwearWord
+ */
 public class ChunkyManager {
 
     private static HashMap<String, ChunkyPlayer> players = new HashMap<String, ChunkyPlayer>();

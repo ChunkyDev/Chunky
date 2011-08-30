@@ -1,7 +1,7 @@
 package com.dumptruckman.chunky.object;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public enum ChunkyObservableData {
     // ChunkyObject

@@ -11,9 +11,9 @@ import java.util.*;
 import java.util.logging.Level;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
-public class SimpleChunkyManager implements ChunkyManager {
+public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
     private Chunky plugin;
     private final Map<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>> listeners = new EnumMap<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>>(ChunkyEvent.Type.class);
@@ -29,7 +29,7 @@ public class SimpleChunkyManager implements ChunkyManager {
         }
     };
 
-    public SimpleChunkyManager(Chunky plugin) {
+    public SimpleChunkyModuleManager(Chunky plugin) {
         this.plugin = plugin;
     }
 

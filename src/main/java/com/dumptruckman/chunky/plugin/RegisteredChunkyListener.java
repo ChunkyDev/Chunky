@@ -5,7 +5,7 @@ import com.dumptruckman.chunky.event.ChunkyListener;
 import org.bukkit.plugin.Plugin;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
 public class RegisteredChunkyListener {
     private final ChunkyListener listener;
@@ -24,7 +24,7 @@ public class RegisteredChunkyListener {
         listener = pluginListener;
         priority = eventPriority;
         plugin = registeredPlugin;
-        executor = SimpleChunkyManager.createExecutor(type, pluginListener);
+        executor = SimpleChunkyModuleManager.createExecutor(type, pluginListener);
     }
 
     /**
