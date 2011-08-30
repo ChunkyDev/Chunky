@@ -26,13 +26,20 @@ public class ChunkyChunk extends ChunkyObject {
     public void addOwner(ChunkyChunkOwner owner) {
         if (!owners.contains(owner)) {
             owners.add(owner);
+            owner.addChunk(this);
         } else {
             // TODO
         }
     }
 
     public boolean removeOwner(ChunkyChunkOwner owner) {
-        return owners.remove(owner);
+        if (owners.remove(owner)) {
+            owner.removeChunk(this);
+            // TODO error checking here? (in case owner for some reason didn't have the chunk)
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isOwner(ChunkyChunkOwner owner) {
