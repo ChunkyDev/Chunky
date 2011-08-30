@@ -3,6 +3,8 @@ package com.dumptruckman.chunky.locale;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.config.CommentedConfiguration;
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -110,5 +112,11 @@ public class Language {
         for (String message : messages) {
             sender.sendMessage(message);
         }
+    }
+
+    public static void sendMessage(ChunkyPlayer chunkyPlayer, LanguagePath path, Object...args) {
+        try {
+            sendMessage(chunkyPlayer.getPlayer(), path, args);
+        } catch (ChunkyPlayerOfflineException ignore) {}
     }
 }
