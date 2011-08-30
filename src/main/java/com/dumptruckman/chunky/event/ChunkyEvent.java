@@ -39,7 +39,7 @@ public class ChunkyEvent implements Serializable {
     }
 
     /**
-     * Gets the event's name. Should only be used if getType() == Type.CUSTOM
+     * Gets the event's name. Should only be used if getOwnableType() == Type.CUSTOM
      *
      * @return Name of this event
      */
