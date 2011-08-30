@@ -15,6 +15,12 @@ public class PlayerEvents extends PlayerListener{
     public void onPlayerMove(PlayerMoveEvent event) {
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+        ChunkyChunk fromChunk = chunkyPlayer.getLastChunk();
+        if(fromChunk.equals(toChunk)) return;
+        onPlayerChunkChange(chunkyPlayer,toChunk,fromChunk);
+    }
+
+    public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
 
     }
 }
