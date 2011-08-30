@@ -20,6 +20,6 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
     }
 
     public ChunkyChunk getFromChunk() {
-        return this.toChunk;
+        return this.fromChunk;
     }
 }
