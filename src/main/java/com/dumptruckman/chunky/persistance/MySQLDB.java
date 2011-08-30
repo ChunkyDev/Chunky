@@ -21,7 +21,7 @@ public class MySQLDB implements Database {
     public Boolean load() {
 
         Logging.info("Connecting to MySQL database.");
-        db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getDatabase(),Config.getUsername(),Config.getPassword());
+        db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getDatabase(),Config.getUsername(),Config.getPassword(),Config.getPort());
         try {
             if(!db.open()) return false;
         } catch (Exception e) {

@@ -29,13 +29,15 @@ public class MySQL extends DatabaseHandler {
 	private String username;
 	private String password;
 	private String database;
+    private String port;
 	
-	public MySQL(Logger log, String prefix, String hostname, String database, String username, String password) {
+	public MySQL(Logger log, String prefix, String hostname, String database, String username, String password, String port) {
 		super(log,prefix,"[MySQL] ");
 		this.hostname = hostname;
 		this.database = database;
 		this.username = username;
 		this.password = password;
+        this.port = port;
 	}
 	
 	@Override
@@ -61,7 +63,7 @@ public class MySQL extends DatabaseHandler {
 		String url = "";
 		try {
 			Class.forName("com.mysql.jdbc.Driver"); // Check that server's Java has MySQL support.
-			url = "jdbc:mysql://" + this.hostname + "/" + this.database + "/";
+			url = "jdbc:mysql://" + this.hostname + ":" + port + "/" + this.database + "/";
 			connection = DriverManager.getConnection(url, this.username, this.password);
 			return true;
 	    } catch (ClassNotFoundException e) {

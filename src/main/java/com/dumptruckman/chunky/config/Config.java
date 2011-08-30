@@ -90,5 +90,8 @@ public class Config {
     public static String getPassword() {
         return config.getString(MYSQL_PASSWORD.getPath(),MYSQL_PASSWORD.getDefault().toString());
     }
+    public static String getPort() {
+        return config.getString(MYSQL_PORT.getPath(),MYSQL_PORT.getDefault().toString());
+    }
 
 }
