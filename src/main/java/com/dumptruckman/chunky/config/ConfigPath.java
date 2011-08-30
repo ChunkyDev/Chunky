@@ -11,8 +11,9 @@ public enum ConfigPath {
     MYSQL_PASSWORD("settings.mysql.password","password","# Password for MySQL database."),
     MYSQL_HOST("settings.mysql.host","localhost","# Address for the MySQL server."),
     MYSQL_DATABASE("settings.mysql.database","minecraft","# Name of database to use."),
-    MYSQL_PORT("setting.mysql.port",3306,"# MySQL server port.");
-
+    MYSQL_PORT("setting.mysql.port",3306,"# MySQL server port."),
+    PLAYER_CHUNK_LIMIT("player.chunk_limit.default", 10, "# The default number of chunks a player list allowed to claim."),
+    PLAYER_CHUNK_LIMIT_CUSTOM("player.chunk_limit.custom", "", "# The default number of chunks a player list allowed to claim."),
     ;
 
     private String path;
