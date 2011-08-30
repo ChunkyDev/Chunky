@@ -131,6 +131,7 @@ public class ChunkyEvent implements Serializable {
          */
         PLAYER_CHUNK_CHANGE (Category.PLAYER),
         PLAYER_UNOWNED_BUILD (Category.PLAYER),
+        PLAYER_UNOWNED_BREAK (Category.PLAYER),
 
         /**
          * COMMAND EVENTS
