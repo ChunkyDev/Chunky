@@ -94,7 +94,12 @@ public class ChunkyEvent implements Serializable {
         /**
          * Represents a chunkyPlayer Event
          */
-        CHUNKYPLAYER,
+        PLAYER,
+
+        /**
+         * Represents a chunky command event
+         */
+        COMMAND,
 
         /**
          * Represents any miscellaneous events
@@ -118,13 +123,22 @@ public class ChunkyEvent implements Serializable {
 
 
         /**
-         * CHUNKYPLAYER EVENTS
+         * PLAYER EVENTS
          */
 
         /**
-         * Represents a player switching chunks.
+         * Represents a player switching chunks
          */
-        CHUNKYPLAYER_CHUNK_CHANGE (Category.CHUNKYPLAYER),
+        PLAYER_CHUNK_CHANGE (Category.PLAYER),
+
+        /**
+         * COMMAND EVENTS
+         */
+
+        /**
+         * Represents the "chunky" command event
+         */
+        CHUNKY_COMMAND (Category.COMMAND),
 
         /**
          * MISCELLANEOUS EVENTS

@@ -13,7 +13,7 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
     private ChunkyChunk fromChunk;
 
     public ChunkyPlayerChunkChangeEvent(final ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
-        super(Type.CHUNKYPLAYER_CHUNK_CHANGE, chunkyPlayer);
+        super(Type.PLAYER_CHUNK_CHANGE, chunkyPlayer);
         this.toChunk = toChunk;
         this.fromChunk = fromChunk;
     }
