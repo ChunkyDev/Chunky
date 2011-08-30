@@ -3,5 +3,5 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyChunkOwner extends ChunkyOwner {
+public interface ChunkyChunkOwner {
 }
