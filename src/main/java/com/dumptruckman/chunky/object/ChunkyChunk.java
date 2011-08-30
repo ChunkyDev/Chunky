@@ -49,4 +49,8 @@ public class ChunkyChunk extends ChunkyObject {
     public int hashCode() {
         return getCoord().hashCode();
     }
+
+    public boolean equals(Object obj) {
+        return obj instanceof ChunkyChunk && ((ChunkyChunk)obj).getCoord().equals(this.getCoord());
+    }
 }

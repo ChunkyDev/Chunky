@@ -36,4 +36,8 @@ public class ChunkyObject extends Observable implements ChunkyEntity {
     public int hashCode() {
         return getName().hashCode();
     }
+
+    public boolean equals(Object obj) {
+        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getName().equals(this.getName());
+    }
 }
