@@ -3,6 +3,7 @@ package com.dumptruckman.chunky.listeners;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
+import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.player.PlayerListener;
@@ -16,7 +17,11 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerMove(PlayerMoveEvent event) {
         if(event.isCancelled()) return;
-        ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
+        ChunkyChunk toChunk = null;
+        try {
+            toChunk = ChunkyManager.getChunk(event.getTo());
+        } catch (ChunkyUnregisteredException ignored) {
+        }
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk fromChunk = chunkyPlayer.getLastChunk();
 
