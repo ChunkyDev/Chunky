@@ -3,6 +3,9 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyEntity extends ChunkyObject {
+public interface ChunkyEntity {
 
+    public String getName();
+
+    public void setName(String name);
 }
