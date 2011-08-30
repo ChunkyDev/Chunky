@@ -5,6 +5,7 @@ import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.command.ChunkyCommandEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
+import com.dumptruckman.chunky.permission.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,7 +42,7 @@ public class ChunkyCommandExecutor implements CommandExecutor {
 
             if (sender instanceof Player) {
                 Player player = (Player)sender;
-                if (Chunky.hasPerm(player, "chunky.claim")) {
+                if (Permissions.CHUNKY_CLAIM.hasPerm(player)) {
                     //TODO
                 } else {
                     Language.sendMessage(player, LanguagePath.NO_COMMAND_PERMISSION);
