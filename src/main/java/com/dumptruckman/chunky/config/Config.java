@@ -55,6 +55,18 @@ public class Config {
         }
     }
 
+    private static Boolean getBoolean(ConfigPath path) {
+        return config.getBoolean(path.getPath(), (Boolean)path.getDefault());
+    }
+
+    private static Integer getInt(ConfigPath path) {
+        return config.getInt(path.getPath(), (Integer)path.getDefault());
+    }
+
+    private static String getString(ConfigPath path) {
+        return config.getString(path.getPath(), (String)path.getDefault());
+    }
+
     /**
      * Retrieves the language file name for this plugin
      * @return Language file name
@@ -67,28 +79,29 @@ public class Config {
      * Retrieves the period at which to save the data file in seconds
      * @return Period to save data file
      */
+    @Deprecated
     public static int getDataSavePeriod() {
-        return config.getInt(DATA_SAVE_PERIOD.getPath(), (Integer)DATA_SAVE_PERIOD.getDefault());
+        return getInt(DATA_SAVE_PERIOD);
     }
 
     public static Boolean isUsingMySQL() {
-        return config.getBoolean(USING_MYSQL.getPath(),(Boolean)USING_MYSQL.getDefault());
+        return getBoolean(USING_MYSQL);
     }
 
     public static String getUsername() {
-        return config.getString(MYSQL_USERNAME.getPath(),MYSQL_USERNAME.getDefault().toString());
+        return getString(MYSQL_USERNAME);
     }
 
     public static String getHost() {
-        return config.getString(MYSQL_HOST.getPath(),MYSQL_HOST.getDefault().toString());
+        return getString(MYSQL_HOST);
     }
 
     public static String getDatabase() {
-        return config.getString(MYSQL_DATABASE.getPath(),MYSQL_DATABASE.getDefault().toString());
+        return getString(MYSQL_DATABASE);
     }
 
     public static String getPassword() {
-        return config.getString(MYSQL_PASSWORD.getPath(),MYSQL_PASSWORD.getDefault().toString());
+        return getString(MYSQL_PASSWORD);
     }
     public static String getPort() {
         return config.getString(MYSQL_PORT.getPath(),MYSQL_PORT.getDefault().toString());
