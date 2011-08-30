@@ -15,16 +15,18 @@ public class PlayerEvents extends PlayerListener{
 
     @Override
     public void onPlayerMove(PlayerMoveEvent event) {
+        if(event.isCancelled()) return;
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk fromChunk = chunkyPlayer.getLastChunk();
-        if(fromChunk.equals(toChunk)) return;
+
+        if(!fromChunk.equals(toChunk)) return;
         onPlayerChunkChange(chunkyPlayer,toChunk,fromChunk);
     }
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk);
         Chunky.getModuleManager().callEvent(event);
-
+        chunkyPlayer.setLastChunk(toChunk);
     }
 }

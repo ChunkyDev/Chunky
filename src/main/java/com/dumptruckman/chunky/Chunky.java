@@ -1,11 +1,13 @@
 package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +21,7 @@ public class Chunky extends JavaPlugin {
 
     private static Chunky instance;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
+    final private PlayerEvents playerEvents = new PlayerEvents();
 
     final public void onDisable() {
         // Save the plugin data
@@ -69,6 +72,7 @@ public class Chunky extends JavaPlugin {
         // Register Events
         registerEvents(pm);
 
+
         // Initialize ChunkyModuleManager
         CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
 
@@ -87,7 +91,8 @@ public class Chunky extends JavaPlugin {
     }
 
     final public void registerEvents(PluginManager pm) {
-        // Event registering goes here
+        // Player events.
+        pm.registerEvent(Event.Type.PLAYER_MOVE,playerEvents, Event.Priority.Highest,this);
     }
 
     static public ChunkyModuleManager getModuleManager() {
