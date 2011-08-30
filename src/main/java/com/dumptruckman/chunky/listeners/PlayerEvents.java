@@ -44,7 +44,7 @@ public class PlayerEvents extends PlayerListener{
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
         try {
-            chunkyPlayer.getPlayer().sendMessage(message);
+            chunkyPlayer.getPlayer().sendMessage(event.getMessage());
         } catch (ChunkyPlayerOfflineException ignored) {
         }
         chunkyPlayer.setLastChunk(toChunk);
