@@ -18,7 +18,7 @@ public class DatabaseManager {
     private static Boolean loadMySQL()
     {
         database = new MySQLDB();
-        if(!database.load()) return loadMySQL();
+        if(!database.load()) return loadSQLite();
         else return true;
     }
 
