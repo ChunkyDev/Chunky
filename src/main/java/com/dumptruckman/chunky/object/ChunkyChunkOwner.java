@@ -9,5 +9,5 @@ public interface ChunkyChunkOwner extends ChunkyEntity {
 
     public boolean removeChunk(ChunkyChunk chunk);
 
-    public boolean hasChunk(ChunkyChunk chunk);
+    public boolean ownsChunk(ChunkyChunk chunk);
 }
