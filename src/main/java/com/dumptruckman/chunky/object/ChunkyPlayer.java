@@ -1,5 +1,9 @@
 package com.dumptruckman.chunky.object;
 
+import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,5 +43,11 @@ public class ChunkyPlayer extends ChunkyObject implements ChunkyChunkOwner {
 
     public boolean ownsChunk(ChunkyChunk chunk) {
         return chunks.contains(chunk);
+    }
+
+    public Player getPlayer() throws ChunkyPlayerOfflineException {
+        Player player = Bukkit.getServer().getPlayer(this.getName());
+        if(player == null) throw new ChunkyPlayerOfflineException();
+        return player;
     }
 }
