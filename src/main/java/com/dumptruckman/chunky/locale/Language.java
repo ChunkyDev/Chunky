@@ -67,9 +67,9 @@ public class Language {
      * @param args Optional arguments to replace %n variable notations
      * @return A List of formatted Strings
      */
-    private static List<String> getStrings(String path, Object...args) {
+    private static List<String> getStrings(LanguagePath path, Object...args) {
         // Gets the messages for the path submitted
-        List<Object> list = language.getList(path);
+        List<Object> list = language.getList(path.getPath());
 
         List<String> message = new ArrayList<String>();
         // Parse each item in list
@@ -95,7 +95,7 @@ public class Language {
     }
 
     public static void sendMessage(CommandSender sender, LanguagePath path, Object...args) {
-        List<String> messages = getStrings(path.getPath(), args);
+        List<String> messages = getStrings(path, args);
         for (String message : messages) {
             sender.sendMessage(message);
         }
