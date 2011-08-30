@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.event.object;
+package com.dumptruckman.chunky.event.player;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;

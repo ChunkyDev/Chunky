@@ -2,14 +2,12 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
-import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
+import com.dumptruckman.chunky.event.player.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
-import org.bukkit.Chunk;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
