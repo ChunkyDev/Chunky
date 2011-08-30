@@ -104,7 +104,7 @@ public class Config {
         return getString(MYSQL_PASSWORD);
     }
     public static String getPort() {
-        return config.getString(MYSQL_PORT.getPath(),MYSQL_PORT.getDefault().toString());
+        return getString(MYSQL_PORT);
     }
 
 }
