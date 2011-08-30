@@ -8,7 +8,7 @@ import java.util.Observable;
 /**
  * @author dumptruckman
  */
-public class ChunkyObject extends Observable {
+public class ChunkyObject extends Observable implements ChunkyEntity {
 
     private String name;
 

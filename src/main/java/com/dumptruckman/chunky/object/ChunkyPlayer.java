@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPlayer extends ChunkyEntity implements ChunkyChunkOwner {
+public class ChunkyPlayer extends ChunkyObject implements ChunkyChunkOwner {
     private ChunkyChunk lastChunk;
 
     public ChunkyPlayer(String name) {
