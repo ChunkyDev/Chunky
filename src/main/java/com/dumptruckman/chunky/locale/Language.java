@@ -3,6 +3,7 @@ package com.dumptruckman.chunky.locale;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.config.CommentedConfiguration;
 import com.dumptruckman.chunky.config.Config;
+import org.bukkit.command.CommandSender;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,7 @@ public class Language {
      * @param args Optional arguments to replace %n variable notations
      * @return A List of formatted Strings
      */
-    public List<String> getStrings(String path, String... args) {
+    private static List<String> getStrings(String path, Object...args) {
         // Gets the messages for the path submitted
         List<Object> list = language.getList(path);
 
@@ -80,7 +81,7 @@ public class Language {
             // replaced
             if (args != null) {
                 for (int j = 0; j < args.length; j++) {
-                    temp = temp.replace("%" + (j + 1), args[j]);
+                    temp = temp.replace("%" + (j + 1), args[j].toString());
                 }
             }
             // Pass the line into the line breaker
@@ -91,5 +92,12 @@ public class Language {
             }
         }
         return message;
+    }
+
+    public static void sendMessage(CommandSender sender, LanguagePath path, Object...args) {
+        List<String> messages = getStrings(path.getPath(), args);
+        for (String message : messages) {
+            sender.sendMessage(message);
+        }
     }
 }
