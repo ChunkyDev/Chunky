@@ -16,14 +16,14 @@ import org.bukkit.entity.Player;
 public class ChunkyCommandExecutor implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.CHUNKY_COMMAND, sender, command, label, args);
+        ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_CHUNKY, sender, command, label, args);
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return true;
 
         if (args.length == 0) {
             simpleCommand(sender);
         } else {
-            parseCommand(sender, args);
+            parseCommand(sender, command, label, args);
         }
 
         return true;
@@ -33,8 +33,12 @@ public class ChunkyCommandExecutor implements CommandExecutor {
 
     }
 
-    public void parseCommand(CommandSender sender, String[] args) {
+    public void parseCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args[0].equals("claim")) {
+            ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_CHUNKY_CLAIM, sender, command, label, args);
+            Chunky.getModuleManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             if (sender instanceof Player) {
                 Player player = (Player)sender;
                 if (Chunky.hasPerm(player, "chunky.claim")) {
