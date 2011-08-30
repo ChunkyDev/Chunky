@@ -4,7 +4,8 @@ package com.dumptruckman.chunky.locale;
  * @author dumptruckman, SwearWord
  */
 public enum LanguagePath {
-
+    NO_COMMAND_PERMISSION ("no_cmd_permission", "You do not have permission to access this command!", ""),
+    IN_GAME_ONLY ("in_game_only", "Only in game players may use this feature!", "")
     ;
 
     private String path;

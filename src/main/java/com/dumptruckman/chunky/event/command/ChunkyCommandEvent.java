@@ -45,4 +45,19 @@ public class ChunkyCommandEvent extends ChunkyEvent implements Cancellable {
         this.cancel = cancel;
     }
 
+    public CommandSender getSender() {
+        return sender;
+    }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String[] getArgs() {
+        return args;
+    }
 }

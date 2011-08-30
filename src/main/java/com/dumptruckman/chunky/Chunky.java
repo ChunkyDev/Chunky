@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -104,4 +105,7 @@ public class Chunky extends JavaPlugin {
         return CHUNKY_MODULE_MANAGER;
     }
 
+    static public boolean hasPerm(Player player, String node) {
+        return player.isOp() || player.hasPermission(node);
+    }
 }
