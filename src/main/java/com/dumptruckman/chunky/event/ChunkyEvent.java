@@ -92,6 +92,11 @@ public class ChunkyEvent implements Serializable {
         OBJECT,
 
         /**
+         * Represents a chunkyPlayer Event
+         */
+        CHUNKYPLAYER,
+
+        /**
          * Represents any miscellaneous events
          */
         MISCELLANEOUS;
@@ -110,6 +115,16 @@ public class ChunkyEvent implements Serializable {
          * Represents an object's name change event
          */
         OBJECT_NAME (Category.OBJECT),
+
+
+        /**
+         * CHUNKYPLAYER EVENTS
+         */
+
+        /**
+         * Represents a player switching chunks.
+         */
+        CHUNKYPLAYER_CHUNK_CHANGE (Category.CHUNKYPLAYER),
 
         /**
          * MISCELLANEOUS EVENTS

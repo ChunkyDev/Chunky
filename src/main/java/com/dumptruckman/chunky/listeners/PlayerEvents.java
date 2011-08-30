@@ -1,6 +1,8 @@
 package com.dumptruckman.chunky.listeners;
 
+import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
+import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
@@ -21,6 +23,8 @@ public class PlayerEvents extends PlayerListener{
     }
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
+        ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk);
+        Chunky.getManager().callEvent(event);
 
     }
 }

@@ -1,0 +1,23 @@
+package com.dumptruckman.chunky.event.object;
+
+import com.dumptruckman.chunky.event.ChunkyEvent;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
+
+public class ChunkyPlayerEvent extends ChunkyEvent{
+
+    protected ChunkyPlayer chunkyPlayer;
+
+    public ChunkyPlayerEvent(final Type type, ChunkyPlayer chunkyPlayer) {
+        super(type);
+        this.chunkyPlayer = chunkyPlayer;
+    }
+
+    /**
+     * Returns the player involved in this event.
+     * @return
+     */
+    public final ChunkyPlayer getChunkyPlayer() {
+        return this.chunkyPlayer;
+    }
+
+}
