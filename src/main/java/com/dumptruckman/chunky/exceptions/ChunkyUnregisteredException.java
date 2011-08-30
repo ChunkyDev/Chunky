@@ -4,11 +4,11 @@ public class ChunkyUnregisteredException extends ChunkyException {
 
     public ChunkyUnregisteredException() {
         super();
-        error = "Not registered.";
+        setError("Not registered.");
     }
 
     public ChunkyUnregisteredException(String error) {
         super(error);
-        this.error = error;
+        setError(error);
     }
 }

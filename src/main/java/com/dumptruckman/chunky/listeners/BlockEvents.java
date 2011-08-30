@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerUnownedBreak;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerUnownedBuild;
+import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -13,9 +14,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BlockEvents extends BlockListener {
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
-        ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-        if(chunk==null || !chunk.isOwner(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
+        try {
+            ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
+            if(chunk.isOwner(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
+        } catch (ChunkyUnregisteredException e) {
+        }
     }
 
     public void onUnownedChunkBuild(BlockPlaceEvent event, ChunkyPlayer builder, ChunkyChunk chunkyChunk) {
@@ -26,9 +30,12 @@ public class BlockEvents extends BlockListener {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-        ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-        if(chunk==null || !chunk.isOwner(chunkyPlayer)) onUnownedChunkBreak(event, chunkyPlayer, chunk);
+        try {
+            ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
+            if(!chunk.isOwner(chunkyPlayer)) onUnownedChunkBreak(event, chunkyPlayer, chunk);
+        } catch (ChunkyUnregisteredException e) {
+        }
     }
 
     public void onUnownedChunkBreak(BlockBreakEvent event, ChunkyPlayer breaker, ChunkyChunk chunkyChunk) {

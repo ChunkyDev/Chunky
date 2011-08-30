@@ -2,19 +2,23 @@ package com.dumptruckman.chunky.exceptions;
 
 public class ChunkyException extends Exception {
 
-    public String error;
+    private String error;
 
     public ChunkyException(String error) {
         super(error);
-        this.error = error;
+        setError(error);
     }
 
     public ChunkyException() {
         super("Unknown");
-        this.error = "Unknown";
+        setError("Unknown");
     }
 
     public String getError() {
         return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

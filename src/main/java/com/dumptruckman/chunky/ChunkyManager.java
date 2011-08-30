@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky;
 
+import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
@@ -23,12 +24,12 @@ public class ChunkyManager {
         return player;
     }
 
-    public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
+    public static ChunkyChunk getChunk(ChunkyCoordinates coords) throws ChunkyUnregisteredException {
         if(chunks.containsKey(coords)) return chunks.get(coords);
-        return null;
+        throw new ChunkyUnregisteredException();
     }
 
-    public static ChunkyChunk getChunk(Location location)
+    public static ChunkyChunk getChunk(Location location) throws ChunkyUnregisteredException
     {
         return getChunk(new ChunkyCoordinates(location));
     }
