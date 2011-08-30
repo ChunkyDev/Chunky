@@ -23,8 +23,7 @@ public class ChunkyManager {
         return player;
     }
 
-    public static ChunkyChunk getChunk(ChunkyCoordinates coords)
-    {
+    public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(chunks.containsKey(coords)) return chunks.get(coords);
         return null;
     }
