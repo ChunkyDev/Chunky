@@ -14,6 +14,7 @@ public enum ConfigPath {
     MYSQL_PORT("setting.mysql.port",3306,"# MySQL server port."),
     PLAYER_CHUNK_LIMIT("player.chunk_limit.default", 10, "# The default number of chunks a player list allowed to claim."),
     PLAYER_CHUNK_LIMIT_CUSTOM("player.chunk_limit.custom", "", "# The default number of chunks a player list allowed to claim."),
+    PLAYER_CHUNK_LIMIT_EXAMPLE("player.chunk_limit.custom.example", 25, "# This example creates a permission node: chunky.player.chunklimit.example", "# This allows players will that permission node to claim 25 chunks instead of the default."),
     ;
 
     private String path;
