@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
  */
 public enum Permissions {
     CHUNKY_CLAIM ("chunky.claim"),
+    PLAYER_CHUNK_LIMIT ("chunky.chunk_claim_limit"),
+    PLAYER_NO_CHUNK_LIMIT ("chunky.no_chunk_limit"),
     ;
 
     String node;
@@ -20,6 +22,10 @@ public enum Permissions {
     }
 
     public boolean hasPerm(Player player) {
+        return player.isOp() || player.hasPermission(node);
+    }
+
+    public static boolean hasPerm(Player player, String node) {
         return player.isOp() || player.hasPermission(node);
     }
 }

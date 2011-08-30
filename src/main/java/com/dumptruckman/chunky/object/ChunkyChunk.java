@@ -46,6 +46,10 @@ public class ChunkyChunk extends ChunkyObject {
         return owners.contains(owner);
     }
 
+    public HashSet<ChunkyChunkOwner> getOwners() {
+        return owners;
+    }
+
     public int hashCode() {
         return getCoord().hashCode();
     }

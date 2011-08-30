@@ -4,6 +4,8 @@ import com.dumptruckman.chunky.Chunky;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 import static com.dumptruckman.chunky.config.ConfigPath.*;
 
@@ -103,8 +105,21 @@ public class Config {
     public static String getPassword() {
         return getString(MYSQL_PASSWORD);
     }
+
     public static String getPort() {
         return getString(MYSQL_PORT);
     }
 
+    public static Integer getPlayerChunkLimitDefault() {
+        return getInt(PLAYER_CHUNK_LIMIT);
+    }
+
+    public static HashMap<String,Integer> getCustomPlayerChunkLimits() {
+        List<String> keys = config.getKeys(PLAYER_CHUNK_LIMIT_CUSTOM.getPath());
+        HashMap<String,Integer> map = new HashMap<String, Integer>();
+        for (String key : keys) {
+            map.put(key, config.getInt(PLAYER_CHUNK_LIMIT_CUSTOM.getPath() + "." + key, (Integer)PLAYER_CHUNK_LIMIT.getDefault()));
+        }
+        return map;
+    }
 }

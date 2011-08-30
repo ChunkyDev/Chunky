@@ -4,9 +4,7 @@ import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * @author dumptruckman, SwearWord
@@ -49,5 +47,9 @@ public class ChunkyPlayer extends ChunkyObject implements ChunkyChunkOwner {
         Player player = Bukkit.getServer().getPlayer(this.getName());
         if(player == null) throw new ChunkyPlayerOfflineException();
         return player;
+    }
+
+    public HashSet<ChunkyChunk> getOwnedChunks() {
+        return (HashSet<ChunkyChunk>)chunks.clone();
     }
 }
