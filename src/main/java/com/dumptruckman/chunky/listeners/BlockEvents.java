@@ -2,7 +2,6 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.event.object.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.event.object.ChunkyPlayerUnownedBuild;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
@@ -18,7 +17,7 @@ public class BlockEvents extends BlockListener {
     }
 
     public void onUnownedChunkyBuild(BlockPlaceEvent event, ChunkyPlayer builder, ChunkyChunk chunkyChunk) {
-        ChunkyPlayerUnownedBuild chunkyEvent = new ChunkyPlayerUnownedBuild(builder, chunkyChunk);
+        ChunkyPlayerUnownedBuild chunkyEvent = new ChunkyPlayerUnownedBuild(builder, chunkyChunk, event.getBlock());
         Chunky.getModuleManager().callEvent(chunkyEvent);
         event.setCancelled(chunkyEvent.isCancelled());
     }
