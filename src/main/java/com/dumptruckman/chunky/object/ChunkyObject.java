@@ -32,4 +32,8 @@ public class ChunkyObject extends Observable implements ChunkyEntity {
         setChanged();
         notifyObservers(ChunkyObservableData.NAME_CHANGE);
     }
+
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }
