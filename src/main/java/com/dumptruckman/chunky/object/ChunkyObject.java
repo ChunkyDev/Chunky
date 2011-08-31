@@ -13,9 +13,11 @@ import java.util.Observable;
 public abstract class ChunkyObject extends Observable {
 
     private String name;
-    protected String type = null;
+    protected String type = TYPE;
     private HashMap<String, HashSet<ChunkyObject>> allOwnables;
     private HashMap<String, HashSet<ChunkyObject>> allOwners;
+
+    public static final String TYPE = null;
 
     public ChunkyObject() {
         this(null);

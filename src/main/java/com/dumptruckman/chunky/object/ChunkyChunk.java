@@ -8,10 +8,11 @@ import java.util.HashSet;
 public class ChunkyChunk extends ChunkyObject {
 
     private ChunkyCoordinates coord;
+    public static final String TYPE = "chunk";
 
     public ChunkyChunk(ChunkyCoordinates coord) {
         this.coord = coord;
-        type = "chunk";
+        type = TYPE;
     }
 
     public void setCoord(ChunkyCoordinates coord) {
