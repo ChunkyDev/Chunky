@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.persistance;
 
+import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
@@ -9,12 +10,20 @@ public class QueryGen {
         return "select * from chunky-players";
     }
 
-    public static String getOwned(ChunkyObject owner, String ownableType) {
+    public static String getOwned(ChunkyObject owner, int ownableType) {
         return
             String.format("SELECT * FROM `chunky-%s` WHERE `Hash` IN " +
             "(SELECT `OwnableHash` from `chunky-ownership` " +
             "where `OwnerHash` = %s " +
             "&& `OwnableType` = '%s' && `OwnerType` = %s)",ownableType,owner.hashCode(),ownableType,owner.getType());
+    }
+
+    public static String getCreateTypeTable() {
+        return
+            "CREATE TABLE `chunky-types` (" +
+            "`Hash` INT NOT NULL," +
+            "`Name` VARCHAR(50) NOT NULL," +
+            "PRIMARY KEY (`Hash`) )";
     }
 
     public static String getCreateOwnerShipTable() {
@@ -29,12 +38,12 @@ public class QueryGen {
 
     public static String getCreateChunkTable() {
         return
-            "CREATE TABLE `chunky-chunk` (" +
+            String.format("CREATE TABLE `chunky-%s` (" +
             "`Hash` INT NOT NULL," +
             "`Name` VARCHAR(50) NOT NULL," +
             "`x` INT NOT NULL," +
             "`z` INT NOT NULL," +
-            "PRIMARY KEY (`Hash`) )";
+            "PRIMARY KEY (`Hash`) )", ChunkyChunk.class.getName().hashCode());
     }
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {
@@ -53,6 +62,14 @@ public class QueryGen {
             "`OwnerHash` = %s " +
             "&& `OwnableHash` = %s",owner.hashCode(), ownable.hashCode());
 
+    }
+
+    public static String getAddType(int hash, String name) {
+        return String.format("INSERT INTO `chunky-types` (`Hash`, `Name`) VALUES (%s, '%s')",hash, name);
+    }
+
+    public static String getGetType(int Hash) {
+        return String.format("SELECT `name` FROM chunky-types where Hash = %s",Hash);
     }
 
 }

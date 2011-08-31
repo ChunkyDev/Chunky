@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.SQLite;
+import org.bukkit.Chunk;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,7 +60,7 @@ public class SQLiteDB implements Database {
     }
 
     private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
-        ResultSet chunks = getOwned(chunkyPlayer, "chunk");
+        ResultSet chunks = getOwned(chunkyPlayer, ChunkyChunk.class.hashCode());
         try {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("y"));
@@ -87,7 +88,7 @@ public class SQLiteDB implements Database {
     }
 
 
-    public ResultSet getOwned(ChunkyObject owner, String ownableType) {
+    public ResultSet getOwned(ChunkyObject owner, int ownableType) {
         String query = QueryGen.getOwned(owner, ownableType);
         return db.query(query);
     }
@@ -100,6 +101,16 @@ public class SQLiteDB implements Database {
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
         db.query(QueryGen.getRemoveOwnership(owner,ownable));
     }
+
+    public void addType(int hash, String name) {
+        db.query(QueryGen.getAddType(hash,name));
+    }
+
+    public ResultSet getTypeName(int Hash) {
+        return db.query(QueryGen.getGetType(Hash));
+    }
+
+
 
 
 }

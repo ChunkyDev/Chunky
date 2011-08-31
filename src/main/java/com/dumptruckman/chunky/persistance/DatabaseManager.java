@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.ChunkyObject;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author dumptruckman, SwearWord
@@ -30,7 +31,7 @@ public class DatabaseManager {
         return database.load();
     }
 
-    public static ResultSet getOwned(ChunkyObject owner, String ownableType) {
+    public static ResultSet getOwned(ChunkyObject owner, int ownableType) {
         return database.getOwned(owner,ownableType);
     }
 
@@ -40,6 +41,22 @@ public class DatabaseManager {
 
     public static void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
         database.removeOwnership(owner,ownable);
+    }
+
+    public static void addType(int hash, String name) {
+        database.addType(hash,name);
+    }
+
+    public static String getTypeName(int hash) {
+        ResultSet results = database.getTypeName(hash);
+        if(results==null) return null;
+        try {
+            if(!results.next()) return null;
+            return results.getString("name");
+        } catch (SQLException e) {
+            return null;
+        }
+
     }
 
 

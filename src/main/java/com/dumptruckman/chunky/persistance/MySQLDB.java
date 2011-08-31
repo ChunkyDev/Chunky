@@ -10,6 +10,7 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
 
+import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -52,6 +53,12 @@ public class MySQLDB implements Database {
     }
 
     private void checkTables() throws Exception {
+
+        if(!this.db.checkTable("chunky-types")) {
+            db.createTable(QueryGen.getCreateTypeTable());
+            Logging.info("Created chunky-types table.");
+        }
+
         if(!this.db.checkTable("chunky-chunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
             Logging.info("Created chunky-chunk table.");
@@ -101,10 +108,10 @@ public class MySQLDB implements Database {
     }
 
     private ResultSet getChunks(ChunkyPlayer chunkyPlayer) {
-        return getOwned(chunkyPlayer, "chunk");
+        return getOwned(chunkyPlayer, ChunkyChunk.class.getName().hashCode());
     }
 
-    public ResultSet getOwned(ChunkyObject owner, String ownableType) {
+    public ResultSet getOwned(ChunkyObject owner, int ownableType) {
         try {
             String query = QueryGen.getOwned(owner, ownableType);
             return db.query(query);
@@ -121,7 +128,22 @@ public class MySQLDB implements Database {
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
         try {
-            db.query(QueryGen.getRemoveOwnership(owner,ownable));
+            db.query(QueryGen.getRemoveOwnership(owner, ownable));
         } catch (Exception ignored) {}
+    }
+
+    public void addType(int hash, String name) {
+        try {
+            db.query(QueryGen.getAddType(hash, name));
+        } catch (Exception ignored) {
+        }
+    }
+
+    public ResultSet getTypeName(int hash) {
+        try {
+            return db.query(QueryGen.getGetType(hash));
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 }
