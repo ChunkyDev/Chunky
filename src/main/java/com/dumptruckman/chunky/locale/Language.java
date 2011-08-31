@@ -38,7 +38,7 @@ public class Language {
         }
 
         // Load the language file into memory
-        language = new CommentedConfiguration(new File(plugin.getDataFolder(), "config.yml"));
+        language = new CommentedConfiguration(new File(plugin.getDataFolder(), "english.yml"));
         language.load();
 
         // Sets defaults language values

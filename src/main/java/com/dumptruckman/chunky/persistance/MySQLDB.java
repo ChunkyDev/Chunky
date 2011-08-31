@@ -32,7 +32,10 @@ public class MySQLDB implements Database {
         Logging.info("Connecting to MySQL database.");
         db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getDatabase(),Config.getUsername(),Config.getPassword(),Config.getPort());
         try {
-            if(!db.open()) return false;
+            db.open();
+            if(!db.checkConnection()) {
+                return false;
+            }
         } catch (Exception e) {
             Logging.severe("Connection to MySQL database failed.");
             return false;
@@ -51,24 +54,24 @@ public class MySQLDB implements Database {
 
     private void checkTables() throws Exception {
 
-        if(!this.db.checkTable("chunky-types")) {
+        if(!this.db.checkTable("chunky_types")) {
             db.createTable(QueryGen.getCreateTypeTable());
-            Logging.info("Created chunky-types table.");
+            Logging.info("Created chunky_types table.");
         }
 
-        if(!this.db.checkTable("chunky-ChunkyChunk")) {
+        if(!this.db.checkTable("chunky_ChunkyChunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
-            Logging.info("Created chunky-ChunkyChunk table.");
+            Logging.info("Created chunky_ChunkyChunk table.");
         }
 
-        if(!this.db.checkTable("chunky-ChunkyPlayer")) {
-            Logging.info("Creating chunky-ChunkyPlayer table.");
+        if(!this.db.checkTable("chunky_ChunkyPlayer")) {
+            Logging.info("Creating chunky_ChunkyPlayer table.");
             //TODO Figure out table stuff.
         }
 
-        if(!this.db.checkTable("chunky-ownership")) {
+        if(!this.db.checkTable("chunky_ownership")) {
             db.createTable(QueryGen.getCreateOwnerShipTable());
-            Logging.info("Created chunky-ownership table.");
+            Logging.info("Created chunky_ownership table.");
         }
     }
 

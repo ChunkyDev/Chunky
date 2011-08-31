@@ -7,8 +7,8 @@ import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
-import lib.PatPeter.SQLibrary.SQLite;
-import org.bukkit.Chunk;
+
+import lib.PatPeter.SQLibrary.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,34 +28,35 @@ public class SQLiteDB implements Database {
     public Boolean load() {
         Logging.info("Connecting to SQLite database.");
         this.db = new SQLite(Logging.getLog(), Logging.getNameVersion(), "data", plugin.getDataFolder().getPath());
-        if(!db.open())
+        db.open();
+        if(!db.checkConnection())
         {
             Logging.severe("Unable to access flatfile: " + db.name);
             return false;
         }
         checkTables();
-        Logging.severe("Successfully connected to SQLite database.");
+        Logging.info("Successfully connected to SQLite database.");
         return true;
     }
 
     private void checkTables() {
-        if(!this.db.checkTable("chunky-types")) {
+        if(!this.db.checkTable("chunky_types")) {
             db.createTable(QueryGen.getCreateTypeTable());
-            Logging.info("Created chunky-types table.");
+            Logging.info("Created chunky_types table.");
         }
 
-        if(!this.db.checkTable("chunky-ChunkyChunk")) {
+        if(!this.db.checkTable("chunky_ChunkyChunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
-            Logging.info("Created chunky-ChunkyChunk table.");
+            Logging.info("Created chunky_ChunkyChunk table.");
         }
 
-        if(!this.db.checkTable("chunky-ChunkyPlayer")) {
-            Logging.info("Creating chunky-ChunkyPlayer table.");
+        if(!this.db.checkTable("chunky_ChunkyPlayer")) {
+            Logging.info("Creating chunky_ChunkyPlayer table.");
             //TODO Figure out table stuff.
         }
 
-        if(!this.db.checkTable("chunky-ownership")) {
-            Logging.info("Creating chunky-ownership table.");
+        if(!this.db.checkTable("chunky_ownership")) {
+            Logging.info("Creating chunky_ownership table.");
             db.createTable(QueryGen.getCreateOwnerShipTable());
         }
 
