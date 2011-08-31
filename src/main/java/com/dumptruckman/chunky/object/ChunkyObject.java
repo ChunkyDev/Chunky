@@ -154,6 +154,10 @@ public abstract class ChunkyObject {
         }
     }
 
+    final public boolean isOwned() {
+        return (allOwners.size() > 0);
+    }
+
     final public boolean owns(ChunkyObject ownable) {
         int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
