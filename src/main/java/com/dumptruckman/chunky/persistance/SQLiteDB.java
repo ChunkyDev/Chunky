@@ -42,6 +42,11 @@ public class SQLiteDB implements Database {
     }
 
     private void checkTables() {
+        if(!this.db.checkTable("chunky-types")) {
+            db.createTable(QueryGen.getCreateTypeTable());
+            Logging.info("Created chunky-types table.");
+        }
+
         if(!db.checkTable("chunky-ChunkyChunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
             Logging.info("Created chunky-ChunkyChunk table.");
