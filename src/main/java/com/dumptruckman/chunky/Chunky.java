@@ -5,6 +5,8 @@ import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.listeners.BlockEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.locale.Language;
+import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
@@ -71,6 +73,8 @@ public class Chunky extends JavaPlugin {
             Logging.severe("Encoutered an error while loading data. Disabling...");
             pm.disablePlugin(this);
         }
+        DatabaseManager.addType(ChunkyChunk.class.getName().hashCode(), "ChunkyChunk");
+        DatabaseManager.addType(ChunkyPlayer.class.getName().hashCode(), "ChunkyPlayer");
 
         // Register Events
         registerEvents(pm);
