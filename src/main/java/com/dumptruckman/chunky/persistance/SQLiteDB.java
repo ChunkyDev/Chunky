@@ -41,13 +41,13 @@ public class SQLiteDB implements Database {
     }
 
     private void checkTables() {
-        if(!db.checkTable("chunky-chunks")) {
+        if(!db.checkTable("chunky-chunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
-            Logging.info("Created chunky-chunks table.");
+            Logging.info("Created chunky-chunk table.");
         }
 
-        if(!db.checkTable("chunky-players")) {
-            Logging.info("Creating chunky-players table.");
+        if(!db.checkTable("chunky-player")) {
+            Logging.info("Creating chunky-player table.");
             //TODO Figure out table stuff.
         }
 

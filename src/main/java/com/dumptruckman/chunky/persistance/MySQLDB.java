@@ -52,13 +52,13 @@ public class MySQLDB implements Database {
     }
 
     private void checkTables() throws Exception {
-        if(!this.db.checkTable("chunky-chunks")) {
+        if(!this.db.checkTable("chunky-chunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
-            Logging.info("Created chunky-chunks table.");
+            Logging.info("Created chunky-chunk table.");
         }
 
-        if(!this.db.checkTable("chunky-players")) {
-            Logging.info("Creating chunky-players table.");
+        if(!this.db.checkTable("chunky-player")) {
+            Logging.info("Creating chunky-player table.");
             //TODO Figure out table stuff.
         }
 

@@ -14,7 +14,7 @@ public class QueryGen {
             String.format("SELECT * FROM `chunky-%s` WHERE `Hash` IN " +
             "(SELECT `OwnableHash` from `chunky-ownership` " +
             "where `OwnerHash` = %s " +
-            "&& `OwnableType` = '%s' && `OwnerType` ='%s')",ownableType,owner.hashCode(),ownableType,owner.getType());
+            "&& `OwnableType` = '%s' && `OwnerType` = %s)",ownableType,owner.hashCode(),ownableType,owner.getType());
     }
 
     public static String getCreateOwnerShipTable() {
@@ -22,14 +22,14 @@ public class QueryGen {
             "CREATE TABLE `chunky-ownership` (" +
             "`OwnerHash` INT NOT NULL,  " +
             "`OwnableHash` INT NOT NULL,  " +
-            "`OwnerType` VARCHAR(20) NOT NULL,  " +
-            "`OwnableType` VARCHAR(20) NOT NULL,  " +
+            "`OwnerType` INT NOT NULL,  " +
+            "`OwnableType` INT NOT NULL,  " +
             "PRIMARY KEY (`OwnerHash`, `OwnableHash`) )";
     }
 
     public static String getCreateChunkTable() {
         return
-            "CREATE TABLE `chunky-chunks` (" +
+            "CREATE TABLE `chunky-chunk` (" +
             "`Hash` INT NOT NULL," +
             "`Name` VARCHAR(50) NOT NULL," +
             "`x` INT NOT NULL," +
