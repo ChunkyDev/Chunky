@@ -16,10 +16,6 @@ public abstract class ChunkyObject {
     private HashMap<Integer, HashSet<ChunkyObject>> allOwnables;
     private HashMap<Integer, HashSet<ChunkyObject>> allOwners;
 
-    private ChunkyObject() {
-        this(null);
-    }
-
     public ChunkyObject(String name) {
         this.name = name;
         allOwnables = new HashMap<Integer, HashSet<ChunkyObject>>();
