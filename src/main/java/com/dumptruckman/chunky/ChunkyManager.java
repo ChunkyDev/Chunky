@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -24,12 +25,14 @@ public class ChunkyManager {
         return player;
     }
 
-    public static ChunkyChunk getChunk(ChunkyCoordinates coords) throws ChunkyUnregisteredException {
+    public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
-        throw new ChunkyUnregisteredException();
+        ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
+        CHUNKS.put(coords,chunkyChunk);
+        return chunkyChunk;
     }
 
-    public static ChunkyChunk getChunk(Location location) throws ChunkyUnregisteredException
+    public static ChunkyChunk getChunk(Location location)
     {
         return getChunk(new ChunkyCoordinates(location));
     }
