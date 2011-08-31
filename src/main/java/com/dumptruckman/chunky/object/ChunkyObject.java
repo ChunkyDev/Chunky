@@ -5,12 +5,11 @@ import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Observable;
 
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject extends Observable {
+public abstract class ChunkyObject {
 
     private String name;
     private int classHash;
@@ -37,8 +36,6 @@ public abstract class ChunkyObject extends Observable {
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return;
         this.name = event.getNewName();
-        setChanged();
-        notifyObservers(ChunkyObservableData.NAME_CHANGE);
     }
 
     public int hashCode() {
