@@ -3,14 +3,19 @@ package com.dumptruckman.chunky.object;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Observable;
 
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyObject extends Observable implements ChunkyEntity {
+public abstract class ChunkyObject extends Observable {
 
     private String name;
+    protected String type = null;
+    private HashMap<String, HashSet<ChunkyObject>> allOwnables;
+    private HashMap<String, HashSet<ChunkyObject>> allOwners;
 
     public ChunkyObject() {
         this(null);
@@ -18,6 +23,8 @@ public class ChunkyObject extends Observable implements ChunkyEntity {
 
     public ChunkyObject(String name) {
         this.name = name;
+        allOwnables = new HashMap<String, HashSet<ChunkyObject>>();
+        allOwners = new HashMap<String, HashSet<ChunkyObject>>();
     }
 
     public String getName() {
@@ -34,10 +41,152 @@ public class ChunkyObject extends Observable implements ChunkyEntity {
     }
 
     public int hashCode() {
-        return getName().hashCode();
+        return (getType() + ":" + getName()).hashCode();
     }
 
     public boolean equals(Object obj) {
         return obj instanceof ChunkyObject && ((ChunkyObject)obj).getName().equals(this.getName());
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    private boolean _addOwner(ChunkyObject owner) {
+        String type = owner.getType();
+        if (getOwnersOfType(type) != null) {
+            return getOwnersOfType(type).add(owner);
+        } else {
+            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
+            owners.add(owner);
+            allOwners.put(type, owners);
+            return true;
+        }
+    }
+
+    private boolean _removeOwner(ChunkyObject owner) {
+        String type = owner.getType();
+        return getOwnersOfType(type) != null && getOwnersOfType(type).remove(owner);
+    }
+
+    /**
+     * Adds an object to be owned by this object.  Also adds this object as an owner of the ownable object.
+     * @param ownable Object that will become owned by this object.
+     */
+    final public void addOwnable(ChunkyObject ownable) {
+        String type = ownable.getType();
+        if (getOwnablesOfType(type) != null) {
+            if (getOwnablesOfType(type).add(ownable)) {
+                ownable._addOwner(this);
+            } else {
+                // ownable already exists TODO throw something?
+            }
+        } else {
+            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
+            ownables.add(ownable);
+            ownable._addOwner(this);
+            allOwnables.put(type, ownables);
+        }
+    }
+
+    /**
+     * Removes an object from this object's ownership.  Also remove this object as an owner of the ownable object.
+     * @param ownable Object that will cease to be owned by this object.
+     */
+    final public void removeOwnable(ChunkyObject ownable) {
+        String type = ownable.getType();
+        if (getOwnablesOfType(type) != null) {
+            if (getOwnablesOfType(type).remove(ownable)) {
+                ownable._removeOwner(this);
+            } else {
+                // ownable did not exist TODO throw something?
+            }
+        } else {
+            // ownable did not exist TODO throw something?
+        }
+    }
+
+    private boolean _addOwnable(ChunkyObject ownable) {
+        String type = ownable.getType();
+        if (getOwnablesOfType(type) != null) {
+            return getOwnablesOfType(type).add(ownable);
+        } else {
+            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
+            owners.add(ownable);
+            allOwners.put(type, owners);
+            return true;
+        }
+    }
+
+    private boolean _removeOwnable(ChunkyObject ownable) {
+        String type = ownable.getType();
+        return getOwnablesOfType(type) != null && getOwnablesOfType(type).remove(ownable);
+    }
+
+    /**
+     * Adds an object to be an owner of this object.  Also adds this object as an owned object of the owner object.
+     * @param owner Object that will own this object.
+     */
+    final public void addOwner(ChunkyObject owner) {
+        String type = owner.getType();
+        if (getOwnersOfType(type) != null) {
+            if (getOwnersOfType(type).add(owner)) {
+                owner._addOwnable(this);
+            } else {
+                // owner already exists TODO throw something?
+            }
+        } else {
+            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
+            ownables.add(owner);
+            owner._addOwnable(this);
+            allOwnables.put(type, ownables);
+        }
+    }
+
+    /**
+     * Removes this object from the ownership of the specified object.  Also removes this object as an owned object of the owner object.
+     * @param owner Object that will no longer own this object.
+     */
+    final public void removeOwner(ChunkyObject owner) {
+        String type = owner.getType();
+        if (getOwnersOfType(type) != null) {
+            if (getOwnersOfType(type).remove(owner)) {
+                owner._removeOwnable(this);
+            } else {
+                // owner did not exist TODO throw something?
+            }
+        } else {
+            // owner did not exist TODO throw something?
+        }
+    }
+
+    final public boolean owns(ChunkyObject ownable) {
+        String type = ownable.getType();
+        if (getOwnablesOfType(type) != null) {
+            return getOwnablesOfType(type).contains(ownable);
+        }
+        return false;
+    }
+
+    final public boolean isOwnedBy(ChunkyObject owner) {
+        String type = owner.getType();
+        if (getOwnersOfType(type) != null) {
+            return getOwnersOfType(type).contains(owner);
+        }
+        return false;
+    }
+
+    private HashSet<ChunkyObject> getOwnablesOfType(String type) {
+        return allOwnables.get(type);
+    }
+
+    private HashSet<ChunkyObject> getOwnersOfType(String type) {
+        return allOwners.get(type);
+    }
+
+    final public HashSet<ChunkyObject> getOwnables(String type) {
+        @SuppressWarnings("unchecked")
+        HashSet<ChunkyObject> ownables = (HashSet<ChunkyObject>)allOwnables.get(type).clone();
+        return ownables;
     }
 }

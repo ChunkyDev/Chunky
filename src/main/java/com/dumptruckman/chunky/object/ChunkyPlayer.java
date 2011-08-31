@@ -9,7 +9,7 @@ import java.util.HashSet;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPlayer extends ChunkyObject implements ChunkyChunkOwner {
+public class ChunkyPlayer extends ChunkyObject {
 
     private ChunkyChunk lastChunk;
     private HashSet<ChunkyChunk> chunks;
@@ -17,6 +17,7 @@ public class ChunkyPlayer extends ChunkyObject implements ChunkyChunkOwner {
     public ChunkyPlayer(String name) {
         chunks = new HashSet<ChunkyChunk>();
         setName(name);
+        type = "player";
     }
 
     public void setLastChunk(ChunkyChunk chunk) {

@@ -8,11 +8,10 @@ import java.util.HashSet;
 public class ChunkyChunk extends ChunkyObject {
 
     private ChunkyCoordinates coord;
-    private HashSet<ChunkyChunkOwner> owners;
 
     public ChunkyChunk(ChunkyCoordinates coord) {
         this.coord = coord;
-        this.owners = new HashSet<ChunkyChunkOwner>();
+        type = "chunk";
     }
 
     public void setCoord(ChunkyCoordinates coord) {
@@ -23,35 +22,8 @@ public class ChunkyChunk extends ChunkyObject {
         return coord;
     }
 
-    public void addOwner(ChunkyChunkOwner owner) {
-        if (!owners.contains(owner)) {
-            owners.add(owner);
-            owner.addChunk(this);
-        } else {
-            // TODO
-        }
-    }
-
-    public boolean removeOwner(ChunkyChunkOwner owner) {
-        if (owners.remove(owner)) {
-            owner.removeChunk(this);
-            // TODO error checking here? (in case owner for some reason didn't have the chunk)
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isOwner(ChunkyChunkOwner owner) {
-        return owners.contains(owner);
-    }
-
-    public HashSet<ChunkyChunkOwner> getOwners() {
-        return owners;
-    }
-
     public int hashCode() {
-        return getCoord().hashCode();
+        return (getType() + ":" + getCoord().toString()).hashCode();
     }
 
     public boolean equals(Object obj) {

@@ -47,6 +47,11 @@ public class ChunkyCoordinates {
 
     @Override
     public int hashCode() {
-        return (this.getWorld() + "," + this.getX() + "," + this.getZ()).hashCode();
+        return toString().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.getWorld() + "," + this.getX() + "," + this.getZ();
     }
 }
