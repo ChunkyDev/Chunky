@@ -15,7 +15,7 @@ public class QueryGen {
             String.format("SELECT * FROM `chunky-%s` WHERE `Hash` IN " +
             "(SELECT `OwnableHash` from `chunky-ownership` " +
             "where `OwnerHash` = %s " +
-            "&& `OwnableType` = '%s' && `OwnerType` = %s)",ownableType,owner.hashCode(),ownableType,owner.getType());
+            "&& `OwnableType` = '%s' && `OwnerType` = %s)",DatabaseManager.getTypeName(ownableType),owner.hashCode(),ownableType,owner.getType());
     }
 
     public static String getCreateTypeTable() {
