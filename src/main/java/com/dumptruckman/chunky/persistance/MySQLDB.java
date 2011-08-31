@@ -146,4 +146,8 @@ public class MySQLDB implements Database {
             return null;
         }
     }
+
+    public void closeDB() {
+        db.close();
+    }
 }

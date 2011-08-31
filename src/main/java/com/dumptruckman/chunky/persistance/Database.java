@@ -22,6 +22,8 @@ public interface Database {
 
     public ResultSet getTypeName(int hash);
 
+    public void closeDB();
+
 
 
 

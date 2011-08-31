@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import sun.nio.cs.ext.DBCS_IBM_EBCDIC_Decoder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,6 +58,10 @@ public class DatabaseManager {
             return null;
         }
 
+    }
+
+    public static void closeDB() {
+        database.closeDB();
     }
 
 

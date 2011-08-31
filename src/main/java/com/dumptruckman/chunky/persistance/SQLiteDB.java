@@ -47,12 +47,12 @@ public class SQLiteDB implements Database {
             Logging.info("Created chunky-types table.");
         }
 
-        if(!db.checkTable("chunky-ChunkyChunk")) {
+        if(!this.db.checkTable("chunky-ChunkyChunk")) {
             db.createTable(QueryGen.getCreateChunkTable());
             Logging.info("Created chunky-ChunkyChunk table.");
         }
 
-        if(!db.checkTable("chunky-ChunkyPlayer")) {
+        if(!this.db.checkTable("chunky-ChunkyPlayer")) {
             Logging.info("Creating chunky-ChunkyPlayer table.");
             //TODO Figure out table stuff.
         }
@@ -115,7 +115,7 @@ public class SQLiteDB implements Database {
         return db.query(QueryGen.getGetType(Hash));
     }
 
-
-
-
+    public void closeDB() {
+        this.db.close();
+    }
 }
