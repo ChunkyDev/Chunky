@@ -43,7 +43,7 @@ public class QueryGen {
             "`Name` VARCHAR(50) NOT NULL," +
             "`x` INT NOT NULL," +
             "`z` INT NOT NULL," +
-            "PRIMARY KEY (`Hash`) )", ChunkyChunk.class.getName().hashCode());
+            "PRIMARY KEY (`Hash`) )", DatabaseManager.getTypeName(ChunkyChunk.class.getName().hashCode()));
     }
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {
