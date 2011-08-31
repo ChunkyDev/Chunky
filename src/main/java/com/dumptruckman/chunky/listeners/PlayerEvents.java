@@ -24,8 +24,7 @@ public class PlayerEvents extends PlayerListener{
         if(event.isCancelled()) return;
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-        ChunkyChunk fromChunk = chunkyPlayer.getLastChunk();
-        if(fromChunk == null) fromChunk = ChunkyManager.getChunk(event.getFrom());
+        ChunkyChunk fromChunk = ChunkyManager.getChunk(event.getFrom());
         if(fromChunk.equals(toChunk)) return;
         onPlayerChunkChange(chunkyPlayer,toChunk,fromChunk);
     }
@@ -33,15 +32,14 @@ public class PlayerEvents extends PlayerListener{
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
         Logging.debug(chunkyPlayer.getName() + " changed chunks.");
         String message = "";
-        if(toChunk==null && fromChunk != null) message += Language.getString(LanguagePath.UNREGISTERED_CHUNK_NAME);
-        else if(toChunk != null) {
-            if(fromChunk != null && !fromChunk.getName().equals(toChunk.getName())) message += toChunk.getName();
+        if(!toChunk.isOwned() && fromChunk.isOwned()) message += "Wilderness ";
+        else if(toChunk.isOwned()) {
+            if(!fromChunk.getName().equals(toChunk.getName()) && fromChunk.isOwned()) message += toChunk.getName();
             else message += toChunk.getName();
         }
-
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
-        Language.sendMessage(chunkyPlayer,event.getMessage());
+        if(!message.equals("")) Language.sendMessage(chunkyPlayer,event.getMessage());
         chunkyPlayer.setLastChunk(toChunk);
     }
 

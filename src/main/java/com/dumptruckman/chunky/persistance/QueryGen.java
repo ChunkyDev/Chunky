@@ -60,7 +60,7 @@ public class QueryGen {
             "OwnableHash, " +
             "OwnerType, " +
             "OwnableType) " +
-            "VALUES (%s,%s,%s,%s)",ownable.hashCode(), ownable.hashCode(), ownable.getType(), ownable.getType());
+            "VALUES (%s,%s,%s,%s)",owner.hashCode(), ownable.hashCode(), owner.getType(), ownable.getType());
     }
 
     public static String getRemoveOwnership(ChunkyObject owner, ChunkyObject ownable) {

@@ -29,7 +29,7 @@ public class MySQLDB implements Database {
     public Boolean load() {
 
         Logging.info("Connecting to MySQL database.");
-        db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getDatabase(),Config.getUsername(),Config.getPassword(),Config.getPort());
+        db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getPort(),Config.getDatabase(),Config.getUsername(),Config.getPassword());
         try {
             db.open();
             if(!db.checkConnection()) {
