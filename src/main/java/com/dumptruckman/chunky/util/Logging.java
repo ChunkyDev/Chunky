@@ -29,6 +29,10 @@ public class Logging {
         LOG.info(NAME_VERSION + message);
     }
 
+    public static void debug(String message) {
+        LOG.info(NAME_VERSION + message);
+    }
+
     public static void warning(String message) {
         LOG.warning(NAME_VERSION + message);
     }

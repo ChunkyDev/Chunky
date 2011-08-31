@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 
+import com.sun.org.apache.xml.internal.resolver.helpers.Debug;
 import lib.PatPeter.SQLibrary.*;
 
 import java.sql.ResultSet;
@@ -101,6 +102,7 @@ public class SQLiteDB implements Database {
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
         db.query(QueryGen.getAddOwnership(owner, ownable));
+        Logging.debug("Executed: " + QueryGen.getAddOwnership(owner, ownable));
     }
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {

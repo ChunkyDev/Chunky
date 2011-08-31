@@ -7,7 +7,9 @@ import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -27,12 +29,11 @@ public class PlayerEvents extends PlayerListener{
         }
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk fromChunk = chunkyPlayer.getLastChunk();
-
-        if(!fromChunk.equals(toChunk)) return;
         onPlayerChunkChange(chunkyPlayer,toChunk,fromChunk);
     }
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
+        Logging.debug(chunkyPlayer.getName() + " changed chunks.");
         String message = "";
         if(toChunk==null && fromChunk != null) message += Language.getString(LanguagePath.UNREGISTERED_CHUNK_NAME);
         else if(toChunk != null) {
