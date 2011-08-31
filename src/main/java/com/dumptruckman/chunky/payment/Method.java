@@ -1,4 +1,4 @@
-package com.dumptruckman.register.payment;
+package com.dumptruckman.chunky.payment;
 
 import org.bukkit.plugin.Plugin;
 

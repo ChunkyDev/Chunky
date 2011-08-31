@@ -1,6 +1,6 @@
-package com.dumptruckman.register.payment.methods;
+package com.dumptruckman.chunky.payment.methods;
 
-import com.dumptruckman.register.payment.Method;
+import com.dumptruckman.chunky.payment.Method;
 import com.iConomy.iConomy;
 import com.iConomy.system.Account;
 import com.iConomy.system.BankAccount;

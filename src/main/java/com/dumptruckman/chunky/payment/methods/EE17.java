@@ -1,6 +1,6 @@
-package com.dumptruckman.register.payment.methods;
+package com.dumptruckman.chunky.payment.methods;
 
-import com.dumptruckman.register.payment.Method;
+import com.dumptruckman.chunky.payment.Method;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
