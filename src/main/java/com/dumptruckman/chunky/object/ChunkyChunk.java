@@ -27,6 +27,7 @@ public class ChunkyChunk extends ChunkyObject {
     }
 
     public boolean equals(Object obj) {
+        if(obj==null) return false;
         return obj instanceof ChunkyChunk && ((ChunkyChunk)obj).getCoord().equals(this.getCoord());
     }
 }
