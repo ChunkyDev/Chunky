@@ -27,29 +27,9 @@ public class ChunkyPlayer extends ChunkyObject {
         return lastChunk;
     }
 
-    public void addChunk(ChunkyChunk chunk) {
-        if (!chunks.contains(chunk)) {
-            chunks.add(chunk);
-        } else {
-            // TODO
-        }
-    }
-
-    public boolean removeChunk(ChunkyChunk chunk) {
-        return chunks.remove(chunk);
-    }
-
-    public boolean ownsChunk(ChunkyChunk chunk) {
-        return chunks.contains(chunk);
-    }
-
     public Player getPlayer() throws ChunkyPlayerOfflineException {
         Player player = Bukkit.getServer().getPlayer(this.getName());
         if(player == null) throw new ChunkyPlayerOfflineException();
         return player;
-    }
-
-    public HashSet<ChunkyChunk> getOwnedChunks() {
-        return (HashSet<ChunkyChunk>)chunks.clone();
     }
 }
