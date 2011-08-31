@@ -15,8 +15,8 @@ public class ChunkyPlayer extends ChunkyObject {
     private HashSet<ChunkyChunk> chunks;
 
     public ChunkyPlayer(String name) {
+        super(name);
         chunks = new HashSet<ChunkyChunk>();
-        setName(name);
     }
 
     public void setLastChunk(ChunkyChunk chunk) {

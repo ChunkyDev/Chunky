@@ -13,10 +13,11 @@ import java.util.Observable;
 public abstract class ChunkyObject extends Observable {
 
     private String name;
+    private int classHash;
     private HashMap<Integer, HashSet<ChunkyObject>> allOwnables;
     private HashMap<Integer, HashSet<ChunkyObject>> allOwners;
 
-    public ChunkyObject() {
+    private ChunkyObject() {
         this(null);
     }
 
@@ -24,6 +25,7 @@ public abstract class ChunkyObject extends Observable {
         this.name = name;
         allOwnables = new HashMap<Integer, HashSet<ChunkyObject>>();
         allOwners = new HashMap<Integer, HashSet<ChunkyObject>>();
+        classHash = this.getClass().getName().hashCode();
     }
 
     public String getName() {
@@ -48,7 +50,7 @@ public abstract class ChunkyObject extends Observable {
     }
 
     public Integer getType() {
-        return this.getClass().getName().hashCode();
+        return classHash;
     }
 
     private boolean _addOwner(ChunkyObject owner) {
