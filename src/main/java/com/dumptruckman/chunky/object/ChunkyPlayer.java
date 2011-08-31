@@ -13,12 +13,10 @@ public class ChunkyPlayer extends ChunkyObject {
 
     private ChunkyChunk lastChunk;
     private HashSet<ChunkyChunk> chunks;
-    public static final String TYPE = "player";
 
     public ChunkyPlayer(String name) {
         chunks = new HashSet<ChunkyChunk>();
         setName(name);
-        type = TYPE;
     }
 
     public void setLastChunk(ChunkyChunk chunk) {

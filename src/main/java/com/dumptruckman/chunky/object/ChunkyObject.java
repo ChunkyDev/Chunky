@@ -13,11 +13,8 @@ import java.util.Observable;
 public abstract class ChunkyObject extends Observable {
 
     private String name;
-    protected String type = TYPE;
-    private HashMap<String, HashSet<ChunkyObject>> allOwnables;
-    private HashMap<String, HashSet<ChunkyObject>> allOwners;
-
-    public static final String TYPE = null;
+    private HashMap<Integer, HashSet<ChunkyObject>> allOwnables;
+    private HashMap<Integer, HashSet<ChunkyObject>> allOwners;
 
     public ChunkyObject() {
         this(null);
@@ -25,8 +22,8 @@ public abstract class ChunkyObject extends Observable {
 
     public ChunkyObject(String name) {
         this.name = name;
-        allOwnables = new HashMap<String, HashSet<ChunkyObject>>();
-        allOwners = new HashMap<String, HashSet<ChunkyObject>>();
+        allOwnables = new HashMap<Integer, HashSet<ChunkyObject>>();
+        allOwners = new HashMap<Integer, HashSet<ChunkyObject>>();
     }
 
     public String getName() {
@@ -50,12 +47,12 @@ public abstract class ChunkyObject extends Observable {
         return obj instanceof ChunkyObject && ((ChunkyObject)obj).getName().equals(this.getName());
     }
 
-    public String getType() {
-        return type;
+    public Integer getType() {
+        return this.getClass().getName().hashCode();
     }
 
     private boolean _addOwner(ChunkyObject owner) {
-        String type = owner.getType();
+        int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             return getOwnersOfType(type).add(owner);
         } else {
@@ -67,7 +64,7 @@ public abstract class ChunkyObject extends Observable {
     }
 
     private boolean _removeOwner(ChunkyObject owner) {
-        String type = owner.getType();
+        int type = owner.getType();
         return getOwnersOfType(type) != null && getOwnersOfType(type).remove(owner);
     }
 
@@ -76,7 +73,7 @@ public abstract class ChunkyObject extends Observable {
      * @param ownable Object that will become owned by this object.
      */
     final public void addOwnable(ChunkyObject ownable) {
-        String type = ownable.getType();
+        int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             if (getOwnablesOfType(type).add(ownable)) {
                 ownable._addOwner(this);
@@ -96,7 +93,7 @@ public abstract class ChunkyObject extends Observable {
      * @param ownable Object that will cease to be owned by this object.
      */
     final public void removeOwnable(ChunkyObject ownable) {
-        String type = ownable.getType();
+        int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             if (getOwnablesOfType(type).remove(ownable)) {
                 ownable._removeOwner(this);
@@ -109,7 +106,7 @@ public abstract class ChunkyObject extends Observable {
     }
 
     private boolean _addOwnable(ChunkyObject ownable) {
-        String type = ownable.getType();
+        int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             return getOwnablesOfType(type).add(ownable);
         } else {
@@ -121,7 +118,7 @@ public abstract class ChunkyObject extends Observable {
     }
 
     private boolean _removeOwnable(ChunkyObject ownable) {
-        String type = ownable.getType();
+        int type = ownable.getType();
         return getOwnablesOfType(type) != null && getOwnablesOfType(type).remove(ownable);
     }
 
@@ -130,7 +127,7 @@ public abstract class ChunkyObject extends Observable {
      * @param owner Object that will own this object.
      */
     final public void addOwner(ChunkyObject owner) {
-        String type = owner.getType();
+        int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             if (getOwnersOfType(type).add(owner)) {
                 owner._addOwnable(this);
@@ -150,7 +147,7 @@ public abstract class ChunkyObject extends Observable {
      * @param owner Object that will no longer own this object.
      */
     final public void removeOwner(ChunkyObject owner) {
-        String type = owner.getType();
+        int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             if (getOwnersOfType(type).remove(owner)) {
                 owner._removeOwnable(this);
@@ -163,7 +160,7 @@ public abstract class ChunkyObject extends Observable {
     }
 
     final public boolean owns(ChunkyObject ownable) {
-        String type = ownable.getType();
+        int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             return getOwnablesOfType(type).contains(ownable);
         }
@@ -171,24 +168,30 @@ public abstract class ChunkyObject extends Observable {
     }
 
     final public boolean isOwnedBy(ChunkyObject owner) {
-        String type = owner.getType();
+        int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             return getOwnersOfType(type).contains(owner);
         }
         return false;
     }
 
-    private HashSet<ChunkyObject> getOwnablesOfType(String type) {
+    private HashSet<ChunkyObject> getOwnablesOfType(int type) {
         return allOwnables.get(type);
     }
 
-    private HashSet<ChunkyObject> getOwnersOfType(String type) {
+    private HashSet<ChunkyObject> getOwnersOfType(int type) {
         return allOwners.get(type);
     }
 
-    final public HashSet<ChunkyObject> getOwnables(String type) {
+    final public HashSet<ChunkyObject> getOwnables(int type) {
         @SuppressWarnings("unchecked")
         HashSet<ChunkyObject> ownables = (HashSet<ChunkyObject>)allOwnables.get(type).clone();
         return ownables;
+    }
+
+    final public HashSet<ChunkyObject> getOwners(int type) {
+        @SuppressWarnings("unchecked")
+        HashSet<ChunkyObject> owners = (HashSet<ChunkyObject>)allOwners.get(type).clone();
+        return owners;
     }
 }
