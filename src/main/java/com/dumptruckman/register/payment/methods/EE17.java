@@ -1,10 +1,10 @@
-package com.nijikokun.register.payment.methods;
+package com.dumptruckman.register.payment.methods;
 
+import com.dumptruckman.register.payment.Method;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
-import com.nijikokun.register.payment.Method;
 import org.bukkit.plugin.Plugin;
 
 /**

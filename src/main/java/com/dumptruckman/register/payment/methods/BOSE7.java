@@ -1,6 +1,6 @@
-package com.nijikokun.register.payment.methods;
+package com.dumptruckman.register.payment.methods;
 
-import com.nijikokun.register.payment.Method;
+import com.dumptruckman.register.payment.Method;
 import cosine.boseconomy.BOSEconomy;
 import org.bukkit.plugin.Plugin;
 
