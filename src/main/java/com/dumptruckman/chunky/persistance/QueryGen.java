@@ -34,7 +34,7 @@ public class QueryGen {
             "`Name` VARCHAR(50) NOT NULL," +
             "`x` INT NOT NULL," +
             "`z` INT NOT NULL," +
-            "PRIMARY KEY (`Hash`)";
+            "PRIMARY KEY (`Hash`) )";
     }
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {
