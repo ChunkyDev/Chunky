@@ -64,4 +64,7 @@ public class DatabaseManager {
     }
 
 
+    public static void loadData() {
+        database.loadData();
+    }
 }

@@ -46,9 +46,6 @@ public class MySQLDB implements Database {
         }
 
         Logging.info("Connected to MySQL database and verified tables.");
-        Logging.info("Reading MySQL tables.");
-        loadData();
-        Logging.info("Loaded data from MySQL tables.");
         return true;
     }
 
@@ -88,7 +85,8 @@ public class MySQLDB implements Database {
         }
     }
 
-    private void loadData() {
+    public void loadData() {
+        Logging.info("Reading MySQL tables.");
         ResultSet rows = getPlayers();
         try {
             while(rows.next()) {
@@ -97,6 +95,7 @@ public class MySQLDB implements Database {
             }
         } catch (SQLException ignored) {
         }
+        Logging.info("Loaded data from MySQL tables.");
     }
 
     private ResultSet getPlayers() {

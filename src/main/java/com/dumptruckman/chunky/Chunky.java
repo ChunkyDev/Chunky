@@ -11,6 +11,7 @@ import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
+import com.nijiko.coelho.iConomy.net.Database;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -75,8 +76,10 @@ public class Chunky extends JavaPlugin {
             Logging.severe("Encoutered an error while loading data. Disabling...");
             pm.disablePlugin(this);
         }
+
         DatabaseManager.addType(ChunkyChunk.class.getName().hashCode(), "ChunkyChunk");
         DatabaseManager.addType(ChunkyPlayer.class.getName().hashCode(), "ChunkyPlayer");
+        DatabaseManager.loadData();
 
         // Register Events
         registerEvents(pm);

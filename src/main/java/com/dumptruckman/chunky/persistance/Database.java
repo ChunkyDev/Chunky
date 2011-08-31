@@ -24,6 +24,8 @@ public interface Database {
 
     public void closeDB();
 
+    public void loadData();
+
 
 
 

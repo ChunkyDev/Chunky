@@ -35,9 +35,6 @@ public class SQLiteDB implements Database {
         }
         checkTables();
         Logging.severe("Successfully connected to SQLite database.");
-        Logging.info("Reading SQLite tables.");
-        loadData();
-        Logging.info("Loaded data from SQLite tables.");
         return true;
     }
 
@@ -77,7 +74,8 @@ public class SQLiteDB implements Database {
         }
     }
 
-    private void loadData() {
+    public void loadData() {
+        Logging.info("Reading SQLite tables.");
         ResultSet rows = getPlayers();
         try {
             while(rows.next()) {
@@ -86,6 +84,7 @@ public class SQLiteDB implements Database {
             }
         } catch (SQLException ignored) {
         }
+        Logging.info("Loaded data from SQLite tables.");
     }
 
     private ResultSet getPlayers() {
