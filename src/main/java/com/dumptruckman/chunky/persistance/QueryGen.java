@@ -7,7 +7,7 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 public class QueryGen {
 
     public static String getAllPlayers() {
-        return "select * from chunky-players";
+        return "select * from chunky-ChunkyPlayer";
     }
 
     public static String getOwned(ChunkyObject owner, int ownableType) {
