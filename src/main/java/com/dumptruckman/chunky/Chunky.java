@@ -4,14 +4,15 @@ import com.dumptruckman.chunky.command.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.listeners.BlockEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
+import com.dumptruckman.chunky.listeners.ServerEvents;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
 import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
-import com.nijiko.coelho.iConomy.net.Database;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -24,11 +25,13 @@ import java.io.IOException;
  */
 public class Chunky extends JavaPlugin {
 
-    private static Chunky instance;
+    private static Method METHOD = null;
+    private static Chunky INSTANCE;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
     // Event listeners
     final private PlayerEvents playerEvents = new PlayerEvents();
     final private BlockEvents blockEvents = new BlockEvents();
+    final private ServerEvents serverEvents = new ServerEvents();
 
     final public void onDisable() {
         // Save the plugin data
@@ -40,8 +43,8 @@ public class Chunky extends JavaPlugin {
     }
 
     final public void onEnable() {
-        //Load instance for other classes.
-        instance = this;
+        //Load INSTANCE for other classes.
+        INSTANCE = this;
 
         // Grab the PluginManager
         final PluginManager pm = getServer().getPluginManager();
@@ -94,24 +97,34 @@ public class Chunky extends JavaPlugin {
     }
 
     /**
-     * Gets the logger associated with this plugin
+     * Gets the instance of this plugin.
      *
-     * @return The logger associated with this plugin
+     * @return The instance of this plugin
      */
-    //Get instance of the plugin.
     public static Chunky getInstance() {
-        return instance;
+        return INSTANCE;
+    }
+
+    public static Method getMethod() {
+        return METHOD;
+    }
+
+    public static void setMethod(Method method) {
+        METHOD = method;
     }
 
     final public void registerEvents(PluginManager pm) {
         // Player events.
-        pm.registerEvent(Event.Type.PLAYER_MOVE,playerEvents, Event.Priority.Highest,this);
+        pm.registerEvent(Event.Type.PLAYER_MOVE, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
 
         // Block events.
         pm.registerEvent(Event.Type.BLOCK_BREAK, blockEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.BLOCK_PLACE, blockEvents, Event.Priority.Normal, this);
 
+        // Server events
+        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverEvents, Event.Priority.Normal, this);
     }
 
     final public void registerCommands() {
