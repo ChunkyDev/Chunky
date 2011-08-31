@@ -75,11 +75,7 @@ public class ChunkyCommandExecutor implements CommandExecutor {
             if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(player) || chunkyPlayer.getOwnables(ChunkyChunk.class.getName().hashCode()).size() < chunkLimit) {
                 ChunkyChunk chunkyChunk;
                 Location location = player.getLocation();
-                try{
-                    chunkyChunk = ChunkyManager.getChunk(location);
-                } catch (ChunkyUnregisteredException e) {
-                    chunkyChunk = new ChunkyChunk(new ChunkyCoordinates(location));
-                }
+                chunkyChunk = ChunkyManager.getChunk(location);
                 chunkyChunk.addOwner(chunkyPlayer);
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             } else {

@@ -16,11 +16,8 @@ public class BlockEvents extends BlockListener {
     public void onBlockPlace(BlockPlaceEvent event) {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk = null;
-        try {
-            chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
-        } catch (ChunkyUnregisteredException ignored) {
-        }
-        if(chunk == null || chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
+        chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
+        if(chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
     }
 
     public void onUnownedChunkBuild(BlockPlaceEvent event, ChunkyPlayer builder, ChunkyChunk chunkyChunk) {
@@ -33,10 +30,7 @@ public class BlockEvents extends BlockListener {
     public void onBlockBreak(BlockBreakEvent event) {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk = null;
-        try {
-            chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
-        } catch (ChunkyUnregisteredException ignored) {
-        }
+        chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
         if(chunk == null || !chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBreak(event, chunkyPlayer, chunk);
     }
 
