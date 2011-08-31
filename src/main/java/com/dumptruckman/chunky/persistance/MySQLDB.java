@@ -5,16 +5,13 @@ import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
+import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
-import org.bukkit.Chunk;
-import org.bukkit.entity.Player;
 
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 /**
  * @author dumptruckman, SwearWord
@@ -56,8 +53,8 @@ public class MySQLDB implements Database {
 
     private void checkTables() throws Exception {
         if(!this.db.checkTable("chunky-chunks")) {
-            Logging.info("Creating chunky-chunks table.");
-            //TODO Figure out table stuff.
+            db.createTable(QueryGen.getCreateChunkTable());
+            Logging.info("Created chunky-chunks table.");
         }
 
         if(!this.db.checkTable("chunky-players")) {
@@ -66,13 +63,13 @@ public class MySQLDB implements Database {
         }
 
         if(!this.db.checkTable("chunky-ownership")) {
-            Logging.info("Creating chunky-chunks table.");
-            //TODO Figure out table stuff.
+            db.createTable(QueryGen.getCreateOwnerShipTable());
+            Logging.info("Created chunky-ownership table.");
         }
     }
 
     private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
-        ResultSet chunks = getChunks(chunkyPlayer.getName());
+        ResultSet chunks = getChunks(chunkyPlayer);
         try {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("y"));
@@ -97,18 +94,34 @@ public class MySQLDB implements Database {
 
     private ResultSet getPlayers() {
         try {
-            return db.query(SQLstatements.getAllPlayers());
+            return db.query(QueryGen.getAllPlayers());
         } catch (Exception e) {
             return null;
         }
     }
 
-    private ResultSet getChunks(String chunkyPlayer) {
+    private ResultSet getChunks(ChunkyPlayer chunkyPlayer) {
+        return getOwned(chunkyPlayer, "chunk");
+    }
+
+    public ResultSet getOwned(ChunkyObject owner, String ownableType) {
         try {
-            String query = SQLstatements.getOwnedChunks(chunkyPlayer);
+            String query = QueryGen.getOwned(owner, ownableType);
             return db.query(query);
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        try {
+            db.query(QueryGen.getAddOwnership(owner, ownable));
+        } catch (Exception ignored) {}
+    }
+
+    public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        try {
+            db.query(QueryGen.getRemoveOwnership(owner,ownable));
+        } catch (Exception ignored) {}
     }
 }
