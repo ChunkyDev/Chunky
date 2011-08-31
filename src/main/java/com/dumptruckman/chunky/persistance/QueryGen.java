@@ -25,6 +25,14 @@ public class QueryGen {
             "PRIMARY KEY (Hash) )";
     }
 
+    public static String getCreatePlayerTable() {
+        return
+            "CREATE TABLE chunky_ChunkyPlayer (" +
+            "Hash INT NOT NULL," +
+            "Name VARCHAR(16) NOT NULL," +
+            "PRIMARY KEY (Hash) )";
+    }
+
     public static String getCreateOwnerShipTable() {
         return
             "CREATE TABLE chunky_ownership (" +
@@ -37,12 +45,12 @@ public class QueryGen {
 
     public static String getCreateChunkTable() {
         return
-            String.format("CREATE TABLE chunky_%s (" +
+            "CREATE TABLE chunky_ChunkyChunk (" +
             "Hash INT NOT NULL," +
             "Name VARCHAR(50) NOT NULL," +
             "x INT NOT NULL," +
             "z INT NOT NULL," +
-            "PRIMARY KEY (Hash) )", DatabaseManager.getTypeName(ChunkyChunk.class.getName().hashCode()));
+            "PRIMARY KEY (Hash) )";
     }
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {

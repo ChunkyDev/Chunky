@@ -65,8 +65,8 @@ public class MySQLDB implements Database {
         }
 
         if(!this.db.checkTable("chunky_ChunkyPlayer")) {
-            Logging.info("Creating chunky_ChunkyPlayer table.");
-            //TODO Figure out table stuff.
+            db.createTable(QueryGen.getCreatePlayerTable());
+            Logging.info("Created chunky_ChunkyPlayer table.");
         }
 
         if(!this.db.checkTable("chunky_ownership")) {
