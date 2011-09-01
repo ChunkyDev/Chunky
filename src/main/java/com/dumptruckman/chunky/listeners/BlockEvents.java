@@ -16,25 +16,28 @@ public class BlockEvents extends BlockListener {
     public void onBlockPlace(BlockPlaceEvent event) {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
-        if(chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
+        if(!chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBuild(event, chunkyPlayer, chunk);
     }
 
     public void onUnownedChunkBuild(BlockPlaceEvent event, ChunkyPlayer builder, ChunkyChunk chunkyChunk) {
         ChunkyPlayerUnownedBuild chunkyEvent = new ChunkyPlayerUnownedBuild(builder, chunkyChunk, event.getBlock());
         Chunky.getModuleManager().callEvent(chunkyEvent);
         event.setCancelled(chunkyEvent.isCancelled());
+        event.setCancelled(true);
     }
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk  = ChunkyManager.getChunk(event.getBlock().getLocation());
-        if(chunk == null || !chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBreak(event, chunkyPlayer, chunk);
+        if(!chunk.isOwnedBy(chunkyPlayer)) onUnownedChunkBreak(event, chunkyPlayer, chunk);
     }
 
     public void onUnownedChunkBreak(BlockBreakEvent event, ChunkyPlayer breaker, ChunkyChunk chunkyChunk) {
+        event.setCancelled(true);
         ChunkyPlayerUnownedBreak chunkyEvent = new ChunkyPlayerUnownedBreak(breaker,chunkyChunk,event.getBlock());
         Chunky.getModuleManager().callEvent(chunkyEvent);
         event.setCancelled(chunkyEvent.isCancelled());
+        event.setCancelled(true);
     }
 }
