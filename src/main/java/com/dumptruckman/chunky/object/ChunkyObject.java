@@ -106,9 +106,9 @@ public abstract class ChunkyObject {
         if (getOwnablesOfType(type) != null) {
             return getOwnablesOfType(type).add(ownable);
         } else {
-            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
-            owners.add(ownable);
-            allOwners.put(type, owners);
+            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
+            ownables.add(ownable);
+            allOwnables.put(type, ownables);
             return true;
         }
     }
@@ -132,10 +132,10 @@ public abstract class ChunkyObject {
                 // owner already exists TODO throw something?
             }
         } else {
-            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
-            ownables.add(owner);
+            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
+            owners.add(owner);
             owner._addOwnable(this);
-            allOwnables.put(type, ownables);
+            allOwners.put(type, owners);
         }
     }
 
