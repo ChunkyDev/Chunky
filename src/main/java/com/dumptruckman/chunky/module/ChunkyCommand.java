@@ -1,7 +1,5 @@
 package com.dumptruckman.chunky.module;
 
-import org.bukkit.command.CommandExecutor;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,17 +14,22 @@ public class ChunkyCommand {
     private List<String> aliases;
     private String description;
     private List<String> helpLines;
-    private CommandExecutor executor;
+    private ChunkyCommandExecutor executor;
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children;
 
-    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, CommandExecutor executor) {
+    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor) {
         this(name, aliases, description, helpLines, executor, null);
     }
 
-    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, CommandExecutor executor, ChunkyCommand parentCommand) {
-        this.name = name;
+    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
+        this.name = name.toLowerCase();
+        if (aliases != null) {
+            for (int i = 0; i < aliases.size(); i++) {
+                aliases.set(i, aliases.get(i).toLowerCase());
+            }
+        }
         this.aliases = aliases;
         this.description = description;
         this.helpLines = helpLines;
@@ -48,6 +51,16 @@ public class ChunkyCommand {
 
     public final String getFullName() {
         return fullName;
+    }
+
+    public final String getChatName() {
+        String[] splitName = getFullName().split(".");
+        String chatName = "/";
+        for (int i = 0; i < splitName.length; i++) {
+            if (i != 0) chatName += " ";
+            chatName += splitName[i];
+        }
+        return chatName;
     }
 
     public final ChunkyCommand getParent() {
@@ -72,7 +85,7 @@ public class ChunkyCommand {
         return helpLines;
     }
 
-    public final CommandExecutor getExecutor() {
+    public final ChunkyCommandExecutor getExecutor() {
         return executor;
     }
 
@@ -86,6 +99,10 @@ public class ChunkyCommand {
 
     public final ChunkyCommand getChild(String fullName) {
         return children.get(fullName);
+    }
+
+    public final boolean hasChild(String fullName) {
+        return getChild(fullName) != null;
     }
 
     public boolean equals(Object o) {

@@ -1,17 +1,19 @@
 package com.dumptruckman.chunky;
 
-import com.dumptruckman.chunky.command.ChunkyCommandExecutor;
+import com.dumptruckman.chunky.command.CommandChunky;
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.listeners.BlockEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.listeners.ServerEvents;
 import com.dumptruckman.chunky.locale.Language;
+import com.dumptruckman.chunky.module.ChunkyCommand;
+import com.dumptruckman.chunky.module.ChunkyModuleManager;
+import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
-import com.dumptruckman.chunky.module.ChunkyModuleManager;
-import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,6 +21,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author dumptruckman, SwearWord
@@ -117,6 +120,7 @@ public class Chunky extends JavaPlugin {
         // Player events.
         pm.registerEvent(Event.Type.PLAYER_MOVE, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerEvents, Event.Priority.Normal, this);
 
         // Block events.
         pm.registerEvent(Event.Type.BLOCK_BREAK, blockEvents, Event.Priority.Normal, this);
@@ -128,7 +132,16 @@ public class Chunky extends JavaPlugin {
     }
 
     final public void registerCommands() {
-        getCommand("chunky").setExecutor(new ChunkyCommandExecutor());
+        try {
+            ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
+                    null, Arrays.asList("This command contains the main functions of Chunky."),
+                    new CommandChunky());
+            getModuleManager().registerCommand(commandChunky);
+            ChunkyCommand commandChunkyClaim = new ChunkyCommand("chunky", Arrays.asList("c"),
+                    null, Arrays.asList("This command contains the main functions of Chunky."),
+                    new CommandChunky(), commandChunky);
+            getModuleManager().registerCommand(commandChunkyClaim);
+        } catch (ChunkyUnregisteredException ignore) {}
     }
 
     static public ChunkyModuleManager getModuleManager() {

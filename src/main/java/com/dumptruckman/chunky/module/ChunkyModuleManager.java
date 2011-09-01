@@ -3,6 +3,7 @@ package com.dumptruckman.chunky.module;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -40,4 +41,8 @@ public interface ChunkyModuleManager {
     public ChunkyCommand getCommandByName(String fullName);
 
     public boolean isCommandRegistered(String fullName);
+
+    public ChunkyCommand getCommandByAlias(ChunkyCommand parentCommand, String alias);
+
+    public void parseCommand(CommandSender sender, String[] commands);
 }

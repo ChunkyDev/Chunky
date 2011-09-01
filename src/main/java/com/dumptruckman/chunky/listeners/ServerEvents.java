@@ -1,10 +1,12 @@
 package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.payment.Methods;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.event.server.ServerListener;
 
 /**
@@ -39,6 +41,22 @@ public class ServerEvents extends ServerListener {
                 Chunky.setMethod(methods.getMethod());
                 Logging.info("Payment method found (" + Chunky.getMethod().getName() + " version: " + Chunky.getMethod().getVersion() + ")");
             }
+        }
+    }
+
+    @Override
+    public void onServerCommand(ServerCommandEvent event) {
+        String[] commands = event.getCommand().split("\\s");
+        ChunkyCommand chunkyCommand = Chunky.getModuleManager().getCommandByName(commands[0]);
+        if (chunkyCommand == null) return;
+
+        String currentName = commands[0];
+        int i;
+        for (i = 1; i < commands.length; i++) {
+            currentName += "." + commands[i];
+            ChunkyCommand currentCommand = chunkyCommand.getChild(currentName);
+            if (currentCommand == null) break;
+            chunkyCommand = currentCommand;
         }
     }
 }
