@@ -82,7 +82,7 @@ public class Language {
      * @param args Optional arguments to replace %n variable notations
      * @return A List of formatted Strings
      */
-    private static List<String> getStrings(LanguagePath path, Object...args) {
+    public static List<String> getStrings(LanguagePath path, Object...args) {
         // Gets the messages for the path submitted
         List<Object> list = language.getList(path.getPath());
 

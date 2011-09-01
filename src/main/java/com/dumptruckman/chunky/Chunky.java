@@ -9,6 +9,7 @@ import com.dumptruckman.chunky.listeners.ChunkyCommandEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.listeners.ServerEvents;
 import com.dumptruckman.chunky.locale.Language;
+import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.module.ChunkyModuleManager;
 import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
@@ -143,11 +144,12 @@ public class Chunky extends JavaPlugin {
     final public void registerCommands() {
         try {
             ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
-                    null, Arrays.asList("This command contains the main functions of Chunky."),
+                    null, Language.getStrings(LanguagePath.CMD_CHUNKY_HELP),
                     new CommandChunky());
             getModuleManager().registerCommand(commandChunky);
             ChunkyCommand commandChunkyClaim = new ChunkyCommand("chunky", Arrays.asList("c"),
-                    null, Arrays.asList("This command contains the main functions of Chunky."),
+                    Language.getString(LanguagePath.CMD_CHUNKY_CLAIM_DESC),
+                    Language.getStrings(LanguagePath.CMD_CHUNKY_CLAIM_HELP),
                     new CommandChunky(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
         } catch (ChunkyUnregisteredException ignore) {}
