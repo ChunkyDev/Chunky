@@ -57,7 +57,7 @@ public class QueryGen {
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
-            String.format("INSERT INTO chunky_ownership (" +
+            String.format("REPLACE INTO chunky_ownership (" +
             "OwnerHash, " +
             "OwnableHash, " +
             "OwnerType, " +
@@ -74,7 +74,7 @@ public class QueryGen {
     }
 
     public static String getAddType(int hash, String name) {
-        return String.format("INSERT INTO chunky_types (Hash, Name) VALUES (%s, '%s')",hash, name);
+        return String.format("REPLACE INTO chunky_types (Hash, Name) VALUES (%s, '%s')",hash, name);
     }
 
     public static String getGetType(int Hash) {
@@ -93,7 +93,7 @@ public class QueryGen {
 
     public static String getAddPlayer(ChunkyPlayer player) {
         return
-            String.format("INSERT INTO chunky_ChunkyPlayer (" +
+            String.format("REPLACE INTO chunky_ChunkyPlayer (" +
             "Hash, " +
             "Name) " +
             "VALUES (%s,'%s')",player.hashCode(), player.getName());
