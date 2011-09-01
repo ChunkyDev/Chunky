@@ -147,7 +147,7 @@ public class Chunky extends JavaPlugin {
                     null, Language.getStrings(LanguagePath.CMD_CHUNKY_HELP),
                     new CommandChunky());
             getModuleManager().registerCommand(commandChunky);
-            ChunkyCommand commandChunkyClaim = new ChunkyCommand("chunky", Arrays.asList("c"),
+            ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
                     Language.getString(LanguagePath.CMD_CHUNKY_CLAIM_DESC),
                     Language.getStrings(LanguagePath.CMD_CHUNKY_CLAIM_HELP),
                     new CommandChunky(), commandChunky);
