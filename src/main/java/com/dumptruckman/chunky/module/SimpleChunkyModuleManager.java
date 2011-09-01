@@ -177,11 +177,11 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 }
             }
         } else {
-            for (ChunkyCommand childCommand : parentCommand.getChildren()) {
-                if (childCommand.getName().equals(alias.toLowerCase())
-                        || (childCommand.getAliases() != null
-                            && childCommand.getAliases().contains(alias.toLowerCase()))) {
-                    return childCommand;
+            for (Map.Entry<String,ChunkyCommand> childCommand : parentCommand.getChildren().entrySet()) {
+                if (childCommand.getValue().getName().equals(alias.toLowerCase())
+                        || (childCommand.getValue().getAliases() != null
+                            && childCommand.getValue().getAliases().contains(alias.toLowerCase()))) {
+                    return childCommand.getValue();
                 }
             }
         }

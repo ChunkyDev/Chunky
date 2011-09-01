@@ -6,6 +6,8 @@ import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.module.ChunkyCommand;
 
+import java.util.Map;
+
 /**
  * @author dumptruckman
  */
@@ -22,9 +24,9 @@ public class ChunkyCommandEvents extends ChunkyCommandListener {
     public void onCommandList(ChunkyCommandEvent event) {
         if (event.isCancelled()) return;
         Language.sendMessage(event.getSender(), LanguagePath.CMD_LIST, event.getCommand().getChatName());
-        for (ChunkyCommand childCommand : event.getCommand().getChildren()) {
-            if (childCommand.getDescription() == null) continue;
-            event.getSender().sendMessage(childCommand.getName() + " - " + childCommand.getDescription());
+        for (Map.Entry<String, ChunkyCommand> childCommand : event.getCommand().getChildren().entrySet()) {
+            if (childCommand.getValue().getDescription() == null) continue;
+            event.getSender().sendMessage(childCommand.getValue().getName() + " - " + childCommand.getValue().getDescription());
         }
     }
 }
