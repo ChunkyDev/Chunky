@@ -82,6 +82,7 @@ public class MySQLDB implements Database {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("World"),chunks.getInt("x"),chunks.getInt("z"));
                 ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
+                chunk.setName(chunks.getString("Name"));
                 chunk.addOwner(chunkyPlayer);
 
             }
@@ -108,11 +109,22 @@ public class MySQLDB implements Database {
         } catch (Exception ignored) {}
     }
 
+    public void updateChunk(ChunkyChunk chunky) {
+        try {
+            db.query(QueryGen.getUpdateChunk(chunky));
+        } catch (Exception ignored) {}
+    }
+
     public void addPlayer(ChunkyPlayer player) {
         try {
             db.query(QueryGen.getAddPlayer(player));
         } catch (Exception ignored) {}
     }
+
+    public void updateChunk() {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
     private ResultSet getPlayers() {
         try {

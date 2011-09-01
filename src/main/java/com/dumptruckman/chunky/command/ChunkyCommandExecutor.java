@@ -12,6 +12,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.Permissions;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -77,6 +78,8 @@ public class ChunkyCommandExecutor implements CommandExecutor {
                 Location location = player.getLocation();
                 chunkyChunk = ChunkyManager.getChunk(location);
                 chunkyChunk.addOwner(chunkyPlayer);
+                chunkyChunk.setName("~" + chunkyPlayer.getName());
+                DatabaseManager.updateChunk(chunkyChunk);
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             } else {
                 // TODO chunk limit reached

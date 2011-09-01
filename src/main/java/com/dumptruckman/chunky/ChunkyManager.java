@@ -32,7 +32,6 @@ public class ChunkyManager {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
         ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
         CHUNKS.put(coords,chunkyChunk);
-        DatabaseManager.addChunk(chunkyChunk);
         return chunkyChunk;
     }
 

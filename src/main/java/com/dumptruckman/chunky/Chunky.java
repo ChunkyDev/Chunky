@@ -73,6 +73,9 @@ public class Chunky extends JavaPlugin {
             return;
         }
 
+        // Initialize ChunkyModuleManager
+        CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
+
         //Loads the data.
         if(!DatabaseManager.load())
         {
@@ -88,9 +91,6 @@ public class Chunky extends JavaPlugin {
         registerEvents(pm);
         // Register Commands
         registerCommands();
-
-        // Initialize ChunkyModuleManager
-        CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
 
         // Display enable message/version info
         Logging.info("enabled.");

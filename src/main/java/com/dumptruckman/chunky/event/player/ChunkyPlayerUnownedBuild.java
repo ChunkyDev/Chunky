@@ -9,7 +9,8 @@ public class ChunkyPlayerUnownedBuild extends ChunkyPlayerEvent implements Cance
 
     private ChunkyChunk chunkyChunk;
     private Block block;
-    private boolean cancel = false;
+    private boolean cancel = true;
+
 
     public ChunkyPlayerUnownedBuild(final ChunkyPlayer chunkyPlayer, final ChunkyChunk chunkyChunk, final Block block) {
         super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer);

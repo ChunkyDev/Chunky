@@ -76,4 +76,8 @@ public class DatabaseManager {
     public static void addPlayer(ChunkyPlayer player) {
         database.addPlayer(player);
     }
+
+    public static void updateChunk(ChunkyChunk chunkyChunk) {
+        database.updateChunk(chunkyChunk);
+    }
 }

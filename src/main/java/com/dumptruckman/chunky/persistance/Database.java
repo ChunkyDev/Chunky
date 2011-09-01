@@ -30,5 +30,7 @@ public interface Database {
 
     public void addChunk(ChunkyChunk chunky);
 
+    public void updateChunk(ChunkyChunk chunky);
+
     public void addPlayer(ChunkyPlayer player);
 }

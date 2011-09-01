@@ -10,7 +10,7 @@ public class ChunkyChunk extends ChunkyObject {
     private ChunkyCoordinates coord;
 
     public ChunkyChunk(ChunkyCoordinates coord) {
-        super("Chunk");
+        super("");
         this.coord = coord;
     }
 

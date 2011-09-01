@@ -23,7 +23,6 @@ public class BlockEvents extends BlockListener {
         ChunkyPlayerUnownedBuild chunkyEvent = new ChunkyPlayerUnownedBuild(builder, chunkyChunk, event.getBlock());
         Chunky.getModuleManager().callEvent(chunkyEvent);
         event.setCancelled(chunkyEvent.isCancelled());
-        event.setCancelled(true);
     }
 
     @Override
@@ -38,6 +37,5 @@ public class BlockEvents extends BlockListener {
         ChunkyPlayerUnownedBreak chunkyEvent = new ChunkyPlayerUnownedBreak(breaker,chunkyChunk,event.getBlock());
         Chunky.getModuleManager().callEvent(chunkyEvent);
         event.setCancelled(chunkyEvent.isCancelled());
-        event.setCancelled(true);
     }
 }

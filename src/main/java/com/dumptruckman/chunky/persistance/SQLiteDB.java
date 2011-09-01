@@ -8,7 +8,6 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 
-import com.sun.org.apache.xml.internal.resolver.helpers.Debug;
 import lib.PatPeter.SQLibrary.*;
 
 import java.sql.ResultSet;
@@ -69,6 +68,7 @@ public class SQLiteDB implements Database {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("z"));
                 ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
+                chunk.setName(chunks.getString("Name"));
                 chunkyPlayer.addOwnable(chunk);
             }
         } catch (SQLException ignored) {
@@ -90,6 +90,10 @@ public class SQLiteDB implements Database {
 
     public void addChunk(ChunkyChunk chunky) {
         db.query(QueryGen.getAddChunk(chunky));
+    }
+
+    public void updateChunk(ChunkyChunk chunky) {
+        db.query(QueryGen.getUpdateChunk(chunky));
     }
 
     public void addPlayer(ChunkyPlayer player) {

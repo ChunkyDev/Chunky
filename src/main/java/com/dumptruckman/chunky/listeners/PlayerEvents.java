@@ -34,8 +34,8 @@ public class PlayerEvents extends PlayerListener{
         String message = "";
         if(!toChunk.isOwned() && fromChunk.isOwned()) message += "Wilderness ";
         else if(toChunk.isOwned()) {
-            if(!fromChunk.getName().equals(toChunk.getName()) && fromChunk.isOwned()) message += toChunk.getName();
-            else message += toChunk.getName();
+            if(fromChunk.isOwned() && !fromChunk.getName().equals(toChunk.getName()) ) message += toChunk.getName();
+            else if(!fromChunk.isOwned()) message += toChunk.getName();
         }
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);

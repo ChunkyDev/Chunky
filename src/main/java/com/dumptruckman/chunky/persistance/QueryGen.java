@@ -91,6 +91,16 @@ public class QueryGen {
             "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), chunk.getName(), chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
     }
 
+    public static String getUpdateChunk(ChunkyChunk chunk) {
+        return String.format("REPLACE INTO chunky_ChunkyChunk (" +
+            "Hash, " +
+            "Name, " +
+            "World, " +
+            "x, " +
+            "z) " +
+            "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), chunk.getName(), chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+    }
+
     public static String getAddPlayer(ChunkyPlayer player) {
         return
             String.format("INSERT INTO chunky_ChunkyPlayer (" +
