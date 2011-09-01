@@ -10,19 +10,16 @@ package lib.PatPeter.SQLibrary;
 /*
  * MySQL
  */
+
 import java.net.MalformedURLException;
+import java.sql.*;
+import java.util.logging.Logger;
 
 /*
  * Both
  */
 //import java.net.MalformedURLException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 //import java.util.logging.Logger;
-import java.util.logging.Logger;
 
 public class MySQL extends DatabaseHandler {
 	private String hostname = "localhost";

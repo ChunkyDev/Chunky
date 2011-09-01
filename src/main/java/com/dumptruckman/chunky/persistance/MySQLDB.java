@@ -9,9 +9,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
-import sun.security.util.Debug;
 
-import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

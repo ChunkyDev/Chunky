@@ -1,12 +1,9 @@
 package com.dumptruckman.chunky;
 
-import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
-import com.dumptruckman.chunky.util.Logging;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 import java.util.HashMap;

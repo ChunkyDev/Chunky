@@ -7,8 +7,7 @@ import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
-
-import lib.PatPeter.SQLibrary.*;
+import lib.PatPeter.SQLibrary.SQLite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -4,7 +4,6 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.player.ChunkyPlayerUnownedBreak;
 import com.dumptruckman.chunky.event.player.ChunkyPlayerUnownedBuild;
-import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.block.BlockBreakEvent;

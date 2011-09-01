@@ -2,8 +2,6 @@ package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
-import java.util.HashSet;
-
 /**
  * @author dumptruckman, SwearWord
  */

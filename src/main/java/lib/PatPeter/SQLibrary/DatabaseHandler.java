@@ -10,23 +10,23 @@ package lib.PatPeter.SQLibrary;
 /*
  *  MySQL
  */
+
 import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.logging.Logger;
 
 /*
  *  SQLLite
  */
 //import java.io.File;
 //import java.sql.DatabaseMetaData;
-
 /*
  *  Both
  */
-import java.sql.Connection;
 //import java.sql.DriverManager;
-import java.sql.ResultSet;
 //import java.sql.SQLException;
 //import java.sql.Statement;
-import java.util.logging.Logger;
 
 public abstract class DatabaseHandler {
 	protected Logger log;
