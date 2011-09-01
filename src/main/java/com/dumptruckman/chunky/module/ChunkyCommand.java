@@ -19,6 +19,7 @@ public class ChunkyCommand {
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children;
+    private String chatName;
 
     public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor) {
         this(name, aliases, description, helpLines, executor, null);
@@ -44,6 +45,14 @@ public class ChunkyCommand {
             this.fullName  = currentParent.getName() + "." + this.fullName;
             currentParent = currentParent.getParent();
         }
+
+        String[] splitName = this.fullName.split(".");
+        String chatName = "/";
+        for (int i = 0; i < splitName.length; i++) {
+            Logging.debug(splitName[i]);
+            if (i != 0) chatName += " ";
+            chatName += splitName[i];
+        }
     }
 
     public final String getName() {
@@ -55,13 +64,6 @@ public class ChunkyCommand {
     }
 
     public final String getChatName() {
-        String[] splitName = getFullName().split(".");
-        Logging.debug(getFullName());
-        String chatName = "/";
-        for (int i = 0; i < splitName.length; i++) {
-            if (i != 0) chatName += " ";
-            chatName += splitName[i];
-        }
         return chatName;
     }
 
