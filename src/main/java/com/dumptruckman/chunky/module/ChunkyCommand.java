@@ -1,7 +1,6 @@
 package com.dumptruckman.chunky.module;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -67,9 +66,9 @@ public class ChunkyCommand {
         return parent;
     }
 
-    public final HashSet<ChunkyCommand> getChildren() {
+    public final HashMap<String, ChunkyCommand> getChildren() {
         @SuppressWarnings("unchecked")
-        HashSet<ChunkyCommand> children = (HashSet<ChunkyCommand>)this.children.clone();
+        HashMap<String, ChunkyCommand> children = (HashMap<String, ChunkyCommand>)this.children.clone();
         return children;
     }
 
