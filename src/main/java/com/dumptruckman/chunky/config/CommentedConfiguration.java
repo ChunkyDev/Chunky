@@ -115,7 +115,7 @@ public class CommentedConfiguration extends Configuration {
                 }
                 if (comment != null) {
                     // Add the comment to the beginning of the current line
-                    if (!comment.isEmpty() && !comment.equals(System.getProperty("line.separator"))) {
+                    if (!comment.trim().matches("^\\s*$")) {
                         line = comment + System.getProperty("line.separator") + line;
                     }
                 }
