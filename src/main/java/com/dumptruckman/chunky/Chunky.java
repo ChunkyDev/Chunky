@@ -10,8 +10,8 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
-import com.dumptruckman.chunky.plugin.ChunkyModuleManager;
-import com.dumptruckman.chunky.plugin.SimpleChunkyModuleManager;
+import com.dumptruckman.chunky.module.ChunkyModuleManager;
+import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -34,7 +34,7 @@ public class Chunky extends JavaPlugin {
     final private ServerEvents serverEvents = new ServerEvents();
 
     final public void onDisable() {
-        // Save the plugin data
+        // Save the module data
 
         DatabaseManager.closeDB();
 
@@ -97,9 +97,9 @@ public class Chunky extends JavaPlugin {
     }
 
     /**
-     * Gets the instance of this plugin.
+     * Gets the instance of this module.
      *
-     * @return The instance of this plugin
+     * @return The instance of this module
      */
     public static Chunky getInstance() {
         return INSTANCE;

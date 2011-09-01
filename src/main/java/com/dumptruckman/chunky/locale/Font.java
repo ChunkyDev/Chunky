@@ -20,7 +20,7 @@ public class Font {
         /*
          * Widths is in pixels
          * Got them from fontWidths.txt uploaded to the Bukkit forum by Edward Hand
-         * http://forums.bukkit.org/threads/formatting-plugin-output-text-into-columns.8481/
+         * http://forums.bukkit.org/threads/formatting-module-output-text-into-columns.8481/
          */
         fontWidth.clear();
         fontWidth.put(" ",4);

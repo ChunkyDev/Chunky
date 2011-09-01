@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.plugin;
+package com.dumptruckman.chunky.module;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.ChunkyEvent;

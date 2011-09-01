@@ -189,7 +189,7 @@ public class Methods {
     }
 
     /**
-     * Verify is a plugin is disabled, only does this if we there is an existing payment
+     * Verify is a module is disabled, only does this if we there is an existing payment
      * method initialized in Register.
      *
      * @param method Plugin data from bukkit, Internal Class file.

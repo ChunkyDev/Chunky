@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.plugin;
+package com.dumptruckman.chunky.module;
 
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
@@ -36,7 +36,7 @@ public class RegisteredChunkyListener {
     }
 
     /**
-     * Gets the plugin for this registration
+     * Gets the module for this registration
      * @return Registered Plugin
      */
     public Plugin getPlugin() {

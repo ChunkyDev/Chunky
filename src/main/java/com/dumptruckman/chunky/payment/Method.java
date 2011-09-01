@@ -17,7 +17,7 @@ public interface Method {
      *
      * <pre>
      *  if(method.getName().equalsIgnoreCase("iConomy"))
-     *   iConomy plugin = ((iConomy)method.getPlugin());</pre>
+     *   iConomy module = ((iConomy)method.getPlugin());</pre>
      * 
      * @return <code>Object</code>
      * @see #getName()
@@ -100,7 +100,7 @@ public interface Method {
     public MethodBankAccount getBankAccount(String bank, String name);
 
     /**
-     * Checks to verify the compatibility between this Method and a plugin.
+     * Checks to verify the compatibility between this Method and a module.
      * Internal usage only, for the most part.
      *
      * @param plugin Plugin

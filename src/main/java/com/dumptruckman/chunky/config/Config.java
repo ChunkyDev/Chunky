@@ -19,7 +19,7 @@ public class Config {
 
     /**
      * Loads the configuration data into memory and sets defaults
-     * @param plugin Your plugin
+     * @param plugin Your module
      * @throws IOException
      */
     public static void load(Chunky plugin) throws IOException {
@@ -70,7 +70,7 @@ public class Config {
     }
 
     /**
-     * Retrieves the language file name for this plugin
+     * Retrieves the language file name for this module
      * @return Language file name
      */
     public static String getLanguageFileName() {

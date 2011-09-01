@@ -22,7 +22,7 @@ public class Language {
 
     /**
      * Loads the language data into memory and sets defaults
-     * @param plugin Your plugin
+     * @param plugin Your module
      * @throws java.io.IOException
      */
     public static void load(Chunky plugin) throws IOException {

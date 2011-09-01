@@ -5,7 +5,7 @@ package com.dumptruckman.chunky.config;
  */
 public enum ConfigPath {
     LANGUAGE("settings.language_file", "english.yml", "# This is the language file you wish to use."),
-    DATA_SAVE_PERIOD("settings.data.save_every", 30, "# This is often plugin data is written to the disk."),
+    DATA_SAVE_PERIOD("settings.data.save_every", 30, "# This is often module data is written to the disk."),
     USING_MYSQL("settings.mysql.using_mysql", true, "# True for MySQL, flat-files otherwise."),
     MYSQL_USERNAME("settings.mysql.username","root","# Username for MySQL database."),
     MYSQL_PASSWORD("settings.mysql.password","password","# Password for MySQL database."),

@@ -20,7 +20,7 @@ public class ServerEvents extends ServerListener {
 
     @Override
     public void onPluginDisable(PluginDisableEvent event) {
-        // Check to see if the plugin thats being disabled is the one we are using
+        // Check to see if the module thats being disabled is the one we are using
         if (methods != null && methods.hasMethod()) {
             Boolean check = methods.checkDisabled(event.getPlugin());
 
