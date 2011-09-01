@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -126,6 +127,7 @@ public abstract class ChunkyObject {
         if (getOwnersOfType(type) != null) {
             if (getOwnersOfType(type).add(owner)) {
                 owner._addOwnable(this);
+                DatabaseManager.addOwnership(owner,this);
             } else {
                 // owner already exists TODO throw something?
             }
@@ -134,6 +136,7 @@ public abstract class ChunkyObject {
             owners.add(owner);
             owner._addOwnable(this);
             allOwners.put(type, owners);
+            DatabaseManager.addOwnership(owner,this);
         }
     }
 

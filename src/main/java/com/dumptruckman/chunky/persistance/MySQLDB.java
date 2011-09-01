@@ -9,7 +9,9 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
+import sun.security.util.Debug;
 
+import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -78,10 +80,11 @@ public class MySQLDB implements Database {
         ResultSet chunks = getChunks(chunkyPlayer);
         try {
             while(chunks.next()) {
-                ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("y"));
+                ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("World"),chunks.getInt("x"),chunks.getInt("z"));
                 ChunkyChunk chunk = new ChunkyChunk(coordinates);
+                chunk.addOwner(chunkyPlayer);
                 ChunkyManager.addChunk(chunk);
-                chunkyPlayer.addOwnable(chunk);
+
             }
         } catch (SQLException ignored) {
         }
@@ -92,12 +95,25 @@ public class MySQLDB implements Database {
         ResultSet rows = getPlayers();
         try {
             while(rows.next()) {
-                ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
+                ChunkyPlayer player = new ChunkyPlayer(rows.getString("name"));
                 addOwnedChunks(player);
+                ChunkyManager.addChunkyPlayer(player);
             }
         } catch (SQLException ignored) {
         }
         Logging.info("Loaded data from MySQL tables.");
+    }
+
+    public void addChunk(ChunkyChunk chunky) {
+        try {
+            db.query(QueryGen.getAddChunk(chunky));
+        } catch (Exception ignored) {}
+    }
+
+    public void addPlayer(ChunkyPlayer player) {
+        try {
+            db.query(QueryGen.getAddPlayer(player));
+        } catch (Exception ignored) {}
     }
 
     private ResultSet getPlayers() {
@@ -117,6 +133,7 @@ public class MySQLDB implements Database {
             String query = QueryGen.getOwned(owner, ownableType);
             return db.query(query);
         } catch (Exception e) {
+            Logging.debug(e.getMessage());
             return null;
         }
     }

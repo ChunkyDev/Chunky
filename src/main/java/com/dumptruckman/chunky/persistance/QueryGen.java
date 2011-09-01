@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 public class QueryGen {
 
@@ -14,7 +15,7 @@ public class QueryGen {
             String.format("SELECT * FROM chunky_%s WHERE Hash IN " +
             "(SELECT OwnableHash from chunky_ownership " +
             "where OwnerHash = %s " +
-            "&& OwnableType = '%s' && OwnerType = %s)",DatabaseManager.getTypeName(ownableType),owner.hashCode(),ownableType,owner.getType());
+            "&& OwnableType = %s && OwnerType = %s)",DatabaseManager.getTypeName(ownableType),owner.hashCode(),ownableType,owner.getType());
     }
 
     public static String getCreateTypeTable() {
@@ -48,6 +49,7 @@ public class QueryGen {
             "CREATE TABLE chunky_ChunkyChunk (" +
             "Hash INT NOT NULL," +
             "Name VARCHAR(50) NOT NULL," +
+            "World VARCHAR(50) NOT NULL," +
             "x INT NOT NULL," +
             "z INT NOT NULL," +
             "PRIMARY KEY (Hash) )";
@@ -72,11 +74,29 @@ public class QueryGen {
     }
 
     public static String getAddType(int hash, String name) {
-        return String.format("INSERT OR REPLACE INTO chunky_types (Hash, Name) VALUES (%s, '%s')",hash, name);
+        return String.format("INSERT INTO chunky_types (Hash, Name) VALUES (%s, '%s')",hash, name);
     }
 
     public static String getGetType(int Hash) {
         return String.format("SELECT name FROM chunky_types where Hash = %s",Hash);
     }
 
+    public static String getAddChunk(ChunkyChunk chunk) {
+        return String.format("INSERT INTO chunky_ChunkyChunk (" +
+            "Hash, " +
+            "Name, " +
+            "World, " +
+            "x, " +
+            "z) " +
+            "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), chunk.getName(), chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+    }
+
+    public static String getAddPlayer(ChunkyPlayer player) {
+        return
+            String.format("INSERT INTO chunky_ChunkyPlayer (" +
+            "Hash, " +
+            "Name) " +
+            "VALUES (%s,'%s')",player.hashCode(), player.getName());
+
+    }
 }

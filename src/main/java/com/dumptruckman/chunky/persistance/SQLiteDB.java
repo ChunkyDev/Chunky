@@ -67,7 +67,7 @@ public class SQLiteDB implements Database {
         ResultSet chunks = getOwned(chunkyPlayer, ChunkyChunk.class.hashCode());
         try {
             while(chunks.next()) {
-                ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("y"));
+                ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("z"));
                 ChunkyChunk chunk = new ChunkyChunk(coordinates);
                 ChunkyManager.addChunk(chunk);
                 chunkyPlayer.addOwnable(chunk);
@@ -87,6 +87,14 @@ public class SQLiteDB implements Database {
         } catch (SQLException ignored) {
         }
         Logging.info("Loaded data from SQLite tables.");
+    }
+
+    public void addChunk(ChunkyChunk chunky) {
+        db.query(QueryGen.getAddChunk(chunky));
+    }
+
+    public void addPlayer(ChunkyPlayer player) {
+        db.query(QueryGen.getAddPlayer(player));
     }
 
     private ResultSet getPlayers() {

@@ -26,6 +26,13 @@ public class ChunkyCoordinates {
         this.z = (int)(z/16)-1;
     }
 
+    public ChunkyCoordinates(String world, int x, int z)
+    {
+        this.world = world;
+        this.x = x;
+        this.z = z;
+    }
+
     public int getX() {
         return this.x;
     }

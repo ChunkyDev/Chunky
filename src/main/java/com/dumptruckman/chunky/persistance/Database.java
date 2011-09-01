@@ -1,6 +1,8 @@
 package com.dumptruckman.chunky.persistance;
 
+import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
 
@@ -26,7 +28,7 @@ public interface Database {
 
     public void loadData();
 
+    public void addChunk(ChunkyChunk chunky);
 
-
-
+    public void addPlayer(ChunkyPlayer player);
 }

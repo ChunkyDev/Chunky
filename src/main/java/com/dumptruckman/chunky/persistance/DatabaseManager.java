@@ -1,7 +1,9 @@
 package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,8 +65,15 @@ public class DatabaseManager {
         database.closeDB();
     }
 
-
     public static void loadData() {
         database.loadData();
+    }
+
+    public static void addChunk(ChunkyChunk chunk) {
+        database.addChunk(chunk);
+    }
+
+    public static void addPlayer(ChunkyPlayer player) {
+        database.addPlayer(player);
     }
 }
