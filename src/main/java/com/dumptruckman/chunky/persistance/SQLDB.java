@@ -65,6 +65,7 @@ public abstract class SQLDB implements Database {
 
     public ResultSet getOwned(ChunkyObject owner, int ownableType) {
         return query(QueryGen.getOwned(owner, ownableType));
+
     }
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {

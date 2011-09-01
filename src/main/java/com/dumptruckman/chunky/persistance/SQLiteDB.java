@@ -71,18 +71,6 @@ public class SQLiteDB extends SQLDB {
         return db.query(query);
     }
 
-    private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
-        ResultSet chunks = getOwned(chunkyPlayer, ChunkyChunk.class.hashCode());
-        try {
-            while(chunks.next()) {
-                ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("z"));
-                ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
-                chunk.setName(chunks.getString("Name"));
-                chunkyPlayer.addOwnable(chunk);
-            }
-        } catch (SQLException ignored) {
-        }
-    }
 
     public void closeDB() {
         this.db.close();
