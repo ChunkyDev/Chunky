@@ -51,27 +51,29 @@ public class MySQLDB implements Database {
         return true;
     }
 
-    private void checkTables() throws Exception {
+    private Boolean checkTables() throws Exception {
 
         if(!this.db.checkTable("chunky_types")) {
-            db.createTable(QueryGen.getCreateTypeTable());
+            if(!db.createTable(QueryGen.getCreateTypeTable())) return false;
             Logging.info("Created chunky_types table.");
         }
 
         if(!this.db.checkTable("chunky_ChunkyChunk")) {
-            db.createTable(QueryGen.getCreateChunkTable());
+            if(!db.createTable(QueryGen.getCreateChunkTable())) return false;
             Logging.info("Created chunky_ChunkyChunk table.");
         }
 
         if(!this.db.checkTable("chunky_ChunkyPlayer")) {
-            db.createTable(QueryGen.getCreatePlayerTable());
+            if(!db.createTable(QueryGen.getCreatePlayerTable())) return false;
             Logging.info("Created chunky_ChunkyPlayer table.");
         }
 
         if(!this.db.checkTable("chunky_ownership")) {
-            db.createTable(QueryGen.getCreateOwnerShipTable());
+            if(!db.createTable(QueryGen.getCreateOwnerShipTable())) return false;
             Logging.info("Created chunky_ownership table.");
         }
+
+        return true;
     }
 
     private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
