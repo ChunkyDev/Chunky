@@ -8,8 +8,8 @@ public enum LanguagePath {
     IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", ""),
     UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", ""),
     CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", ""),
-    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "This command contains the main functions of Chunky.", ""),
-    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "This command contains the main functions of Chunky.", ""),
+    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", ""),
+    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", ""),
     CMD_HELP ("command.help", "Help for command: %1", ""),
     CMD_LIST ("command.list", "Sub-command list for: %1", ""),
     ;

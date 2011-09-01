@@ -1,5 +1,7 @@
 package com.dumptruckman.chunky.module;
 
+import com.dumptruckman.chunky.util.Logging;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class ChunkyCommand {
 
     public final String getChatName() {
         String[] splitName = getFullName().split(".");
+        Logging.debug(getFullName());
         String chatName = "/";
         for (int i = 0; i < splitName.length; i++) {
             if (i != 0) chatName += " ";
