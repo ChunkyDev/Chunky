@@ -15,7 +15,7 @@ import java.sql.SQLException;
 /**
  * @author dumptruckman, SwearWord
  */
-public class SQLiteDB implements Database {
+public class SQLiteDB extends SQLDB {
 
     private SQLite db;
     private Chunky plugin;
@@ -64,6 +64,11 @@ public class SQLiteDB implements Database {
 
         return true;
 
+    }
+
+    @Override
+    public ResultSet query(String query) {
+        return db.query(query);
     }
 
     private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
