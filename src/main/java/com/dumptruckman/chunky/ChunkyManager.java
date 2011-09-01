@@ -41,13 +41,4 @@ public class ChunkyManager {
         return getChunk(new ChunkyCoordinates(location));
     }
 
-    public static void addChunk(ChunkyChunk chunk) {
-        CHUNKS.put(chunk.getCoord(),chunk);
-        Logging.debug("Loaded chunk: " + chunk.getCoord().getX() + ":" + chunk.getCoord().getZ());
-    }
-
-    public static void addChunkyPlayer(ChunkyPlayer chunkyPlayer) {
-        PLAYERS.put(chunkyPlayer.getName(), chunkyPlayer);
-    }
-
 }

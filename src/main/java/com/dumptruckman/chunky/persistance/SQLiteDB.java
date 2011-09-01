@@ -68,8 +68,7 @@ public class SQLiteDB implements Database {
         try {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("world"),chunks.getInt("x"),chunks.getInt("z"));
-                ChunkyChunk chunk = new ChunkyChunk(coordinates);
-                ChunkyManager.addChunk(chunk);
+                ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
                 chunkyPlayer.addOwnable(chunk);
             }
         } catch (SQLException ignored) {

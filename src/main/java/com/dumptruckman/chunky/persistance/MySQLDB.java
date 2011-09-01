@@ -81,9 +81,8 @@ public class MySQLDB implements Database {
         try {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("World"),chunks.getInt("x"),chunks.getInt("z"));
-                ChunkyChunk chunk = new ChunkyChunk(coordinates);
+                ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
                 chunk.addOwner(chunkyPlayer);
-                ChunkyManager.addChunk(chunk);
 
             }
         } catch (SQLException ignored) {
@@ -95,9 +94,8 @@ public class MySQLDB implements Database {
         ResultSet rows = getPlayers();
         try {
             while(rows.next()) {
-                ChunkyPlayer player = new ChunkyPlayer(rows.getString("name"));
+                ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
                 addOwnedChunks(player);
-                ChunkyManager.addChunkyPlayer(player);
             }
         } catch (SQLException ignored) {
         }

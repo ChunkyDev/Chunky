@@ -75,7 +75,7 @@ public abstract class DatabaseHandler {
 	 * @param severe - whether console output should appear as an error or warning.
 	 */
 	protected void writeError(String toWrite, boolean severe) {
-		if (toWrite != null) {
+		if (toWrite != null && !toWrite.contains("Duplicate")) {
 			if (severe) {
 				this.log.severe(this.PREFIX + this.DATABASE_PREFIX + toWrite);
 			} else {
