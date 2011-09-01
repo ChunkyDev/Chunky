@@ -2,8 +2,10 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.CommandChunky;
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.listeners.BlockEvents;
+import com.dumptruckman.chunky.listeners.ChunkyCommandEvents;
 import com.dumptruckman.chunky.listeners.PlayerEvents;
 import com.dumptruckman.chunky.listeners.ServerEvents;
 import com.dumptruckman.chunky.locale.Language;
@@ -35,6 +37,7 @@ public class Chunky extends JavaPlugin {
     final private PlayerEvents playerEvents = new PlayerEvents();
     final private BlockEvents blockEvents = new BlockEvents();
     final private ServerEvents serverEvents = new ServerEvents();
+    final private ChunkyCommandEvents chunkyCommandEvents = new ChunkyCommandEvents();
 
     final public void onDisable() {
         // Save the module data
@@ -91,7 +94,8 @@ public class Chunky extends JavaPlugin {
         DatabaseManager.loadData();
 
         // Register Events
-        registerEvents(pm);
+        registerBukkitEvents(pm);
+        registerChunkyEvents();
         // Register Commands
         registerCommands();
 
@@ -116,7 +120,7 @@ public class Chunky extends JavaPlugin {
         METHOD = method;
     }
 
-    final public void registerEvents(PluginManager pm) {
+    final public void registerBukkitEvents(PluginManager pm) {
         // Player events.
         pm.registerEvent(Event.Type.PLAYER_MOVE, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
@@ -129,6 +133,11 @@ public class Chunky extends JavaPlugin {
         // Server events
         pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverEvents, Event.Priority.Normal, this);
+    }
+
+    final public void registerChunkyEvents() {
+        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_HELP, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_LIST, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
     }
 
     final public void registerCommands() {

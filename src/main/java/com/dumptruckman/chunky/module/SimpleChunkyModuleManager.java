@@ -4,6 +4,8 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.event.CustomChunkyEventListener;
+import com.dumptruckman.chunky.event.command.ChunkyCommandEvent;
+import com.dumptruckman.chunky.event.command.ChunkyCommandListener;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.command.CommandSender;
@@ -93,6 +95,26 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         switch (type) {
 
             // TODO: MAKE EVENTS ACTUALLY WORK LOL
+
+            // Command Events
+            case COMMAND_PROCESS:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyCommandListener) listener).onCommandProcess((ChunkyCommandEvent) event);
+                    }
+                };
+            case COMMAND_HELP:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyCommandListener) listener).onCommandHelp((ChunkyCommandEvent) event);
+                    }
+                };
+            case COMMAND_LIST:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyCommandListener) listener).onCommandList((ChunkyCommandEvent) event);
+                    }
+                };
             
             // Custom Events
             case CUSTOM_EVENT:
@@ -171,33 +193,49 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     }
 
     public void parseCommand(CommandSender sender, String[] commands) {
-        ChunkyCommand chunkyCommand = Chunky.getModuleManager().getCommandByAlias(null, commands[0]);
+        ChunkyCommand chunkyCommand = getCommandByAlias(null, commands[0]);
         if (chunkyCommand == null) return;
 
         int i;
         for (i = 1; i < commands.length; i++) {
-            ChunkyCommand currentCommand = Chunky.getModuleManager().getCommandByAlias(chunkyCommand, commands[i]);
+            ChunkyCommand currentCommand = getCommandByAlias(chunkyCommand, commands[i]);
             if (currentCommand == null) {
                 break;
             }
             chunkyCommand = currentCommand;
         }
 
-        ArrayList<String> args = new ArrayList<String>();
+        ArrayList<String> argsList = new ArrayList<String>();
         if (commands.length > 1 && i < commands.length) {
             for (i = i; i < commands.length; i++) {
-                args.add(commands[i]);
+                argsList.add(commands[i]);
             }
         }
 
-        if (!args.isEmpty()) {
-            if (args.get(0).equalsIgnoreCase("help")) {
-                // TODO add Help event
+        String label = commands[i-1];
+        String[] args = argsList.toArray(new String[argsList.size()]);
+        if (!argsList.isEmpty()) {
+            if (argsList.get(0).equalsIgnoreCase("help")) {
+                ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_HELP, sender, chunkyCommand, label, args);
+                callEvent(event);
+                if (!event.isCancelled()) {
+                    // TODO add Help event
+                }
             }
-            if (args.get(0).equalsIgnoreCase("?")) {
-                // TODO add command list event
+            if (argsList.get(0).equalsIgnoreCase("?")) {
+                ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_LIST, sender, chunkyCommand, label, args);
+                callEvent(event);
+                if (!event.isCancelled()) {
+                    // TODO add command list event
+                }
             }
         }
-        chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, commands[i-1], args.toArray(new String[args.size()]));
+
+
+        ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
+        callEvent(event);
+        if (!event.isCancelled())  {
+            chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);
+        }
     }
 }

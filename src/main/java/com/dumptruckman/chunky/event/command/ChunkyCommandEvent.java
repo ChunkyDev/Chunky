@@ -1,7 +1,7 @@
 package com.dumptruckman.chunky.event.command;
 
 import com.dumptruckman.chunky.event.ChunkyEvent;
-import org.bukkit.command.Command;
+import com.dumptruckman.chunky.module.ChunkyCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
 
@@ -12,11 +12,11 @@ public class ChunkyCommandEvent extends ChunkyEvent implements Cancellable {
 
     private boolean cancel;
     private CommandSender sender;
-    private Command command;
+    private ChunkyCommand command;
     private String label;
     private String[] args;
     
-    public ChunkyCommandEvent(Type type, CommandSender sender, Command command, String label, String[] args) {
+    public ChunkyCommandEvent(Type type, CommandSender sender, ChunkyCommand command, String label, String[] args) {
         super (type);
 
         this.sender = sender;
@@ -49,7 +49,7 @@ public class ChunkyCommandEvent extends ChunkyEvent implements Cancellable {
         return sender;
     }
 
-    public Command getCommand() {
+    public ChunkyCommand getCommand() {
         return command;
     }
 

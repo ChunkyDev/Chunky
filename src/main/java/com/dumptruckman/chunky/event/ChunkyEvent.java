@@ -138,10 +138,11 @@ public class ChunkyEvent implements Serializable {
          */
 
         /**
-         * Represents the "chunky" command event
+         * Represents the command event
          */
-        COMMAND_CHUNKY (Category.COMMAND),
-        COMMAND_CHUNKY_CLAIM (Category.COMMAND),
+        COMMAND_PROCESS (Category.COMMAND),
+        COMMAND_HELP (Category.COMMAND),
+        COMMAND_LIST (Category.COMMAND),
 
         /**
          * MISCELLANEOUS EVENTS
