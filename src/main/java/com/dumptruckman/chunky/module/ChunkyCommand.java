@@ -47,7 +47,7 @@ public class ChunkyCommand {
         }
 
         String[] splitName = this.fullName.split(".");
-        String chatName = "/";
+        chatName = "/";
         for (int i = 0; i < splitName.length; i++) {
             Logging.debug(splitName[i]);
             if (i != 0) chatName += " ";
