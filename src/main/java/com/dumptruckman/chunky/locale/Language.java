@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class Language {
         for (LanguagePath path : LanguagePath.values()) {
             language.addComment(path.getPath(), path.getComments());
             if (language.getString(path.getPath()) == null) {
-                language.setProperty(path.getPath(), path.getDefault());
+                language.setProperty(path.getPath(), Arrays.asList(path.getDefault()));
             }
         }
     }

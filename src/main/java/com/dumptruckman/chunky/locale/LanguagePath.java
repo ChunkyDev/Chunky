@@ -4,14 +4,14 @@ package com.dumptruckman.chunky.locale;
  * @author dumptruckman, SwearWord
  */
 public enum LanguagePath {
-    NO_COMMAND_PERMISSION ("no_cmd_permission", "You do not have permission to access this command!", ""),
-    IN_GAME_ONLY ("in_game_only", "Only in game players may use this feature!", ""),
-    UNREGISTERED_CHUNK_NAME("unregistered_chunk_name", "Wilderness", ""),
-    CMD_CHUNKY_HELP ("cmd_chunky_help", "This command contains the main functions of Chunky.", ""),
-    CMD_CHUNKY_CLAIM_DESC ("cmd_chunky_claim_desc", "This command contains the main functions of Chunky.", ""),
-    CMD_CHUNKY_CLAIM_HELP ("cmd_chunky_claim_help", "This command contains the main functions of Chunky.", ""),
-    CMD_HELP ("cmd_help", "Help for command: %1", ""),
-    CMD_LIST ("cmd_list", "Sub-command list for: %1", ""),
+    NO_COMMAND_PERMISSION ("command.no_permission", "You do not have permission to access this command!", ""),
+    IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", ""),
+    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", ""),
+    CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", ""),
+    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "This command contains the main functions of Chunky.", ""),
+    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "This command contains the main functions of Chunky.", ""),
+    CMD_HELP ("command.help", "Help for command: %1", ""),
+    CMD_LIST ("command.list", "Sub-command list for: %1", ""),
     ;
 
     private String path;

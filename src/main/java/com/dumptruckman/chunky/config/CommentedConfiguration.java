@@ -115,7 +115,9 @@ public class CommentedConfiguration extends Configuration {
                 }
                 if (comment != null) {
                     // Add the comment to the beginning of the current line
-                    line = comment + System.getProperty("line.separator") + line;
+                    if (!comment.isEmpty()) {
+                        line = comment + System.getProperty("line.separator") + line;
+                    }
                 }
                 if (comment != null || (line.length() > 1 && line.charAt(line.length() - 1) == ':')) {
                     // Add the (modified) line to the total config String
