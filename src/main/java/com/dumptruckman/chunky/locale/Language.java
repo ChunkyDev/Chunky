@@ -5,6 +5,7 @@ import com.dumptruckman.chunky.config.CommentedConfiguration;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -39,7 +40,7 @@ public class Language {
         }
 
         // Load the language file into memory
-        language = new CommentedConfiguration(new File(plugin.getDataFolder(), "english.yml"));
+        language = new CommentedConfiguration(languageFile);
         language.load();
 
         // Sets defaults language values
@@ -59,6 +60,7 @@ public class Language {
                 language.setProperty(path.getPath(), Arrays.asList(path.getDefault()));
             }
         }
+        language.setHeader("# Please don't use colons in your strings! :) Enjoy the irony.");
     }
 
     private static String formatString(String string, Object...args) {
@@ -88,6 +90,10 @@ public class Language {
         List<Object> list = language.getList(path.getPath());
 
         List<String> message = new ArrayList<String>();
+        if (list == null) {
+            Logging.warning("Missing language for: " + path.getPath());
+            return message;
+        }
         // Parse each item in list
         for (int i = 0; i < list.size(); i++) {
             String temp = formatString(list.get(i).toString(), args);
@@ -104,6 +110,10 @@ public class Language {
 
     public static String getString(LanguagePath path, Object...args) {
         List<Object> list = language.getList(path.getPath());
+        if (list == null) {
+            Logging.warning("Missing language for: " + path.getPath());
+            return "";
+        }
         if (list.isEmpty()) return "";
         return (formatString(list.get(0).toString(), args));
     }
