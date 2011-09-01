@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.module;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.command.ChunkyCommand;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.event.CustomChunkyEventListener;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
     private Chunky plugin;
+    private ChunkyCommand registeredCommands;
     private final Map<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>> listeners = new EnumMap<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>>(ChunkyEvent.Type.class);
     private final Comparator<RegisteredChunkyListener> comparer = new Comparator<RegisteredChunkyListener>() {
         public int compare(RegisteredChunkyListener i, RegisteredChunkyListener j) {
@@ -98,5 +100,9 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         }
 
         throw new IllegalArgumentException("Event " + type + " is not supported");
+    }
+
+    public void registerCommand(ChunkyCommand command) {
+        
     }
 }

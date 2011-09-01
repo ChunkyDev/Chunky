@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.module;
 
+import com.dumptruckman.chunky.command.ChunkyCommand;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import org.bukkit.plugin.Plugin;
@@ -27,4 +28,5 @@ public interface ChunkyModuleManager {
     public void registerEvent(ChunkyEvent.Type type, ChunkyListener listener,
                               ChunkyEvent.Priority priority, Plugin plugin);
 
+    public void registerCommand(ChunkyCommand command);
 }
