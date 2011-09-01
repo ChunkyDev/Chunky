@@ -84,55 +84,6 @@ public class SQLiteDB extends SQLDB {
         }
     }
 
-    public void loadData() {
-        Logging.info("Reading SQLite tables.");
-        ResultSet rows = getPlayers();
-        try {
-            while(rows.next()) {
-                ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
-                addOwnedChunks(player);
-            }
-        } catch (SQLException ignored) {
-        }
-        Logging.info("Loaded data from SQLite tables.");
-    }
-
-    public void updateChunk(ChunkyChunk chunky) {
-        db.query(QueryGen.getUpdateChunk(chunky));
-    }
-
-    public void addPlayer(ChunkyPlayer player) {
-        db.query(QueryGen.getAddPlayer(player));
-    }
-
-    private ResultSet getPlayers() {
-        return db.query(QueryGen.getAllPlayers());
-    }
-
-
-    public ResultSet getOwned(ChunkyObject owner, int ownableType) {
-        String query = QueryGen.getOwned(owner, ownableType);
-        return db.query(query);
-    }
-
-
-    public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        db.query(QueryGen.getAddOwnership(owner, ownable));
-        Logging.debug("Executed: " + QueryGen.getAddOwnership(owner, ownable));
-    }
-
-    public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        db.query(QueryGen.getRemoveOwnership(owner,ownable));
-    }
-
-    public void addType(int hash, String name) {
-        db.query(QueryGen.getAddType(hash,name));
-    }
-
-    public ResultSet getTypeName(int Hash) {
-        return db.query(QueryGen.getGetType(Hash));
-    }
-
     public void closeDB() {
         this.db.close();
     }
