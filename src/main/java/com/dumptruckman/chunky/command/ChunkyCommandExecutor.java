@@ -79,7 +79,6 @@ public class ChunkyCommandExecutor implements CommandExecutor {
                 chunkyChunk = ChunkyManager.getChunk(location);
                 chunkyChunk.addOwner(chunkyPlayer);
                 chunkyChunk.setName("~" + chunkyPlayer.getName());
-                DatabaseManager.updateChunk(chunkyChunk);
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             } else {
                 // TODO chunk limit reached

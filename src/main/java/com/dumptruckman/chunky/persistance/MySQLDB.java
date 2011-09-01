@@ -103,12 +103,6 @@ public class MySQLDB implements Database {
         Logging.info("Loaded data from MySQL tables.");
     }
 
-    public void addChunk(ChunkyChunk chunky) {
-        try {
-            db.query(QueryGen.getAddChunk(chunky));
-        } catch (Exception ignored) {}
-    }
-
     public void updateChunk(ChunkyChunk chunky) {
         try {
             db.query(QueryGen.getUpdateChunk(chunky));
@@ -120,11 +114,6 @@ public class MySQLDB implements Database {
             db.query(QueryGen.getAddPlayer(player));
         } catch (Exception ignored) {}
     }
-
-    public void updateChunk() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
 
     private ResultSet getPlayers() {
         try {

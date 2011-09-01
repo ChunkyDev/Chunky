@@ -88,10 +88,6 @@ public class SQLiteDB implements Database {
         Logging.info("Loaded data from SQLite tables.");
     }
 
-    public void addChunk(ChunkyChunk chunky) {
-        db.query(QueryGen.getAddChunk(chunky));
-    }
-
     public void updateChunk(ChunkyChunk chunky) {
         db.query(QueryGen.getUpdateChunk(chunky));
     }

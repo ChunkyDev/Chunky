@@ -1,5 +1,7 @@
 package com.dumptruckman.chunky.object;
 
+import com.dumptruckman.chunky.persistance.DatabaseManager;
+
 import java.util.HashSet;
 
 /**
@@ -20,6 +22,12 @@ public class ChunkyChunk extends ChunkyObject {
 
     public ChunkyCoordinates getCoord() {
         return coord;
+    }
+
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        DatabaseManager.updateChunk(this);
     }
 
     public int hashCode() {
