@@ -91,6 +91,8 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         switch (type) {
 
+            // TODO: MAKE EVENTS ACTUALLY WORK LOL
+            
             // Custom Events
             case CUSTOM_EVENT:
                 return new ChunkyEventExecutor() {
@@ -103,16 +105,46 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         throw new IllegalArgumentException("Event " + type + " is not supported");
     }
 
-    public void registerCommand(ChunkyCommand command) throws ChunkyUnregisteredException {
+    /**
+     * Registers a command with Chunky
+     *
+     * @param command Command to register
+     * @return True if the command has not already been registered
+     * @throws ChunkyUnregisteredException if the parent command has not been registered
+     */
+    public boolean registerCommand(ChunkyCommand command) throws ChunkyUnregisteredException {
         if (command.getParent() == null) {
-            registeredCommands.put(command.getFullName(), command);
+            if (!registeredCommands.containsKey(command.getFullName())) {
+                registeredCommands.put(command.getFullName(), command);
+                return true;
+            }
+            return false;
         } else {
             ChunkyCommand parentCommand = registeredCommands.get(command.getParent().getFullName());
             if (parentCommand != null) {
-                parentCommand.addChild(command);
+                return parentCommand.addChild(command);
             } else {
                 throw new ChunkyUnregisteredException("Parent command not registered!");
             }
         }
+    }
+
+    public ChunkyCommand getCommandByName(String fullName) {
+        String[] commands = fullName.split(".");
+        String currentName = commands[0];
+        ChunkyCommand currentCommand = registeredCommands.get(commands[0]);
+        for (int i = 0; i < commands.length; i++) {
+            if (currentCommand == null) break;
+            
+            if (i != 0) {
+                currentName += "." + commands[i];
+                currentCommand = currentCommand.getChild(currentName);
+            }
+        }
+        return currentCommand;
+    }
+
+    public boolean isCommandRegistered(String fullName) {
+        return getCommandByName(fullName) != null;
     }
 }

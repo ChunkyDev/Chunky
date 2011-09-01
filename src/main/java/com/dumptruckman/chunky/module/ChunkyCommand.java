@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.module;
 
 import org.bukkit.command.CommandExecutor;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ChunkyCommand {
     private CommandExecutor executor;
 
     private String fullName;
-    private HashSet<ChunkyCommand> children;
+    private HashMap<String, ChunkyCommand> children;
 
     public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, CommandExecutor executor) {
         this(name, aliases, description, helpLines, executor, null);
@@ -31,7 +32,7 @@ public class ChunkyCommand {
         this.helpLines = helpLines;
         this.parent = parentCommand;
         this.executor = executor;
-        this.children = new HashSet<ChunkyCommand>();
+        this.children = new HashMap<String, ChunkyCommand>();
         this.fullName = name;
         ChunkyCommand currentParent = parentCommand;
         while (true) {
@@ -75,8 +76,16 @@ public class ChunkyCommand {
         return executor;
     }
 
-    protected final void addChild(ChunkyCommand child) {
-        children.add(child);
+    protected final boolean addChild(ChunkyCommand child) {
+        if (!children.containsKey(child.getFullName())) {
+            children.put(child.getFullName(), child);
+            return true;
+        }
+        return false;
+    }
+
+    public final ChunkyCommand getChild(String fullName) {
+        return children.get(fullName);
     }
 
     public boolean equals(Object o) {

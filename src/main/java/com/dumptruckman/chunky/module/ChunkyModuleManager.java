@@ -28,5 +28,16 @@ public interface ChunkyModuleManager {
     public void registerEvent(ChunkyEvent.Type type, ChunkyListener listener,
                               ChunkyEvent.Priority priority, Plugin plugin);
 
-    public void registerCommand(ChunkyCommand command) throws ChunkyUnregisteredException;
+    /**
+     * Registers a command with Chunky
+     *
+     * @param command Command to register
+     * @return True if the command has not already been registered
+     * @throws ChunkyUnregisteredException if the parent command has not been registered
+     */
+    public boolean registerCommand(ChunkyCommand command) throws ChunkyUnregisteredException;
+
+    public ChunkyCommand getCommandByName(String fullName);
+
+    public boolean isCommandRegistered(String fullName);
 }
