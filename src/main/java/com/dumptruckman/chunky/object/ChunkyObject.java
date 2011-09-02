@@ -1,7 +1,9 @@
 package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.event.object.ChunkyObjectOwnershipEvent;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
@@ -69,6 +71,9 @@ public abstract class ChunkyObject {
      * @param ownable Object that will become owned by this object.
      */
     final public void addOwnable(ChunkyObject ownable) {
+        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_ADD_OWNER, this, ownable);
+        Chunky.getModuleManager().callEvent(event);
+        if (event.isCancelled()) return;
         int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             if (getOwnablesOfType(type).add(ownable)) {
@@ -89,6 +94,9 @@ public abstract class ChunkyObject {
      * @param ownable Object that will cease to be owned by this object.
      */
     final public void removeOwnable(ChunkyObject ownable) {
+        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_REMOVE_OWNER, this, ownable);
+        Chunky.getModuleManager().callEvent(event);
+        if (event.isCancelled()) return;
         int type = ownable.getType();
         if (getOwnablesOfType(type) != null) {
             if (getOwnablesOfType(type).remove(ownable)) {
@@ -123,6 +131,9 @@ public abstract class ChunkyObject {
      * @param owner Object that will own this object.
      */
     final public void addOwner(ChunkyObject owner) {
+        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_ADD_OWNER, owner, this);
+        Chunky.getModuleManager().callEvent(event);
+        if (event.isCancelled()) return;
         int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             if (getOwnersOfType(type).add(owner)) {
@@ -145,6 +156,9 @@ public abstract class ChunkyObject {
      * @param owner Object that will no longer own this object.
      */
     final public void removeOwner(ChunkyObject owner) {
+        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_REMOVE_OWNER, owner, this);
+        Chunky.getModuleManager().callEvent(event);
+        if (event.isCancelled()) return;
         int type = owner.getType();
         if (getOwnersOfType(type) != null) {
             if (getOwnersOfType(type).remove(owner)) {
