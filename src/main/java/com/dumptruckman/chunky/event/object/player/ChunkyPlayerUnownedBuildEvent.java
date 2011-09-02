@@ -5,21 +5,15 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 
-public class ChunkyPlayerUnownedBuildEvent extends ChunkyPlayerEvent implements Cancellable{
+public class ChunkyPlayerUnownedBuildEvent extends ChunkyPlayerChunkEvent implements Cancellable{
 
-    private ChunkyChunk chunkyChunk;
     private Block block;
-    private boolean cancel = true;
+    private boolean cancel = false;
 
 
     public ChunkyPlayerUnownedBuildEvent(final ChunkyPlayer chunkyPlayer, final ChunkyChunk chunkyChunk, final Block block) {
-        super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer);
-        this.chunkyChunk = chunkyChunk;
+        super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer, chunkyChunk);
         this.block = block;
-    }
-
-    public ChunkyChunk getChunkyChunk() {
-        return this.chunkyChunk;
     }
 
     public Block getBlock() {

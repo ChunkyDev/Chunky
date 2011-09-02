@@ -5,18 +5,21 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 
-public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements Cancellable{
+/**
+ * @author dumptruckman, SwearWord
+ */
+public class ChunkyPlayerSwitchEvent extends ChunkyPlayerChunkEvent implements Cancellable {
 
-    private ItemStack itemUsed;
+    private ItemStack item;
     private boolean cancel = false;
 
-    public ChunkyPlayerItemUseEvent(final ChunkyPlayer chunkyPlayer, final ChunkyChunk chunkyChunk, final ItemStack itemUsed) {
-        super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer, chunkyChunk);
-        this.itemUsed= itemUsed;
+    public ChunkyPlayerSwitchEvent(Type type, ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack item) {
+        super(type, chunkyPlayer, chunkyChunk);
+        this.item = item;
     }
 
-    public ItemStack getItemUsed() {
-        return this.itemUsed;
+    public final ItemStack getItem() {
+        return item;
     }
 
     public boolean isCancelled() {
@@ -27,4 +30,3 @@ public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements 
         cancel = b;
     }
 }
-
