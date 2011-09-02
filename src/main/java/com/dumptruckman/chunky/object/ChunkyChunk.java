@@ -22,12 +22,6 @@ public class ChunkyChunk extends ChunkyObject {
         return coord;
     }
 
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-        DatabaseManager.updateChunk(this);
-    }
-
     public int hashCode() {
         return (getType() + ":" + getCoord().toString()).hashCode();
     }
