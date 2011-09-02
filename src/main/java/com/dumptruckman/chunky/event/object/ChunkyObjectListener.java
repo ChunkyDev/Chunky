@@ -10,4 +10,8 @@ public class ChunkyObjectListener implements ChunkyListener {
     public ChunkyObjectListener() {}
 
     public void onObjectNameChange(ChunkyObjectNameEvent event) {}
+
+    public void onObjectAddOwner(ChunkyObjectOwnershipEvent event) {}
+
+    public void onObjectRemoveOwner(ChunkyObjectOwnershipEvent event) {}
 }
