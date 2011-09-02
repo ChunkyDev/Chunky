@@ -6,6 +6,12 @@ import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.event.CustomChunkyEventListener;
 import com.dumptruckman.chunky.event.command.ChunkyCommandEvent;
 import com.dumptruckman.chunky.event.command.ChunkyCommandListener;
+import com.dumptruckman.chunky.event.object.ChunkyObjectListener;
+import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerListener;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBreakEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBuildEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.command.CommandSender;
@@ -94,7 +100,33 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         switch (type) {
 
-            // TODO: MAKE EVENTS ACTUALLY WORK LOL
+            // Object Events
+            case OBJECT_NAME:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyObjectListener) listener).onObjectNameChange((ChunkyObjectNameEvent) event);
+                    }
+                };
+
+            // Player Events
+            case PLAYER_UNOWNED_BUILD:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerUnownedBuild((ChunkyPlayerUnownedBuildEvent) event);
+                    }
+                };
+            case PLAYER_UNOWNED_BREAK:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerUnownedBreak((ChunkyPlayerUnownedBreakEvent) event);
+                    }
+                };
+            case PLAYER_CHUNK_CHANGE:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerChunkChange((ChunkyPlayerChunkChangeEvent) event);
+                    }
+                };
 
             // Command Events
             case COMMAND_PROCESS:

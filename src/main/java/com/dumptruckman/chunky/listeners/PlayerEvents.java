@@ -2,7 +2,7 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.event.player.ChunkyPlayerChunkChangeEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
