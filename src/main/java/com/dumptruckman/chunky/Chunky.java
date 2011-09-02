@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.CommandChunky;
+import com.dumptruckman.chunky.command.CommandChunkyClaim;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
@@ -149,7 +150,7 @@ public class Chunky extends JavaPlugin {
             ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
                     Language.getString(LanguagePath.CMD_CHUNKY_CLAIM_DESC),
                     Language.getStrings(LanguagePath.CMD_CHUNKY_CLAIM_HELP),
-                    new CommandChunky(), commandChunky);
+                    new CommandChunkyClaim(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
         } catch (ChunkyUnregisteredException ignore) {}
     }
