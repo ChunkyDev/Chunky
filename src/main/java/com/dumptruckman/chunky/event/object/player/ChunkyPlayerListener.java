@@ -13,5 +13,9 @@ public class ChunkyPlayerListener extends ChunkyObjectListener {
 
     public void onPlayerUnownedBuild(ChunkyPlayerUnownedBuildEvent event) {}
 
+    public void onPlayerItemUse(ChunkyPlayerItemUseEvent event) {}
+
+    public void onPlayerSwitch(ChunkyPlayerSwitchEvent event) {}
+
     public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {}
 }

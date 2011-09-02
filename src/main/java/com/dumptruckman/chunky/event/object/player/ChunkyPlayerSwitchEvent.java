@@ -13,8 +13,8 @@ public class ChunkyPlayerSwitchEvent extends ChunkyPlayerChunkEvent implements C
     private ItemStack item;
     private boolean cancel = false;
 
-    public ChunkyPlayerSwitchEvent(Type type, ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack item) {
-        super(type, chunkyPlayer, chunkyChunk);
+    public ChunkyPlayerSwitchEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack item) {
+        super(Type.PLAYER_SWITCH, chunkyPlayer, chunkyChunk);
         this.item = item;
     }
 

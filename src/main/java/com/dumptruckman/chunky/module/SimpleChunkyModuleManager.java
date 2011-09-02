@@ -8,10 +8,7 @@ import com.dumptruckman.chunky.event.command.ChunkyCommandEvent;
 import com.dumptruckman.chunky.event.command.ChunkyCommandListener;
 import com.dumptruckman.chunky.event.object.ChunkyObjectListener;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerListener;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBreakEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBuildEvent;
+import com.dumptruckman.chunky.event.object.player.*;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.command.CommandSender;
@@ -125,6 +122,20 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 return new ChunkyEventExecutor() {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
                         ((ChunkyPlayerListener) listener).onPlayerChunkChange((ChunkyPlayerChunkChangeEvent) event);
+                    }
+                };
+
+            case PLAYER_ITEM_USE:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerItemUse((ChunkyPlayerItemUseEvent) event);
+                    }
+                };
+
+            case PLAYER_SWITCH:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerSwitch((ChunkyPlayerSwitchEvent) event);
                     }
                 };
 
