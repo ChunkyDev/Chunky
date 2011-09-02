@@ -153,7 +153,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     }
 
     public ChunkyCommand getCommandByName(String fullName) {
-        String[] commands = fullName.split(".");
+        String[] commands = fullName.split("\\.");
         String currentName = commands[0];
         ChunkyCommand currentCommand = registeredCommands.get(commands[0]);
         for (int i = 0; i < commands.length; i++) {

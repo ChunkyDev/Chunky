@@ -44,16 +44,16 @@ public class ChunkyCommand {
             currentParent = currentParent.getParent();
         }
 
-        String[] splitName = this.fullName.split(".");
+        String[] splitName = this.fullName.split("\\.");
         chatName = "/";
-        if (splitName.length != 0) {
+        //if (splitName.length != 0) {
             for (int i = 0; i < splitName.length; i++) {
                 if (i != 0) chatName += " ";
                 chatName += splitName[i];
             }
-        } else {
-            chatName += this.fullName;
-        }
+        //} else {
+        //    chatName += this.fullName;
+        //}
     }
 
     public final String getName() {
