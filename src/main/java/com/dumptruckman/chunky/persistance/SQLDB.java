@@ -47,8 +47,8 @@ public abstract class SQLDB implements Database {
         Logging.info("Loaded data from tables.");
     }
 
-    public void updateChunk(ChunkyChunk chunky) {
-        query(QueryGen.getUpdateChunk(chunky));
+    public void updateChunk(ChunkyChunk chunky, String name) {
+        query(QueryGen.getUpdateChunk(chunky, name));
     }
 
     public void addPlayer(ChunkyPlayer player) {

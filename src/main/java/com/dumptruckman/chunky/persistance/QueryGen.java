@@ -81,14 +81,14 @@ public class QueryGen {
         return String.format("SELECT name FROM chunky_types where Hash = %s",Hash);
     }
 
-    public static String getUpdateChunk(ChunkyChunk chunk) {
+    public static String getUpdateChunk(ChunkyChunk chunk, String name) {
         return String.format("REPLACE INTO chunky_ChunkyChunk (" +
             "Hash, " +
             "Name, " +
             "World, " +
             "x, " +
             "z) " +
-            "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), chunk.getName(), chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+            "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
     }
 
     public static String getAddPlayer(ChunkyPlayer player) {

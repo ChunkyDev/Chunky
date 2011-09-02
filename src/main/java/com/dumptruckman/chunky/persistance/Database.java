@@ -28,7 +28,7 @@ public interface Database {
 
     public void loadData();
 
-    public void updateChunk(ChunkyChunk chunky);
+    public void updateChunk(ChunkyChunk chunky, String name);
 
     public void addPlayer(ChunkyPlayer player);
 }
