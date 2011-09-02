@@ -2,14 +2,17 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
+import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerItemUseEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerSwitchEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.module.ChunkyModuleManager;
 import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
+import com.dumptruckman.chunky.util.MinecraftTools;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
@@ -56,12 +59,21 @@ public class PlayerEvents extends PlayerListener{
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !event.isBlockInHand()) {
-            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-            ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
-            ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem());
-            Chunky.getModuleManager().callEvent(chunkyEvent);
-            event.setCancelled(chunkyEvent.isCancelled());
+        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if(MinecraftTools.isUsable(event.getItem().getTypeId())) {
+                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
+                ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem());
+                Chunky.getModuleManager().callEvent(chunkyEvent);
+                event.setCancelled(chunkyEvent.isCancelled());
+            }
+            if(MinecraftTools.isSwitchable(event.getClickedBlock().getTypeId())) {
+                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
+                ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock());
+                Chunky.getModuleManager().callEvent(chunkyEvent);
+                event.setCancelled(chunkyEvent.isCancelled());
+            }
         }
 
     }

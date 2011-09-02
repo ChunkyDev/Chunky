@@ -4,7 +4,9 @@ import com.dumptruckman.chunky.Chunky;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import static com.dumptruckman.chunky.config.ConfigPath.*;
@@ -16,6 +18,8 @@ public class Config {
 
     private static Chunky plugin;
     private static CommentedConfiguration config;
+    private static HashSet<String> SWITCHABLES;
+    private static HashSet<String> USABLES;
 
     /**
      * Loads the configuration data into memory and sets defaults
@@ -40,6 +44,8 @@ public class Config {
 
         // Sets defaults config values
         setDefaults();
+        SWITCHABLES = createHashSet(getString(SWITCH_IDS));
+        USABLES = createHashSet(getString(ITEM_USE_IDS));
 
         // Saves the configuration from memory to file
         config.save();
@@ -55,6 +61,12 @@ public class Config {
                 config.setProperty(path.getPath(), path.getDefault());
             }
         }
+    }
+
+    private static HashSet<String> createHashSet(String line) {
+        HashSet<String> ret = new HashSet<String>();
+        Collections.addAll(ret, line.split(","));
+        return ret;
     }
 
     private static Boolean getBoolean(ConfigPath path) {
@@ -112,6 +124,13 @@ public class Config {
 
     public static Integer getPlayerChunkLimitDefault() {
         return getInt(PLAYER_CHUNK_LIMIT);
+    }
+
+    public static HashSet<String> getSwitchables() {
+        return SWITCHABLES;
+    }
+    public static HashSet<String> getUsables() {
+        return USABLES;
     }
 
     public static HashMap<String,Integer> getCustomPlayerChunkLimits() {
