@@ -4,10 +4,7 @@ import com.dumptruckman.chunky.command.CommandChunky;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
-import com.dumptruckman.chunky.listeners.BlockEvents;
-import com.dumptruckman.chunky.listeners.ChunkyCommandEvents;
-import com.dumptruckman.chunky.listeners.PlayerEvents;
-import com.dumptruckman.chunky.listeners.ServerEvents;
+import com.dumptruckman.chunky.listeners.*;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.module.ChunkyCommand;
@@ -39,6 +36,7 @@ public class Chunky extends JavaPlugin {
     final private BlockEvents blockEvents = new BlockEvents();
     final private ServerEvents serverEvents = new ServerEvents();
     final private ChunkyCommandEvents chunkyCommandEvents = new ChunkyCommandEvents();
+    final private ChunkyObjectEvents chunkyObjectEvents = new ChunkyObjectEvents();
 
     final public void onDisable() {
         // Save the module data
@@ -139,6 +137,7 @@ public class Chunky extends JavaPlugin {
     final public void registerChunkyEvents() {
         getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_HELP, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
         getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_LIST, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.OBJECT_NAME, chunkyObjectEvents, ChunkyEvent.Priority.Monitor, this);
     }
 
     final public void registerCommands() {
