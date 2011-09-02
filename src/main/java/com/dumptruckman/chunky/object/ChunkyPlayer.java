@@ -9,18 +9,18 @@ import org.bukkit.entity.Player;
  */
 public class ChunkyPlayer extends ChunkyObject {
 
-    private ChunkyChunk lastChunk;
+    private ChunkyChunk currentChunk;
 
     public ChunkyPlayer(String name) {
         super(name);
     }
 
-    public void setLastChunk(ChunkyChunk chunk) {
-        this.lastChunk = chunk;
+    public void setCurrentChunk(ChunkyChunk chunk) {
+        this.currentChunk = chunk;
     }
 
-    public ChunkyChunk getLastChunk() {
-        return lastChunk;
+    public ChunkyChunk getCurrentChunk() {
+        return this.currentChunk;
     }
 
     public Player getPlayer() throws ChunkyPlayerOfflineException {
