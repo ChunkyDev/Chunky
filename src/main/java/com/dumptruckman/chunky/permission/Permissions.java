@@ -22,10 +22,10 @@ public enum Permissions {
     }
 
     public boolean hasPerm(Player player) {
-        return player.isOp() || player.hasPermission(node);
+        return player.hasPermission(node);
     }
 
     public static boolean hasPerm(Player player, String node) {
-        return player.isOp() || player.hasPermission(node);
+        return player.hasPermission(node);
     }
 }
