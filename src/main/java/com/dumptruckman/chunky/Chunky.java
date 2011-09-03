@@ -1,7 +1,6 @@
 package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.CommandChunky;
-import com.dumptruckman.chunky.command.CommandChunkyClaim;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
@@ -38,6 +37,7 @@ public class Chunky extends JavaPlugin {
     final private ServerEvents serverEvents = new ServerEvents();
     final private ChunkyCommandEvents chunkyCommandEvents = new ChunkyCommandEvents();
     final private ChunkyObjectEvents chunkyObjectEvents = new ChunkyObjectEvents();
+    final private ChunkyPlayerEvents chunkyPlayerEvents = new ChunkyPlayerEvents();
 
     final public void onDisable() {
         // Save the module data
@@ -136,9 +136,18 @@ public class Chunky extends JavaPlugin {
     }
 
     final public void registerChunkyEvents() {
+        // Command Events
         getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_HELP, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
         getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_LIST, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
+
+        //Object Events
         getModuleManager().registerEvent(ChunkyEvent.Type.OBJECT_NAME, chunkyObjectEvents, ChunkyEvent.Priority.Monitor, this);
+
+        //Player Events
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_UNOWNED_BUILD, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_UNOWNED_BREAK, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_ITEM_USE, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_SWITCH, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
     }
 
     final public void registerCommands() {
@@ -150,7 +159,7 @@ public class Chunky extends JavaPlugin {
             ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
                     Language.getString(LanguagePath.CMD_CHUNKY_CLAIM_DESC),
                     Language.getStrings(LanguagePath.CMD_CHUNKY_CLAIM_HELP),
-                    new CommandChunkyClaim(), commandChunky);
+                    new CommandChunky(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
         } catch (ChunkyUnregisteredException ignore) {}
     }

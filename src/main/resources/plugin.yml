@@ -6,3 +6,14 @@ author: dumptruckman, SwearWord
 commands:
   chunky:
     aliases: c
+
+permissions:
+    chunky.build_anywhere:
+        description: Allows building anywhere.
+        default: op
+    chunky.no_chunk_limit:
+        description: Allows building anywhere.
+        default: op
+    chunky.claim:
+        description: Allows players to claim chunks.
+        default: true

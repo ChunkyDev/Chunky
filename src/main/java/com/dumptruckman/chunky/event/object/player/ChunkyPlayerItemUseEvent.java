@@ -15,6 +15,9 @@ public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements 
         this.itemUsed= itemUsed;
     }
 
+    /**
+     * @return Returns the ItemStack that the player right clicked with.
+     */
     public ItemStack getItemUsed() {
         return this.itemUsed;
     }

@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.event.command.ChunkyCommandEvent;
 import com.dumptruckman.chunky.event.command.ChunkyCommandListener;
 import com.dumptruckman.chunky.event.object.ChunkyObjectListener;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.event.object.ChunkyObjectOwnershipEvent;
 import com.dumptruckman.chunky.event.object.player.*;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.util.Logging;
@@ -102,6 +103,18 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 return new ChunkyEventExecutor() {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
                         ((ChunkyObjectListener) listener).onObjectNameChange((ChunkyObjectNameEvent) event);
+                    }
+                };
+            case OBJECT_ADD_OWNER:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyObjectListener) listener).onObjectAddOwner((ChunkyObjectOwnershipEvent) event);
+                    }
+                };
+            case OBJECT_REMOVE_OWNER:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyObjectListener) listener).onObjectRemoveOwner((ChunkyObjectOwnershipEvent) event);
                     }
                 };
 
