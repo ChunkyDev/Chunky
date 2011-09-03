@@ -4,7 +4,6 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * @author dumptruckman, SwearWord
@@ -23,10 +22,22 @@ public class ChunkyPlayerSwitchEvent extends ChunkyPlayerChunkEvent implements C
         return this.switchedBlock;
     }
 
+    /**
+     * Gets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @return true if this event is cancelled
+     */
     public boolean isCancelled() {
         return cancel;
     }
 
+    /**
+     * Sets the cancellation state of this event. A cancelled event will not
+     * be executed in the server, but will still pass to other plugins
+     *
+     * @param b true if you wish to cancel this event
+     */
     public void setCancelled(boolean b) {
         cancel = b;
     }
