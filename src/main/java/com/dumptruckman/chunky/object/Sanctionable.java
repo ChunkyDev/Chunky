@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public interface ChunkyPermissible {
+public interface Sanctionable {
 
     public boolean hasBuildPermission(ChunkyObject chunkyObject);
 
