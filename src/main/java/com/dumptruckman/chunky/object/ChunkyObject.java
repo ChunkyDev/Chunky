@@ -6,13 +6,14 @@ import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import com.dumptruckman.chunky.event.object.ChunkyObjectOwnershipEvent;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.HashMap;
 import java.util.HashSet;
 
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject {
+public abstract class ChunkyObject extends DefaultMutableTreeNode {
 
     private String name;
     private int classHash;
