@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyChunk extends ChunkyObject implements Sanctionable {
+public class ChunkyChunk extends ChunkySanctionableObject {
 
     private ChunkyCoordinates coord;
 
@@ -27,20 +27,5 @@ public class ChunkyChunk extends ChunkyObject implements Sanctionable {
     public boolean equals(Object obj) {
         return obj != null && obj instanceof ChunkyChunk && ((ChunkyChunk) obj).getCoord().equals(this.getCoord());
     }
-
-    public boolean hasBuildPermission(ChunkyObject chunkyObject) {
-        return true; // TODO
-    }
-
-    public boolean hasDestroyPermission(ChunkyObject chunkyObject) {
-        return true; // TODO
-    }
-
-    public boolean hasItemPermission(ChunkyObject chunkyObject) {
-        return true; // TODO
-    }
-
-    public boolean hasSwitchPermission(ChunkyObject chunkyObject) {
-        return true; // TODO
-    }
+    
 }
