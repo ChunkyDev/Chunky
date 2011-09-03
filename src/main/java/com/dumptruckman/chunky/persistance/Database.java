@@ -24,6 +24,8 @@ public interface Database {
 
     public ResultSet getTypeName(int hash);
 
+    public ResultSet query(String query);
+
     public void closeDB();
 
     public void loadData();

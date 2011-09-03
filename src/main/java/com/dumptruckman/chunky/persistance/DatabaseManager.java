@@ -76,4 +76,9 @@ public class DatabaseManager {
     public static void updateChunk(ChunkyChunk chunkyChunk, String name) {
         database.updateChunk(chunkyChunk, name);
     }
+
+    public static ResultSet genericQuery(String query) {
+        return database.query(query);
+    }
+
 }
