@@ -1,53 +1,64 @@
 package com.dumptruckman.chunky.object;
 
-import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import java.util.Enumeration;
 
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyOwnershipNode implements MutableTreeNode {
+public class ChunkyOwnershipNode implements TreeNode {
 
     /**
-     * Adds <code>child</code> to the receiver at <code>index</code>.
-     * <code>child</code> will be messaged with <code>setParent</code>.
+     * Returns the child <code>TreeNode</code> at index
+     * <code>childIndex</code>.
      */
-    public void insert(MutableTreeNode child, int index) {
-
+    public TreeNode getChildAt(int childIndex) {
+        return null; //TODO
     }
 
     /**
-     * Removes the child at <code>index</code> from the receiver.
+     * Returns the number of children <code>TreeNode</code>s the receiver
+     * contains.
      */
-    public void remove(int index) {
-
+    public int getChildCount() {
+        return -1; // TODO
     }
 
     /**
-     * Removes <code>node</code> from the receiver. <code>setParent</code>
-     * will be messaged on <code>node</code>.
+     * Returns the parent <code>TreeNode</code> of the receiver.
      */
-    public void remove(MutableTreeNode node) {
+    public TreeNode getParent() {
+        return null; //TODO
+    }
 
+
+    /**
+     * Returns true if the receiver is a leaf.
+     */
+    public boolean isLeaf() {
+        return false; // TODO
     }
 
     /**
-     * Resets the user object of the receiver to <code>object</code>.
+     * Returns the children of the receiver as an <code>Enumeration</code>.
      */
-    public void setUserObject(Object object) {
-
+    public Enumeration children() {
+        return null; //TODO
     }
 
     /**
-     * Removes the receiver from its parent.
+     * Returns the index of <code>node</code> in the receivers children.
+     * If the receiver does not contain <code>node</code>, -1 will be
+     * returned.
      */
-    public void removeFromParent() {
-
+    public int getIndex(TreeNode node) {
+        return -1; // TODO
     }
 
     /**
-     * Sets the parent of the receiver to <code>newParent</code>.
+     * Returns true if the receiver allows children.
      */
-    public void setParent(MutableTreeNode newParent) {
-
+    public boolean getAllowsChildren() {
+        return false; // TODO
     }
 }
