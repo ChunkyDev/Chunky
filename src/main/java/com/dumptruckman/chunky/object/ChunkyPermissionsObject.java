@@ -3,9 +3,9 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkySanctionableObject extends ChunkyObject {
+public class ChunkyPermissionsObject extends ChunkyObject {
 
-    public ChunkySanctionableObject(String name) {
+    public ChunkyPermissionsObject(String name) {
         super(name);
     }
 
