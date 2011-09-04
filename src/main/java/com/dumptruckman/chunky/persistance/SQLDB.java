@@ -21,7 +21,7 @@ public abstract class SQLDB implements Database {
     public abstract ResultSet query(String query);
 
     private void addOwnedChunks(ChunkyPlayer chunkyPlayer) {
-        ResultSet chunks = getChunks(chunkyPlayer);
+        ResultSet chunks = getOwnedChunks(chunkyPlayer);
         try {
             while(chunks.next()) {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("World"),chunks.getInt("x"),chunks.getInt("z"));
@@ -29,6 +29,17 @@ public abstract class SQLDB implements Database {
                 chunk.setName(chunks.getString("Name"));
                 chunk.setOwner(chunkyPlayer, true);
 
+            }
+        } catch (SQLException ignored) {
+        }
+    }
+
+    private void addOwnedPlayers(ChunkyPlayer chunkyPlayer) {
+        ResultSet players = getOwnedChunks(chunkyPlayer);
+        try {
+            while(players.next()) {
+                ChunkyPlayer player = ChunkyManager.getChunkyPlayer(players.getString("name"));
+                player.setOwner(chunkyPlayer, true);
             }
         } catch (SQLException ignored) {
         }
@@ -59,8 +70,12 @@ public abstract class SQLDB implements Database {
         return query(QueryGen.getAllPlayers());
     }
 
-    private ResultSet getChunks(ChunkyPlayer chunkyPlayer) {
+    private ResultSet getOwnedChunks(ChunkyPlayer chunkyPlayer) {
         return getOwned(chunkyPlayer, ChunkyChunk.class.getName().hashCode());
+    }
+
+    private ResultSet getOwnedPlayers(ChunkyPlayer chunkyPlayer) {
+        return getOwned(chunkyPlayer, ChunkyPlayer.class.getName().hashCode());
     }
 
     public ResultSet getOwned(ChunkyObject owner, int ownableType) {
