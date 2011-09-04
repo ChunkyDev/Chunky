@@ -64,10 +64,10 @@ public abstract class ChunkyObject {
             throw new IllegalArgumentException();
 
         // If owner is a owned by the child, remove owner from tree first.
-        // ex. town.setOwner(Peasant) Peasent is removed from parent (Town).
+        // ex. town.setOwner(Peasant) Peasant is removed from parent (Town).
 
         if(this.isOwnedBy(o)) {
-            this.getOwner().removeOwnable(this);
+            this.getOwner().removeOwnableAndTakeChildren(this);
         }
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
@@ -90,20 +90,27 @@ public abstract class ChunkyObject {
     private boolean removeOwnable(ChunkyObject o) {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
         if(removed) {
-            // If a child is removed, parent reposesses all their objects.
-            // ex. If a child of a town is removed then their plots are owned by town.
-
-            HashMap<Integer, HashSet<ChunkyObject>> reposess = o.getOwnables();
-            o.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
-            for(Integer key : reposess.keySet()) {
-                for(ChunkyObject co : reposess.get(key)) {
-                    this.addOwnable(co);
-                }
-            }
-
+            o.setOwner(null);
             DatabaseManager.removeOwnership(this,o);
         }
         return removed;
+    }
+
+    private void removeOwnableAndTakeChildren(ChunkyObject o) {
+        if(removeOwnable(o)) takeChildren(o);
+    }
+
+    public void takeChildren(ChunkyObject o) {
+        // If a child is removed, parent reposesses all their objects.
+        // ex. If a child of a town is removed then their plots are owned by town.
+
+        HashMap<Integer, HashSet<ChunkyObject>> reposess = o.getOwnables();
+        o.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
+        for(Integer key : reposess.keySet()) {
+            for(ChunkyObject co : reposess.get(key)) {
+                this.addOwnable(co);
+            }
+        }
     }
 
     /**
@@ -142,7 +149,7 @@ public abstract class ChunkyObject {
 
     public void setOwner(ChunkyObject object) {
         //TODO IS THIS RIGHT?!?!
-        ChunkyObject oldowner= this.owner;
+        ChunkyObject oldowner = this.owner;
         if (owner != null)
             owner.removeOwnable(this);
         if (object != null) {
@@ -150,8 +157,8 @@ public abstract class ChunkyObject {
         } else {
             owner = null;
         }
-        if(oldowner.isOwnedBy(this))
-        {
+        if(oldowner != null) {
+
         }
 
     }
