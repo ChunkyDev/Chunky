@@ -123,8 +123,7 @@ public abstract class ChunkyObject {
     }
 
     /**
-     * 
-     * @param owner
+     * @param owner Check if this object is an ancestor.
      * @return
      */
     final public boolean isOwnedBy(ChunkyObject owner) {
@@ -151,8 +150,7 @@ public abstract class ChunkyObject {
      * @param object the object that will become the owner.
      * @param keepChildren false transfers the object's children to current owner.
      */
-
-    public void setOwner(ChunkyObject object,Boolean keepChildren) {
+    public void setOwner(ChunkyObject object, Boolean keepChildren) {
         //TODO IS THIS RIGHT?!?!
         ChunkyObject oldowner = this.owner;
         if (owner != null)
