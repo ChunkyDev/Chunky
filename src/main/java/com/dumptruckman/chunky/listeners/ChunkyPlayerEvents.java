@@ -49,6 +49,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         }
         if(event.getChunkyChunk().isOwnedBy(event.getChunkyPlayer())) return;
         event.setCancelled(true);
+        event.getChunkyPlayer();
 
     }
 }

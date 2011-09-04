@@ -11,4 +11,6 @@ public class ChunkyObjectEvents extends ChunkyObjectListener{
         if(!(event.getObject() instanceof ChunkyChunk) || event.isCancelled()) return;
         DatabaseManager.updateChunk((ChunkyChunk)event.getObject(),event.getNewName());
     }
+
+
 }
