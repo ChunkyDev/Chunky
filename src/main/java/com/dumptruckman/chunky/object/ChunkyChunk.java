@@ -27,5 +27,4 @@ public class ChunkyChunk extends ChunkySanctionableObject {
     public boolean equals(Object obj) {
         return obj != null && obj instanceof ChunkyChunk && ((ChunkyChunk) obj).getCoord().equals(this.getCoord());
     }
-    
 }

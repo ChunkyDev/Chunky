@@ -16,13 +16,9 @@ public abstract class ChunkyObject extends ChunkyOwnershipNode {
 
     private String name;
     private int classHash;
-    private HashMap<Integer, HashSet<ChunkyObject>> allOwnables;
-    private HashMap<Integer, HashSet<ChunkyObject>> allOwners;
 
     public ChunkyObject(String name) {
         this.name = name;
-        allOwnables = new HashMap<Integer, HashSet<ChunkyObject>>();
-        allOwners = new HashMap<Integer, HashSet<ChunkyObject>>();
         classHash = this.getClass().getName().hashCode();
     }
 
@@ -49,165 +45,44 @@ public abstract class ChunkyObject extends ChunkyOwnershipNode {
         return classHash;
     }
 
-    private boolean _addOwner(ChunkyObject owner) {
-        int type = owner.getType();
-        if (getOwnersOfType(type) != null) {
-            return getOwnersOfType(type).add(owner);
-        } else {
-            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
-            owners.add(owner);
-            allOwners.put(type, owners);
-            return true;
-        }
-    }
-
-    private boolean _removeOwner(ChunkyObject owner) {
-        int type = owner.getType();
-        return getOwnersOfType(type) != null && getOwnersOfType(type).remove(owner);
-    }
-
-    /**
-     * Adds an object to be owned by this object.  Also adds this object as an owner of the ownable object.
-     * @param ownable Object that will become owned by this object.
-     */
-    final public void addOwnable(ChunkyObject ownable) {
-        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_ADD_OWNER, this, ownable);
-        Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
-        int type = ownable.getType();
-        if (getOwnablesOfType(type) != null) {
-            if (getOwnablesOfType(type).add(ownable)) {
-                ownable._addOwner(this);
-            } else {
-                // ownable already exists TODO throw something?
-            }
-        } else {
-            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
-            ownables.add(ownable);
-            ownable._addOwner(this);
-            allOwnables.put(type, ownables);
-        }
-    }
-
-    /**
-     * Removes an object from this object's ownership.  Also remove this object as an owner of the ownable object.
-     * @param ownable Object that will cease to be owned by this object.
-     */
-    final public void removeOwnable(ChunkyObject ownable) {
-        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_REMOVE_OWNER, this, ownable);
-        Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
-        int type = ownable.getType();
-        if (getOwnablesOfType(type) != null) {
-            if (getOwnablesOfType(type).remove(ownable)) {
-                ownable._removeOwner(this);
-            } else {
-                // ownable did not exist TODO throw something?
-            }
-        } else {
-            // ownable did not exist TODO throw something?
-        }
-    }
-
-    private boolean _addOwnable(ChunkyObject ownable) {
-        int type = ownable.getType();
-        if (getOwnablesOfType(type) != null) {
-            return getOwnablesOfType(type).add(ownable);
-        } else {
-            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
-            ownables.add(ownable);
-            allOwnables.put(type, ownables);
-            return true;
-        }
-    }
-
-    private boolean _removeOwnable(ChunkyObject ownable) {
-        int type = ownable.getType();
-        return getOwnablesOfType(type) != null && getOwnablesOfType(type).remove(ownable);
-    }
-
-    /**
-     * Adds an object to be an owner of this object.  Also adds this object as an owned object of the owner object.
-     * @param owner Object that will own this object.
-     */
-    final public void addOwner(ChunkyObject owner) {
-        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_ADD_OWNER, owner, this);
-        Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
-        int type = owner.getType();
-        if (getOwnersOfType(type) != null) {
-            if (getOwnersOfType(type).add(owner)) {
-                owner._addOwnable(this);
-                DatabaseManager.addOwnership(owner,this);
-            } else {
-                // owner already exists TODO throw something?
-            }
-        } else {
-            HashSet<ChunkyObject> owners = new HashSet<ChunkyObject>();
-            owners.add(owner);
-            owner._addOwnable(this);
-            allOwners.put(type, owners);
-            DatabaseManager.addOwnership(owner,this);
-        }
-    }
-
-    /**
-     * Removes this object from the ownership of the specified object.  Also removes this object as an owned object of the owner object.
-     * @param owner Object that will no longer own this object.
-     */
-    final public void removeOwner(ChunkyObject owner) {
-        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_REMOVE_OWNER, owner, this);
-        Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
-        int type = owner.getType();
-        if (getOwnersOfType(type) != null) {
-            if (getOwnersOfType(type).remove(owner)) {
-                owner._removeOwnable(this);
-            } else {
-                // owner did not exist TODO throw something?
-            }
-        } else {
-            // owner did not exist TODO throw something?
-        }
-    }
-
     final public boolean isOwned() {
-        return (allOwners.size() > 0);
+        return !(parent==null);
+    }
+
+    public void addOwnable(ChunkyObject ownable) {
+        if (! allowsChildren)
+            throw new IllegalStateException();
+        if (ownable == null)
+            throw new IllegalArgumentException();
+        children.add(ownable);
+        ownable.setParent(this);
+    }
+
+    public void addOwner(ChunkyObject owner) {
+        if (owner == null)
+            throw new IllegalArgumentException();
+        if (! owner.allowsChildren)
+            throw new IllegalStateException();
+        parent = owner;
+        owner.addOwnable(this);
     }
 
     final public boolean owns(ChunkyObject ownable) {
-        int type = ownable.getType();
-        if (getOwnablesOfType(type) != null) {
-            return getOwnablesOfType(type).contains(ownable);
-        }
-        return false;
+        return children.contains(ownable);
     }
 
     final public boolean isOwnedBy(ChunkyObject owner) {
-        int type = owner.getType();
-        if (getOwnersOfType(type) != null) {
-            return getOwnersOfType(type).contains(owner);
-        }
-        return false;
+        if (owner == null)
+            return false;
+        ChunkyObject current = this;
+        while (current != null && current != owner)
+            current = current.getParent();
+        return current == owner;
     }
 
-    private HashSet<ChunkyObject> getOwnablesOfType(int type) {
-        return allOwnables.get(type);
+    final public boolean isDirectlyOwnnedBy(ChunkyObject owner) {
+        return parent == owner;
     }
 
-    private HashSet<ChunkyObject> getOwnersOfType(int type) {
-        return allOwners.get(type);
-    }
 
-    final public HashSet<ChunkyObject> getOwnables(int type) {
-        @SuppressWarnings("unchecked")
-        HashSet<ChunkyObject> ownables = (HashSet<ChunkyObject>)allOwnables.get(type).clone();
-        return ownables;
-    }
-
-    final public HashSet<ChunkyObject> getOwners(int type) {
-        @SuppressWarnings("unchecked")
-        HashSet<ChunkyObject> owners = (HashSet<ChunkyObject>)allOwners.get(type).clone();
-        return owners;
-    }
 }
