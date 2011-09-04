@@ -42,7 +42,7 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
                 ChunkyChunk chunkyChunk;
                 Location location = player.getLocation();
                 chunkyChunk = ChunkyManager.getChunk(location);
-                chunkyChunk.setOwner(chunkyPlayer);
+                chunkyChunk.setOwner(chunkyPlayer, true);
                 chunkyChunk.setName("~" + chunkyPlayer.getName());
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             } else {

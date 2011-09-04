@@ -27,7 +27,7 @@ public abstract class SQLDB implements Database {
                 ChunkyCoordinates coordinates = new ChunkyCoordinates(chunks.getString("World"),chunks.getInt("x"),chunks.getInt("z"));
                 ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
                 chunk.setName(chunks.getString("Name"));
-                chunk.setOwner(chunkyPlayer);
+                chunk.setOwner(chunkyPlayer, true);
 
             }
         } catch (SQLException ignored) {

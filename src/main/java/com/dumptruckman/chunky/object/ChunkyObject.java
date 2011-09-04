@@ -90,7 +90,7 @@ public abstract class ChunkyObject {
     private boolean removeOwnable(ChunkyObject o) {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
         if(removed) {
-            o.setOwner(null);
+            o.owner = null;
             DatabaseManager.removeOwnership(this,o);
         }
         return removed;
@@ -147,11 +147,12 @@ public abstract class ChunkyObject {
         return owner;
     }
 
-    public void setOwner(ChunkyObject object) {
+    public void setOwner(ChunkyObject object,Boolean keepChildren) {
         //TODO IS THIS RIGHT?!?!
         ChunkyObject oldowner = this.owner;
         if (owner != null)
-            owner.removeOwnableAndTakeChildren(this);
+            if(keepChildren) owner.removeOwnable(this);
+            else owner.removeOwnableAndTakeChildren(this);
         if (object != null) {
             if (object.addOwnable(this)) owner = object;
         } else {
@@ -162,6 +163,8 @@ public abstract class ChunkyObject {
         }
 
     }
+
+
 
     /**
      * Returns true if the receiver is a leaf.
