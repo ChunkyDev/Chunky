@@ -41,6 +41,9 @@ public class Chunky extends JavaPlugin {
     final private ChunkyObjectEvents chunkyObjectEvents = new ChunkyObjectEvents();
     final private ChunkyPlayerEvents chunkyPlayerEvents = new ChunkyPlayerEvents();
 
+    /**
+     * Called when this plugin is disabled.
+     */
     final public void onDisable() {
         // Save the module data
 
@@ -50,6 +53,9 @@ public class Chunky extends JavaPlugin {
         Logging.info("disabled.");
     }
 
+    /**
+     * Called when this plugin is enabled.
+     */
     final public void onEnable() {
         //Load INSTANCE for other classes.
         INSTANCE = this;
@@ -96,33 +102,46 @@ public class Chunky extends JavaPlugin {
         DatabaseManager.loadData();
 
         // Register Events
-        registerBukkitEvents(pm);
+        registerBukkitEvents();
         registerChunkyEvents();
         // Register Commands
-        registerCommands();
+        registerChunkyCommands();
 
         // Display enable message/version info
         Logging.info("enabled.");
     }
 
     /**
-     * Gets the instance of this module.
+     * Gets the instance of this plugin.
      *
-     * @return The instance of this module
+     * @return The instance of this plugin
      */
     public static Chunky getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Returns the Payment Method (Register)
+     *
+     * @return Payment Method
+     */
     public static Method getMethod() {
         return METHOD;
     }
 
+    /**
+     * Sets the Payment Method (Register)
+     * @param method new Payment Method
+     */
     public static void setMethod(Method method) {
         METHOD = method;
     }
 
-    final public void registerBukkitEvents(PluginManager pm) {
+    /**
+     * Registers all the bukkit events related to this plugin.
+     */
+    final private void registerBukkitEvents() {
+        PluginManager pm = this.getServer().getPluginManager();
         // Player events.
         pm.registerEvent(Event.Type.PLAYER_MOVE, playerEvents, Event.Priority.Highest, this);
         pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
@@ -137,10 +156,13 @@ public class Chunky extends JavaPlugin {
         pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverEvents, Event.Priority.Normal, this);
     }
 
-    final public void registerChunkyEvents() {
+    /**
+     * Registers all the Chunky events related to this plugin.
+     */
+    final private void registerChunkyEvents() {
         // Command Events
-        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_HELP, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
-        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_LIST, chunkyCommandEvents, ChunkyEvent.Priority.Highest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_HELP, chunkyCommandEvents, ChunkyEvent.Priority.Monitor, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.COMMAND_LIST, chunkyCommandEvents, ChunkyEvent.Priority.Monitor, this);
 
         //Object Events
         getModuleManager().registerEvent(ChunkyEvent.Type.OBJECT_NAME, chunkyObjectEvents, ChunkyEvent.Priority.Monitor, this);
@@ -152,7 +174,10 @@ public class Chunky extends JavaPlugin {
         getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_SWITCH, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
     }
 
-    final public void registerCommands() {
+    /**
+     * Registers all the Chunky Comands for this plugin.
+     */
+    final private void registerChunkyCommands() {
         try {
             ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
                     null, Language.getStrings(LanguagePath.CMD_CHUNKY_HELP),
@@ -171,6 +196,11 @@ public class Chunky extends JavaPlugin {
         } catch (ChunkyUnregisteredException ignore) {}
     }
 
+    /**
+     * Returns the ChunkyModuleManager.  With this manager you may register your plugins Chunky events and Chunky commands.
+     * 
+     * @return the ModuleManager for Chunky
+     */
     static public ChunkyModuleManager getModuleManager() {
         return CHUNKY_MODULE_MANAGER;
     }
