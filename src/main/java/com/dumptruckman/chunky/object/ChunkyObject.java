@@ -124,9 +124,11 @@ public abstract class ChunkyObject {
         //TODO IS THIS RIGHT?!?!
         if (owner != null)
             owner.removeOwnable(this);
-        owner = object;
-        if (object != null)
-            object.addOwnable(this);
+        if (object != null) {
+            if (object.addOwnable(this)) owner = object;
+        } else {
+            owner = null;
+        }
     }
 
     /**
