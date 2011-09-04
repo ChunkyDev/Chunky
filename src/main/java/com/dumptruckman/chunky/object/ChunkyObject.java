@@ -134,7 +134,7 @@ public abstract class ChunkyObject {
         if(oldowner.isOwnedBy(this))
         {
             oldowner.ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
-            this.ownables = new HashMap<Integer, HashSet<ChunkyObject>();
+            this.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
         }
 
     }
