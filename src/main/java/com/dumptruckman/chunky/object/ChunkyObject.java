@@ -62,7 +62,13 @@ public abstract class ChunkyObject {
     private boolean addOwnable(ChunkyObject o) {
         if (o == null)
             throw new IllegalArgumentException();
-        if(this.isOwnedBy(o)) return false;
+
+        // If owner is a owned by the child, remove owner from tree first.
+        // ex. town.setOwner(Peasant) Peasent is removed from parent (Town).
+
+        if(this.isOwnedBy(o)) {
+            this.getOwner().removeOwnable(this);
+        }
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
             if(exists) DatabaseManager.addOwnership(this,o);
@@ -83,7 +89,20 @@ public abstract class ChunkyObject {
      */
     private boolean removeOwnable(ChunkyObject o) {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
-        if(removed) DatabaseManager.removeOwnership(this,o);
+        if(removed) {
+            // If a child is removed, parent reposesses all their objects.
+            // ex. If a child of a town is removed then their plots are owned by town.
+
+            HashMap<Integer, HashSet<ChunkyObject>> reposess = o.getOwnables();
+            o.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
+            for(Integer key : reposess.keySet()) {
+                for(ChunkyObject co : reposess.get(key)) {
+                    this.addOwnable(co);
+                }
+            }
+
+            DatabaseManager.removeOwnership(this,o);
+        }
         return removed;
     }
 
@@ -133,8 +152,6 @@ public abstract class ChunkyObject {
         }
         if(oldowner.isOwnedBy(this))
         {
-            oldowner.ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
-            this.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
         }
 
     }
