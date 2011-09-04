@@ -62,6 +62,7 @@ public abstract class ChunkyObject {
     private boolean addOwnable(ChunkyObject o) {
         if (o == null)
             throw new IllegalArgumentException();
+        if(this.isOwnedBy(o)) return false;
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
             if(exists) DatabaseManager.addOwnership(this,o);
