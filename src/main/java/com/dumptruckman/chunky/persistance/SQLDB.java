@@ -35,7 +35,7 @@ public abstract class SQLDB implements Database {
     }
 
     private void addOwnedPlayers(ChunkyPlayer chunkyPlayer) {
-        ResultSet players = getOwnedChunks(chunkyPlayer);
+        ResultSet players = getOwnedPlayers(chunkyPlayer);
         try {
             while(players.next()) {
                 ChunkyPlayer player = ChunkyManager.getChunkyPlayer(players.getString("name"));
@@ -52,6 +52,7 @@ public abstract class SQLDB implements Database {
             while(rows.next()) {
                 ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
                 addOwnedChunks(player);
+                addOwnedPlayers(player);
             }
         } catch (SQLException ignored) {
         }

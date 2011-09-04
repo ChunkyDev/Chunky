@@ -11,7 +11,7 @@ public class ChunkyPlayerUnownedBreakEvent extends ChunkyPlayerChunkEvent implem
     private boolean cancel = false;
 
     public ChunkyPlayerUnownedBreakEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block) {
-        super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer, chunkyChunk);
+        super(Type.PLAYER_UNOWNED_BREAK, chunkyPlayer, chunkyChunk);
         this.block = block;
     }
 
