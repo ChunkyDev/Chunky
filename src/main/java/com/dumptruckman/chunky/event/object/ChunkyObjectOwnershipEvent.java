@@ -15,7 +15,8 @@ public class ChunkyObjectOwnershipEvent extends ChunkyEvent implements Cancellab
 
     public ChunkyObjectOwnershipEvent(Type type, ChunkyObject owner, ChunkyObject ownable) {
         super(type);
-        
+        this.owner = owner;
+        this.ownable = ownable;
     }
 
     /**
