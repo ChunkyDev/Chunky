@@ -1,9 +1,7 @@
 package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
-import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
-import com.dumptruckman.chunky.event.object.ChunkyObjectOwnershipEvent;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
@@ -153,12 +151,10 @@ public abstract class ChunkyObject {
      * @param keepChildren false transfers the object's children to current owner.
      */
     public void setOwner(ChunkyObject object, Boolean keepChildren) {
-        ChunkyObjectOwnershipEvent event = new ChunkyObjectOwnershipEvent(ChunkyEvent.Type.OBJECT_SET_OWNER, this, object, keepChildren);
-        Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
+        //TODO IS THIS RIGHT?!?!
         ChunkyObject oldowner = this.owner;
         if (owner != null)
-            if(event.isKeepingChildren()) owner.removeOwnable(this);
+            if(keepChildren) owner.removeOwnable(this);
             else owner.removeOwnableAndTakeChildren(this);
         if (object != null) {
             if (object.addOwnable(this)) owner = object;
@@ -170,6 +166,8 @@ public abstract class ChunkyObject {
         }
 
     }
+
+
 
     /**
      * Returns true if the receiver is a leaf.
