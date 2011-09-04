@@ -59,11 +59,10 @@ public abstract class ChunkyObject {
      * @param o object to become owned.
      * @return true if this object did not already own o.
      */
-    public boolean addOwnable(ChunkyObject o) {
+    private boolean addOwnable(ChunkyObject o) {
         if (o == null)
             throw new IllegalArgumentException();
         if (ownables.containsKey(o.getType())) {
-            o.setOwner(this);
             Boolean exists = ownables.get(o.getType()).add(o);
             if(exists) DatabaseManager.addOwnership(this,o);
             return exists;
@@ -81,7 +80,7 @@ public abstract class ChunkyObject {
      * @param o the ownable to remove
      * @return true if the set contained the specified element
      */
-    public boolean removeOwnable(ChunkyObject o) {
+    private boolean removeOwnable(ChunkyObject o) {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
         if(removed) DatabaseManager.removeOwnership(this,o);
         return removed;
@@ -92,8 +91,8 @@ public abstract class ChunkyObject {
      * @param o object to check ownership for
      * @return true if this object owns o
      */
-    final public boolean owns(ChunkyObject o) {
-        return ownables.containsKey(o.getType()) && ownables.get(o.getType()).contains(o);
+    final public boolean isOwnerOf(ChunkyObject o) {
+        return o.isOwnedBy(this);
     }
 
     /**
@@ -122,7 +121,12 @@ public abstract class ChunkyObject {
     }
 
     public void setOwner(ChunkyObject object) {
-        object.addOwnable(this);
+        //TODO IS THIS RIGHT?!?!
+        if (owner != null)
+            owner.removeOwnable(this);
+        owner = object;
+        if (object != null)
+            object.addOwnable(this);
     }
 
     /**
