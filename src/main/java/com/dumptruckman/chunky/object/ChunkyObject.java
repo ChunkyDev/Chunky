@@ -1,10 +1,7 @@
 package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
-import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
-import com.dumptruckman.chunky.event.object.ChunkyObjectOwnershipEvent;
-import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,7 +9,14 @@ import java.util.HashSet;
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject extends ChunkyOwnershipNode {
+public abstract class ChunkyObject {
+
+    /**
+     * Returns the child <code>TreeNode</code> at index
+     * <code>childIndex</code>.
+     */
+    protected ChunkyObject owner;
+    protected HashMap<Integer, HashSet<ChunkyObject>> ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
 
     private String name;
     private int classHash;
@@ -46,43 +50,90 @@ public abstract class ChunkyObject extends ChunkyOwnershipNode {
     }
 
     final public boolean isOwned() {
-        return !(parent==null);
+        return !(owner == null);
     }
 
-    public void addOwnable(ChunkyObject ownable) {
-        if (! allowsChildren)
-            throw new IllegalStateException();
-        if (ownable == null)
+    /**
+     * Causes o to be owned by this object.
+     * @param o object to become owned.
+     * @return true if this object did not already own o.
+     */
+    public boolean addOwnable(ChunkyObject o) {
+        if (o == null)
             throw new IllegalArgumentException();
-        children.add(ownable);
-        ownable.setParent(this);
+        if (ownables.containsKey(o.getType())) {
+            o.setOwner(this);
+            return ownables.get(o.getType()).add(o);
+        } else {
+            HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
+            ownables.add(o);
+            this.ownables.put(o.getType(), ownables);
+            return true;
+        }
     }
 
-    public void addOwner(ChunkyObject owner) {
-        if (owner == null)
-            throw new IllegalArgumentException();
-        if (! owner.allowsChildren)
-            throw new IllegalStateException();
-        parent = owner;
-        owner.addOwnable(this);
+    /**
+     * Removes an ownable o from this object.
+     * @param o the ownable to remove
+     * @return true if the set contained the specified element
+     */
+    public boolean removeOwnable(ChunkyObject o) {
+        return ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
     }
 
-    final public boolean owns(ChunkyObject ownable) {
-        return children.contains(ownable);
+    /**
+     * Checks if o is owned by this object.
+     * @param o object to check ownership for
+     * @return true if this object owns o
+     */
+    final public boolean owns(ChunkyObject o) {
+        return ownables.containsKey(o.getType()) && ownables.get(o.getType()).contains(o);
     }
 
+    /**
+     * 
+     * @param owner
+     * @return
+     */
     final public boolean isOwnedBy(ChunkyObject owner) {
         if (owner == null)
             return false;
         ChunkyObject current = this;
         while (current != null && current != owner)
-            current = current.getParent();
+            current = current.getOwner();
         return current == owner;
     }
 
     final public boolean isDirectlyOwnnedBy(ChunkyObject owner) {
-        return parent == owner;
+        return this.owner == owner;
+    }
+
+    /**
+     * Returns the owner <code>TreeNode</code> of the receiver.
+     */
+    public ChunkyObject getOwner() {
+        return owner;
+    }
+
+    public void setOwner(ChunkyObject object) {
+        this.owner = object;
+    }
+
+    /**
+     * Returns true if the receiver is a leaf.
+     */
+    public boolean isLeaf() {
+        return ownables.size() == 0;
     }
 
 
+    /**
+     * Returns all ownables of this object.  You may not change the structure/values of this HashMap.
+     * @return
+     */
+    public HashMap<Integer, HashSet<ChunkyObject>> getOwnables() {
+        @SuppressWarnings("unchecked")
+        HashMap<Integer, HashSet<ChunkyObject>> ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
+        return ownables;
+    }
 }

@@ -76,7 +76,7 @@ public class ChunkyCommand {
     }
 
     /**
-     * Retrieves the name of this command.  This is only the individual command/sub command string.  It will not contain the names of any parent commands.
+     * Retrieves the name of this command.  This is only the individual command/sub command string.  It will not contain the names of any owner commands.
      *
      * @return the name of this command
      */
@@ -85,7 +85,7 @@ public class ChunkyCommand {
     }
 
     /**
-     * Retrieves the "full name" of this command.  The full name includes the parent command chain separated by periods.  This looks something like chunky.command.radius
+     * Retrieves the "full name" of this command.  The full name includes the owner command chain separated by periods.  This looks something like chunky.command.radius
      *
      * @return the full name of this command
      */
@@ -103,9 +103,9 @@ public class ChunkyCommand {
     }
 
     /**
-     * Retrieves the parent command that this command is a sub-command of.
+     * Retrieves the owner command that this command is a sub-command of.
      *
-     * @return the parent command of this command or null if this is a top level command
+     * @return the owner command of this command or null if this is a top level command
      */
     public final ChunkyCommand getParent() {
         return parent;

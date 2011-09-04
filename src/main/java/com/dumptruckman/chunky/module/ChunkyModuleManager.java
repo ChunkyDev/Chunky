@@ -34,7 +34,7 @@ public interface ChunkyModuleManager {
      *
      * @param command Command to register
      * @return True if the command has not already been registered
-     * @throws ChunkyUnregisteredException if the parent command has not been registered
+     * @throws ChunkyUnregisteredException if the owner command has not been registered
      */
     public boolean registerCommand(ChunkyCommand command) throws ChunkyUnregisteredException;
 
