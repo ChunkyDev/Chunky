@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,11 +64,14 @@ public abstract class ChunkyObject {
             throw new IllegalArgumentException();
         if (ownables.containsKey(o.getType())) {
             o.setOwner(this);
-            return ownables.get(o.getType()).add(o);
+            Boolean exists = ownables.get(o.getType()).add(o);
+            if(exists) DatabaseManager.addOwnership(this,o);
+            return exists;
         } else {
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
+            DatabaseManager.addOwnership(this,o);
             return true;
         }
     }
@@ -78,7 +82,9 @@ public abstract class ChunkyObject {
      * @return true if the set contained the specified element
      */
     public boolean removeOwnable(ChunkyObject o) {
-        return ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
+        Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
+        if(removed) DatabaseManager.removeOwnership(this,o);
+        return removed;
     }
 
     /**
@@ -116,7 +122,7 @@ public abstract class ChunkyObject {
     }
 
     public void setOwner(ChunkyObject object) {
-        this.owner = object;
+        object.addOwnable(this);
     }
 
     /**
