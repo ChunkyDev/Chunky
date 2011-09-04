@@ -120,8 +120,9 @@ public class ChunkyEvent implements Serializable {
          * Represents an object's name change event
          */
         OBJECT_NAME (Category.OBJECT),
-        OBJECT_ADD_OWNER (Category.OBJECT),
-        OBJECT_REMOVE_OWNER (Category.OBJECT),
+        //OBJECT_ADD_OWNER (Category.OBJECT),
+        //OBJECT_REMOVE_OWNER (Category.OBJECT),
+        OBJECT_SET_OWNER (Category.OBJECT),
 
 
         /**

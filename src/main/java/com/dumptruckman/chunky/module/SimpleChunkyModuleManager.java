@@ -105,7 +105,13 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                         ((ChunkyObjectListener) listener).onObjectNameChange((ChunkyObjectNameEvent) event);
                     }
                 };
-            case OBJECT_ADD_OWNER:
+            case OBJECT_SET_OWNER:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyObjectListener) listener).onObjectSetOwner((ChunkyObjectOwnershipEvent) event);
+                    }
+                };
+            /*case OBJECT_ADD_OWNER:
                 return new ChunkyEventExecutor() {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
                         ((ChunkyObjectListener) listener).onObjectAddOwner((ChunkyObjectOwnershipEvent) event);
@@ -116,7 +122,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
                         ((ChunkyObjectListener) listener).onObjectRemoveOwner((ChunkyObjectOwnershipEvent) event);
                     }
-                };
+                };*/
 
             // Player Events
             case PLAYER_UNOWNED_BUILD:

@@ -11,12 +11,14 @@ public class ChunkyObjectOwnershipEvent extends ChunkyEvent implements Cancellab
 
     private boolean cancel = false;
     private ChunkyObject owner;
-    private ChunkyObject ownable;
+    private ChunkyObject object;
+    private Boolean keepChildren;
 
-    public ChunkyObjectOwnershipEvent(Type type, ChunkyObject owner, ChunkyObject ownable) {
+    public ChunkyObjectOwnershipEvent(Type type, ChunkyObject object, ChunkyObject owner, boolean keepChildren) {
         super(type);
         this.owner = owner;
-        this.ownable = ownable;
+        this.object = object;
+        this.keepChildren = keepChildren;
     }
 
     /**
@@ -39,11 +41,23 @@ public class ChunkyObjectOwnershipEvent extends ChunkyEvent implements Cancellab
         this.cancel = cancel;
     }
 
-    public ChunkyObject getOwnerObject() {
+    public ChunkyObject getObject() {
+        return object;
+    }
+
+    public ChunkyObject getOldOwner() {
+        return object.getOwner();
+    }
+
+    public ChunkyObject getNewOwner() {
         return owner;
     }
 
-    public ChunkyObject getOwnableObject() {
-        return ownable;
+    public Boolean isKeepingChildren() {
+        return keepChildren;
+    }
+
+    public void setKeepChildren(boolean b) {
+        keepChildren = b;
     }
 }
