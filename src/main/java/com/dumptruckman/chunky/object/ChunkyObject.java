@@ -123,6 +123,7 @@ public abstract class ChunkyObject {
 
     public void setOwner(ChunkyObject object) {
         //TODO IS THIS RIGHT?!?!
+        ChunkyObject oldowner= this.owner;
         if (owner != null)
             owner.removeOwnable(this);
         if (object != null) {
@@ -130,6 +131,12 @@ public abstract class ChunkyObject {
         } else {
             owner = null;
         }
+        if(oldowner.isOwnedBy(this))
+        {
+            oldowner.ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
+            this.ownables = new HashMap<Integer, HashSet<ChunkyObject>();
+        }
+
     }
 
     /**
