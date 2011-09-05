@@ -66,7 +66,7 @@ public abstract class ChunkyObject {
         // If owner is a owned by the child, remove owner from tree first.
         // ex. town.setOwner(Peasant) Peasant is removed from parent (Town).
 
-        if(this.isOwnedBy(o)) {
+        if(this.isOwnedBy(o) && this.owner != null) {
             this.getOwner().removeOwnableAndTakeChildren(this);
         }
         if (ownables.containsKey(o.getType())) {
