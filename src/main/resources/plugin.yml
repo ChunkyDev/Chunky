@@ -17,3 +17,6 @@ permissions:
     chunky.claim:
         description: Allows players to claim chunks.
         default: true
+    chunky.unclaim:
+        description: Allows players to unclaim chunks.
+        default: true
