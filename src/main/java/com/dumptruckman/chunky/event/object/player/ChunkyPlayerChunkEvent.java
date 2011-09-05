@@ -12,7 +12,7 @@ public class ChunkyPlayerChunkEvent extends ChunkyPlayerEvent {
     private ChunkyChunk chunkyChunk;
 
     public ChunkyPlayerChunkEvent(Type type, ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk) {
-        super(ChunkyEvent.Type.PLAYER_UNOWNED_BUILD, chunkyPlayer);
+        super(type, chunkyPlayer);
         this.chunkyChunk = chunkyChunk;
     }
 
