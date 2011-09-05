@@ -31,6 +31,7 @@ public enum Language {
     CMD_LIST ("command.list", "Sub-command list for %1", ""),
     ERROR ("error", "[Error]"),
     SUCCESS ("success", "[Success]"),
+    HELP ("help", "[Help]"),
     CHUNK_OWNED ("chunk.owned", "This chunk is owned by - %1", ""),
     CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", ""),
     CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", "")
@@ -214,6 +215,16 @@ public enum Language {
     public void good(ChunkyPlayer chunkyPlayer, Object... args) {
         try {
             good(chunkyPlayer.getPlayer(), args);
+        } catch (ChunkyPlayerOfflineException ignore) {}
+    }
+
+    public void help(CommandSender sender, Object... args) {
+        send(ChatColor.YELLOW.toString() + Language.HELP.getString(), sender, args);
+    }
+
+    public void help(ChunkyPlayer chunkyPlayer, Object... args) {
+        try {
+            help(chunkyPlayer.getPlayer(), args);
         } catch (ChunkyPlayerOfflineException ignore) {}
     }
 
