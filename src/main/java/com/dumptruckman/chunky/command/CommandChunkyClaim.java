@@ -42,13 +42,13 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
                 Location location = player.getLocation();
                 chunkyChunk = ChunkyManager.getChunk(location);
                 if (chunkyChunk.isOwned()) {
-                    Language.CHUNK_OWNED.good(player, chunkyChunk.getOwner().getName());
+                    Language.CHUNK_OWNED.bad(player, chunkyChunk.getOwner().getName());
                     return;
                 }
                 chunkyChunk.setOwner(chunkyPlayer, true);
                 chunkyChunk.setName("~" + chunkyPlayer.getName());
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
-                Language.CHUNK_CLAIMED.normal(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
+                Language.CHUNK_CLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
             } else {
                 Language.CHUNK_LIMIT_REACHED.bad(player, chunkLimit);
             }
