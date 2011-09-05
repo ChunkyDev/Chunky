@@ -33,8 +33,11 @@ public enum Language {
     SUCCESS ("success", "[Success]"),
     HELP ("help", "[Help]"),
     CHUNK_OWNED ("chunk.owned", "This chunk is owned by - %1", ""),
+    CHUNK_NOT_OWNED("chunk.not_owned", "This chunk is not owned!"),
+    CHUNK_NONE_OWNED("chunk.none_owned", "You do not own any chunks!"),
     CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", ""),
-    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", "")
+    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", ""),
+    CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", ""),
     ;
 
     private String path;
