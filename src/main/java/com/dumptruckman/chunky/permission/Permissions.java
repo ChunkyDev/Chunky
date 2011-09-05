@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.permission;
 
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.entity.Player;
 
 /**
@@ -24,6 +25,7 @@ public enum Permissions {
     }
 
     public boolean hasPerm(Player player) {
+        Logging.debug(player.getName() + " has perm: " + node + ": " + player.hasPermission(node));
         return player.hasPermission(node);
     }
 
