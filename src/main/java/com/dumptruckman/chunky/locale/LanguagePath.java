@@ -14,6 +14,9 @@ public enum LanguagePath {
     CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", ""),
     CMD_HELP ("command.help", "Help for command %1", ""),
     CMD_LIST ("command.list", "Sub-command list for %1", ""),
+    CHUNK_OWNED ("chunk.owned", "This chunk is owned by - %1", ""),
+    CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", ""),
+    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", "")
     ;
 
     private String path;
