@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.object;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 
 /**
@@ -7,10 +8,19 @@ import java.util.EnumSet;
  */
 public class ChunkyPermissible {
 
-    protected ChunkyObject object;
-    protected EnumSet<PermissionFlags> permissionFlags;
+    protected ChunkyPermissibleObject object;
+    protected EnumSet<Flags> flags;
 
-    public ChunkyPermissible(ChunkyObject object) {
+    public ChunkyPermissible(ChunkyPermissibleObject object, Flags...flags) {
         this.object = object;
+        this.flags = EnumSet.copyOf(Arrays.asList(flags));
+    }
+
+    public enum Flags {
+        BUILD, DESTROY, ITEM_USE, SWITCH
+    }
+
+    public boolean contains(Flags flag) {
+        return flags.contains(flag);
     }
 }

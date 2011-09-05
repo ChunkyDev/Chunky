@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPlayer extends ChunkyObject {
+public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     private ChunkyChunk currentChunk;
 
