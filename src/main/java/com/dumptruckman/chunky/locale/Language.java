@@ -6,6 +6,7 @@ import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -15,26 +16,78 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author dumptruckman
+ * @author dumptruckman, SwearWord
  */
-public class Language {
+public enum Language {
+    NO_COMMAND_PERMISSION ("command.no_permission", "You do not have permission to access this command!", ""),
+    IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", ""),
+    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", ""),
+    CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", ""),
+    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", ""),
+    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", ""),
+    CMD_CHUNKY_UNCLAIM_DESC ("command.chunky_unclaim_desc", "Unclaims the chunk the user stands in.", ""),
+    CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", ""),
+    CMD_HELP ("command.help", "Help for command %1", ""),
+    CMD_LIST ("command.list", "Sub-command list for %1", ""),
+    ERROR ("error", "[Error]"),
+    SUCCESS ("success", "[Success]"),
+    CHUNK_OWNED ("chunk.owned", "This chunk is owned by - %1", ""),
+    CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", ""),
+    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", "")
+    ;
 
-    private static Chunky plugin;
+    private String path;
+    private String def;
+    private String[] comments;
     private static CommentedConfiguration language;
+
+    Language(String path, String def, String... comments) {
+        this.path = path;
+        this.def = def;
+        this.comments = comments;
+    }
+
+    /**
+     * Retrieves the path for a config option
+     * @return The path for a config option
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Retrieves the default value for a config path
+     * @return The default value for a config path
+     */
+    public String getDefault() {
+        return def;
+    }
+
+    /**
+     * Retrieves the comment for a config path
+     * @return The comments for a config path
+     */
+    public String[] getComments() {
+        if (comments != null) {
+            return comments;
+        }
+
+        String[] comments = new String[1];
+        comments[0] = "";
+        return comments;
+    }
 
     /**
      * Loads the language data into memory and sets defaults
-     * @param plugin Your module
      * @throws java.io.IOException
      */
-    public static void load(Chunky plugin) throws IOException {
-        Language.plugin = plugin;
+    public static void load() throws IOException {
 
         // Make the data folders
-        plugin.getDataFolder().mkdirs();
+        Chunky.getInstance().getDataFolder().mkdirs();
 
         // Check if the language file exists.  If not, create it.
-        File languageFile = new File(plugin.getDataFolder(), Config.getLanguageFileName());
+        File languageFile = new File(Chunky.getInstance().getDataFolder(), Config.getLanguageFileName());
         if (!languageFile.exists()) {
             languageFile.createNewFile();
         }
@@ -54,7 +107,7 @@ public class Language {
      * Loads default settings for any missing language strings
      */
     private static void setDefaults() {
-        for (LanguagePath path : LanguagePath.values()) {
+        for (Language path : Language.values()) {
             language.addComment(path.getPath(), path.getComments());
             if (language.getString(path.getPath()) == null) {
                 language.setProperty(path.getPath(), Arrays.asList(path.getDefault()));
@@ -81,11 +134,12 @@ public class Language {
      * converted and any lines too long will be split into an extra element in
      * the list.  %n notated variables n the message will be replaced with the
      * optional arguments passed in.
+     * 
      * @param path Path of the message in the language yaml file.
      * @param args Optional arguments to replace %n variable notations
      * @return A List of formatted Strings
      */
-    public static List<String> getStrings(LanguagePath path, Object...args) {
+    public static List<String> getStrings(Language path, Object...args) {
         // Gets the messages for the path submitted
         List<Object> list = language.getList(path.getPath());
 
@@ -108,29 +162,67 @@ public class Language {
         return message;
     }
 
-    public static String getString(LanguagePath path, Object...args) {
-        List<Object> list = language.getList(path.getPath());
+    public static String getString(Language language, Object...args) {
+        List<Object> list = Language.language.getList(language.getPath());
         if (list == null) {
-            Logging.warning("Missing language for: " + path.getPath());
+            Logging.warning("Missing language for: " + language.getPath());
             return "";
         }
         if (list.isEmpty()) return "";
         return (formatString(list.get(0).toString(), args));
     }
 
-    public static void sendMessage(CommandSender sender, LanguagePath path, Object...args) {
-        List<String> messages = getStrings(path, args);
-        for (String message : messages) {
-            sender.sendMessage(message);
-        }
+    public String getString(Object...args) {
+        return getString(this, args);
     }
 
-    public static void sendMessage(ChunkyPlayer chunkyPlayer, LanguagePath path, Object...args) {
+    public void bad(CommandSender sender, Object... args) {
+        send(ChatColor.RED.toString() + Language.ERROR.getString(), sender, args);
+    }
+
+    public void bad(ChunkyPlayer chunkyPlayer, Object... args) {
         try {
-            sendMessage(chunkyPlayer.getPlayer(), path, args);
+            bad(chunkyPlayer.getPlayer(), args);
         } catch (ChunkyPlayerOfflineException ignore) {}
     }
 
+    public void normal(CommandSender sender, Object... args) {
+        send("", sender, args);
+    }
+
+    public void normal(ChunkyPlayer chunkyPlayer, Object... args) {
+        try {
+            normal(chunkyPlayer.getPlayer(), args);
+        } catch (ChunkyPlayerOfflineException ignore) {}
+    }
+
+    private void send(String prefix, CommandSender sender, Object... args) {
+        List<String> messages = getStrings(this, args);
+        for (int i = 0; i < messages.size(); i++) {
+            if (i == 0) {
+                sender.sendMessage(prefix + " " + messages.get(i));
+            } else {
+                sender.sendMessage(messages.get(i));
+            }
+        }
+    }
+
+    public void good(CommandSender sender, Object... args) {
+        send(ChatColor.GREEN.toString() + Language.SUCCESS.getString(), sender, args);
+    }
+
+    public void good(ChunkyPlayer chunkyPlayer, Object... args) {
+        try {
+            good(chunkyPlayer.getPlayer(), args);
+        } catch (ChunkyPlayerOfflineException ignore) {}
+    }
+
+    /**
+     * Sends a custom string to a player.
+     * 
+     * @param chunkyPlayer
+     * @param message
+     */
     public static void sendMessage(ChunkyPlayer chunkyPlayer, String message) {
         try {
             chunkyPlayer.getPlayer().sendMessage(message);

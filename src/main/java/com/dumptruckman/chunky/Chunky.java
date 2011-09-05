@@ -8,7 +8,6 @@ import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.listeners.*;
 import com.dumptruckman.chunky.locale.Language;
-import com.dumptruckman.chunky.locale.LanguagePath;
 import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.module.ChunkyModuleManager;
 import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
@@ -80,7 +79,7 @@ public class Chunky extends JavaPlugin {
 
         // Loads the language
         try {
-            Language.load(this);
+            Language.load();
         } catch (IOException e) {  // Catch errors loading the language file and exit out if found.
             Logging.severe("Encountered an error while loading the language file.  Disabling...");
             pm.disablePlugin(this);
@@ -180,17 +179,17 @@ public class Chunky extends JavaPlugin {
     final private void registerChunkyCommands() {
         try {
             ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
-                    null, Language.getStrings(LanguagePath.CMD_CHUNKY_HELP),
+                    null, Language.getStrings(Language.CMD_CHUNKY_HELP),
                     new CommandChunky());
             getModuleManager().registerCommand(commandChunky);
             ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
-                    Language.getString(LanguagePath.CMD_CHUNKY_CLAIM_DESC),
-                    Language.getStrings(LanguagePath.CMD_CHUNKY_CLAIM_HELP),
+                    Language.getString(Language.CMD_CHUNKY_CLAIM_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_CLAIM_HELP),
                     new CommandChunkyClaim(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
             ChunkyCommand commandChunkyUnclaim = new ChunkyCommand("unclaim", Arrays.asList("u", "uc"),
-                    Language.getString(LanguagePath.CMD_CHUNKY_UNCLAIM_DESC),
-                    Language.getStrings(LanguagePath.CMD_CHUNKY_UNCLAIM_HELP),
+                    Language.getString(Language.CMD_CHUNKY_UNCLAIM_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_UNCLAIM_HELP),
                     new CommandChunkyUnclaim(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
         } catch (ChunkyUnregisteredException ignore) {}

@@ -38,7 +38,7 @@ public class PlayerEvents extends PlayerListener{
         }
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
-        if(!message.equals("")) Language.sendMessage(chunkyPlayer,event.getMessage());
+        if(!message.equals("")) Language.sendMessage(chunkyPlayer, event.getMessage());
         chunkyPlayer.setCurrentChunk(toChunk);
     }
 
