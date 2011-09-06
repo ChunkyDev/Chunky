@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.module;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ public class ChunkyCommand {
 
     private String name;
     private ChunkyCommand parent;
-    private List<String> aliases;
+    private HashSet<String> aliases;
     private String description;
     private List<String> helpLines;
     private ChunkyCommandExecutor executor;
@@ -44,12 +45,12 @@ public class ChunkyCommand {
      */
     public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
         this.name = name.toLowerCase();
+        this.aliases = new HashSet<String>();
         if (aliases != null) {
             for (int i = 0; i < aliases.size(); i++) {
-                aliases.set(i, aliases.get(i).toLowerCase());
+                this.aliases.add(aliases.get(i).toLowerCase());
             }
         }
-        this.aliases = aliases;
         this.description = description;
         this.helpLines = helpLines;
         this.parent = parentCommand;
@@ -127,7 +128,7 @@ public class ChunkyCommand {
      *
      * @return aliases of this command or null if no aliases
      */
-    public final List<String> getAliases() {
+    public final HashSet<String> getAliases() {
         return aliases;
     }
 
