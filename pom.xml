@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.dumptruckman.chunky</groupId>
   <artifactId>Chunky</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT${build.number}</version>
   <name>Chunky</name>
   <url>http://build.blockface.org/</url>
   <repositories>
