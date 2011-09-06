@@ -9,7 +9,7 @@ import java.util.EnumSet;
 public class ChunkyPermissions {
 
     public enum Flags {
-        BUILD, DESTROY, ITEM_USE, SWITCH
+        BUILD, DESTROY, ITEMUSE, SWITCH
     }
 
     protected EnumSet<Flags> flags;

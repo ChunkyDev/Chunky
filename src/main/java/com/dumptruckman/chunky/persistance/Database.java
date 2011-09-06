@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import com.dumptruckman.chunky.object.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
@@ -33,4 +34,7 @@ public interface Database {
     public void updateChunk(ChunkyChunk chunky, String name);
 
     public void addPlayer(ChunkyPlayer player);
+
+    public void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status);
+
 }

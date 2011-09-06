@@ -71,7 +71,7 @@ public class PlayerEvents extends PlayerListener{
                     permType = ChunkyPermissionType.OWNER;
                     if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
                     isCancelled = false;
-                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.ITEM_USE)) {
+                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.ITEMUSE)) {
                     permType = ChunkyPermissionType.PERMISSION;
                     isCancelled = false;
                 }

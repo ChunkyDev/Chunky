@@ -3,6 +3,7 @@ package com.dumptruckman.chunky.persistance;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
+import com.dumptruckman.chunky.object.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
@@ -80,5 +81,10 @@ public class DatabaseManager {
     public static ResultSet genericQuery(String query) {
         return database.query(query);
     }
+
+    public static void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
+        database.updatePermissions(permissiblehash,objecthash,type,status);
+    }
+
 
 }

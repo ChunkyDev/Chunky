@@ -3,10 +3,7 @@ package com.dumptruckman.chunky.persistance;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.config.Config;
-import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyCoordinates;
-import com.dumptruckman.chunky.object.ChunkyObject;
-import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
 
@@ -99,4 +96,9 @@ public abstract class SQLDB implements Database {
     public ResultSet getTypeName(int hash) {
         return query(QueryGen.getGetType(hash));
     }
+
+    public void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
+        query(QueryGen.getUpdatePermissions(permissiblehash,objecthash,type,status));
+    }
+
 }

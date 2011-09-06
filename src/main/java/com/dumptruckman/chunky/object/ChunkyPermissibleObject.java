@@ -1,5 +1,7 @@
 package com.dumptruckman.chunky.object;
 
+import com.dumptruckman.chunky.persistance.DatabaseManager;
+
 import java.util.EnumSet;
 import java.util.HashMap;
 
@@ -26,6 +28,17 @@ public class ChunkyPermissibleObject extends ChunkyObject {
         ChunkyPermissions perms = permissions.get(object.hashCode());
         if (perms == null) {
             perms = new ChunkyPermissions();
+            permissions.put(object.hashCode(),perms);
+        }
+        perms.setFlag(type, status);
+        DatabaseManager.updatePermissions(this.hashCode(),object.hashCode(),type,status);
+    }
+
+    public void setPermNoDB(int object, ChunkyPermissions.Flags type, boolean status) {
+        ChunkyPermissions perms = permissions.get(object);
+        if (perms == null) {
+            perms = new ChunkyPermissions();
+            permissions.put(object,perms);
         }
         perms.setFlag(type, status);
     }

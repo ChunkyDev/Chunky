@@ -1,8 +1,6 @@
 package com.dumptruckman.chunky.persistance;
 
-import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyObject;
-import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.object.*;
 
 public class QueryGen {
 
@@ -24,6 +22,33 @@ public class QueryGen {
             "Hash INT NOT NULL," +
             "Name VARCHAR(50) NOT NULL," +
             "PRIMARY KEY (Hash) )";
+    }
+
+    public static String getCreatePermissionsTable() {
+        return
+            "CREATE TABLE chunky_permissions (" +
+            "PermissibleHash INT NOT NULL," +
+            "ObjectHash INT NOT NULL," +
+            "BUILD TINYINT NOT NULL DEFAULT 0," +
+            "DESTROY TINYINT NOT NULL DEFAULT 0," +
+            "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
+            "SWITCH TINYINT NOT NULL DEFAULT 0," +
+            "PRIMARY KEY (PermissibleHash, ObjectHash) )";
+    }
+
+    public static String getSelectPermissions(int hash) {
+        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash;
+    }
+
+    public static String getUpdatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
+        int tiny = 0;
+        if(status) tiny=1;
+        return
+            String.format("REPLACE INTO chunky_permissions (" +
+            "PermissibleHash, " +
+            "ObjectHash, " +
+            "%s) " +
+            "VALUES (%s,%s,%s)",type.name(), permissiblehash, objecthash, tiny);
     }
 
     public static String getCreatePlayerTable() {
