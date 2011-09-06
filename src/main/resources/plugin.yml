@@ -1,6 +1,6 @@
 name: ${project.name}
 main: ${project.groupId}.${project.name}
-version: ${project.version}
+version: ${project.version}-b${build.number}
 author: dumptruckman, SwearWord
 
 commands:
