@@ -215,6 +215,15 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     }
 
     /**
+     * Gets all base commands registered.  This will only return commands with a null parent.
+     *
+     * @return base commands
+     */
+    public HashMap<String, ChunkyCommand> getRegisteredCommands() {
+        return registeredCommands;
+    }
+
+    /**
      * Retrieve a ChunkyCommand by looking it up by it's full name.  Example: /chunky.claim.radius
      *
      * @param fullName Full name of command to look up
@@ -236,7 +245,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     }
 
     /**
-     * Retrieves a command by an alias.  You must know the parent command in order to use this.
+     * Retrieves a command by an alias (or the normal name).  You must know the parent command in order to use this.
      *
      * @param parentCommand Parent command of command to look up
      * @param alias Alias of command to look up

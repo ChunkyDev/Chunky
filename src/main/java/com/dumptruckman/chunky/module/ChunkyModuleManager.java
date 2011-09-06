@@ -6,6 +6,8 @@ import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
+
 /**
  * @author dumptruckman, SwearWord
  */
@@ -53,6 +55,13 @@ public interface ChunkyModuleManager {
      * @return true if the command is registered
      */
     public boolean isCommandRegistered(String fullName);
+
+    /**
+     * Gets all base commands registered.  This will only return commands with a null parent.
+     *
+     * @return base commands
+     */
+    public HashMap<String, ChunkyCommand> getRegisteredCommands();
 
     /**
      * Retrieves a command by an alias.  You must know the parent command in order to use this.
