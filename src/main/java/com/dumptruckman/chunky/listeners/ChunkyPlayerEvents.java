@@ -8,7 +8,6 @@ import com.dumptruckman.chunky.permission.Permissions;
 public class ChunkyPlayerEvents extends ChunkyPlayerListener {
     @Override
     public void onPlayerUnownedBreak(ChunkyPlayerUnownedBreakEvent event) {
-        if(event.isCancelled()) return;
         try {
             if(!Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(event.getChunkyPlayer().getPlayer())) return;
         } catch (ChunkyPlayerOfflineException e) {
@@ -19,7 +18,6 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
 
     @Override
     public void onPlayerUnownedBuild(ChunkyPlayerUnownedBuildEvent event) {
-        if(event.isCancelled()) return;
         try {
             if(!Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(event.getChunkyPlayer().getPlayer())) return;
         } catch (ChunkyPlayerOfflineException e) {
@@ -30,7 +28,6 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
 
     @Override
     public void onPlayerItemUse(ChunkyPlayerItemUseEvent event) {
-        if(event.isCancelled()) return;
         try {
             if(!Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(event.getChunkyPlayer().getPlayer())) return;
         } catch (ChunkyPlayerOfflineException e) {
@@ -41,7 +38,6 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
 
     @Override
     public void onPlayerSwitch(ChunkyPlayerSwitchEvent event) {
-        if(event.isCancelled()) return;
         try {
             if(!Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(event.getChunkyPlayer().getPlayer())) return;
         } catch (ChunkyPlayerOfflineException e) {
