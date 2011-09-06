@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.event.object.player.*;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
+import com.dumptruckman.chunky.object.ChunkyPermissionType;
 import com.dumptruckman.chunky.permission.Permissions;
 
 public class ChunkyPlayerEvents extends ChunkyPlayerListener {
@@ -13,7 +14,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        event.setCancelled(true);
+        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -24,7 +25,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        event.setCancelled(true);
+        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -35,8 +36,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getChunkyChunk().isOwnedBy(event.getChunkyPlayer())) return;
-        event.setCancelled(true);
+        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -47,7 +47,6 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getChunkyChunk().isOwnedBy(event.getChunkyPlayer())) return;
-        event.setCancelled(true);
+        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
     }
 }
