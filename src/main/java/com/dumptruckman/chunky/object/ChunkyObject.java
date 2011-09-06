@@ -135,7 +135,7 @@ public abstract class ChunkyObject {
         return current == owner;
     }
 
-    final public boolean isDirectlyOwnnedBy(ChunkyObject owner) {
+    final public boolean isDirectlyOwnedBy(ChunkyObject owner) {
         return this.owner == owner;
     }
 

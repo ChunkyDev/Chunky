@@ -69,7 +69,7 @@ public class PlayerEvents extends PlayerListener{
                 // Permission chain
                 if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
                     permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
+                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
                     isCancelled = false;
                 } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.ITEM_USE)) {
                     permType = ChunkyPermissionType.PERMISSION;
@@ -93,7 +93,7 @@ public class PlayerEvents extends PlayerListener{
                 // Permission chain
                 if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
                     permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
+                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
                     isCancelled = false;
                 } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.SWITCH)) {
                     permType = ChunkyPermissionType.PERMISSION;

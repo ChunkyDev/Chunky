@@ -25,7 +25,7 @@ public class BlockEvents extends BlockListener {
         // Permission chain
         if (chunk.isOwnedBy(chunkyPlayer)) {
             permType = ChunkyPermissionType.OWNER;
-            if (chunk.isDirectlyOwnnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
+            if (chunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
             isCancelled = false;
         } else if (chunkyPlayer.hasPerm(chunk, ChunkyPermissions.Flags.BUILD)) {
             permType = ChunkyPermissionType.PERMISSION;
@@ -51,7 +51,7 @@ public class BlockEvents extends BlockListener {
         // Permission chain
         if (chunk.isOwnedBy(chunkyPlayer)) {
             permType = ChunkyPermissionType.OWNER;
-            if (chunk.isDirectlyOwnnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
+            if (chunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
             isCancelled = false;
         } else if (chunkyPlayer.hasPerm(chunk, ChunkyPermissions.Flags.DESTROY)) {
             permType = ChunkyPermissionType.PERMISSION;
