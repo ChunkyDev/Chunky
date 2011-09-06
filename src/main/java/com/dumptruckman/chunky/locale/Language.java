@@ -26,6 +26,9 @@ public enum Language {
     /**
      * Command Language
      */
+    CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
+            "&fVersion - %1", "Loaded Modules - %2",
+            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!"), ""),
     CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", ""),
     CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", ""),
     CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", ""),
@@ -50,11 +53,17 @@ public enum Language {
     ;
 
     private String path;
-    private String def;
+    private List<String> def;
     private String[] comments;
     private static CommentedConfiguration language;
 
     Language(String path, String def, String... comments) {
+        this.path = path;
+        this.def = Arrays.asList(def);
+        this.comments = comments;
+    }
+
+    Language(String path, List<String> def, String... comments) {
         this.path = path;
         this.def = def;
         this.comments = comments;
@@ -72,7 +81,7 @@ public enum Language {
      * Retrieves the default value for a config path
      * @return The default value for a config path
      */
-    public String getDefault() {
+    public List<String> getDefault() {
         return def;
     }
 
@@ -123,7 +132,7 @@ public enum Language {
         for (Language path : Language.values()) {
             language.addComment(path.getPath(), path.getComments());
             if (language.getString(path.getPath()) == null) {
-                language.setProperty(path.getPath(), Arrays.asList(path.getDefault()));
+                language.setProperty(path.getPath(), path.getDefault());
             }
         }
         language.setHeader("# Please don't use colons in your strings! :) Enjoy the irony.");
