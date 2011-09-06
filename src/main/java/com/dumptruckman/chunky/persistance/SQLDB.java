@@ -1,11 +1,8 @@
 package com.dumptruckman.chunky.persistance;
 
-import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.util.Logging;
-import lib.PatPeter.SQLibrary.MySQL;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,10 +47,26 @@ public abstract class SQLDB implements Database {
                 ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
                 addOwnedChunks(player);
                 addOwnedPlayers(player);
+                setPermissions(player);
             }
         } catch (SQLException ignored) {
         }
         Logging.info("Loaded data from tables.");
+    }
+
+    private void setPermissions(ChunkyPlayer player) {
+        ResultSet perms = query(QueryGen.getSelectPermissions(player.hashCode()));
+        try {
+            while(perms.next()) {
+                int object = perms.getInt("ObjectHash");
+                player.loadPermFromDB(object, ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1));
+                player.loadPermFromDB(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1));
+                player.loadPermFromDB(object, ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1));
+                player.loadPermFromDB(object, ChunkyPermissions.Flags.ITEMUSE, (perms.getInt("ITEMUSE") == 1));
+            }
+        } catch (SQLException ignored) {
+        }
+
     }
 
     public void updateChunk(ChunkyChunk chunky, String name) {

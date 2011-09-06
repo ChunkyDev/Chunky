@@ -31,10 +31,10 @@ public class ChunkyPermissibleObject extends ChunkyObject {
             permissions.put(object.hashCode(),perms);
         }
         perms.setFlag(type, status);
-        DatabaseManager.updatePermissions(this.hashCode(),object.hashCode(),type,status);
+        DatabaseManager.updatePermissions(this.hashCode(), object.hashCode(), type, status);
     }
 
-    public void setPermNoDB(int object, ChunkyPermissions.Flags type, boolean status) {
+    public void loadPermFromDB(int object, ChunkyPermissions.Flags type, boolean status) {
         ChunkyPermissions perms = permissions.get(object);
         if (perms == null) {
             perms = new ChunkyPermissions();

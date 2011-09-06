@@ -62,6 +62,11 @@ public class SQLiteDB extends SQLDB {
             Logging.info("Created chunky_ownership table.");
         }
 
+        if(!this.db.checkTable("chunky_permissions")) {
+            if(!db.createTable(QueryGen.getCreatePermissionsTable())) return false;
+            Logging.info("Created chunky_permissions table.");
+        }
+
         return true;
 
     }
