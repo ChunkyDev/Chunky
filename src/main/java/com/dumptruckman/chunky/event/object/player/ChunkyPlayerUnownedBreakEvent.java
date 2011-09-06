@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.event.object.player;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
@@ -10,8 +11,8 @@ public class ChunkyPlayerUnownedBreakEvent extends ChunkyPlayerChunkEvent implem
     private Block block;
     private boolean cancel = false;
 
-    public ChunkyPlayerUnownedBreakEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block) {
-        super(Type.PLAYER_UNOWNED_BREAK, chunkyPlayer, chunkyChunk);
+    public ChunkyPlayerUnownedBreakEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block, ChunkyPermissionType permissionType) {
+        super(Type.PLAYER_UNOWNED_BREAK, chunkyPlayer, chunkyChunk, permissionType);
         this.block = block;
     }
 
