@@ -50,7 +50,7 @@ public class Chunky extends JavaPlugin {
         DatabaseManager.closeDB();
 
         // Display disable message/version info
-        Logging.info("disabled.");
+        Logging.info("disabled.", true);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Chunky extends JavaPlugin {
         registerChunkyCommands();
 
         // Display enable message/version info
-        Logging.info("enabled.");
+        Logging.info("enabled.", true);
     }
 
     /**

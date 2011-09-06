@@ -10,11 +10,19 @@ import java.util.logging.Logger;
  */
 public class Logging {
     final private static Logger LOG = Logger.getLogger("Minecraft.chunky");
-    private static String NAME_VERSION = "";
+    private static String NAME = "";
+    private static String VERSION = "";
 
     public static void load(Chunky chunky) {
         PluginDescriptionFile pdf = chunky.getDescription();
-        NAME_VERSION = pdf.getName() + " " + pdf.getVersion() + " ";
+        NAME = pdf.getName() + " ";
+        VERSION = pdf.getVersion() + " ";
+    }
+
+    private static String getString(String message, boolean showVersion) {
+        String string = NAME;
+        if (showVersion) string += VERSION;
+        return string += message;
     }
 
     public static Logger getLog() {
@@ -22,23 +30,35 @@ public class Logging {
     }
 
     public static String getNameVersion() {
-        return NAME_VERSION;
+        return NAME + VERSION;
     }
 
     public static void info(String message) {
-        LOG.info(NAME_VERSION + message);
+        info(message, false);
+    }
+
+    public static void info(String message, boolean showVersion) {
+        LOG.info(getString(message, showVersion));
     }
 
     public static void debug(String message) {
-        LOG.info(NAME_VERSION + message);
+        LOG.info(getString(message, true));
     }
 
     public static void warning(String message) {
-        LOG.warning(NAME_VERSION + message);
+        warning(message, false);
+    }
+
+    public static void warning(String message, boolean showVersion) {
+        LOG.warning(getString(message, showVersion));
     }
 
     public static void severe(String message) {
-        LOG.severe(NAME_VERSION + message);
+        severe(message, false);
+    }
+
+    public static void severe(String message, boolean showVersion) {
+        LOG.severe(getString(message, showVersion));
     }
 
 }
