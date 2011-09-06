@@ -14,15 +14,15 @@ public class ChunkyPermissibleObject extends ChunkyObject {
         super(name);
     }
 
-    public boolean hasPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type) {
+    public boolean hasPerm(ChunkyPermissionsObject object, ChunkyPermissions.Flags type) {
         return permissions.containsKey(object.hashCode()) && permissions.get(object.hashCode()).contains(type);
     }
 
-    public EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyPermissibleObject object) {
+    public EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyPermissionsObject object) {
         return permissions.get(object.hashCode()).flags;
     }
 
-    public void setPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type, boolean status) {
+    public void setPerm(ChunkyPermissionsObject object, ChunkyPermissions.Flags type, boolean status) {
         ChunkyPermissions perms = permissions.get(object.hashCode());
         if (perms == null) {
             perms = new ChunkyPermissions();
