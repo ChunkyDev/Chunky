@@ -168,8 +168,8 @@ public class Chunky extends JavaPlugin {
         getModuleManager().registerEvent(ChunkyEvent.Type.OBJECT_NAME, chunkyObjectEvents, ChunkyEvent.Priority.Monitor, this);
 
         //Player Events
-        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_UNOWNED_BUILD, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
-        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_UNOWNED_BREAK, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_BUILD, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
+        getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_DESTROY, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
         getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_ITEM_USE, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
         getModuleManager().registerEvent(ChunkyEvent.Type.PLAYER_SWITCH, chunkyPlayerEvents, ChunkyEvent.Priority.Lowest, this);
     }

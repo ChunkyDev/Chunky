@@ -9,9 +9,9 @@ public class ChunkyPlayerListener extends ChunkyObjectListener {
 
     public ChunkyPlayerListener() {}
 
-    public void onPlayerUnownedBreak(ChunkyPlayerUnownedBreakEvent event) {}
+    public void onPlayerUnownedBreak(ChunkyPlayerDestroyEvent event) {}
 
-    public void onPlayerUnownedBuild(ChunkyPlayerUnownedBuildEvent event) {}
+    public void onPlayerUnownedBuild(ChunkyPlayerBuildEvent event) {}
 
     public void onPlayerItemUse(ChunkyPlayerItemUseEvent event) {}
 

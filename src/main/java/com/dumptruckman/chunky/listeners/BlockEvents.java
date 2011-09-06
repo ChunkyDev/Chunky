@@ -2,8 +2,8 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBreakEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerUnownedBuildEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerDestroyEvent;
+import com.dumptruckman.chunky.event.object.player.ChunkyPlayerBuildEvent;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPermissions;
@@ -33,7 +33,8 @@ public class BlockEvents extends BlockListener {
         }
         //Groups here?:
 
-        ChunkyPlayerUnownedBuildEvent chunkyEvent = new ChunkyPlayerUnownedBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
+
+        ChunkyPlayerBuildEvent chunkyEvent = new ChunkyPlayerBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
         Chunky.getModuleManager().callEvent(chunkyEvent);
 
@@ -59,7 +60,7 @@ public class BlockEvents extends BlockListener {
         }
         //Groups here?:
 
-        ChunkyPlayerUnownedBreakEvent chunkyEvent = new ChunkyPlayerUnownedBreakEvent(chunkyPlayer, chunk, event.getBlock(), permType);
+        ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
         Chunky.getModuleManager().callEvent(chunkyEvent);
         

@@ -12,7 +12,7 @@ public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements 
     private boolean cancel = false;
 
     public ChunkyPlayerItemUseEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack itemUsed, ChunkyPermissionType permissionType) {
-        super(Type.PLAYER_UNOWNED_BUILD, chunkyPlayer, chunkyChunk, permissionType);
+        super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, permissionType);
         this.itemUsed= itemUsed;
     }
 

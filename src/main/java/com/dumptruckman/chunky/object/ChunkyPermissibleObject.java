@@ -37,7 +37,7 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     public void loadPermFromDB(int object, ChunkyPermissions.Flags type, boolean status) {
         ChunkyPermissions perms = permissions.get(object);
         if (perms == null) {
-            perms = new ChunkyPermissions();
+            perms = new ChunkyPermissions(ChunkyPermissions.Flags.BUILD);
             permissions.put(object,perms);
         }
         perms.setFlag(type, status);

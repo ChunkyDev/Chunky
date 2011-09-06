@@ -125,16 +125,16 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 };*/
 
             // Player Events
-            case PLAYER_UNOWNED_BUILD:
+            case PLAYER_BUILD:
                 return new ChunkyEventExecutor() {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
-                        ((ChunkyPlayerListener) listener).onPlayerUnownedBuild((ChunkyPlayerUnownedBuildEvent) event);
+                        ((ChunkyPlayerListener) listener).onPlayerUnownedBuild((ChunkyPlayerBuildEvent) event);
                     }
                 };
-            case PLAYER_UNOWNED_BREAK:
+            case PLAYER_DESTROY:
                 return new ChunkyEventExecutor() {
                     public void execute(ChunkyListener listener, ChunkyEvent event) {
-                        ((ChunkyPlayerListener) listener).onPlayerUnownedBreak((ChunkyPlayerUnownedBreakEvent) event);
+                        ((ChunkyPlayerListener) listener).onPlayerUnownedBreak((ChunkyPlayerDestroyEvent) event);
                     }
                 };
             case PLAYER_CHUNK_CHANGE:
