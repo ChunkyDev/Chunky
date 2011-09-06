@@ -2,6 +2,7 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.CommandChunky;
 import com.dumptruckman.chunky.command.CommandChunkyClaim;
+import com.dumptruckman.chunky.command.CommandChunkyPermission;
 import com.dumptruckman.chunky.command.CommandChunkyUnclaim;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
@@ -178,20 +179,31 @@ public class Chunky extends JavaPlugin {
      */
     final private void registerChunkyCommands() {
         try {
+            // /chunky
             ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
                     null, Language.getStrings(Language.CMD_CHUNKY_HELP),
                     new CommandChunky());
             getModuleManager().registerCommand(commandChunky);
+
+            // /chunky claim
             ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
                     Language.getString(Language.CMD_CHUNKY_CLAIM_DESC),
                     Language.getStrings(Language.CMD_CHUNKY_CLAIM_HELP),
                     new CommandChunkyClaim(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
+
+            // /chunky unclaim
             ChunkyCommand commandChunkyUnclaim = new ChunkyCommand("unclaim", Arrays.asList("u", "uc"),
                     Language.getString(Language.CMD_CHUNKY_UNCLAIM_DESC),
                     Language.getStrings(Language.CMD_CHUNKY_UNCLAIM_HELP),
                     new CommandChunkyUnclaim(), commandChunky);
             getModuleManager().registerCommand(commandChunkyClaim);
+
+            // /chunky permission
+            ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
+                    Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP),
+                    new CommandChunkyPermission(), commandChunky);
         } catch (ChunkyUnregisteredException ignore) {}
     }
 
