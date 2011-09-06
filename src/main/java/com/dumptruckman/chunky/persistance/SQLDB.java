@@ -59,10 +59,10 @@ public abstract class SQLDB implements Database {
         try {
             while(perms.next()) {
                 int object = perms.getInt("ObjectHash");
-                player.loadPermFromDB(object, ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1));
-                player.loadPermFromDB(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1));
-                player.loadPermFromDB(object, ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1));
-                player.loadPermFromDB(object, ChunkyPermissions.Flags.ITEMUSE, (perms.getInt("ITEMUSE") == 1));
+                player.setPerm(object, ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
+                player.setPerm(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1), false);
+                player.setPerm(object, ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1), false);
+                player.setPerm(object, ChunkyPermissions.Flags.ITEMUSE, (perms.getInt("ITEMUSE") == 1), false);
             }
         } catch (SQLException ignored) {
         }

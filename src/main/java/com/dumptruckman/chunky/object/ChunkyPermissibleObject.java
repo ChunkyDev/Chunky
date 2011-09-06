@@ -25,21 +25,23 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     }
 
     public void setPerm(ChunkyPermissionsObject object, ChunkyPermissions.Flags type, boolean status) {
-        ChunkyPermissions perms = permissions.get(object.hashCode());
-        if (perms == null) {
-            perms = new ChunkyPermissions();
-            permissions.put(object.hashCode(),perms);
-        }
-        perms.setFlag(type, status);
-        DatabaseManager.updatePermissions(this.hashCode(), object.hashCode(), type, status);
+        setPerm(object.hashCode(), type, status, true);
     }
 
-    public void loadPermFromDB(int object, ChunkyPermissions.Flags type, boolean status) {
+    public void setPerm(int object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
         ChunkyPermissions perms = permissions.get(object);
+
+        // Create object if non-existant
         if (perms == null) {
-            perms = new ChunkyPermissions(ChunkyPermissions.Flags.BUILD);
-            permissions.put(object,perms);
+            perms = new ChunkyPermissions();
+            permissions.put(object, perms);
         }
+        // Set flag
         perms.setFlag(type, status);
+
+        // Persist if requested
+        if (persist) {
+            DatabaseManager.updatePermissions(this.hashCode(), object, type, status);
+        }
     }
 }
