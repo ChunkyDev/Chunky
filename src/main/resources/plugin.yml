@@ -1,5 +1,5 @@
 name: ${project.name}
-main: ${project.groupId}.${project.name}
+main: ${project.groupId}.chunky.${project.name}
 version: ${project.version}-b${build.number}
 author: dumptruckman, SwearWord
 
