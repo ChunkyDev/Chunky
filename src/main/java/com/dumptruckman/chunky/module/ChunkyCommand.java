@@ -121,6 +121,15 @@ public class ChunkyCommand {
         return children;
     }
 
+    public final String getAliasesAsString() {
+        String aliases = "";
+        for (String alias : this.aliases) {
+            if (!aliases.isEmpty()) aliases += ", ";
+            aliases += alias;
+        }
+        return aliases;
+    }
+
     /**
      * Retrieves the aliases for this command, if any.
      *
