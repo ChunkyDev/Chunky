@@ -118,8 +118,6 @@ public class ChunkyCommand {
      * @return all sub-commands of this command
      */
     public final HashMap<String, ChunkyCommand> getChildren() {
-        @SuppressWarnings("unchecked")
-        HashMap<String, ChunkyCommand> children = (HashMap<String, ChunkyCommand>)this.children.clone();
         return children;
     }
 
