@@ -14,7 +14,7 @@ public class ChunkyCommandEvents extends ChunkyCommandListener {
 
     public void onCommandHelp(ChunkyCommandEvent event) {
         if (event.isCancelled()) return;
-        Language.CMD_HELP.help(event.getSender(), event.getCommand().getChatName());
+        Language.CMD_HELP.help(event.getSender(), event.getCommand().getChatName(), event.getCommand().getAliasesAsString());
         for (String helpLine : event.getCommand().getHelpLines()) {
             event.getSender().sendMessage(helpLine);
         }
@@ -22,7 +22,7 @@ public class ChunkyCommandEvents extends ChunkyCommandListener {
 
     public void onCommandList(ChunkyCommandEvent event) {
         if (event.isCancelled()) return;
-        Language.CMD_LIST.help(event.getSender(), event.getCommand().getChatName());
+        Language.CMD_LIST.help(event.getSender(), event.getCommand().getChatName(), event.getCommand().getAliasesAsString());
         for (Map.Entry<String, ChunkyCommand> childCommand : event.getCommand().getChildren().entrySet()) {
             if (childCommand.getValue().getDescription() == null) continue;
             event.getSender().sendMessage(childCommand.getValue().getName() + " - " + childCommand.getValue().getDescription());
