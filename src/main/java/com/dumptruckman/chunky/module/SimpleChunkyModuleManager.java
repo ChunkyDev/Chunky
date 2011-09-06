@@ -252,24 +252,29 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
      * @return Command found if any or null if none found
      */
     public ChunkyCommand getCommandByAlias(ChunkyCommand parentCommand, String alias) {
+        ChunkyCommand command = null;
         if (parentCommand == null) {
             for (Map.Entry<String, ChunkyCommand> registeredCommand : registeredCommands.entrySet()) {
-                if (registeredCommand.getValue().getName().equals(alias.toLowerCase())
-                        || (registeredCommand.getValue().getAliases() != null
-                            &&registeredCommand.getValue().getAliases().contains(alias.toLowerCase()))) {
+                if (registeredCommand.getValue().getName().equals(alias.toLowerCase())) {
                     return registeredCommand.getValue();
+                }
+                if (registeredCommand.getValue().getAliases() != null
+                            &&registeredCommand.getValue().getAliases().contains(alias.toLowerCase())) {
+                    command = registeredCommand.getValue();
                 }
             }
         } else {
             for (Map.Entry<String,ChunkyCommand> childCommand : parentCommand.getChildren().entrySet()) {
-                if (childCommand.getValue().getName().equals(alias.toLowerCase())
-                        || (childCommand.getValue().getAliases() != null
-                            && childCommand.getValue().getAliases().contains(alias.toLowerCase()))) {
+                if (childCommand.getValue().getName().equals(alias.toLowerCase())) {
                     return childCommand.getValue();
+                }
+                if (childCommand.getValue().getAliases() != null
+                            && childCommand.getValue().getAliases().contains(alias.toLowerCase())) {
+                    command = childCommand.getValue();
                 }
             }
         }
-        return null;
+        return command;
     }
 
     /**
