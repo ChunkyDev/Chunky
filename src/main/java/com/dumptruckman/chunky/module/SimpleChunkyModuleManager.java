@@ -14,6 +14,7 @@ import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
     private Chunky plugin;
     private HashMap<String, ChunkyCommand> registeredCommands;
+    private HashSet<JavaPlugin> registeredModules;
     private final Map<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>> listeners = new EnumMap<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>>(ChunkyEvent.Type.class);
     private final Comparator<RegisteredChunkyListener> comparer = new Comparator<RegisteredChunkyListener>() {
         public int compare(RegisteredChunkyListener i, RegisteredChunkyListener j) {
@@ -41,6 +43,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     public SimpleChunkyModuleManager(Chunky plugin) {
         this.plugin = plugin;
         registeredCommands = new HashMap<String, ChunkyCommand>();
+        registeredModules = new HashSet<JavaPlugin>();
     }
 
     /**
@@ -332,5 +335,23 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         if (!event.isCancelled())  {
             chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);
         }
+    }
+
+    /**
+     * Register your module with Chunky.  The main purpose of this method is so your module shows up in lists.
+     *
+     * @param module Plugin class of your Chunky Module.
+     */
+    public void registerModule(JavaPlugin module) {
+        registeredModules.add(module);
+    }
+
+    /**
+     * Retrieves all modules registered with Chunky.
+     *
+     * @return Set of registered Chunky Modules
+     */
+    public HashSet<JavaPlugin> getRegisteredModules() {
+        return registeredModules;
     }
 }

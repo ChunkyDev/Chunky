@@ -5,8 +5,10 @@ import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -79,4 +81,18 @@ public interface ChunkyModuleManager {
      * @param commands Array of words used in command
      */
     public void parseCommand(CommandSender sender, String[] commands);
+
+    /**
+     * Register your module with Chunky.  The main purpose of this method is so your module shows up in lists.
+     *
+     * @param module Plugin class of your Chunky Module.
+     */
+    public void registerModule(JavaPlugin module);
+
+    /**
+     * Retrieves all modules registered with Chunky.
+     *
+     * @return Set of registered Chunky Modules
+     */
+    public HashSet<JavaPlugin> getRegisteredModules();
 }
