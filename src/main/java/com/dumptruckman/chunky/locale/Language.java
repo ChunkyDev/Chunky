@@ -36,6 +36,9 @@ public enum Language {
     CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", ""),
     CMD_CHUNKY_PERMISSION_DESC ("command.chunky_permission_desc", "Allows you to set permissions for other players.", ""),
     CMD_CHUNKY_PERMISSION_HELP ("command.chunky_permission_help", "This command houses all the sub-commands necessary to set up permissions for others.", ""),
+    CMD_CHUNKY_PLAYER_DESC ("command.chunky_permission_desc", "Allows you to set permissions for other players.", ""),
+    CMD_CHUNKY_PLAYER_HELP ("command.chunky_permission_help", "This command houses all the sub-commands necessary to set up permissions for others.", ""),
+
 
     CMD_HELP ("command.help", "Help for command %1 (%2)", ""),
     CMD_LIST ("command.list", "Sub-command list for %1 (%2)", ""),

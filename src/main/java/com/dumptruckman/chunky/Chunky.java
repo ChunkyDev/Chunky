@@ -2,7 +2,7 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.CommandChunky;
 import com.dumptruckman.chunky.command.CommandChunkyClaim;
-import com.dumptruckman.chunky.command.CommandChunkyPermission;
+import com.dumptruckman.chunky.command.CommandChunkyPlayer;
 import com.dumptruckman.chunky.command.CommandChunkyUnclaim;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
@@ -200,10 +200,10 @@ public class Chunky extends JavaPlugin {
             getModuleManager().registerCommand(commandChunkyClaim);
 
             // /chunky permission
-            ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
-                    Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP),
-                    new CommandChunkyPermission(), commandChunky);
+            ChunkyCommand commandChunkyPermission = new ChunkyCommand("player", Arrays.asList("p", "pl", "player"),
+                    Language.getString(Language.CMD_CHUNKY_PLAYER_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_PLAYER_HELP),
+                    new CommandChunkyPlayer(), commandChunky);
         } catch (ChunkyUnregisteredException ignore) {}
     }
 
