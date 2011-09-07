@@ -29,6 +29,7 @@ public class Chunky extends JavaPlugin {
 
     private static Method METHOD = null;
     private static Chunky INSTANCE;
+    private static Integer BUILD;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
     // Event listeners
     final private PlayerEvents playerEvents = new PlayerEvents();
@@ -65,6 +66,15 @@ public class Chunky extends JavaPlugin {
 
         // Grab the Plugin Description File
         PluginDescriptionFile pdf = getDescription();
+
+        // Store the build number
+        try {
+            BUILD = Integer.valueOf(pdf.getVersion().substring(pdf.getVersion().indexOf("-b") + 1));
+            Logging.debug(BUILD.toString());
+        } catch (NumberFormatException ignore) {
+            Logging.warning("Build number unattainable.");
+            BUILD = 0;
+        }
 
         // Loads the configuration
         try {
@@ -115,6 +125,10 @@ public class Chunky extends JavaPlugin {
      */
     public static Chunky getInstance() {
         return INSTANCE;
+    }
+
+    public static Integer getBuildNumber() {
+        return BUILD;
     }
 
     /**
