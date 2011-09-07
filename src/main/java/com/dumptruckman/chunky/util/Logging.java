@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.util;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.config.Config;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.util.logging.Logger;
@@ -15,14 +16,14 @@ public class Logging {
 
     public static void load(Chunky chunky) {
         PluginDescriptionFile pdf = chunky.getDescription();
-        NAME = pdf.getName() + " ";
-        VERSION = pdf.getVersion() + " ";
+        NAME = pdf.getName();
+        VERSION = pdf.getVersion();
     }
 
     private static String getString(String message, boolean showVersion) {
-        String string = NAME;
-        if (showVersion) string += VERSION;
-        return string += message;
+        String string = "[" + NAME;
+        if (showVersion) string += " " + VERSION;
+        return string += "] " + message;
     }
 
     public static Logger getLog() {
@@ -42,7 +43,8 @@ public class Logging {
     }
 
     public static void debug(String message) {
-        LOG.info(getString(message, true));
+        if (Config.isDebugging())
+            LOG.info(getString(message, true));
     }
 
     public static void warning(String message) {
