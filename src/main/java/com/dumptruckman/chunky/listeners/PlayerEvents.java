@@ -3,16 +3,10 @@ package com.dumptruckman.chunky.listeners;
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerItemUseEvent;
-import com.dumptruckman.chunky.event.object.player.ChunkyPlayerSwitchEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyPermissionType;
-import com.dumptruckman.chunky.object.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
-import com.dumptruckman.chunky.util.MinecraftTools;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
 /**
@@ -58,56 +52,6 @@ public class PlayerEvents extends PlayerListener{
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if(MinecraftTools.isUsable(event.getItem().getTypeId())) {
-                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
-
-                boolean isCancelled = true;
-                ChunkyPermissionType permType = ChunkyPermissionType.NONE;
-
-                // Permission chain
-                if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
-                    permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
-                    isCancelled = false;
-                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.ITEMUSE)) {
-                    permType = ChunkyPermissionType.PERMISSION;
-                    isCancelled = false;
-                }
-                //Groups here?:
-
-                ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem(), permType);
-                chunkyEvent.setCancelled(isCancelled);
-                Chunky.getModuleManager().callEvent(chunkyEvent);
-
-                event.setCancelled(chunkyEvent.isCancelled());
-            }
-            if(MinecraftTools.isSwitchable(event.getClickedBlock().getTypeId())) {
-                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
-                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
-
-                boolean isCancelled = true;
-                ChunkyPermissionType permType = ChunkyPermissionType.NONE;
-
-                // Permission chain
-                if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
-                    permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
-                    isCancelled = false;
-                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.SWITCH)) {
-                    permType = ChunkyPermissionType.PERMISSION;
-                    isCancelled = false;
-                }
-                //Groups here?:
-
-                ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
-                chunkyEvent.setCancelled(isCancelled);
-                Chunky.getModuleManager().callEvent(chunkyEvent);
-                
-                event.setCancelled(chunkyEvent.isCancelled());
-            }
-        }
-
+        
     }
 }
