@@ -122,6 +122,10 @@ public class Config {
         return getString(MYSQL_PORT);
     }
 
+    public static Boolean isDebugging() {
+        return getBoolean(DEBUG);
+    }
+
     public static Integer getPlayerChunkLimitDefault() {
         return getInt(PLAYER_CHUNK_LIMIT);
     }
