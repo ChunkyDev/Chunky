@@ -70,7 +70,6 @@ public class Chunky extends JavaPlugin {
         // Store the build number
         try {
             BUILD = Integer.valueOf(pdf.getVersion().substring(pdf.getVersion().indexOf("-b") + 2));
-            Logging.debug(BUILD.toString());
         } catch (NumberFormatException ignore) {
             Logging.warning("Build number unattainable.");
             BUILD = 0;
