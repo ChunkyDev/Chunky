@@ -1,6 +1,9 @@
 package com.dumptruckman.chunky;
 
-import com.dumptruckman.chunky.command.*;
+import com.dumptruckman.chunky.command.CommandChunky;
+import com.dumptruckman.chunky.command.CommandChunkyClaim;
+import com.dumptruckman.chunky.command.CommandChunkyPlayer;
+import com.dumptruckman.chunky.command.CommandChunkyUnclaim;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
@@ -29,7 +32,6 @@ public class Chunky extends JavaPlugin {
 
     private static Method METHOD = null;
     private static Chunky INSTANCE;
-    private static Integer BUILD;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
     // Event listeners
     final private PlayerEvents playerEvents = new PlayerEvents();
@@ -66,15 +68,6 @@ public class Chunky extends JavaPlugin {
 
         // Grab the Plugin Description File
         PluginDescriptionFile pdf = getDescription();
-
-        // Store the build number
-        try {
-            BUILD = Integer.valueOf(pdf.getVersion().substring(pdf.getVersion().indexOf("-b") + 1));
-            Logging.debug(BUILD.toString());
-        } catch (NumberFormatException ignore) {
-            Logging.warning("Build number unattainable.");
-            BUILD = 0;
-        }
 
         // Loads the configuration
         try {
@@ -125,10 +118,6 @@ public class Chunky extends JavaPlugin {
      */
     public static Chunky getInstance() {
         return INSTANCE;
-    }
-
-    public static Integer getBuildNumber() {
-        return BUILD;
     }
 
     /**
@@ -208,22 +197,13 @@ public class Chunky extends JavaPlugin {
                     Language.getString(Language.CMD_CHUNKY_UNCLAIM_DESC),
                     Language.getStrings(Language.CMD_CHUNKY_UNCLAIM_HELP),
                     new CommandChunkyUnclaim(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyUnclaim);
+            getModuleManager().registerCommand(commandChunkyClaim);
 
-            // /chunky player
-            ChunkyCommand commandChunkyPlayer = new ChunkyCommand("player", Arrays.asList("p", "pl", "player"),
+            // /chunky permission
+            ChunkyCommand commandChunkyPermission = new ChunkyCommand("player", Arrays.asList("p", "pl", "player"),
                     Language.getString(Language.CMD_CHUNKY_PLAYER_DESC),
                     Language.getStrings(Language.CMD_CHUNKY_PLAYER_HELP),
                     new CommandChunkyPlayer(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyPlayer);
-
-            // /chunky player permission
-            ChunkyCommand commandChunkyPlayerPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
-                    Language.getString(Language.CMD_CHUNKY_PLAYER_PERMISSION_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PLAYER_PERMISSION_HELP),
-                    new CommandChunkyPlayerPermission(), commandChunkyPlayer);
-            getModuleManager().registerCommand(commandChunkyPlayerPermission);
-            
         } catch (ChunkyUnregisteredException ignore) {}
     }
 

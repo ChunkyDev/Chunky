@@ -104,9 +104,10 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
                 chunkyEvent.setCancelled(isCancelled);
                 Chunky.getModuleManager().callEvent(chunkyEvent);
-
+                
                 event.setCancelled(chunkyEvent.isCancelled());
             }
         }
+
     }
 }
