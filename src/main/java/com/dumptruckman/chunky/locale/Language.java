@@ -1,13 +1,13 @@
 package com.dumptruckman.chunky.locale;
 
 import com.dumptruckman.chunky.Chunky;
-import com.dumptruckman.chunky.config.CommentedConfiguration;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.util.config.Configuration;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,65 +19,73 @@ import java.util.List;
  * @author dumptruckman, SwearWord
  */
 public enum Language {
-    NO_COMMAND_PERMISSION ("command.no_permission", "You do not have permission to access this command!", ""),
-    IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", ""),
-    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", ""),
+    NO_COMMAND_PERMISSION ("command.no_permission", "You do not have permission to access this command!", 0),
+    IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", 0),
+    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", 0),
 
     /**
      * Command Language
      */
     CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
-            "&fVersion - %1", "Loaded Modules - %2",
-            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!"), ""),
-    CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", ""),
-    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", ""),
-    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", ""),
-    CMD_CHUNKY_UNCLAIM_DESC ("command.chunky_unclaim_desc", "Unclaims the chunk the user stands in.", ""),
-    CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", ""),
-    CMD_CHUNKY_PLAYER_PERMISSION_DESC ("command.chunky__player_permission_desc", "Allows you to set permissions for other players.", ""),
+            "&fVersion: %1", "Loaded Modules - %2",
+            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!"), 0),
+    CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", 0),
+    CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", 0),
+    CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", 0),
+    CMD_CHUNKY_UNCLAIM_DESC ("command.chunky_unclaim_desc", "Unclaims the chunk the user stands in.", 0),
+    CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", 0),
+    CMD_CHUNKY_PLAYER_PERMISSION_DESC ("command.chunky__player_permission_desc", "Allows you to set permissions for other players.", 0),
     CMD_CHUNKY_PLAYER_PERMISSION_HELP ("command.chunky_player_permission_help",
             Arrays.asList("Usage for this command is %1 [global/g:][-]<flags> <player>",
                     "(Optional) global: (or g: for short) - allows settings a player's permissions for ALL of your chunks.",
                     "Flags - The type of permissions to give.  b: build, d: destroy, i: item use, s: switch.  To remove, use a minus sign before the flags.", "" +
-                    "Example: \"%1 g:-d dumptruckman\" removes destroy permission from all your chunks for dumptruckman"), ""),
-    CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", ""),
-    CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", ""),
+                    "Example: \"%1 g:-d dumptruckman\" removes destroy permission from all your chunks for dumptruckman"), 0),
+    CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
+    CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", 0),
 
 
-    CMD_HELP ("command.help", "Help for command %1 (%2)", ""),
-    CMD_LIST ("command.list", "Sub-command list for %1 (%2)", ""),
+    CMD_HELP ("command.help", "Help for command: %1 (%2)", 0),
+    CMD_LIST ("command.list", "Sub-command list for: %1 (%2)", 0),
 
 
-    ERROR ("error", "[Error]"),
-    SUCCESS ("success", "[Success]"),
-    HELP ("help", "[Help]"),
-    CHUNK_OWNED ("chunk.owned", "This chunk is owned by - %1", ""),
-    CHUNK_NOT_OWNED("chunk.not_owned", "This chunk is not owned!"),
-    CHUNK_NONE_OWNED("chunk.none_owned", "You do not own any chunks!"),
-    CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", ""),
-    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", ""),
-    CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", ""),
+    ERROR ("error", "[Error]", 0),
+    SUCCESS ("success", "[Success]", 0),
+    HELP ("help", "[Help]", 0),
+    CHUNK_OWNED ("chunk.owned", "This chunk is owned by: %1", 0),
+    CHUNK_NOT_OWNED("chunk.not_owned", "This chunk is not owned!", 0),
+    CHUNK_NONE_OWNED("chunk.none_owned", "You do not own any chunks!", 0),
+    CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", 0),
+    CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", 0),
+    CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", 0),
     ;
+
+    private static List<String> deprecatedPaths = Arrays.asList(
+            // Put old unused paths in here to be removed from the language file
+            
+    );
+
 
     private String path;
     private List<String> def;
-    private String[] comments;
-    private static CommentedConfiguration language;
+    private int build;
+    private static int BUILD;
+    private static Configuration language;
 
-    Language(String path, String def, String... comments) {
+    Language(String path, String def, int lastChangedBuild) {
         this.path = path;
         this.def = Arrays.asList(def);
-        this.comments = comments;
+        this.build = lastChangedBuild;
     }
 
-    Language(String path, List<String> def, String... comments) {
+    Language(String path, List<String> def, int lastChangedBuild) {
         this.path = path;
         this.def = def;
-        this.comments = comments;
+        this.build = lastChangedBuild;
     }
 
     /**
      * Retrieves the path for a config option
+     *
      * @return The path for a config option
      */
     public String getPath() {
@@ -86,6 +94,7 @@ public enum Language {
 
     /**
      * Retrieves the default value for a config path
+     *
      * @return The default value for a config path
      */
     public List<String> getDefault() {
@@ -93,21 +102,17 @@ public enum Language {
     }
 
     /**
-     * Retrieves the comment for a config path
-     * @return The comments for a config path
+     * Retrieves the build number that this language was last changed on
+     *
+     * @return The build number this language was last changed on
      */
-    public String[] getComments() {
-        if (comments != null) {
-            return comments;
-        }
-
-        String[] comments = new String[1];
-        comments[0] = "";
-        return comments;
+    public int getBuild() {
+        return build;
     }
 
     /**
      * Loads the language data into memory and sets defaults
+     *
      * @throws java.io.IOException
      */
     public static void load() throws IOException {
@@ -122,11 +127,16 @@ public enum Language {
         }
 
         // Load the language file into memory
-        language = new CommentedConfiguration(languageFile);
+        language = new Configuration(languageFile);
         language.load();
+
+        BUILD = language.getInt("last_run_build", 0);
 
         // Sets defaults language values
         setDefaults();
+        removeDeprecatedLanguage();
+        
+        language.setProperty("last_run_build", Chunky.getBuildNumber());
 
         // Saves the configuration from memory to file
         language.save();
@@ -137,12 +147,16 @@ public enum Language {
      */
     private static void setDefaults() {
         for (Language path : Language.values()) {
-            language.addComment(path.getPath(), path.getComments());
-            if (language.getString(path.getPath()) == null) {
+            if (language.getString(path.getPath()) == null || path.getBuild() > BUILD) {
                 language.setProperty(path.getPath(), path.getDefault());
             }
         }
-        language.setHeader("# Please don't use colons in your strings! :) Enjoy the irony.");
+    }
+
+    private static void removeDeprecatedLanguage() {
+        for (String path : deprecatedPaths) {
+            language.removeProperty(path);
+        }
     }
 
     private static String formatString(String string, Object...args) {
