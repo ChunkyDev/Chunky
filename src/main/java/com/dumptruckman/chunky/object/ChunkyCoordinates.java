@@ -15,7 +15,7 @@ public class ChunkyCoordinates {
     public ChunkyCoordinates(Location location)
     {
         this.x = (int)(location.getX()/16)-1;
-        this.z = (int)(location.getZ()/16)-1;
+        this.z = (int)(location.getZ()/16);
         this.world = location.getWorld().getName();
     }
 
