@@ -28,6 +28,16 @@ public class ChunkyPermissibleObject extends ChunkyObject {
         setPerm(object.hashCode(), type, status, true);
     }
 
+    public void setPerms(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
+        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
+        for (ChunkyPermissions.Flags flag : flags) {
+            setPerm(object, flag, true);
+        }
+        for (ChunkyPermissions.Flags flag : notSet) {
+            setPerm(object, flag, false);
+        }
+    }
+
     public void setPerm(int object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
         ChunkyPermissions perms = permissions.get(object);
 
