@@ -58,6 +58,10 @@ public enum Language {
     CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", 0),
     CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", 0),
     CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", 0),
+
+    PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
+    PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0);
+
     ;
 
     private static List<String> deprecatedPaths = Arrays.asList(
