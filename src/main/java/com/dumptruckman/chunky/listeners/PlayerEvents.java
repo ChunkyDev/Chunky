@@ -10,6 +10,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
 import com.dumptruckman.chunky.permission.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
 import com.dumptruckman.chunky.util.MinecraftTools;
 import org.bukkit.event.block.Action;
@@ -23,6 +24,7 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerMove(PlayerMoveEvent event) {
         if(event.isCancelled()) return;
+        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk fromChunk = ChunkyManager.getChunk(event.getFrom());
@@ -52,12 +54,15 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) return;
+        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         String[] commands = event.getMessage().substring(1).split("\\s");
         Chunky.getModuleManager().parseCommand(event.getPlayer(), commands);
     }
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(MinecraftTools.isUsable(event.getItem().getTypeId())) {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());

@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
 import com.dumptruckman.chunky.permission.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -16,6 +17,8 @@ public class BlockEvents extends BlockListener {
 
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
+        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
 
@@ -33,6 +36,8 @@ public class BlockEvents extends BlockListener {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
+        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk  = ChunkyManager.getChunk(event.getBlock().getLocation());
 
