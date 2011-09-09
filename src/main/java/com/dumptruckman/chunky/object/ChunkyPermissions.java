@@ -1,7 +1,5 @@
 package com.dumptruckman.chunky.object;
 
-import com.sun.deploy.net.proxy.StaticProxyManager;
-
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
