@@ -13,6 +13,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
+import com.dumptruckman.chunky.stats.CallHome;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -57,6 +58,9 @@ public class Chunky extends JavaPlugin {
     final public void onEnable() {
         //Load INSTANCE for other classes.
         INSTANCE = this;
+
+        //Call Home
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this,new CallHome(this),0L,20L*60L*10);
 
         // Grab the PluginManager
         final PluginManager pm = getServer().getPluginManager();
