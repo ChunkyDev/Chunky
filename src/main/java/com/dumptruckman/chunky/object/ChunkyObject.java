@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -21,10 +22,12 @@ public abstract class ChunkyObject {
 
     private String name;
     private int classHash;
+    private ChunkyPermissions selfPerms;
 
     public ChunkyObject(String name) {
         this.name = name;
         classHash = this.getClass().getName().hashCode();
+        selfPerms = new ChunkyPermissions();
     }
 
     public String getName() {
@@ -167,7 +170,38 @@ public abstract class ChunkyObject {
 
     }
 
+    public boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
+        return selfPerms.contains(type);
+    }
 
+    public EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
+        return selfPerms.flags;
+    }
+
+    public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
+        setDefaultPerm(type, status, true);
+    }
+
+    public void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
+        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
+        for (ChunkyPermissions.Flags flag : flags) {
+            setDefaultPerm(flag, true);
+        }
+        for (ChunkyPermissions.Flags flag : notSet) {
+            setDefaultPerm(flag, false);
+        }
+    }
+
+    public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
+        // Set flag
+        selfPerms.setFlag(type, status);
+
+        // Persist if requested
+        if (persist) {
+            //TODO persist this
+            //DatabaseManager.updatePermissions(this.hashCode(), type, status);
+        }
+    }
 
     /**
      * Returns true if the receiver is a leaf.
