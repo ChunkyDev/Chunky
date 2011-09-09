@@ -23,6 +23,7 @@ public abstract class SQLDB implements Database {
                 ChunkyChunk chunk = ChunkyManager.getChunk(coordinates);
                 chunk.setName(chunks.getString("Name"));
                 chunk.setOwner(chunkyPlayer, true);
+                setDefaultPermissions(chunk);
 
             }
         } catch (SQLException ignored) {
@@ -49,6 +50,7 @@ public abstract class SQLDB implements Database {
                 addOwnedChunks(player);
                 addOwnedPlayers(player);
                 setPermissions(player);
+                setDefaultPermissions(player);
             }
         } catch (SQLException ignored) {
         }
@@ -64,6 +66,21 @@ public abstract class SQLDB implements Database {
                 player.setPerm(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1), false);
                 player.setPerm(object, ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1), false);
                 player.setPerm(object, ChunkyPermissions.Flags.ITEMUSE, (perms.getInt("ITEMUSE") == 1), false);
+            }
+        } catch (SQLException ignored) {
+        }
+
+    }
+
+    private void setDefaultPermissions(ChunkyObject object) {
+
+        ResultSet perms = query(QueryGen.getSelectPermissions(object.hashCode()));
+        try {
+            while(perms.next()) {
+                object.setDefaultPerm(ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
+                object.setDefaultPerm(ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1), false);
+                object.setDefaultPerm(ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1), false);
+                object.setDefaultPerm(ChunkyPermissions.Flags.ITEMUSE, (perms.getInt("ITEMUSE") == 1), false);
             }
         } catch (SQLException ignored) {
         }

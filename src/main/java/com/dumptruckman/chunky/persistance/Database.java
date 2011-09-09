@@ -36,5 +36,4 @@ public interface Database {
     public void addPlayer(ChunkyPlayer player);
 
     public void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status);
-
 }

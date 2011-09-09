@@ -86,5 +86,9 @@ public class DatabaseManager {
         database.updatePermissions(permissiblehash,objecthash,type,status);
     }
 
+    public static void updateDefaultPermissions(int permissiblehash, ChunkyPermissions.Flags type, boolean status) {
+        database.updatePermissions(permissiblehash,permissiblehash, type,status);
+    }
+
 
 }

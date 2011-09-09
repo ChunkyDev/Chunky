@@ -41,6 +41,10 @@ public class QueryGen {
         return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash;
     }
 
+    public static String getSelectDefaultPermissions(int hash) {
+        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash + " && ObjectHash = " + hash;
+    }
+
     public static String getUpdatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
         int tiny = 0;
         if(status) tiny=1;

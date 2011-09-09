@@ -199,8 +199,7 @@ public abstract class ChunkyObject {
 
         // Persist if requested
         if (persist) {
-            //TODO persist this
-            //DatabaseManager.updatePermissions(this.hashCode(), type, status);
+            DatabaseManager.updateDefaultPermissions(this.hashCode(), type, status);
         }
     }
 
