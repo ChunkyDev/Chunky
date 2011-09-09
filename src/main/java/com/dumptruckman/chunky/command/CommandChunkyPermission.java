@@ -13,6 +13,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -40,7 +41,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
         String permissions = "";
         String[] tokens = args[0].split(":", 2);
-        ChunkyObject target;
+        ChunkyObject target = null;
         
         if (tokens.length == 1){
         	if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
@@ -78,14 +79,36 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 int state = 0;
                 if (permissions.startsWith("-")) state = -1;
                 if (permissions.startsWith("+")) state = 1;
-                for (char perm : permissions.toCharArray()){
+                EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
+                for (char perm : permissions.toCharArray()) {
                     ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
                     if (flag == null) continue;
-                    switch (state) {
-                        case -1:
-                            //TODO can't finish, too late.  Realized i have a strange situation when i have state == 0;
-                    }
+                    flags.add(flag);
                 }
+                switch (state) {
+                    case -1:
+                        for (ChunkyPermissions.Flags flag : flags) {
+                            permPlayer.setPerm(target, flag, false);
+                        }
+                        break;
+
+                    case 1:
+                        for (ChunkyPermissions.Flags flag : flags) {
+                            permPlayer.setPerm(target, flag, true);
+                        }
+                        break;
+
+                    case 0:
+                        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
+                        for (ChunkyPermissions.Flags flag : flags) {
+                            permPlayer.setPerm(target, flag, true);
+                        }
+                        for (ChunkyPermissions.Flags flag : notSet) {
+                            permPlayer.setPerm(target, flag, false);
+                        }
+                        break;
+                }
+                // TODO NEEDS FEEDBACK
         	}
         } else if (args.length > 2){
         	Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
