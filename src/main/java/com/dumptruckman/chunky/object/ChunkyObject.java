@@ -155,7 +155,6 @@ public abstract class ChunkyObject {
      * @param keepChildren false transfers the object's children to current owner.
      */
     public void setOwner(ChunkyObject object, Boolean keepChildren) {
-        //TODO IS THIS RIGHT?!?!
         ChunkyObject oldowner = this.owner;
         if (owner != null)
             if(keepChildren) owner.removeOwnable(this);
