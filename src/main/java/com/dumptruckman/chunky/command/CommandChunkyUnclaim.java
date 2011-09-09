@@ -7,7 +7,7 @@ import com.dumptruckman.chunky.module.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
-import com.dumptruckman.chunky.permission.Permissions;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;

@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.permission;
+package com.dumptruckman.chunky.permission.bukkit;
 
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.entity.Player;

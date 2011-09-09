@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.EnumSet;
@@ -175,7 +176,7 @@ public abstract class ChunkyObject {
     }
 
     public EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
-        return selfPerms.flags;
+        return selfPerms.getFlags();
     }
 
     public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {

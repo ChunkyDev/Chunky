@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.object.*;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.util.Logging;
 
 import java.sql.ResultSet;

@@ -7,8 +7,8 @@ import com.dumptruckman.chunky.event.object.player.ChunkyPlayerItemUseEvent;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerSwitchEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyPermissionType;
-import com.dumptruckman.chunky.object.ChunkyPermissions;
+import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
+import com.dumptruckman.chunky.permission.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import com.dumptruckman.chunky.util.MinecraftTools;
@@ -66,16 +66,7 @@ public class PlayerEvents extends PlayerListener{
                 boolean isCancelled = true;
                 ChunkyPermissionType permType = ChunkyPermissionType.NONE;
 
-                // Permission chain
-                if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
-                    permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
-                    isCancelled = false;
-                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.ITEMUSE)) {
-                    permType = ChunkyPermissionType.PERMISSION;
-                    isCancelled = false;
-                }
-                //Groups here?:
+                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
 
                 ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem(), permType);
                 chunkyEvent.setCancelled(isCancelled);
@@ -90,16 +81,7 @@ public class PlayerEvents extends PlayerListener{
                 boolean isCancelled = true;
                 ChunkyPermissionType permType = ChunkyPermissionType.NONE;
 
-                // Permission chain
-                if (chunkyChunk.isOwnedBy(chunkyPlayer)) {
-                    permType = ChunkyPermissionType.OWNER;
-                    if (chunkyChunk.isDirectlyOwnedBy(chunkyPlayer)) permType = ChunkyPermissionType.DIRECT_OWNER;
-                    isCancelled = false;
-                } else if (chunkyPlayer.hasPerm(chunkyChunk, ChunkyPermissions.Flags.SWITCH)) {
-                    permType = ChunkyPermissionType.PERMISSION;
-                    isCancelled = false;
-                }
-                //Groups here?:
+                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
 
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
                 chunkyEvent.setCancelled(isCancelled);

@@ -2,15 +2,13 @@ package com.dumptruckman.chunky.command;
 
 import java.util.*;
 
-import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
-import com.dumptruckman.chunky.exceptions.ChunkyException;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.module.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.object.*;
 
-import com.dumptruckman.chunky.persistance.DatabaseManager;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

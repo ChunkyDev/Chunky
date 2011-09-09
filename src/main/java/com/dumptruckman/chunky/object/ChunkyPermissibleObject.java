@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.object;
 
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.EnumSet;
@@ -21,7 +22,7 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     }
 
     public EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyObject object) {
-        return permissions.get(object.hashCode()).flags;
+        return permissions.get(object.hashCode()).getFlags();
     }
 
     public void setPerm(ChunkyObject object, ChunkyPermissions.Flags type, boolean status) {

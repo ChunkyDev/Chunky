@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.object;
+package com.dumptruckman.chunky.permission;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -43,6 +43,10 @@ public class ChunkyPermissions {
 
     public boolean contains(Flags flag) {
         return flags.contains(flag);
+    }
+
+    public EnumSet<Flags> getFlags() {
+        return flags;
     }
 
     public void setFlag(Flags flag, boolean status) {

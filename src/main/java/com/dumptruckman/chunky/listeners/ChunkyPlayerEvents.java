@@ -2,8 +2,8 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.event.object.player.*;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
-import com.dumptruckman.chunky.object.ChunkyPermissionType;
-import com.dumptruckman.chunky.permission.Permissions;
+import com.dumptruckman.chunky.permission.ChunkyPermissionType;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
 
 public class ChunkyPlayerEvents extends ChunkyPlayerListener {
     @Override

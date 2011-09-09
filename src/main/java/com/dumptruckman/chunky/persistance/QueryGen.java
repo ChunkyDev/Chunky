@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.*;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
 public class QueryGen {
 

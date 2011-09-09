@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.persistance;
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
-import com.dumptruckman.chunky.object.ChunkyPermissions;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
