@@ -40,7 +40,7 @@ public enum Language {
             		"Note: ChunkName and g:group flags are not yet availiable.",
                     "(Optional) */ChunkName - allows settings a player's permissions for ALL of your chunks or chunks with a specific name.",
                     "Flags - The type of permissions to give.  b: build, d: destroy, i: item use, s: switch.  To add, use a plus sign before the flag. To remove, use a minus sign.", "" +
-                    "Example: \"%1 *:-d dumptruckman\" removes destroy permission from all your chunks for dumptruckman"), 0),
+                    "Example: \"%1 *:-bd dumptruckman\" removes build and destroy permission from all your chunks for dumptruckman"), 0),
     CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
     CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", 0),
 
@@ -60,7 +60,8 @@ public enum Language {
     CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", 0),
 
     PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
-    PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0);
+    PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0),
+    FEATURE_NYI("feature_nyi", "Sorry, that feature is not yet implemented.", 0),
 
     ;
 

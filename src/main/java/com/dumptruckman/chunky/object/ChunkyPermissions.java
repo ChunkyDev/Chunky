@@ -1,7 +1,11 @@
 package com.dumptruckman.chunky.object;
 
+import com.sun.deploy.net.proxy.StaticProxyManager;
+
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -9,7 +13,28 @@ import java.util.EnumSet;
 public class ChunkyPermissions {
 
     public enum Flags {
-        BUILD, DESTROY, ITEMUSE, SWITCH
+        BUILD('b'), DESTROY('d'), ITEMUSE('i'), SWITCH('s');
+
+        private char rep;
+
+        private static final Map<Character, Flags> lookup = new HashMap<Character, Flags>();
+
+        static {
+            for(Flags f : EnumSet.allOf(Flags.class))
+                lookup.put(f.getRep(), f);
+        }
+
+        Flags(char rep) {
+            this.rep = rep;
+        }
+
+        private char getRep() {
+            return rep;
+        }
+
+        public static Flags get(char c) {
+            return lookup.get(c);
+        }
     }
 
     protected EnumSet<Flags> flags;

@@ -1,8 +1,6 @@
 package com.dumptruckman.chunky.command;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
@@ -30,7 +28,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         }
 
         if (args.length == 0){
-        	Language.CMD_CHUNKY_PERMISSION_HELP.good(sender);
+            // TODO: Maybe this should show a readout of permissions given or something.
+        	Language.CMD_CHUNKY_PERMISSION_HELP.help(sender);
         	return;
         }
         
@@ -38,18 +37,18 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
     }
         
     public void setPerms(ChunkyPlayer cPlayer, String[] args){
-        
-        ArrayList<ChunkyChunk> chunks = new ArrayList<ChunkyChunk>();
-        String[] permissions;
-        String[] tokens = args[0].split(":");
+
+        String permissions = "";
+        String[] tokens = args[0].split(":", 2);
+        ChunkyObject target;
         
         if (tokens.length == 1){
         	if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
         		Language.CHUNK_NOT_OWNED.bad(cPlayer);
         		return;
         	}
-        	chunks.add(cPlayer.getCurrentChunk());
-        	permissions = tokens[0].split(",");
+        	target = cPlayer.getCurrentChunk();
+        	permissions = tokens[0];
         } else if (tokens.length == 2){
         	if (tokens[0].equals("*")){
         		HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
@@ -57,46 +56,36 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         			Language.CHUNK_NONE_OWNED.bad(cPlayer);
         			return;
         		}
-        		HashSet<ChunkyObject> ownedChunks = ownables.get(ChunkyChunk.class.getName().hashCode());
-        		for (ChunkyObject chunkyObject : ownedChunks){
-        			chunks.add((ChunkyChunk) chunkyObject);
-        		}
+        		target = cPlayer;
         	} else {
-        		Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
+        		Language.FEATURE_NYI.bad(cPlayer);
         		return;
         	}
-        	permissions = tokens[1].split(",");
-        } else {
-        	Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
-        	return;
+        	permissions = tokens[1];
         }
         
         // No player or group defined
         if (args.length == 1){
+            // TODO fix when objects have their own flags.
         	Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
     		return;
         } else if (args.length == 2) {
         	if (args[1].startsWith("g:")){
-        		Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
+        		Language.FEATURE_NYI.bad(cPlayer);
         		return;
         	} else {
-        		ChunkyPlayer target = ChunkyManager.getChunkyPlayer(args[1]);
-        		for (ChunkyChunk chunk : chunks){
-        			for (String perm : permissions){
-        				boolean status = false;
-        				if(perm.startsWith("+") || perm.startsWith("-")){
-        					if(perm.startsWith("+")){
-            					status = true;
-            				} else if (perm.startsWith("-")){
-            					status = false;
-            				}
-        					target.setPerm(chunk, stringToPerm(perm.substring(1)), status);
-        				} else {
-        					status = !target.getFlags(chunk).contains(stringToPerm(perm));
-        					target.setPerm(chunk, stringToPerm(perm), status);
-        				}
-        			}
-        		}
+                ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(args[1]);
+                int state = 0;
+                if (permissions.startsWith("-")) state = -1;
+                if (permissions.startsWith("+")) state = 1;
+                for (char perm : permissions.toCharArray()){
+                    ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
+                    if (flag == null) continue;
+                    switch (state) {
+                        case -1:
+                            //TODO can't finish, too late.  Realized i have a strange situation when i have state == 0;
+                    }
+                }
         	}
         } else if (args.length > 2){
         	Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
