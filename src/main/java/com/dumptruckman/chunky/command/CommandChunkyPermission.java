@@ -77,7 +77,6 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
         // No player or group defined
         if (args.length == 1){
-            // TODO fix when objects have their own flags.
             switch (state) {
                 case -1:
                     for (ChunkyPermissions.Flags flag : flags) {
