@@ -5,6 +5,7 @@ import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
@@ -23,6 +24,11 @@ public class ChunkyManager {
         PLAYERS.put(name,player);
         DatabaseManager.addPlayer(player);
         return player;
+    }
+    
+    public static ChunkyPlayer getChunkyPlayer(Player player)
+    {
+        return getChunkyPlayer(player.getName());
     }
 
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {

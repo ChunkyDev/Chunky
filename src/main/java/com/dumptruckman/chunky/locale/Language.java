@@ -34,12 +34,13 @@ public enum Language {
     CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", 0),
     CMD_CHUNKY_UNCLAIM_DESC ("command.chunky_unclaim_desc", "Unclaims the chunk the user stands in.", 0),
     CMD_CHUNKY_UNCLAIM_HELP ("command.chunky_unclaim_help", "Unclaims the chunk you are standing in.", 0),
-    CMD_CHUNKY_PLAYER_PERMISSION_DESC ("command.chunky__player_permission_desc", "Allows you to set permissions for other players.", 0),
-    CMD_CHUNKY_PLAYER_PERMISSION_HELP ("command.chunky_player_permission_help",
-            Arrays.asList("Usage for this command is %1 [global/g:][-]<flags> <player>",
-                    "(Optional) global: (or g: for short) - allows settings a player's permissions for ALL of your chunks.",
-                    "Flags - The type of permissions to give.  b: build, d: destroy, i: item use, s: switch.  To remove, use a minus sign before the flags.", "" +
-                    "Example: \"%1 g:-d dumptruckman\" removes destroy permission from all your chunks for dumptruckman"), 0),
+    CMD_CHUNKY_PERMISSION_DESC ("command.chunky__player_permission_desc", "Allows you to set permissions for other players and eventually groups.", 0),
+    CMD_CHUNKY_PERMISSION_HELP ("command.chunky_player_permission_help",
+            Arrays.asList("Usage for this command is %1 [*/ChunkName:][+/-]<flags> [player/g:group]",
+            		"Note: ChunkName and g:group flags are not yet availiable.",
+                    "(Optional) */ChunkName - allows settings a player's permissions for ALL of your chunks or chunks with a specific name.",
+                    "Flags - The type of permissions to give.  b: build, d: destroy, i: item use, s: switch.  To add, use a plus sign before the flag. To remove, use a minus sign.", "" +
+                    "Example: \"%1 *:-d dumptruckman\" removes destroy permission from all your chunks for dumptruckman"), 0),
     CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
     CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", 0),
 
