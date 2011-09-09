@@ -34,19 +34,18 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         	return;
         }
         
+        setPerms(ChunkyManager.getChunkyPlayer((Player) sender), args);
+    }
         
-        
-        Player player = (Player) sender;
-
-        String[] tokens = args[0].split(":");
-        String[] permissions;
+    public void setPerms(ChunkyPlayer cPlayer, String[] args){
         
         ArrayList<ChunkyChunk> chunks = new ArrayList<ChunkyChunk>();
-        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(player);
+        String[] permissions;
+        String[] tokens = args[0].split(":");
         
         if (tokens.length == 1){
         	if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
-        		Language.CHUNK_NOT_OWNED.bad(sender);
+        		Language.CHUNK_NOT_OWNED.bad(cPlayer);
         		return;
         	}
         	chunks.add(cPlayer.getCurrentChunk());
@@ -55,7 +54,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         	if (tokens[0].equals("*")){
         		HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
         		if (!ownables.containsKey(ChunkyChunk.class.getName().hashCode())){
-        			Language.CHUNK_NONE_OWNED.bad(sender);
+        			Language.CHUNK_NONE_OWNED.bad(cPlayer);
         			return;
         		}
         		HashSet<ChunkyObject> ownedChunks = ownables.get(ChunkyChunk.class.getName().hashCode());
@@ -63,23 +62,22 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         			chunks.add((ChunkyChunk) chunkyObject);
         		}
         	} else {
-        		Language.ERROR.bad(sender, "That feature does not exist yet.");
+        		Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
         		return;
         	}
         	permissions = tokens[1].split(",");
         } else {
-        	Language.CMD_CHUNKY_PERMISSION_HELP.bad(sender);
+        	Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
         	return;
         }
         
-        
         // No player or group defined
         if (args.length == 1){
-        	Language.ERROR.bad(sender, "That feature does not exist yet.");
+        	Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
     		return;
         } else if (args.length == 2) {
         	if (args[1].startsWith("g:")){
-        		Language.ERROR.bad(sender, "That feature does not exist yet.");
+        		Language.ERROR.bad(cPlayer, "That feature does not exist yet.");
         		return;
         	} else {
         		ChunkyPlayer target = ChunkyManager.getChunkyPlayer(args[1]);
@@ -94,14 +92,14 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             				}
         					target.setPerm(chunk, stringToPerm(perm.substring(1)), status);
         				} else {
-        					status = !target.hasPerm(chunk, stringToPerm(perm));
+        					status = !target.getFlags(chunk).contains(stringToPerm(perm));
         					target.setPerm(chunk, stringToPerm(perm), status);
         				}
         			}
         		}
         	}
         } else if (args.length > 2){
-        	Language.CMD_CHUNKY_PERMISSION_HELP.bad(sender);
+        	Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
         	return;
         }
         
