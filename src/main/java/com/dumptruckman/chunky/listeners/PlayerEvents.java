@@ -48,7 +48,8 @@ public class PlayerEvents extends PlayerListener{
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
-        ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+        cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
     }
 
     @Override
