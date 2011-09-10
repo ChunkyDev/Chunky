@@ -295,6 +295,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
      * @param commands Array of words used in command
      */
     public void parseCommand(CommandSender sender, String[] commands) {
+        Logging.debug(sender.getName() + " sent " + Arrays.asList(commands));
         ChunkyCommand chunkyCommand = getCommandByAlias(null, commands[0]);
         if (chunkyCommand == null) return;
 
@@ -327,7 +328,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             }
         }
 
-
+        Logging.debug(sender.getName() + "'s command translated to: " + chunkyCommand.getFullName() + "[" + chunkyCommand.getChatName() + "] with alias: " + label + " and args: " + Arrays.asList(args));
         ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
         callEvent(event);
         if (!event.isCancelled())  {
