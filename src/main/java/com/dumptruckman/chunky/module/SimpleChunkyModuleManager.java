@@ -24,7 +24,6 @@ import java.util.logging.Level;
  */
 public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
-    private Chunky plugin;
     private HashMap<String, ChunkyCommand> registeredCommands;
     private HashSet<JavaPlugin> registeredModules;
     private final Map<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>> listeners = new EnumMap<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>>(ChunkyEvent.Type.class);
@@ -40,8 +39,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         }
     };
 
-    public SimpleChunkyModuleManager(Chunky plugin) {
-        this.plugin = plugin;
+    public SimpleChunkyModuleManager() {
         registeredCommands = new HashMap<String, ChunkyCommand>();
         registeredModules = new HashSet<JavaPlugin>();
     }

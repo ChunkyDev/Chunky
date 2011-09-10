@@ -98,7 +98,7 @@ public class Chunky extends JavaPlugin {
         }
 
         // Initialize ChunkyModuleManager
-        CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager(this);
+        CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager();
 
         //Loads the data.
         if(!DatabaseManager.load())
