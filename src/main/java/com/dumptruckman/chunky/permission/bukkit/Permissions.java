@@ -26,7 +26,7 @@ public enum Permissions {
     }
 
     public boolean hasPerm(Player player) {
-        Logging.debug(player.getName() + " has perm: " + node + ": " + player.hasPermission(node));
+        //Logging.debug(player.getName() + " has perm: " + node + ": " + player.hasPermission(node));
         return player.hasPermission(node);
     }
 
