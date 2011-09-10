@@ -38,7 +38,11 @@ public class ChunkyPermissions {
     protected EnumSet<Flags> flags;
 
     public ChunkyPermissions(Flags... flags) {
-        this.flags = EnumSet.copyOf(Arrays.asList(flags));
+        EnumSet flagSet = EnumSet.noneOf(Flags.class);
+        for (Flags flag : flags) {
+            flagSet.add(flag);
+        }
+        this.flags = flagSet;
     }
 
     public boolean contains(Flags flag) {
