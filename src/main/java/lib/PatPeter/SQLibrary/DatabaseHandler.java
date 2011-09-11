@@ -87,7 +87,7 @@ public abstract class DatabaseHandler {
 	/**
 	 * <b>initialize</b><br>
 	 * <br>
-	 * &nbsp;&nbsp;Used to check whether the class for the SQL engine is installed.
+	 * &nbsp;&nbsp;Used to hasPerm whether the class for the SQL engine is installed.
 	 * <br>
 	 * <br>
 	 */
@@ -211,7 +211,7 @@ public abstract class DatabaseHandler {
 	 * &nbsp;&nbsp;Checks a table in a database based on the table's name.
 	 * <br>
 	 * <br>
-	 * @param table - name of the table to check.
+	 * @param table - name of the table to hasPerm.
 	 * @return success of the method.
 	 * @throws MalformedURLException - cannot access database because of a syntax error in the jdbc:// protocol.
 	 * @throws InstantiationException - cannot instantiate an interface or abstract class.

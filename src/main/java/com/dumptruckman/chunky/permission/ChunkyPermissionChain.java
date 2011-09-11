@@ -8,24 +8,58 @@ import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
  */
 public class ChunkyPermissionChain {
 
-    public static boolean check(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
+    /**
+     * This function checks the permission chain to see if permObject has permission for a specific action (which is indicated by flag.)
+     *
+     * @param object Object that the permObject is trying to interact with
+     * @param permObject PermissibleObject involved in event. (Usually a player)
+     * @param flag The permission action occuring
+     * @param accessLevel The source of the permission
+     * @return true if permObject has permission to flag action
+     */
+    public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
         if (object.isOwnedBy(permObject)) {
             accessLevel = ChunkyAccessLevel.OWNER;
             if (object.isDirectlyOwnedBy(permObject)) accessLevel = ChunkyAccessLevel.DIRECT_OWNER;
-            return false;
-        } else if (permObject.hasPerm(object, flag)) {
-            accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
-            return false;
-        } else if (permObject.hasPerm(object.getOwner(), flag)) {
-            accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
-            return false;
-        } else if (object.hasDefaultPerm(flag)) {
-            accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
-            return false;
-        } else if (object.hasDefaultPerm(flag)) {
-            accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+            return true;
+        }
+
+        Boolean permission = permObject.hasPerm(object, flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
+                return true;
+            }
             return false;
         }
-        return true;
+
+        permission = permObject.hasPerm(object.getOwner(), flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                return true;
+            }
+            return false;
+        }
+
+        permission = object.hasDefaultPerm(flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
+                return true;
+            }
+            return false;
+        }
+
+        permission = object.getOwner().hasDefaultPerm(flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+                return true;
+            }
+            return false;
+        }
+        
+        return false;
     }
 }

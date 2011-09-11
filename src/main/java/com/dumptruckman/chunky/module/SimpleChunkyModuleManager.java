@@ -282,7 +282,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     /**
      * Verifies if a command with given full name is registered.
      *
-     * @param fullName Full name of command to check.  Example: /chunky.claim.radius
+     * @param fullName Full name of command to hasPerm.  Example: /chunky.claim.radius
      * @return true if the command is registered
      */
     public boolean isCommandRegistered(String fullName) {

@@ -46,7 +46,7 @@ public class CallHome{
         if(cfg==null)verifyConfig();
         if(cfg.getBoolean("opt-out",false)) return;
         plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(plugin,new CallTask(plugin,cfg.getBoolean("list-server",true)),0L,20L*60L*10);
-        System.out.println(plugin.getDescription().getName() + " is keeping usage stats. To opt-out for whatever bizarre reason, check plugins/stats.");
+        System.out.println(plugin.getDescription().getName() + " is keeping usage stats. To opt-out for whatever bizarre reason, hasPerm plugins/stats.");
 
     }
 

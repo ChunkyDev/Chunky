@@ -119,7 +119,7 @@ public abstract class ChunkyObject {
 
     /**
      * Checks if o is owned by this object.
-     * @param o object to check ownership for
+     * @param o object to hasPerm ownership for
      * @return true if this object owns o
      */
     final public boolean isOwnerOf(ChunkyObject o) {

@@ -10,7 +10,7 @@ import java.util.Set;
  * The <code>Methods</code> initializes Methods that utilize the Method interface
  * based on a "first come, first served" basis.
  *
- * Allowing you to check whether a payment method exists or not.
+ * Allowing you to hasPerm whether a payment method exists or not.
  *
  * <blockquote><pre>
  *  Methods methods = new Methods();
@@ -43,7 +43,7 @@ public class Methods {
     }
 
     /**
-     * Initializes <code>Methods</code> class utilizing a "preferred" payment method check before
+     * Initializes <code>Methods</code> class utilizing a "preferred" payment method hasPerm before
      * returning the first method that was initialized.
      * 
      * @param preferred Payment method that is most preferred for this setup.

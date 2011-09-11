@@ -106,7 +106,7 @@ public class SQLite extends DatabaseHandler {
 	
 	@Override
 	public boolean checkConnection() {
-		//Connection con = this.getConnection(); // Why reopen the connection if the user only wants to check it?
+		//Connection con = this.getConnection(); // Why reopen the connection if the user only wants to hasPerm it?
 		if (this.connection != null)
 			return true;
 		return false;
@@ -172,7 +172,7 @@ public class SQLite extends DatabaseHandler {
 			else
 			  return false;
 		} catch (SQLException e) {
-			this.writeError("Failed to check if table \"" + table + "\" exists: " + e.getMessage(), true);
+			this.writeError("Failed to hasPerm if table \"" + table + "\" exists: " + e.getMessage(), true);
 			return false;
 		}
 	}

@@ -17,9 +17,12 @@ public class ChunkyPermissibleObject extends ChunkyObject {
         super(name);
     }
 
-    public boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
-        return permissions.containsKey(object.hashCode()) && permissions.get(object.hashCode()) != null
-                && permissions.get(object.hashCode()).contains(type);
+    public Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
+        try {
+            return permissions.get(object.hashCode()).contains(type);
+        } catch (Exception ignore) {
+            return null;
+        }
     }
 
     public EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyObject object) {

@@ -193,7 +193,7 @@ public class ChunkyCommand {
     /**
      * Checks whether this command already contains a specific child command.
      *
-     * @param fullName the full name of the child command to check for
+     * @param fullName the full name of the child command to hasPerm for
      * @return true if the child command is registered to this command
      */
     public final boolean hasChild(String fullName) {
