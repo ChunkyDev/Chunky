@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.permission;
 /**
  * @author dumptruckman, SwearWord
  */
-public enum ChunkyPermissionType {
+public enum ChunkyAccessLevel {
     OWNER,
     DIRECT_OWNER,
     DIRECT_PERMISSION,

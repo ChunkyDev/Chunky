@@ -1,7 +1,7 @@
 package com.dumptruckman.chunky.event.object.player;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.permission.ChunkyPermissionType;
+import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
@@ -11,8 +11,8 @@ public class ChunkyPlayerBuildEvent extends ChunkyPlayerChunkEvent implements Ca
     private Block block;
     private boolean cancel = false;
 
-    public ChunkyPlayerBuildEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block, ChunkyPermissionType permissionType) {
-        super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, permissionType);
+    public ChunkyPlayerBuildEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block, ChunkyAccessLevel accessLevel) {
+        super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, accessLevel);
         this.block = block;
     }
 

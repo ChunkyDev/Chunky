@@ -7,8 +7,8 @@ import com.dumptruckman.chunky.event.object.player.ChunkyPlayerItemUseEvent;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerSwitchEvent;
 import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
-import com.dumptruckman.chunky.permission.ChunkyPermissionType;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
@@ -70,7 +70,7 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
                 boolean isCancelled = true;
-                ChunkyPermissionType permType = ChunkyPermissionType.NONE;
+                ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
                 isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
 
@@ -85,7 +85,7 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
                 boolean isCancelled = true;
-                ChunkyPermissionType permType = ChunkyPermissionType.NONE;
+                ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
                 isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
 

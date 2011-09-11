@@ -1,7 +1,7 @@
 package com.dumptruckman.chunky.event.object.player;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.permission.ChunkyPermissionType;
+import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
@@ -11,8 +11,8 @@ public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements 
     private ItemStack itemUsed;
     private boolean cancel = false;
 
-    public ChunkyPlayerItemUseEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack itemUsed, ChunkyPermissionType permissionType) {
-        super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, permissionType);
+    public ChunkyPlayerItemUseEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack itemUsed, ChunkyAccessLevel accessLevel) {
+        super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, accessLevel);
         this.itemUsed= itemUsed;
     }
 

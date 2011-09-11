@@ -2,7 +2,7 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.event.object.player.*;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
-import com.dumptruckman.chunky.permission.ChunkyPermissionType;
+import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 
 public class ChunkyPlayerEvents extends ChunkyPlayerListener {
@@ -13,7 +13,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
+        if(event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
+        if(event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
+        if(event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -43,6 +43,6 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if(event.getPermissionType().equals(ChunkyPermissionType.NONE)) event.setCancelled(true);
+        if(event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
     }
 }

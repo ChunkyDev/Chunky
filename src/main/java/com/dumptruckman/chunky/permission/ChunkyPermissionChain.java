@@ -8,22 +8,22 @@ import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
  */
 public class ChunkyPermissionChain {
 
-    public static boolean check(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissionType type) {
+    public static boolean check(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyAccessLevel type) {
         if (object.isOwnedBy(permObject)) {
-            type = ChunkyPermissionType.OWNER;
-            if (object.isDirectlyOwnedBy(permObject)) type = ChunkyPermissionType.DIRECT_OWNER;
+            type = ChunkyAccessLevel.OWNER;
+            if (object.isDirectlyOwnedBy(permObject)) type = ChunkyAccessLevel.DIRECT_OWNER;
             return false;
         } else if (permObject.hasPerm(object, ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyPermissionType.DIRECT_PERMISSION;
+            type = ChunkyAccessLevel.DIRECT_PERMISSION;
             return false;
         } else if (permObject.hasPerm(object.getOwner(), ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyPermissionType.GLOBAL_PERMISSION;
+            type = ChunkyAccessLevel.GLOBAL_PERMISSION;
             return false;
         } else if (object.hasDefaultPerm(ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyPermissionType.DIRECT_DEFAULT_PERMISSION;
+            type = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
             return false;
         } else if (object.hasDefaultPerm(ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyPermissionType.GLOBAL_DEFAULT_PERMISSION;
+            type = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
             return false;
         }
         return true;
