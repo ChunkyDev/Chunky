@@ -8,22 +8,22 @@ import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
  */
 public class ChunkyPermissionChain {
 
-    public static boolean check(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyAccessLevel type) {
+    public static boolean check(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
         if (object.isOwnedBy(permObject)) {
-            type = ChunkyAccessLevel.OWNER;
-            if (object.isDirectlyOwnedBy(permObject)) type = ChunkyAccessLevel.DIRECT_OWNER;
+            accessLevel = ChunkyAccessLevel.OWNER;
+            if (object.isDirectlyOwnedBy(permObject)) accessLevel = ChunkyAccessLevel.DIRECT_OWNER;
             return false;
-        } else if (permObject.hasPerm(object, ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyAccessLevel.DIRECT_PERMISSION;
+        } else if (permObject.hasPerm(object, flag)) {
+            accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
             return false;
-        } else if (permObject.hasPerm(object.getOwner(), ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyAccessLevel.GLOBAL_PERMISSION;
+        } else if (permObject.hasPerm(object.getOwner(), flag)) {
+            accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
             return false;
-        } else if (object.hasDefaultPerm(ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
+        } else if (object.hasDefaultPerm(flag)) {
+            accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
             return false;
-        } else if (object.hasDefaultPerm(ChunkyPermissions.Flags.BUILD)) {
-            type = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+        } else if (object.hasDefaultPerm(flag)) {
+            accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
             return false;
         }
         return true;

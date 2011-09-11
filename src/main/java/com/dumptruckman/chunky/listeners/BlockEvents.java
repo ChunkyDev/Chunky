@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
 import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
@@ -25,7 +26,7 @@ public class BlockEvents extends BlockListener {
         boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-        isCancelled = ChunkyPermissionChain.check(chunk, chunkyPlayer, permType);
+        isCancelled = ChunkyPermissionChain.check(chunk, chunkyPlayer, ChunkyPermissions.Flags.BUILD, permType);
 
         ChunkyPlayerBuildEvent chunkyEvent = new ChunkyPlayerBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
@@ -44,7 +45,7 @@ public class BlockEvents extends BlockListener {
         boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-        isCancelled = ChunkyPermissionChain.check(chunk, chunkyPlayer, permType);
+        isCancelled = ChunkyPermissionChain.check(chunk, chunkyPlayer, ChunkyPermissions.Flags.DESTROY, permType);
 
         ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);

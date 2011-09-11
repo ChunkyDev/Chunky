@@ -10,6 +10,7 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.permission.ChunkyPermissionChain;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
 import com.dumptruckman.chunky.util.MinecraftTools;
@@ -72,7 +73,7 @@ public class PlayerEvents extends PlayerListener{
                 boolean isCancelled = true;
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
+                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.ITEMUSE, permType);
 
                 ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem(), permType);
                 chunkyEvent.setCancelled(isCancelled);
@@ -87,7 +88,7 @@ public class PlayerEvents extends PlayerListener{
                 boolean isCancelled = true;
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, permType);
+                isCancelled = ChunkyPermissionChain.check(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.SWITCH, permType);
 
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
                 chunkyEvent.setCancelled(isCancelled);
