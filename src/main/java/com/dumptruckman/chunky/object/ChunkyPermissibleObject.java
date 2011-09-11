@@ -34,6 +34,13 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     }
 
     public void setPerms(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
+        if (flags == null) {
+            permissions.get(object.hashCode()).clearFlags();
+            // TODO Need to clear the persistence for this
+            return;
+        }
+        
+        setPerms(object, flags);
         EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
         for (ChunkyPermissions.Flags flag : flags) {
             setPerm(object, flag, true);

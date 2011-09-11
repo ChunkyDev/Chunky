@@ -183,6 +183,11 @@ public abstract class ChunkyObject {
     }
 
     public void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
+        if (flags == null) {
+            selfPerms.clearFlags();
+            // TODO Need to clear the persistence for this
+            return;
+        }
         EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
         for (ChunkyPermissions.Flags flag : flags) {
             setDefaultPerm(flag, true);

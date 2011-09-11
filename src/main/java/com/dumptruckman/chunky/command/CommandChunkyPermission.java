@@ -37,7 +37,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         String permissions = "";
         String[] tokens = args[0].split(":", 2);
         ChunkyObject target = null;
-        
+
+        // Not global, just flags
         if (tokens.length == 1){
             if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
                 Language.CHUNK_NOT_OWNED.bad(cPlayer);
@@ -45,7 +46,10 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             }
             target = cPlayer.getCurrentChunk();
             permissions = tokens[0];
-        } else if (tokens.length == 2){
+        }
+
+        else if (tokens.length == 2){
+            // Flags are global
             if (tokens[0].equals("*")){
                 HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
                 if (!ownables.containsKey(ChunkyChunk.class.getName().hashCode())){
@@ -53,7 +57,9 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                     return;
                 }
                 target = cPlayer;
-            } else {
+            }
+            // Specific chunk name
+            else {
                 Language.FEATURE_NYI.bad(cPlayer);
                 return;
             }
@@ -62,15 +68,21 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             // WILL NEVER REACH THIS POINT
             return;
         }
-        
+
+        // State is either add, subtract or set flags
         int state = 0;
         if (permissions.startsWith("-")) state = -1;
         if (permissions.startsWith("+")) state = 1;
+        // Set of flags
         EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
-        for (char perm : permissions.toCharArray()) {
-            ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
-            if (flag == null) continue;
-            flags.add(flag);
+        if (permissions.equalsIgnoreCase("clear")) {
+            flags = null;
+        } else {
+            for (char perm : permissions.toLowerCase().toCharArray()) {
+                ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
+                if (flag == null) continue;
+                flags.add(flag);
+            }
         }
 
         // No player or group defined
@@ -94,10 +106,13 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             }
         } else if (args.length == 2) {
             ChunkyPermissibleObject object = null;
+            // Groups
             if (args[1].startsWith("g:")){
                 Language.FEATURE_NYI.bad(cPlayer);
                 return;
-            } else {
+            }
+            // Player
+            else {
                 object = ChunkyManager.getChunkyPlayer(args[1]);
             }
 
