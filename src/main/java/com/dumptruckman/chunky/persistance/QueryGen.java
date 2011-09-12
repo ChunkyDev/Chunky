@@ -49,11 +49,11 @@ public class QueryGen {
         int tiny = 0;
         if(status) tiny=1;
         return
-            String.format("REPLACE INTO chunky_permissions (" +
+            String.format("INSERT INTO chunky_permissions (" +
             "PermissibleHash, " +
             "ObjectHash, " +
-            "%s) " +
-            "VALUES (%s,%s,%s)",type.name(), permissiblehash, objecthash, tiny);
+            "%0) " +
+            "VALUES (%1,%2,%3) on DUPLICATE KEY update %0=%1",type.name(), permissiblehash, objecthash, tiny);
     }
     
     public static String getRemovePermissions(int permissiblehash, int objecthash) {
