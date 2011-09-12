@@ -43,14 +43,14 @@ public class ChunkyManager {
         return getChunk(new ChunkyCoordinates(location));
     }
 
-    public static ChunkyPermissions getPermissions(ChunkyObject object, ChunkyObject permObject) {
-        if (!permissions.containsKey(object.hashCode())) {
-            permissions.put(object.hashCode(), new HashMap<Integer, ChunkyPermissions>());
+    public static ChunkyPermissions getPermissions(int object, int permObject) {
+        if (!permissions.containsKey(object)) {
+            permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
         }
-        HashMap<Integer, ChunkyPermissions> perms = permissions.get(object.hashCode());
+        HashMap<Integer, ChunkyPermissions> perms = permissions.get(object);
         if (!perms.containsKey(permObject)) {
-            perms.put(permObject.hashCode(), new ChunkyPermissions());
+            perms.put(permObject, new ChunkyPermissions());
         }
-        return perms.get(permObject.hashCode());
+        return perms.get(permObject);
     }
 }
