@@ -34,9 +34,12 @@ public class PlayerEvents extends PlayerListener{
     }
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
-        Logging.debug(chunkyPlayer.getName() + " changed chunks.");
+        try {
+            Logging.debug(chunkyPlayer.getName() + " loc: " + chunkyPlayer.getPlayer().getLocation());
+        } catch (Exception ignore) {}
+        Logging.debug(chunkyPlayer.getName() + " changed chunks. [" + fromChunk.getCoord().getX() + ", "+ fromChunk.getCoord().getZ() + "] to [" + toChunk.getCoord().getX() + ", "+ toChunk.getCoord().getZ() + "]");
         String message = "";
-        if(!toChunk.isOwned() && fromChunk.isOwned()) message += "Wilderness ";
+        if(!toChunk.isOwned() && fromChunk.isOwned()) message += Language.UNREGISTERED_CHUNK_NAME.getString();
         else if(toChunk.isOwned()) {
             if(fromChunk.isOwned() && !fromChunk.getName().equals(toChunk.getName()) ) message += toChunk.getName();
             else if(!fromChunk.isOwned()) message += toChunk.getName();
