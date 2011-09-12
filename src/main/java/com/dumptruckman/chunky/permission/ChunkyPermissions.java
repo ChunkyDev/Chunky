@@ -66,6 +66,10 @@ public class ChunkyPermissions {
         }
     }
 
+    public void setFlags(EnumSet<Flags> flags) {
+        this.flags = flags;
+    }
+
     public String toString() {
         if (flags == null) return "empty";
         return flags.toString();
