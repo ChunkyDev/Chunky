@@ -35,21 +35,17 @@ public class ChunkyPermissibleObject extends ChunkyObject {
             return;
         }
 
-        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
-        for (ChunkyPermissions.Flags flag : flags) {
-            setPerm(object, flag, true);
-        }
-        for (ChunkyPermissions.Flags flag : notSet) {
-            setPerm(object, flag, false);
-        }
+        ChunkyManager.getPermissions(object.hashCode(), this.hashCode()).setFlags(flags);
+        DatabaseManager.updatePermissions(this.hashCode(), object.hashCode(), flags);
     }
 
     public void setPerm(int object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
-        ChunkyManager.getPermissions(object, this.hashCode()).setFlag(type, status);
+        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this.hashCode());
+        perms.setFlag(type, status);
         
         // Persist if requested
         if (persist) {
-            DatabaseManager.updatePermissions(this.hashCode(),object,type, status);
+            DatabaseManager.updatePermissions(this.hashCode(), object, perms.getFlags());
         }
     }
 }

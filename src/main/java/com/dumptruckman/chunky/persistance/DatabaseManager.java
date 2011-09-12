@@ -8,6 +8,7 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.EnumSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -82,12 +83,12 @@ public class DatabaseManager {
         return database.query(query);
     }
 
-    public static void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
-        database.updatePermissions(permissiblehash,objecthash,type,status);
+    public static void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
+        database.updatePermissions(permissiblehash, objecthash, flags);
     }
 
-    public static void updateDefaultPermissions(int permissiblehash, ChunkyPermissions.Flags type, boolean status) {
-        database.updatePermissions(permissiblehash,permissiblehash, type,status);
+    public static void updateDefaultPermissions(int permissiblehash, EnumSet<ChunkyPermissions.Flags> flags) {
+        database.updatePermissions(permissiblehash, permissiblehash, flags);
     }
 
     public static void removePermissions(int permissbileHash, int objectHash) {

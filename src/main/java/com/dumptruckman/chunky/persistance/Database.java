@@ -6,6 +6,7 @@ import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 
 import java.sql.ResultSet;
+import java.util.EnumSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -35,7 +36,7 @@ public interface Database {
 
     public void addPlayer(ChunkyPlayer player);
 
-    public void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status);
+    public void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags);
 
     public void removePermissions(int permissiblehash, int objecthash);
 }

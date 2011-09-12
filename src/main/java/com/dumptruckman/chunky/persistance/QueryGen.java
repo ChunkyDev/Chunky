@@ -3,6 +3,8 @@ package com.dumptruckman.chunky.persistance;
 import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
+import java.util.EnumSet;
+
 public class QueryGen {
 
     public static String getAllPlayers() {
@@ -45,7 +47,7 @@ public class QueryGen {
         return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash + " && ObjectHash = " + hash;
     }
 
-    public static String getUpdatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
+    public static String getUpdatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
         int tiny = 0;
         if(status) tiny=1;
         return

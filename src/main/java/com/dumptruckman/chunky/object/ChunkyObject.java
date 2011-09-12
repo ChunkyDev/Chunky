@@ -201,12 +201,13 @@ public abstract class ChunkyObject {
     }
 
     public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
+        ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
         // Set flag
-        ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).setFlag(type, status);
+        perms.setFlag(type, status);
 
         // Persist if requested
         if (persist) {
-            DatabaseManager.updateDefaultPermissions(this.hashCode(), type, status);
+            DatabaseManager.updateDefaultPermissions(this.hashCode(), perms.getFlags());
         }
     }
 

@@ -7,6 +7,7 @@ import com.dumptruckman.chunky.util.Logging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.EnumSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -129,8 +130,8 @@ public abstract class SQLDB implements Database {
         return query(QueryGen.getGetType(hash));
     }
 
-    public void updatePermissions(int permissiblehash, int objecthash, ChunkyPermissions.Flags type, boolean status) {
-        query(QueryGen.getUpdatePermissions(permissiblehash,objecthash,type,status));
+    public void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.getUpdatePermissions(permissiblehash, objecthash, flags));
     }
 
     public void removePermissions(int permissiblehash, int objecthash) {
