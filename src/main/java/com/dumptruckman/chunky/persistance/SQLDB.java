@@ -74,7 +74,7 @@ public abstract class SQLDB implements Database {
 
     private void setDefaultPermissions(ChunkyObject object) {
 
-        ResultSet perms = query(QueryGen.getSelectPermissions(object.hashCode()));
+        ResultSet perms = query(QueryGen.getSelectDefaultPermissions(object.hashCode()));
         try {
             while(perms.next()) {
                 object.setDefaultPerm(ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
