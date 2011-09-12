@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.object;
 
 
+import com.dumptruckman.chunky.Chunky;
 import org.bukkit.Location;
 
 /**

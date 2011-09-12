@@ -54,6 +54,7 @@ public class MySQLDB extends SQLDB{
 
     public ResultSet query(String query) {
         try {
+            Logging.debug(query);
             return db.query(query);
         } catch (Exception e) { return null;}
     }
