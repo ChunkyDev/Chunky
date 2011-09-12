@@ -14,7 +14,7 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
-import org.blockface.stats.CallHome;
+import org.blockface.bukkitstats.CallHome;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
