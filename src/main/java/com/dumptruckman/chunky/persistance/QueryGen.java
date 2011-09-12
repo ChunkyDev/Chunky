@@ -44,7 +44,7 @@ public class QueryGen {
     }
 
     public static String getSelectDefaultPermissions(int hash) {
-        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash + " && ObjectHash = " + hash;
+        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash + " AND ObjectHash = " + hash;
     }
 
     public static String getUpdatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
@@ -67,7 +67,7 @@ public class QueryGen {
         return
             String.format("DELETE FROM chunky_permissions where " +
             "PermissibleHash = %s " +
-            "&& ObjectHash = %s", permissiblehash, objecthash);
+            "AND ObjectHash = %s", permissiblehash, objecthash);
 
     }
 
@@ -114,7 +114,7 @@ public class QueryGen {
         return
             String.format("DELETE FROM chunky_ownership where " +
             "OwnerHash = %s " +
-            "&& OwnableHash = %s",owner.hashCode(), ownable.hashCode());
+            "AND OwnableHash = %s",owner.hashCode(), ownable.hashCode());
 
     }
 
