@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.listeners;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.ChunkyManager;
+import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerItemUseEvent;
 import com.dumptruckman.chunky.event.object.player.ChunkyPlayerSwitchEvent;
@@ -14,6 +15,7 @@ import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
 import com.dumptruckman.chunky.util.MinecraftTools;
+import org.bukkit.Location;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.*;
 
@@ -35,9 +37,12 @@ public class PlayerEvents extends PlayerListener{
 
     public void onPlayerChunkChange(ChunkyPlayer chunkyPlayer, ChunkyChunk toChunk, ChunkyChunk fromChunk) {
         try {
-            Logging.debug(chunkyPlayer.getName() + " loc: " + chunkyPlayer.getPlayer().getLocation());
+            if (Config.isDebugging()) {
+                Location loc = chunkyPlayer.getPlayer().getLocation();
+                Logging.debug(chunkyPlayer.getName() + " x: " + loc.getX() + "  z: " + loc.getZ());
+            }
         } catch (Exception ignore) {}
-        Logging.debug(chunkyPlayer.getName() + " changed chunks. [" + fromChunk.getCoord().getX() + ", "+ fromChunk.getCoord().getZ() + "] to [" + toChunk.getCoord().getX() + ", "+ toChunk.getCoord().getZ() + "]");
+        Logging.debug(chunkyPlayer.getName() + " moved to chunk: [" + toChunk.getCoord().getX() + ", "+ toChunk.getCoord().getZ() + "]");
         String message = "";
         if(!toChunk.isOwned() && fromChunk.isOwned()) message += Language.UNREGISTERED_CHUNK_NAME.getString();
         else if(toChunk.isOwned()) {
