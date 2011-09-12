@@ -49,7 +49,7 @@ public class ChunkyPermissibleObject extends ChunkyObject {
         
         // Persist if requested
         if (persist) {
-            DatabaseManager.updatePermissions(object, this.hashCode(), type, status);
+            DatabaseManager.updatePermissions(this.hashCode(),object,type, status);
         }
     }
 }
