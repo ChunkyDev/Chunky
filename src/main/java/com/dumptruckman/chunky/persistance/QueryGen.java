@@ -52,8 +52,8 @@ public class QueryGen {
             String.format("INSERT INTO chunky_permissions (" +
             "PermissibleHash, " +
             "ObjectHash, " +
-            "%0) " +
-            "VALUES (%1,%2,%3) on DUPLICATE KEY update %0=%1",type.name(), permissiblehash, objecthash, tiny);
+            "%1) " +
+            "VALUES (%2,%3,%4) on DUPLICATE KEY update %1=%2",type.name(), permissiblehash, objecthash, tiny);
     }
     
     public static String getRemovePermissions(int permissiblehash, int objecthash) {
