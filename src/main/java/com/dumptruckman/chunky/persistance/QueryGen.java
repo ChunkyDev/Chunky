@@ -55,6 +55,14 @@ public class QueryGen {
             "%s) " +
             "VALUES (%s,%s,%s)",type.name(), permissiblehash, objecthash, tiny);
     }
+    
+    public static String getRemovePermissions(int permissiblehash, int objecthash) {
+        return
+            String.format("DELETE FROM chunky_permissions where " +
+            "PermissibleHash = %s " +
+            "&& ObjectHash = %s", permissiblehash, objecthash);
+
+    }
 
     public static String getCreatePlayerTable() {
         return
