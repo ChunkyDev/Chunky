@@ -3,6 +3,7 @@ package com.dumptruckman.chunky;
 import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -51,6 +52,7 @@ public class ChunkyManager {
         if (!perms.containsKey(permObject)) {
             perms.put(permObject, new ChunkyPermissions());
         }
+        Logging.debug(perms.toString());
         return perms.get(permObject);
     }
 }
