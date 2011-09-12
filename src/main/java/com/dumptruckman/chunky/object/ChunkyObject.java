@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
@@ -23,13 +24,10 @@ public abstract class ChunkyObject {
 
     private String name;
     private int classHash;
-    private ChunkyPermissions selfPerms;
-    private HashMap<Integer, ChunkyPermissions> permissions = new HashMap<Integer, ChunkyPermissions>();
 
     public ChunkyObject(String name) {
         this.name = name;
         classHash = this.getClass().getName().hashCode();
-        selfPerms = new ChunkyPermissions();
     }
 
     public String getName() {
@@ -170,16 +168,16 @@ public abstract class ChunkyObject {
         }
 
         // TODO Should ownership remove ALL permissions?
-        permissions = new HashMap<Integer, ChunkyPermissions>();
-        selfPerms = new ChunkyPermissions();
+        //permissions = new HashMap<Integer, ChunkyPermissions>();
+        //selfPerms = new ChunkyPermissions();
     }
 
     public boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
-        return selfPerms.contains(type);
+        return ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).contains(type);
     }
 
     public EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
-        return selfPerms.getFlags();
+        return ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).getFlags();
     }
 
     public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
@@ -188,10 +186,11 @@ public abstract class ChunkyObject {
 
     public void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
-            selfPerms.clearFlags();
+            ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).clearFlags();
             DatabaseManager.removePermissions(this.hashCode(), this.hashCode());
             return;
         }
+        
         EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
         for (ChunkyPermissions.Flags flag : flags) {
             setDefaultPerm(flag, true);
@@ -203,7 +202,7 @@ public abstract class ChunkyObject {
 
     public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
         // Set flag
-        selfPerms.setFlag(type, status);
+        ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).setFlag(type, status);
 
         // Persist if requested
         if (persist) {
@@ -227,56 +226,5 @@ public abstract class ChunkyObject {
         @SuppressWarnings("unchecked")
         HashMap<Integer, HashSet<ChunkyObject>> ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
         return ownables;
-    }
-
-
-    protected Boolean _hasPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type) {
-        try {
-            return permissions.get(object.hashCode()).contains(type);
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
-    protected EnumSet<ChunkyPermissions.Flags> _getFlags(ChunkyPermissibleObject object) {
-        return permissions.get(object.hashCode()).getFlags();
-    }
-
-    protected void _setPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type, boolean status) {
-        _setPerm(object.hashCode(), type, status, true);
-    }
-
-    protected void _setPerms(ChunkyPermissibleObject object, EnumSet<ChunkyPermissions.Flags> flags) {
-        if (flags == null) {
-            permissions.get(object.hashCode()).clearFlags();
-            DatabaseManager.removePermissions(object.hashCode(), this.hashCode());
-            return;
-        }
-
-        _setPerms(object, flags);
-        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
-        for (ChunkyPermissions.Flags flag : flags) {
-            _setPerm(object, flag, true);
-        }
-        for (ChunkyPermissions.Flags flag : notSet) {
-            _setPerm(object, flag, false);
-        }
-    }
-
-    protected void _setPerm(int object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
-        ChunkyPermissions perms = permissions.get(object);
-
-        // Create object if non-existant
-        if (perms == null) {
-            perms = new ChunkyPermissions();
-            permissions.put(object, perms);
-        }
-        // Set flag
-        perms.setFlag(type, status);
-
-        // Persist if requested
-        if (persist) {
-            DatabaseManager.updatePermissions(object, this.hashCode(), type, status);
-        }
     }
 }
