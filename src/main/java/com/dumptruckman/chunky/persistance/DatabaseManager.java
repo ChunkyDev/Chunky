@@ -90,5 +90,7 @@ public class DatabaseManager {
         database.updatePermissions(permissiblehash,permissiblehash, type,status);
     }
 
-
+    public static void removePermissions(int permissbileHash, int objectHash) {
+        database.removePermissions(permissbileHash, objectHash);
+    }
 }
