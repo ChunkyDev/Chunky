@@ -67,6 +67,7 @@ public class ChunkyPermissions {
     }
 
     public String toString() {
+        if (flags == null) return "empty";
         return flags.toString();
     }
 }

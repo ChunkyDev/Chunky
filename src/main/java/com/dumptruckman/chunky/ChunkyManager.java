@@ -52,7 +52,7 @@ public class ChunkyManager {
         if (!perms.containsKey(permObject)) {
             perms.put(permObject, new ChunkyPermissions());
         }
-        Logging.debug(perms.toString());
+        Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.toString());
         return perms.get(permObject);
     }
 }
