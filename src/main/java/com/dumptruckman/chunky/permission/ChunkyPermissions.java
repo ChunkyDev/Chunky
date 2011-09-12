@@ -65,4 +65,8 @@ public class ChunkyPermissions {
             flags.add(flag);
         }
     }
+
+    public String toString() {
+        return flags.toString();
+    }
 }
