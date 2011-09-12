@@ -39,7 +39,10 @@ public class ChunkyPermissions {
 
     public ChunkyPermissions(Flags... flags) {
         EnumSet flagSet = EnumSet.noneOf(Flags.class);
-        if (flags == null) this.flags = null;
+        if (flags == null) {
+            this.flags = null;
+            return;
+        }
         for (Flags flag : flags) {
             flagSet.add(flag);
         }
