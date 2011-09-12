@@ -1,8 +1,7 @@
 package com.dumptruckman.chunky;
 
-import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyCoordinates;
-import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.object.*;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -16,6 +15,7 @@ public class ChunkyManager {
 
     private static HashMap<String, ChunkyPlayer> PLAYERS = new HashMap<String, ChunkyPlayer>();
     private static HashMap<ChunkyCoordinates, ChunkyChunk> CHUNKS = new HashMap<ChunkyCoordinates, ChunkyChunk>();
+    private static HashMap<Integer, HashMap<Integer, ChunkyPermissions>> permissions = new HashMap<Integer, HashMap<Integer, ChunkyPermissions>>();
 
     public static ChunkyPlayer getChunkyPlayer(String name)
     {
@@ -43,4 +43,14 @@ public class ChunkyManager {
         return getChunk(new ChunkyCoordinates(location));
     }
 
+    public static ChunkyPermissions getPermissions(ChunkyObject object, ChunkyObject permObject) {
+        if (!permissions.containsKey(object.hashCode())) {
+            permissions.put(object.hashCode(), new HashMap<Integer, ChunkyPermissions>());
+        }
+        HashMap<Integer, ChunkyPermissions> perms = permissions.get(object.hashCode());
+        if (!perms.containsKey(permObject)) {
+            perms.put(permObject.hashCode(), new ChunkyPermissions());
+        }
+        return perms.get(permObject.hashCode());
+    }
 }
