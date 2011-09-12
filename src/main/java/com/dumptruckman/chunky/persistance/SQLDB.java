@@ -62,6 +62,7 @@ public abstract class SQLDB implements Database {
         try {
             while(perms.next()) {
                 int object = perms.getInt("ObjectHash");
+                Logging.debug("Setting perms for " + player.getName() + " on " + object);
                 player.setPerm(object, ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
                 player.setPerm(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1), false);
                 player.setPerm(object, ChunkyPermissions.Flags.SWITCH, (perms.getInt("SWITCH") == 1), false);
