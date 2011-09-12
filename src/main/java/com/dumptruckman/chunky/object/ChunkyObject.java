@@ -185,7 +185,7 @@ public abstract class ChunkyObject {
     public void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             selfPerms.clearFlags();
-            // TODO Need to clear the persistence for this
+            DatabaseManager.removePermissions(this.hashCode(), this.hashCode());
             return;
         }
         EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);

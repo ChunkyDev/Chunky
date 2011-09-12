@@ -36,7 +36,7 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     public void setPerms(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             permissions.get(object.hashCode()).clearFlags();
-            // TODO Need to clear the persistence for this
+            DatabaseManager.removePermissions(this.hashCode(), object.hashCode());
             return;
         }
         
