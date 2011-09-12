@@ -169,6 +169,9 @@ public abstract class ChunkyObject {
 
         }
 
+        // TODO Should ownership remove ALL permissions?
+        permissions = new HashMap<Integer, ChunkyPermissions>();
+        selfPerms = new ChunkyPermissions();
     }
 
     public boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
