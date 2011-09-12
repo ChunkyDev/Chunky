@@ -1,9 +1,6 @@
 package com.dumptruckman.chunky.permission;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dumptruckman, SwearWord
@@ -38,15 +35,11 @@ public class ChunkyPermissions {
     protected EnumSet<Flags> flags;
 
     public ChunkyPermissions(Flags... flags) {
-        EnumSet flagSet = EnumSet.noneOf(Flags.class);
-        if (flags == null) {
+        if (flags.length == 0) {
             this.flags = null;
             return;
         }
-        for (Flags flag : flags) {
-            flagSet.add(flag);
-        }
-        this.flags = flagSet;
+        this.flags.addAll(Arrays.asList(flags));
     }
 
     public Boolean contains(Flags flag) {
@@ -63,6 +56,9 @@ public class ChunkyPermissions {
     }
 
     public void setFlag(Flags flag, boolean status) {
+        if (flags == null) {
+            flags = EnumSet.noneOf(Flags.class);
+        }
         if (flags.contains(flag) && !status) {
             flags.remove(flag);
         } else if (!flags.contains(flag) && status) {
