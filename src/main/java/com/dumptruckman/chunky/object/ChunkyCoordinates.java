@@ -14,27 +14,20 @@ public class ChunkyCoordinates {
 
     public ChunkyCoordinates(Location location)
     {
-        double xPos = (location.getX()/16);
-        double zPos = (location.getZ()/16);
+        loadCoordinates(location.getWorld().getName(),location.getX(),location.getZ());
 
-        this.x = (int)xPos;
-        this.z = (int)zPos;
-
-        if (xPos < 0) {
-            this.x--;
-        }
-
-        if (zPos < 0) {
-            this.z--;
-        }
-        this.world = location.getWorld().getName();
     }
 
     public ChunkyCoordinates(String world, double x, double z)
     {
+        loadCoordinates(world,x,z);
+    }
+
+    private void loadCoordinates(String world, double x, double z) {
+        this.x = (int)(x/16) - ((x<0) ? 1 : 0);
+        this.z = (int)(z/16) - ((z<0) ? 1 : 0);
         this.world = world;
-        this.x = (int)(x/16)-1;
-        this.z = (int)(z/16)-1;
+
     }
 
     public ChunkyCoordinates(String world, int x, int z)
