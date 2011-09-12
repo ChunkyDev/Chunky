@@ -55,4 +55,11 @@ public class ChunkyManager {
         Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObject).toString());
         return perms.get(permObject);
     }
+
+    public static HashMap<Integer, ChunkyPermissions> getAllPermissions(int object) {
+        if (!permissions.containsKey(object)) {
+            permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
+        }
+        return permissions.get(object);
+    }
 }
