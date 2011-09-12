@@ -48,14 +48,19 @@ public class QueryGen {
     }
 
     public static String getUpdatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
-        int tiny = 0;
-        if(status) tiny=1;
+        int build = flags.contains(ChunkyPermissions.Flags.BUILD) ? 1:0;
+        int destroy = flags.contains(ChunkyPermissions.Flags.DESTROY) ? 1:0;
+        int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1:0;
+        int sw = flags.contains(ChunkyPermissions.Flags.SWITCH) ? 1:0;
         return
-            String.format("INSERT INTO chunky_permissions (" +
+            String.format("INSERT OR REPLACE INTO chunky_permissions (" +
             "PermissibleHash, " +
             "ObjectHash, " +
-            "%s) " +
-            "VALUES (%s,%s,%s) on DUPLICATE KEY update %s=%s",type.name(), permissiblehash, objecthash, tiny,type.name(),tiny);
+            "BUILD," +
+            "DESTROY," +
+            "ITEMUSE," +
+            "SWITCH) " +
+            "VALUES (%s,%s,%s,%s,%s,%s)", permissiblehash, objecthash, build,destroy,itemuse,sw);
     }
     
     public static String getRemovePermissions(int permissiblehash, int objecthash) {
