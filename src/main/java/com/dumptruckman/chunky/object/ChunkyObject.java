@@ -24,6 +24,7 @@ public abstract class ChunkyObject {
     private String name;
     private int classHash;
     private ChunkyPermissions selfPerms;
+    private HashMap<Integer, ChunkyPermissions> permissions = new HashMap<Integer, ChunkyPermissions>();
 
     public ChunkyObject(String name) {
         this.name = name;
@@ -223,5 +224,56 @@ public abstract class ChunkyObject {
         @SuppressWarnings("unchecked")
         HashMap<Integer, HashSet<ChunkyObject>> ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
         return ownables;
+    }
+
+
+    protected Boolean _hasPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type) {
+        try {
+            return permissions.get(object.hashCode()).contains(type);
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    protected EnumSet<ChunkyPermissions.Flags> _getFlags(ChunkyPermissibleObject object) {
+        return permissions.get(object.hashCode()).getFlags();
+    }
+
+    protected void _setPerm(ChunkyPermissibleObject object, ChunkyPermissions.Flags type, boolean status) {
+        _setPerm(object.hashCode(), type, status, true);
+    }
+
+    protected void _setPerms(ChunkyPermissibleObject object, EnumSet<ChunkyPermissions.Flags> flags) {
+        if (flags == null) {
+            permissions.get(object.hashCode()).clearFlags();
+            DatabaseManager.removePermissions(object.hashCode(), this.hashCode());
+            return;
+        }
+
+        _setPerms(object, flags);
+        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
+        for (ChunkyPermissions.Flags flag : flags) {
+            _setPerm(object, flag, true);
+        }
+        for (ChunkyPermissions.Flags flag : notSet) {
+            _setPerm(object, flag, false);
+        }
+    }
+
+    protected void _setPerm(int object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
+        ChunkyPermissions perms = permissions.get(object);
+
+        // Create object if non-existant
+        if (perms == null) {
+            perms = new ChunkyPermissions();
+            permissions.put(object, perms);
+        }
+        // Set flag
+        perms.setFlag(type, status);
+
+        // Persist if requested
+        if (persist) {
+            DatabaseManager.updatePermissions(object, this.hashCode(), type, status);
+        }
     }
 }
