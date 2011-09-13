@@ -2,7 +2,9 @@ package com.dumptruckman.chunky.permission;
 
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.entity.Player;
 
 /**
  * @author dumptruckman
@@ -19,6 +21,13 @@ public class ChunkyPermissionChain {
      * @return true if permObject has permission to flag action
      */
     public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
+
+        if (permObject instanceof Player) {
+            if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm((Player) permObject)) {
+                return true;
+            }
+        }
+
         if (object.isOwnedBy(permObject)) {
             accessLevel = ChunkyAccessLevel.OWNER;
             if (object.isDirectlyOwnedBy(permObject)) accessLevel = ChunkyAccessLevel.DIRECT_OWNER;
