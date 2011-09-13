@@ -3,6 +3,7 @@ package com.dumptruckman.chunky.object;
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
+import com.dumptruckman.chunky.util.Logging;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -17,7 +18,9 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     }
 
     public Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
-        return ChunkyManager.getPermissions(object.hashCode(), this.hashCode()).contains(type);
+        ChunkyPermissions perms = ChunkyManager.getPermissions(object.hashCode(), this.hashCode());
+        Logging.debug(this + ".hasPerm(" + object + ", " + type + ")  perms: " + perms + " .contains(): " + perms.contains(type));
+        return perms.contains(type);
     }
 
     public EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyObject object) {
