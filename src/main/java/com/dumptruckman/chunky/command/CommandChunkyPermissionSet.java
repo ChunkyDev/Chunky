@@ -27,50 +27,48 @@ public class CommandChunkyPermissionSet implements ChunkyCommandExecutor {
             return;
         }
 
-        if (args.length == 0){
-            // TODO: Maybe this should show a readout of permissions given or something.
-            Language.CMD_CHUNKY_PERMISSION_SET_HELP.help(sender);
-            return;
-        }
-
         setPerms(ChunkyManager.getChunkyPlayer((Player) sender), args);
     }
 
     public void setPerms(ChunkyPlayer cPlayer, String[] args){
 
         String permissions = "";
-        String[] tokens = args[0].split(":", 2);
         ChunkyObject target = null;
 
-        // Not global, just flags
-        if (tokens.length == 1){
-            if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
-                Language.CHUNK_NOT_OWNED.bad(cPlayer);
-                return;
-            }
-            target = cPlayer.getCurrentChunk();
-            permissions = tokens[0];
-        }
-
-        else if (tokens.length == 2){
-            // Flags are global
-            if (tokens[0].equals("*")){
-                HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
-                if (!ownables.containsKey(ChunkyChunk.class.getName().hashCode())){
-                    Language.CHUNK_NONE_OWNED.bad(cPlayer);
+        if (args.length != 0) {
+            String[] tokens = args[0].split(":", 2);
+            // Not global, just flags
+            if (tokens.length == 1){
+                if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
+                    Language.CHUNK_NOT_OWNED.bad(cPlayer);
                     return;
                 }
-                target = cPlayer;
+                target = cPlayer.getCurrentChunk();
+                permissions = tokens[0];
             }
-            // Specific chunk name
-            else {
-                Language.FEATURE_NYI.bad(cPlayer);
+
+            else if (tokens.length == 2){
+                // Flags are global
+                if (tokens[0].equals("*")){
+                    HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
+                    if (!ownables.containsKey(ChunkyChunk.class.getName().hashCode())){
+                        Language.CHUNK_NONE_OWNED.bad(cPlayer);
+                        return;
+                    }
+                    target = cPlayer;
+                }
+                // Specific chunk name
+                else {
+                    Language.FEATURE_NYI.bad(cPlayer);
+                    return;
+                }
+                permissions = tokens[1];
+            } else {
+                // WILL NEVER REACH THIS POINT
                 return;
             }
-            permissions = tokens[1];
         } else {
-            // WILL NEVER REACH THIS POINT
-            return;
+            target = cPlayer.getCurrentChunk();
         }
 
         // State is either add, subtract or set flags
@@ -91,7 +89,7 @@ public class CommandChunkyPermissionSet implements ChunkyCommandExecutor {
         }
 
         // No player or group defined
-        if (args.length == 1){
+        if (args.length <= 1){
             switch (state) {
                 case -1:
                     for (ChunkyPermissions.Flags flag : flags) {
