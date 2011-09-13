@@ -56,10 +56,11 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
     private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer) {
         EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
         Language.PLAYER_MENU_GLOBALPERMISSIONS.normal(chunkyPlayer,"Global Permissions:");
-        Language.sendMessage(chunkyPlayer," Build: " + flags.contains(ChunkyPermissions.Flags.BUILD) +
-                "|Destroy: " + flags.contains(ChunkyPermissions.Flags.DESTROY) +
-                "|Switch: " + flags.contains(ChunkyPermissions.Flags.SWITCH) +
-                "|Item Use: " + flags.contains(ChunkyPermissions.Flags.ITEMUSE));
+        Language.PERMISSIONS_STATUS.normal(chunkyPlayer
+                ,flags.contains(ChunkyPermissions.Flags.BUILD)
+                ,flags.contains(ChunkyPermissions.Flags.DESTROY)
+                ,flags.contains(ChunkyPermissions.Flags.SWITCH)
+                ,flags.contains(ChunkyPermissions.Flags.ITEMUSE));
     }
 
 }
