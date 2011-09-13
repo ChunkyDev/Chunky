@@ -18,6 +18,7 @@ public class ChunkyPermissibleObject extends ChunkyObject {
     }
 
     public Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
+        Logging.debug(object.toString());
         ChunkyPermissions perms = ChunkyManager.getPermissions(object.hashCode(), this.hashCode());
         Logging.debug(this + ".hasPerm(" + object + ", " + type + ")  perms: " + perms + " .contains(): " + perms.contains(type));
         return perms.contains(type);
