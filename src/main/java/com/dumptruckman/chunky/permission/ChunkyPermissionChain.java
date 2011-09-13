@@ -24,6 +24,7 @@ public class ChunkyPermissionChain {
 
         if (permObject instanceof Player) {
             if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm((Player) permObject)) {
+                accessLevel = ChunkyAccessLevel.ADMIN;
                 return true;
             }
         }
