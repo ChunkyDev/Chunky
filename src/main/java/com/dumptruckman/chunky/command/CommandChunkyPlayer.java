@@ -7,10 +7,12 @@ import com.dumptruckman.chunky.module.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.EnumSet;
 import java.util.HashSet;
 
 /**
@@ -48,5 +50,16 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                 Language.sendMessage(chunkyPlayer,s.trim());
             }
         }
+        displayGlobalPermissions(chunkyPlayer);
     }
+
+    private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer) {
+        EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
+        Language.sendMessage(chunkyPlayer,  "Global Permissions -" +
+                " Build: " + flags.contains(ChunkyPermissions.Flags.BUILD) +
+                " Destroy: " + flags.contains(ChunkyPermissions.Flags.DESTROY) +
+                " Switch: " + flags.contains(ChunkyPermissions.Flags.SWITCH) +
+                " Item Use: " + flags.contains(ChunkyPermissions.Flags.ITEMUSE));
+    }
+
 }
