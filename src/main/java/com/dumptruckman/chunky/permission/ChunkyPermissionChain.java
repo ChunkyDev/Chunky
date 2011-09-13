@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.permission;
 
+import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
@@ -24,10 +25,12 @@ public class ChunkyPermissionChain {
     public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
 
         if (permObject instanceof ChunkyPlayer) {
-            if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm((Player) permObject)) {
-                accessLevel = ChunkyAccessLevel.ADMIN;
-                return true;
-            }
+            try {
+                if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(((ChunkyPlayer) permObject).getPlayer())) {
+                    accessLevel = ChunkyAccessLevel.ADMIN;
+                    return true;
+                }
+            } catch (ChunkyPlayerOfflineException ignore) {}
         }
 
         if (object.isOwnedBy(permObject)) {
