@@ -76,6 +76,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         // Set of flags
         EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
         if (permissions.equalsIgnoreCase("clear")) {
+            state = 0;
             flags = null;
         } else {
             for (char perm : permissions.toLowerCase().toCharArray()) {
