@@ -10,6 +10,7 @@ import com.dumptruckman.chunky.permission.ChunkyAccessLevel;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -41,6 +42,7 @@ public class BlockEvents extends BlockListener {
         
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk  = ChunkyManager.getChunk(event.getBlock().getLocation());
+        Logging.debug("Block break @ " + chunk);
 
         boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
