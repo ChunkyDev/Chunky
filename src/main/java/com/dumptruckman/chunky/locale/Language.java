@@ -74,6 +74,7 @@ public enum Language {
 
     PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
     PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0),
+    PLAYER_MENU_GLOBALPERMISSIONS("playermenu.globalpermissions","&aGlobal Permissions:",0),
     FEATURE_NYI("feature_nyi", "Sorry, that feature is not yet implemented.", 0),
 
     ;
