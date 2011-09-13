@@ -42,7 +42,6 @@ public class BlockEvents extends BlockListener {
         
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk  = ChunkyManager.getChunk(event.getBlock().getLocation());
-        Logging.debug("Block break @ " + chunk);
 
         boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
