@@ -74,6 +74,7 @@ public class ChunkyPermissions {
 
     public String toString() {
         if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
+        if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
         String sFlags = "";
         for (Flags flag : flags) {
             if (!sFlags.isEmpty()) {
