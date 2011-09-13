@@ -42,7 +42,7 @@ public enum Language {
                     //"Note: ChunkName and g:group flags are not yet availiable.",
                     "&e(Optional) *: &fallows settings a player's permissions for ALL of your chunks", // or chunks with a specific name.",
                     "&eFlags: &fThe type of permissions to give.  ",
-                    "&eFlags: &fb: build, d: destroy, i: item use, s: switch.",
+                    "&eFlags: &fb: build, d: destroy, i: item use, s: switch.  clear: removes all flags.",
                     "&e(Optional) +/-: &fThese will allow you to ADD to or REMOVE from the existing flags.",
                     "&eExample: &f\"&e/c p s *:-bd dumptruckman&f\" removes build and destroy permission from all your chunks for dumptruckman"), 0),
     CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
