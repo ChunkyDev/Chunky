@@ -73,15 +73,14 @@ public class PlayerEvents extends PlayerListener{
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         
-        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if(MinecraftTools.isUsable(event.getItem().getTypeId())) {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                boolean isCancelled = true;
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-                isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.ITEMUSE, permType);
+                boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.ITEMUSE, permType);
 
                 ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem(), permType);
                 chunkyEvent.setCancelled(isCancelled);
@@ -93,10 +92,9 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                boolean isCancelled = true;
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-                isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.SWITCH, permType);
+                boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.SWITCH, permType);
 
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
                 chunkyEvent.setCancelled(isCancelled);

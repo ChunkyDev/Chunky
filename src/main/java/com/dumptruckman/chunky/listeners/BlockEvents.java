@@ -23,11 +23,9 @@ public class BlockEvents extends BlockListener {
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
-
-        boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-        isCancelled = !ChunkyPermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.BUILD, permType);
+        Boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.BUILD, permType);
 
         ChunkyPlayerBuildEvent chunkyEvent = new ChunkyPlayerBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
@@ -43,10 +41,9 @@ public class BlockEvents extends BlockListener {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
         ChunkyChunk chunk  = ChunkyManager.getChunk(event.getBlock().getLocation());
 
-        boolean isCancelled = true;
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
-        isCancelled = !ChunkyPermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.DESTROY, permType);
+        Boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.DESTROY, permType);
 
         ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
