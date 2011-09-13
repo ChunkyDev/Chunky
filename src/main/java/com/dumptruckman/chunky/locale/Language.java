@@ -71,7 +71,7 @@ public enum Language {
     CHUNK_AT("chunk_at", "chunk at [%1]", 0),
     PERMISSIONS("permissions.check", "Permissions on %1 are [%2] for %3", 0),
     PERMS_FOR_YOU("permissions.foryou", "%1 set [%2] permissions for you on %3", 0),
-    PERMISSIONS_STATUS("permissions.status","BUILD: %s | DESTROY: %s | SWITCH: %s | ITEMUSE: %S",0),
+    PERMISSIONS_STATUS("permissions.status","BUILD: %1 | DESTROY: %2 | SWITCH: %3 | ITEMUSE: %4",0),
 
     PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
     PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0),
