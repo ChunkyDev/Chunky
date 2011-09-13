@@ -57,9 +57,9 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
         Language.PLAYER_MENU_GLOBALPERMISSIONS.normal(chunkyPlayer,"Global Permissions:");
         Language.sendMessage(chunkyPlayer," Build: " + flags.contains(ChunkyPermissions.Flags.BUILD) +
-                "-Destroy: " + flags.contains(ChunkyPermissions.Flags.DESTROY) +
-                "-Switch: " + flags.contains(ChunkyPermissions.Flags.SWITCH) +
-                "-Item Use: " + flags.contains(ChunkyPermissions.Flags.ITEMUSE));
+                "|Destroy: " + flags.contains(ChunkyPermissions.Flags.DESTROY) +
+                "|Switch: " + flags.contains(ChunkyPermissions.Flags.SWITCH) +
+                "|Item Use: " + flags.contains(ChunkyPermissions.Flags.ITEMUSE));
     }
 
 }
