@@ -88,6 +88,14 @@ public class CommandChunkyPermissionSet implements ChunkyCommandExecutor {
             }
         }
 
+        String sTarget = "";
+        String sPermObject = "";
+        ChunkyPermissions perms = null;
+        if (target instanceof ChunkyChunk) {
+            sTarget = Language.THIS_CHUNK.getString();
+        } else if (target instanceof ChunkyPlayer) {
+            sTarget = Language.YOUR_PROPERTY.getString();
+        }
         // No player or group defined
         if (args.length <= 1){
             switch (state) {
@@ -107,6 +115,8 @@ public class CommandChunkyPermissionSet implements ChunkyCommandExecutor {
                     target.setDefaultPerms(flags);
                     break;
             }
+            sPermObject = Language.EVERYONE.getString();
+            perms = ChunkyManager.getPermissions(target.hashCode(), target.hashCode());
         } else if (args.length == 2) {
             ChunkyPermissibleObject object = null;
             // Groups
@@ -136,9 +146,23 @@ public class CommandChunkyPermissionSet implements ChunkyCommandExecutor {
                     object.setPerms(target, flags);
                     break;
             }
+
+            sPermObject = object.getName();
+            perms = ChunkyManager.getPermissions(target.hashCode(), object.hashCode());
+            
+            if (object instanceof ChunkyPlayer) {
+                String sTarget2 = "";
+                if (target instanceof ChunkyChunk) {
+                    sTarget2 = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                } else if (target instanceof ChunkyPlayer) {
+                    sTarget2 = Language.THEIR_PROPERTY.getString();
+                }
+                Language.PERMS_FOR_YOU.good((ChunkyPlayer)object, cPlayer.getName(), perms, sTarget2);
+            }
         } else if (args.length > 2){
             Language.CMD_CHUNKY_PERMISSION_SET_HELP.bad(cPlayer);
             return;
         }
+        Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
     }
 }
