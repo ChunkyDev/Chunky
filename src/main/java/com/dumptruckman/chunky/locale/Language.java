@@ -56,6 +56,7 @@ public enum Language {
     ERROR ("error", "[Error]", 0),
     SUCCESS ("success", "[Success]", 0),
     HELP ("help", "[Help]", 0),
+    NO_PERMISSIONS_SET("no_permissions_set", "No permissions set", 0),
     CHUNK_OWNED ("chunk.owned", "This chunk is owned by: %1", 0),
     CHUNK_NOT_OWNED("chunk.not_owned", "This chunk is not owned!", 0),
     CHUNK_NONE_OWNED("chunk.none_owned", "You do not own any chunks!", 0),
