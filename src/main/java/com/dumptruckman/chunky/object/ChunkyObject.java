@@ -5,6 +5,7 @@ import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
+import com.dumptruckman.chunky.util.Logging;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -173,7 +174,9 @@ public abstract class ChunkyObject {
     }
 
     public boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
-        return ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).contains(type);
+        ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
+        Logging.debug("default perms: " + perms + " contains " + type + "?");
+        return perms.contains(type);
     }
 
     public EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
