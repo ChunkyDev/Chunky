@@ -173,7 +173,7 @@ public abstract class ChunkyObject {
         //selfPerms = new ChunkyPermissions();
     }
 
-    public boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
+    public Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
         Logging.debug("default perms: " + perms + " contains " + type + "?");
         return perms.contains(type);

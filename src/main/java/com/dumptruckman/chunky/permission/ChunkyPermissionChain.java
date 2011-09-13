@@ -2,11 +2,14 @@ package com.dumptruckman.chunky.permission;
 
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
+import com.dumptruckman.chunky.util.Logging;
 
 /**
  * @author dumptruckman
  */
 public class ChunkyPermissionChain {
+
+    private static Integer times = 0;
 
     /**
      * This function checks the permission chain to see if permObject has permission for a specific action (which is indicated by flag.)
@@ -18,6 +21,8 @@ public class ChunkyPermissionChain {
      * @return true if permObject has permission to flag action
      */
     public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
+        times++;
+        Logging.debug(times.toString());
         if (object.isOwnedBy(permObject)) {
             accessLevel = ChunkyAccessLevel.OWNER;
             if (object.isDirectlyOwnedBy(permObject)) accessLevel = ChunkyAccessLevel.DIRECT_OWNER;
