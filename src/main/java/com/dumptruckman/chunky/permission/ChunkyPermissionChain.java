@@ -33,13 +33,16 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        permission = permObject.hasPerm(object.getOwner(), flag);
-        if (permission != null) {
-            if (permission) {
-                accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
-                return true;
+        ChunkyObject owner = object.getOwner();
+        if (owner != null) {
+            permission = permObject.hasPerm(object.getOwner(), flag);
+            if (permission != null) {
+                if (permission) {
+                    accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
 
         permission = object.hasDefaultPerm(flag);
@@ -51,13 +54,16 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        permission = object.getOwner().hasDefaultPerm(flag);
-        if (permission != null) {
-            if (permission) {
-                accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
-                return true;
+        owner = object.getOwner();
+        if (owner != null) {
+            permission = object.getOwner().hasDefaultPerm(flag);
+            if (permission != null) {
+                if (permission) {
+                    accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
         
         return false;
