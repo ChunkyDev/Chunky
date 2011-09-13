@@ -1,5 +1,7 @@
 package com.dumptruckman.chunky.permission;
 
+import com.dumptruckman.chunky.locale.Language;
+
 import java.util.*;
 
 /**
@@ -71,7 +73,14 @@ public class ChunkyPermissions {
     }
 
     public String toString() {
-        if (flags == null) return "empty";
-        return flags.toString();
+        if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
+        String sFlags = "";
+        for (Flags flag : flags) {
+            if (!sFlags.isEmpty()) {
+                sFlags += ", ";
+            }
+            sFlags += flag.toString();
+        }
+        return sFlags;
     }
 }
