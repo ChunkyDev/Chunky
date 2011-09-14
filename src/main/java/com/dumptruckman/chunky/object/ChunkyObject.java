@@ -167,10 +167,8 @@ public abstract class ChunkyObject {
         if(oldowner != null) {
 
         }
-
-        // TODO Should ownership remove ALL permissions?
-        //permissions = new HashMap<Integer, ChunkyPermissions>();
-        //selfPerms = new ChunkyPermissions();
+        ChunkyManager.getAllPermissions(this.hashCode()).clear();
+        DatabaseManager.removeAllPermissions(this.hashCode());
     }
 
     public Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
