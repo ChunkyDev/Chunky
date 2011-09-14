@@ -25,11 +25,21 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
-        if(args.length == 0) displayInfo(sender);
+        if(args.length == 0) {
+            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer((Player)sender);
+            displayInfo(chunkyPlayer,sender);
+            return;
+        }
+        if(args.length > 0) {
+            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(args[0]);
+            if(chunkyPlayer==null) return;
+            displayInfo(chunkyPlayer,sender);
+            return;
+        }
+
     }
 
-    private void displayInfo(CommandSender sender) {
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(((Player) sender).getName());
+    private void displayInfo(ChunkyPlayer chunkyPlayer, CommandSender sender) {
         Language.PLAYER_MENU_TITLE.normal(sender,chunkyPlayer.getName());
         HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName().hashCode());
 
