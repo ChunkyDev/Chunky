@@ -39,4 +39,6 @@ public interface Database {
     public void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags);
 
     public void removePermissions(int permissiblehash, int objecthash);
+
+    void removeAllPermissions(int objecthash);
 }

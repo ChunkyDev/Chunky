@@ -94,4 +94,8 @@ public class DatabaseManager {
     public static void removePermissions(int permissbileHash, int objectHash) {
         database.removePermissions(permissbileHash, objectHash);
     }
+
+    public static void removeAllPermissions(int objecthash) {
+        database.removeAllPermissions(objecthash);
+    }
 }

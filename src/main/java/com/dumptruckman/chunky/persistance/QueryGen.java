@@ -71,6 +71,12 @@ public class QueryGen {
 
     }
 
+    public static String getRemoveAllPermissions(int objecthash) {
+        return
+            String.format("DELETE FROM chunky_permissions where " +
+                    "ObjectHash = %s",objecthash);
+    }
+
     public static String getCreatePlayerTable() {
         return
             "CREATE TABLE chunky_ChunkyPlayer (" +

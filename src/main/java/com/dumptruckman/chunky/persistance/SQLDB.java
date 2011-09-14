@@ -138,4 +138,8 @@ public abstract class SQLDB implements Database {
         query(QueryGen.getRemovePermissions(permissiblehash, objecthash));
     }
 
+    public void removeAllPermissions(int objecthash) {
+        query(QueryGen.getRemoveAllPermissions(objecthash));
+    }
+
 }
