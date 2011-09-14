@@ -156,7 +156,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 Language.PERMS_FOR_YOU.good((ChunkyPlayer)object, cPlayer.getName(), perms, sTarget2);
             }
         } else if (args.length > 2){
-            Language.CMD_CHUNKY_PERMISSION_SET_HELP.bad(cPlayer);
+            Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
             return;
         }
         Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
