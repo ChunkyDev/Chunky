@@ -220,6 +220,13 @@ public class Chunky extends JavaPlugin {
                     new CommandChunkyPlayer(), commandChunky);
             getModuleManager().registerCommand(commandChunkyPlayer);
 
+            // /chunky chunk
+            ChunkyCommand commandChunkyChunk = new ChunkyCommand("chunk", Arrays.asList("ch", "chunk"),
+                    Language.getString(Language.CMD_CHUNKY_CHUNK_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_CHUNK_HELP),
+                    new CommandChunkyChunk(), commandChunky);
+            getModuleManager().registerCommand(commandChunkyChunk);
+
             // /chunky permission
             ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
                     Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC),

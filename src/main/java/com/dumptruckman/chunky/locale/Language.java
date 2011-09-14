@@ -48,6 +48,9 @@ public enum Language {
     CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
     CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", 0),
 
+    CMD_CHUNKY_CHUNK_DESC ("command.chunky_chunk_desc", "", 0),
+    CMD_CHUNKY_CHUNK_HELP ("command.chunky_chunk_help", "This command will tell you a little about the chunk you're standing in.", 0),
+
 
     CMD_HELP ("command.help", "Help for command: %1 (%2)", 0),
     CMD_LIST ("command.list", "Sub-command list for: %1 (%2)", 0),
