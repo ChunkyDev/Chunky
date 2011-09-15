@@ -322,10 +322,12 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             if (argsList.get(0).equalsIgnoreCase("help")) {
                 ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_HELP, sender, chunkyCommand, label, args);
                 callEvent(event);
+                return;
             }
             if (argsList.get(0).equalsIgnoreCase("?")) {
                 ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_LIST, sender, chunkyCommand, label, args);
                 callEvent(event);
+                return;
             }
         }
 
