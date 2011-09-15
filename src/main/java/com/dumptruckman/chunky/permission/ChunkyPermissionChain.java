@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.permission;
 
+import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.exceptions.ChunkyPlayerOfflineException;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
@@ -7,6 +8,8 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.entity.Player;
+
+import javax.swing.plaf.TreeUI;
 
 /**
  * @author dumptruckman
@@ -31,6 +34,10 @@ public class ChunkyPermissionChain {
                     return true;
                 }
             } catch (ChunkyPlayerOfflineException ignore) {}
+        }
+
+        if (!object.isOwned()) {
+            return Config.canUnowned(flag);
         }
 
         if (object.isOwnedBy(permObject)) {
