@@ -19,6 +19,12 @@ public class ChunkyManager {
     private static HashMap<ChunkyCoordinates, ChunkyChunk> CHUNKS = new HashMap<ChunkyCoordinates, ChunkyChunk>();
     private static HashMap<Integer, HashMap<Integer, ChunkyPermissions>> permissions = new HashMap<Integer, HashMap<Integer, ChunkyPermissions>>();
 
+    /**
+     * Gets a ChunkyPlayer object from the given player name.  If there is no instance already created, a new one will be created.  It is probably best to only use this if the name is from Player.getName().
+     *
+     * @param name Name of the player
+     * @return A ChunkyPlayer object for the given name.
+     */
     public static ChunkyPlayer getChunkyPlayer(String name)
     {
         if(PLAYERS.containsKey(name)) return PLAYERS.get(name);
@@ -28,18 +34,37 @@ public class ChunkyManager {
         return player;
     }
 
+    /**
+     * This will attempt to get a ChunkyPlayer with the given hash code.
+     *
+     * @param hashCode Hash code for player
+     * @return If exists, a ChunkyPlayer object. If not, null.
+     */
     public static ChunkyPlayer getChunkyPlayer(int hashCode) {
         String name = unhashChunkyObject(hashCode);
         if (!name.startsWith(ChunkyPlayer.class.getName())) return null;
         name = name.substring(name.indexOf(":"));
         return getChunkyPlayer(name);
     }
-    
+
+    /**
+     * A convenience method for getting a ChunkyPlayer from a Player object.
+     *
+     * @param player
+     * @return A ChunkyPlayer object for the given player.
+     * @see com.dumptruckman.chunky.ChunkyManager#getChunkyPlayer(String name)
+     */
     public static ChunkyPlayer getChunkyPlayer(Player player)
     {
         return getChunkyPlayer(player.getName());
     }
 
+    /**
+     * Gets the ChunkyChunk associated with the given chunk coordinates
+     *
+     * @param coords Chunk coordinates object
+     * @return ChunkyChunk at the given coordinates
+     */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
         ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
@@ -47,11 +72,24 @@ public class ChunkyManager {
         return chunkyChunk;
     }
 
+    /**
+     * Gets the ChunkyChunk associated with the given chunk coordinates
+     *
+     * @param location Location of chunk
+     * @return ChunkyChunk at the given location
+     */
     public static ChunkyChunk getChunk(Location location)
     {
         return getChunk(new ChunkyCoordinates(location));
     }
 
+    /**
+     * Gets the permissions object for the permissions relationship between permObject and object.
+     * 
+     * @param object Object being interacted with
+     * @param permObject Object doing the interacting
+     * @return a ChunkyPermissions object containing the permissions for this relationship
+     */
     public static ChunkyPermissions getPermissions(int object, int permObject) {
         if (!permissions.containsKey(object)) {
             permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
@@ -64,6 +102,12 @@ public class ChunkyManager {
         return perms.get(permObject);
     }
 
+    /**
+     * Gets a hashmap of all the permissions set on a specific object.  Altering this hashmap can potentially screw up persistence.  Use with caution!
+     *
+     * @param object Object in question
+     * @return HashMap of object permissions
+     */
     public static HashMap<Integer, ChunkyPermissions> getAllPermissions(int object) {
         if (!permissions.containsKey(object)) {
             permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
