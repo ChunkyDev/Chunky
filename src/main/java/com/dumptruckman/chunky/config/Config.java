@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.config;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,17 +127,19 @@ public class Config {
         return getBoolean(DEBUG);
     }
 
-    public static Boolean canUnownedBuild() {
-        return getBoolean(UNOWNED_BUILD);
-    }
-    public static Boolean canUnownedDestroy() {
-        return getBoolean(UNOWNED_DESTROY);
-    }
-    public static Boolean canUnownedItemUse() {
-        return getBoolean(UNOWNED_ITEMUSE);
-    }
-    public static Boolean canUnownedSwitch() {
-        return getBoolean(UNOWNED_SWITCH);
+    public static Boolean canUnowned(ChunkyPermissions.Flags flag) {
+        switch (flag) {
+            case BUILD:
+                return getBoolean(UNOWNED_BUILD);
+            case DESTROY:
+                return getBoolean(UNOWNED_DESTROY);
+            case ITEMUSE:
+                return getBoolean(UNOWNED_ITEMUSE);
+            case SWITCH:
+                return getBoolean(UNOWNED_SWITCH);
+            default:
+                return false;
+        }
     }
 
     public static Integer getPlayerChunkLimitDefault() {
