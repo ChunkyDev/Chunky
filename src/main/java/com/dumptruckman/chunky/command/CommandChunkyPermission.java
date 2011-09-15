@@ -64,6 +64,10 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 return;
             }
         } else {
+            if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
+                Language.CHUNK_NOT_OWNED.bad(cPlayer);
+                return;
+            }
             target = cPlayer.getCurrentChunk();
         }
 
