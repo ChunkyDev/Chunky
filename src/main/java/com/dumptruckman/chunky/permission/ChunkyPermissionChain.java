@@ -37,7 +37,11 @@ public class ChunkyPermissionChain {
         }
 
         if (!object.isOwned()) {
-            return Config.canUnowned(flag);
+            if (Config.canUnowned(flag)) {
+                accessLevel = ChunkyAccessLevel.UNOWNED;
+                return true;
+            }
+            return false;
         }
 
         if (object.isOwnedBy(permObject)) {

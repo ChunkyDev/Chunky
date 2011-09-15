@@ -5,6 +5,7 @@ package com.dumptruckman.chunky.permission;
  */
 public enum ChunkyAccessLevel {
     ADMIN,
+    UNOWNED,
     OWNER,
     DIRECT_OWNER,
     DIRECT_PERMISSION,
