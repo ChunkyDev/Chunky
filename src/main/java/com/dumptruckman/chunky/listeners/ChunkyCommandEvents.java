@@ -25,7 +25,7 @@ public class ChunkyCommandEvents extends ChunkyCommandListener {
         Language.CMD_LIST.help(event.getSender(), event.getCommand().getChatName(), event.getCommand().getAliasesAsString());
         for (Map.Entry<String, ChunkyCommand> childCommand : event.getCommand().getChildren().entrySet()) {
             if (childCommand.getValue().getDescription() == null) continue;
-            event.getSender().sendMessage(childCommand.getValue().getName() + " - " + childCommand.getValue().getDescription());
+            Language.sendMessage(event.getSender(), "&a" + childCommand.getValue().getName() + "&f - " + childCommand.getValue().getDescription());
         }
     }
 }
