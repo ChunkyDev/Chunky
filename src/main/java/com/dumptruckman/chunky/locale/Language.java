@@ -304,7 +304,7 @@ public enum Language {
      * @param chunkyPlayer
      * @param message
      */
-    public static void sendMessage(ChunkyPlayer chunkyPlayer, String message) {
+    public static void sendMessage(ChunkyPlayer chunkyPlayer, String message, Object...args) {
         try {
             sendMessage(chunkyPlayer.getPlayer(), message);
         } catch (ChunkyPlayerOfflineException ignore) {}
@@ -316,8 +316,8 @@ public enum Language {
      * @param player
      * @param message
      */
-    public static void sendMessage(CommandSender player, String message) {
-        List<String> messages = Font.splitString(message);
+    public static void sendMessage(CommandSender player, String message, Object...args) {
+        List<String> messages = Font.splitString(formatString(message, args));
         for (String s : messages) {
             player.sendMessage(message);
         }
