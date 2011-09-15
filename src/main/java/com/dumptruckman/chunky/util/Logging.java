@@ -31,7 +31,7 @@ public class Logging {
     }
 
     public static String getNameVersion() {
-        return NAME + VERSION;
+        return NAME + " v" + VERSION;
     }
 
     public static void info(String message) {
