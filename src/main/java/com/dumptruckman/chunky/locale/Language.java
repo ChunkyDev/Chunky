@@ -7,6 +7,7 @@ import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
@@ -305,7 +306,20 @@ public enum Language {
      */
     public static void sendMessage(ChunkyPlayer chunkyPlayer, String message) {
         try {
-            chunkyPlayer.getPlayer().sendMessage(message);
+            sendMessage(chunkyPlayer.getPlayer(), message);
         } catch (ChunkyPlayerOfflineException ignore) {}
+    }
+
+    /**
+     * Sends a custom string to a player.
+     *
+     * @param player
+     * @param message
+     */
+    public static void sendMessage(CommandSender player, String message) {
+        List<String> messages = Font.splitString(message);
+        for (String s : messages) {
+            player.sendMessage(message);
+        }
     }
 }
