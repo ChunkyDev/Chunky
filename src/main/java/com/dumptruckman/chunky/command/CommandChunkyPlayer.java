@@ -65,7 +65,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
 
     private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer) {
         EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
-        Language.PLAYER_MENU_GLOBALPERMISSIONS.normal(chunkyPlayer,"Global Permissions:");
+        Language.PLAYER_MENU_GLOBALPERMISSIONS.normal(chunkyPlayer);
         if(flags!=null)
             Language.PERMISSIONS_STATUS.normal(chunkyPlayer
                     ,flags.contains(ChunkyPermissions.Flags.BUILD)
