@@ -126,6 +126,19 @@ public class Config {
         return getBoolean(DEBUG);
     }
 
+    public static Boolean canUnownedBuild() {
+        return getBoolean(UNOWNED_BUILD);
+    }
+    public static Boolean canUnownedDestroy() {
+        return getBoolean(UNOWNED_DESTROY);
+    }
+    public static Boolean canUnownedItemUse() {
+        return getBoolean(UNOWNED_ITEMUSE);
+    }
+    public static Boolean canUnownedSwitch() {
+        return getBoolean(UNOWNED_SWITCH);
+    }
+
     public static Integer getPlayerChunkLimitDefault() {
         return getInt(PLAYER_CHUNK_LIMIT);
     }
