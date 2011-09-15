@@ -303,6 +303,7 @@ public enum Language {
      * 
      * @param chunkyPlayer
      * @param message
+     * @param args
      */
     public static void sendMessage(ChunkyPlayer chunkyPlayer, String message, Object...args) {
         try {
@@ -315,11 +316,12 @@ public enum Language {
      *
      * @param player
      * @param message
+     * @param args
      */
     public static void sendMessage(CommandSender player, String message, Object...args) {
         List<String> messages = Font.splitString(formatString(message, args));
         for (String s : messages) {
-            player.sendMessage(message);
+            player.sendMessage(s);
         }
     }
 }
