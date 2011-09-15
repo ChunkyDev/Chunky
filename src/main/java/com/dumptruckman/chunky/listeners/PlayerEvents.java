@@ -74,7 +74,7 @@ public class PlayerEvents extends PlayerListener{
         if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-            if(MinecraftTools.isUsable(event.getItem().getTypeId())) {
+            if(event.getItem() != null && MinecraftTools.isUsable(event.getItem().getTypeId())) {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
