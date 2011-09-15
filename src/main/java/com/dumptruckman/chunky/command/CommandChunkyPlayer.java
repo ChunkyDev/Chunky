@@ -8,12 +8,13 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
-import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -65,19 +66,31 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
 
     private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer) {
         EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
-        Language.PLAYER_MENU_GLOBALPERMISSIONS.normal(chunkyPlayer);
+        Language.DEFAULT_PERMISSIONS.normal(chunkyPlayer, Language.YOUR_PROPERTY.getString());
         if(flags!=null)
             Language.PERMISSIONS_STATUS.normal(chunkyPlayer
                     ,flags.contains(ChunkyPermissions.Flags.BUILD)
                     ,flags.contains(ChunkyPermissions.Flags.DESTROY)
                     ,flags.contains(ChunkyPermissions.Flags.SWITCH)
                     ,flags.contains(ChunkyPermissions.Flags.ITEMUSE));
-        else
-           Language.PERMISSIONS_STATUS.normal(chunkyPlayer
-                    ,"Not set"
-                    ,"Not set"
-                    ,"Not set"
-                    ,"Not set");
+        else {
+            String notSet = Language.NO_PERMISSIONS_SET.getString();
+            Language.PERMISSIONS_STATUS.normal(chunkyPlayer
+                    , notSet
+                    , notSet
+                    , notSet
+                    , notSet);
+        }
+        HashMap<Integer, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer.hashCode());
+        String players = "";
+        if (!playerPermissions.isEmpty()) {
+            for (Map.Entry<Integer, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
+                ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(permPlayer.getKey());
+                if (cPlayer == null) continue;
+                if (!players.isEmpty()) players += ", ";
+                players += cPlayer.getName() + ": [" + ChunkyManager.getPermissions(chunkyPlayer.hashCode(), cPlayer.hashCode()).toSmallString() + "]";
+            }
+        }
     }
 
 }
