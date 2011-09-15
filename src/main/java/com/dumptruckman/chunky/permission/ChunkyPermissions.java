@@ -84,4 +84,17 @@ public class ChunkyPermissions {
         }
         return sFlags;
     }
+
+    public String toSmallString() {
+        if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
+        if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
+        String sFlags = "";
+        for (Flags flag : flags) {
+            if (!sFlags.isEmpty()) {
+                sFlags += ", ";
+            }
+            sFlags += Character.toString(flag.getRep()).toUpperCase();
+        }
+        return sFlags;
+    }
 }
