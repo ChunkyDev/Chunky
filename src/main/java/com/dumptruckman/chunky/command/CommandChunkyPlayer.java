@@ -88,7 +88,9 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                 ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(permPlayer.getKey());
                 if (cPlayer == null) continue;
                 if (!players.isEmpty()) players += ", ";
-                players += cPlayer.getName() + ": [" + ChunkyManager.getPermissions(chunkyPlayer.hashCode(), cPlayer.hashCode()).toSmallString() + "]"; 
+                ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.hashCode(), cPlayer.hashCode());
+                if (perms != null)
+                    players += cPlayer.getName() + ": [" + perms.toSmallString() + "]";
             }
         }
     }
