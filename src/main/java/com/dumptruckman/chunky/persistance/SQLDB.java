@@ -98,7 +98,7 @@ public abstract class SQLDB implements Database {
     }
 
     private ResultSet getPlayers() {
-        return query(QueryGen.getAllPlayers());
+        return query(QueryGen.getPlayersWithOwnership());
     }
 
     private ResultSet getOwnedChunks(ChunkyPlayer chunkyPlayer) {
