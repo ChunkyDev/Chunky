@@ -78,7 +78,7 @@ public class Chunky extends JavaPlugin {
             Logging.warning("Build number unattainable.");
             BUILD = 0;
         }
-//Git Test branches
+
         // Loads the configuration
         try {
             Config.load(this);
