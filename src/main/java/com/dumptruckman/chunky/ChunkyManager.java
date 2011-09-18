@@ -18,6 +18,19 @@ public class ChunkyManager {
     private static HashMap<String, ChunkyPlayer> PLAYERS = new HashMap<String, ChunkyPlayer>();
     private static HashMap<ChunkyCoordinates, ChunkyChunk> CHUNKS = new HashMap<ChunkyCoordinates, ChunkyChunk>();
     private static HashMap<Integer, HashMap<Integer, ChunkyPermissions>> permissions = new HashMap<Integer, HashMap<Integer, ChunkyPermissions>>();
+    private static HashMap<Integer, ChunkyObject> OBJECTS = new HashMap<Integer, ChunkyObject>();
+
+    public static boolean registerObject(ChunkyObject object) {
+        if (OBJECTS.containsKey(object.hashCode())) {
+            return false;
+        }
+        OBJECTS.put(object.hashCode(), object);
+        return true;
+    }
+
+    public static ChunkyObject getObject(int hashCode) {
+        return OBJECTS.get(hashCode);
+    }
 
     /**
      * Gets a ChunkyPlayer object from the given player name.  If there is no instance already created, a new one will be created.  It is probably best to only use this if the name is from Player.getName().
