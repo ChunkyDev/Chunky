@@ -16,15 +16,11 @@ public interface Database {
     //Load database
     public Boolean load();
 
-    public ResultSet getOwned(ChunkyObject owner, int ownableType);
+    public ResultSet getOwned(ChunkyObject owner, String ownableType);
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable);
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
-
-    public void addType(int hash, String name);
-
-    public ResultSet getTypeName(int hash);
 
     public ResultSet query(String query);
 
@@ -36,9 +32,9 @@ public interface Database {
 
     public void addPlayer(ChunkyPlayer player);
 
-    public void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags);
+    public void updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags);
 
-    public void removePermissions(int permissiblehash, int objecthash);
+    public void removePermissions(String permissibleId, String objectId);
 
-    void removeAllPermissions(int objecthash);
+    void removeAllPermissions(String objectId);
 }

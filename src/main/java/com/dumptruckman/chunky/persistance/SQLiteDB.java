@@ -42,10 +42,6 @@ public class SQLiteDB extends SQLDB {
     }
 
     private Boolean checkTables() {
-        if(!this.db.checkTable("chunky_types")) {
-            if(!db.createTable(QueryGen.getCreateTypeTable())) return false;
-            Logging.info("Created chunky_types table.");
-        }
 
         if(!this.db.checkTable("chunky_ChunkyChunk")) {
             if(!db.createTable(QueryGen.getCreateChunkTable())) return false;

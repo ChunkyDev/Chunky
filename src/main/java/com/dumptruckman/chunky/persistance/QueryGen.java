@@ -9,82 +9,75 @@ public class QueryGen {
 
     public static String getPlayersWithOwnership() {
         return "SELECT * FROM chunky_ChunkyPlayer WHERE " +
-                "Hash IN " +
-                "(SELECT OwnerHash from chunky_ownership group by OwnerHash) " +
-                "OR Hash IN " +
-                "(SELECT PermissibleHash from chunky_permissions group by PermissibleHash)";
+                "Id IN " +
+                "(SELECT OwnerId from chunky_ownership group by OwnerId) " +
+                "OR Id IN " +
+                "(SELECT PermissibleId from chunky_permissions group by PermissibleId)";
     }
 
-    public static String getOwned(ChunkyObject owner, int ownableType) {
+    // TODO Totally unsure about this query:
+    public static String getOwned(ChunkyObject owner, String ownableType) {
         return
-            String.format("SELECT * FROM chunky_%s WHERE Hash IN " +
-            "(SELECT OwnableHash from chunky_ownership " +
-            "where OwnerHash = %s " +
-            "AND OwnableType = %s AND OwnerType = %s)",DatabaseManager.getTypeName(ownableType),owner.hashCode(),ownableType,owner.getType());
-    }
-
-    public static String getCreateTypeTable() {
-        return
-            "CREATE TABLE chunky_types (" +
-            "Hash INT NOT NULL," +
-            "Name VARCHAR(50) NOT NULL," +
-            "PRIMARY KEY (Hash) )";
+            String.format("SELECT * FROM chunky_%s WHERE Id IN " +
+            "(SELECT OwnableId from chunky_ownership " +
+            "where OwnerId = %s " +
+            "AND OwnableType = %s AND OwnerType = %s)", DatabaseManager.getTableTypeName(ownableType), owner.getId(), ownableType, owner.getType());
     }
 
     public static String getCreatePermissionsTable() {
         return
             "CREATE TABLE chunky_permissions (" +
-            "PermissibleHash INT NOT NULL," +
-            "ObjectHash INT NOT NULL," +
+            "PermissibleId VARCHAR(255) NOT NULL," +
+            "ObjectId VARCHAR(255) NOT NULL," +
             "BUILD TINYINT NOT NULL DEFAULT 0," +
             "DESTROY TINYINT NOT NULL DEFAULT 0," +
             "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
             "SWITCH TINYINT NOT NULL DEFAULT 0," +
-            "PRIMARY KEY (PermissibleHash, ObjectHash) )";
+            "PRIMARY KEY (PermissibleId, ObjectId) )";
     }
 
-    public static String getSelectPermissions(int hash) {
-        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash;
+    public static String getSelectPermissions(String id) {
+        return "SELECT * FROM chunky_permissions WHERE PermissibleId = " + id;
     }
 
-    public static String getSelectDefaultPermissions(int hash) {
-        return "SELECT * FROM chunky_permissions WHERE PermissibleHash = " + hash + " AND ObjectHash = " + hash;
+    public static String getSelectDefaultPermissions(String id) {
+        return "SELECT * FROM chunky_permissions WHERE PermissibleId = " + id + " AND ObjectId = " + id;
     }
 
-    public static String getUpdatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
+    public static String getUpdatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
         int build = flags.contains(ChunkyPermissions.Flags.BUILD) ? 1:0;
         int destroy = flags.contains(ChunkyPermissions.Flags.DESTROY) ? 1:0;
         int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1:0;
         int sw = flags.contains(ChunkyPermissions.Flags.SWITCH) ? 1:0;
         return
             String.format("INSERT OR REPLACE INTO chunky_permissions (" +
-            "PermissibleHash, " +
-            "ObjectHash, " +
+            "PermissibleId, " +
+            "ObjectId, " +
             "BUILD," +
             "DESTROY," +
             "ITEMUSE," +
             "SWITCH) " +
-            "VALUES (%s,%s,%s,%s,%s,%s)", permissiblehash, objecthash, build,destroy,itemuse,sw);
+            "VALUES (%s,%s,%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
     }
     
-    public static String getRemovePermissions(int permissiblehash, int objecthash) {
+    public static String getRemovePermissions(String permissibleId, String objectId) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-            "PermissibleHash = %s " +
-            "AND ObjectHash = %s", permissiblehash, objecthash);
+            "PermissibleId = %s " +
+            "AND ObjectId = %s", permissibleId, objectId);
 
     }
 
-    public static String getRemoveAllPermissions(int objecthash) {
+    public static String getRemoveAllPermissions(String objectId) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-                    "ObjectHash = %s",objecthash);
+                    "ObjectId = %s", objectId);
     }
 
     public static String getCreatePlayerTable() {
         return
             "CREATE TABLE chunky_ChunkyPlayer (" +
-            "Hash INT NOT NULL," +
+            "Id VARCHAR(64) NOT NULL," +
             "Name VARCHAR(16) NOT NULL," +
             "PRIMARY KEY (Hash) )";
     }
@@ -92,66 +85,58 @@ public class QueryGen {
     public static String getCreateOwnerShipTable() {
         return
             "CREATE TABLE chunky_ownership (" +
-            "OwnerHash INT NOT NULL,  " +
-            "OwnableHash INT NOT NULL,  " +
-            "OwnerType INT NOT NULL,  " +
-            "OwnableType INT NOT NULL,  " +
-            "PRIMARY KEY (OwnerHash, OwnableHash) )";
+            "OwnerId VARCHAR(255) NOT NULL,  " +
+            "OwnableId VARCHAR(255) NOT NULL,  " +
+            "OwnerType VARCHAR(128) NOT NULL,  " +
+            "OwnableType VARCHAR(128) NOT NULL,  " +
+            "PRIMARY KEY (OwnerId, OwnableId) )";
     }
 
     public static String getCreateChunkTable() {
         return
             "CREATE TABLE chunky_ChunkyChunk (" +
-            "Hash INT NOT NULL," +
+            "Id VARCHAR(255) NOT NULL," +
             "Name VARCHAR(50) NOT NULL," +
             "World VARCHAR(50) NOT NULL," +
             "x INT NOT NULL," +
             "z INT NOT NULL," +
-            "PRIMARY KEY (Hash) )";
+            "PRIMARY KEY (Id) )";
     }
 
     public static String getAddOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
             String.format("REPLACE INTO chunky_ownership (" +
-            "OwnerHash, " +
-            "OwnableHash, " +
+            "OwnerId, " +
+            "OwnableId, " +
             "OwnerType, " +
             "OwnableType) " +
-            "VALUES (%s,%s,%s,%s)",owner.hashCode(), ownable.hashCode(), owner.getType(), ownable.getType());
+            "VALUES (%s,%s,%s,%s)",owner.getId(), ownable.getId(), owner.getType(), ownable.getType());
     }
 
     public static String getRemoveOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
             String.format("DELETE FROM chunky_ownership where " +
-            "OwnerHash = %s " +
-            "AND OwnableHash = %s",owner.hashCode(), ownable.hashCode());
+            "OwnerId = %s " +
+            "AND OwnableId = %s",owner.getId(), ownable.getId());
 
-    }
-
-    public static String getAddType(int hash, String name) {
-        return String.format("REPLACE INTO chunky_types (Hash, Name) VALUES (%s, '%s')",hash, name);
-    }
-
-    public static String getGetType(int Hash) {
-        return String.format("SELECT name FROM chunky_types where Hash = %s",Hash);
     }
 
     public static String getUpdateChunk(ChunkyChunk chunk, String name) {
         return String.format("REPLACE INTO chunky_ChunkyChunk (" +
-            "Hash, " +
+            "Id, " +
             "Name, " +
             "World, " +
             "x, " +
             "z) " +
-            "VALUES (%s,'%s','%s',%s,%s)",chunk.hashCode(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+            "VALUES (%s,'%s','%s',%s,%s)", chunk.getId(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
     }
 
     public static String getAddPlayer(ChunkyPlayer player) {
         return
             String.format("REPLACE INTO chunky_ChunkyPlayer (" +
-            "Hash, " +
+            "Id, " +
             "Name) " +
-            "VALUES (%s,'%s')",player.hashCode(), player.getName());
+            "VALUES (%s,'%s')", player.getId(), player.getName());
 
     }
 }

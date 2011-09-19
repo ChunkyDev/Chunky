@@ -59,10 +59,10 @@ public abstract class SQLDB implements Database {
     }
 
     private void setPermissions(ChunkyPlayer player) {
-        ResultSet perms = query(QueryGen.getSelectPermissions(player.hashCode()));
+        ResultSet perms = query(QueryGen.getSelectPermissions(player.getId()));
         try {
             while(perms.next()) {
-                int object = perms.getInt("ObjectHash");
+                String object = perms.getString("ObjectId");
                 Logging.debug("Setting perms for " + player.getName() + " on " + object);
                 player.setPerm(object, ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
                 player.setPerm(object, ChunkyPermissions.Flags.DESTROY, (perms.getInt("DESTROY") == 1), false);
@@ -76,7 +76,7 @@ public abstract class SQLDB implements Database {
 
     private void setDefaultPermissions(ChunkyObject object) {
 
-        ResultSet perms = query(QueryGen.getSelectDefaultPermissions(object.hashCode()));
+        ResultSet perms = query(QueryGen.getSelectDefaultPermissions(object.getId()));
         try {
             while(perms.next()) {
                 object.setDefaultPerm(ChunkyPermissions.Flags.BUILD, (perms.getInt("BUILD") == 1), false);
@@ -102,14 +102,14 @@ public abstract class SQLDB implements Database {
     }
 
     private ResultSet getOwnedChunks(ChunkyPlayer chunkyPlayer) {
-        return getOwned(chunkyPlayer, ChunkyChunk.class.getName().hashCode());
+        return getOwned(chunkyPlayer, ChunkyChunk.class.getName());
     }
 
     private ResultSet getOwnedPlayers(ChunkyPlayer chunkyPlayer) {
-        return getOwned(chunkyPlayer, ChunkyPlayer.class.getName().hashCode());
+        return getOwned(chunkyPlayer, ChunkyPlayer.class.getName());
     }
 
-    public ResultSet getOwned(ChunkyObject owner, int ownableType) {
+    public ResultSet getOwned(ChunkyObject owner, String ownableType) {
         return query(QueryGen.getOwned(owner, ownableType));
 
     }
@@ -122,24 +122,16 @@ public abstract class SQLDB implements Database {
         query(QueryGen.getRemoveOwnership(owner, ownable));
     }
 
-    public void addType(int hash, String name) {
-        query(QueryGen.getAddType(hash, name));
+    public void updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.getUpdatePermissions(permissibleId, objectId, flags));
     }
 
-    public ResultSet getTypeName(int hash) {
-        return query(QueryGen.getGetType(hash));
+    public void removePermissions(String permissibleId, String objectId) {
+        query(QueryGen.getRemovePermissions(permissibleId, objectId));
     }
 
-    public void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.getUpdatePermissions(permissiblehash, objecthash, flags));
-    }
-
-    public void removePermissions(int permissiblehash, int objecthash) {
-        query(QueryGen.getRemovePermissions(permissiblehash, objecthash));
-    }
-
-    public void removeAllPermissions(int objecthash) {
-        query(QueryGen.getRemoveAllPermissions(objecthash));
+    public void removeAllPermissions(String objectId) {
+        query(QueryGen.getRemoveAllPermissions(objectId));
     }
 
 }

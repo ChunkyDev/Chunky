@@ -81,14 +81,14 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                     , notSet
                     , notSet);
         }
-        HashMap<Integer, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer.hashCode());
+        HashMap<String, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer.getId());
         String players = "";
         if (!playerPermissions.isEmpty()) {
-            for (Map.Entry<Integer, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
+            for (Map.Entry<String, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
                 ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(permPlayer.getKey());
                 if (cPlayer == null) continue;
                 if (!players.isEmpty()) players += ", ";
-                ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.hashCode(), cPlayer.hashCode());
+                ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getId(), cPlayer.getId());
                 if (perms != null)
                     players += cPlayer.getName() + ": [" + perms.toSmallString() + "]";
             }

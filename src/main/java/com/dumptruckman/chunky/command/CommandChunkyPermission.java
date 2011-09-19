@@ -116,7 +116,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                     break;
             }
             sPermObject = Language.EVERYONE.getString();
-            perms = ChunkyManager.getPermissions(target.hashCode(), target.hashCode());
+            perms = ChunkyManager.getPermissions(target.getId(), target.getId());
         } else if (args.length == 2) {
             ChunkyPermissibleObject object = null;
             // Groups
@@ -148,7 +148,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             }
 
             sPermObject = object.getName();
-            perms = ChunkyManager.getPermissions(target.hashCode(), object.hashCode());
+            perms = ChunkyManager.getPermissions(target.getId(), object.getId());
 
             if (object instanceof ChunkyPlayer) {
                 String sTarget2 = "";

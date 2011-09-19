@@ -175,7 +175,7 @@ public abstract class ChunkyObject {
 
         }
         ChunkyManager.getAllPermissions(getId()).clear();
-        DatabaseManager.removeAllPermissions(this.hashCode());
+        DatabaseManager.removeAllPermissions(this.getId());
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
@@ -195,7 +195,7 @@ public abstract class ChunkyObject {
     public final void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(getId(), getId()).clearFlags();
-            DatabaseManager.removePermissions(this.hashCode(), this.hashCode());
+            DatabaseManager.removePermissions(this.getId(), this.getId());
             return;
         }
         
@@ -215,7 +215,7 @@ public abstract class ChunkyObject {
 
         // Persist if requested
         if (persist) {
-            DatabaseManager.updateDefaultPermissions(this.hashCode(), perms.getFlags());
+            DatabaseManager.updateDefaultPermissions(this.getId(), perms.getFlags());
         }
     }
 

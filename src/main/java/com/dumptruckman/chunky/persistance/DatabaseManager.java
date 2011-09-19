@@ -35,32 +35,20 @@ public class DatabaseManager {
         return database.load();
     }
 
-    public static ResultSet getOwned(ChunkyObject owner, int ownableType) {
-        return database.getOwned(owner,ownableType);
+    public static ResultSet getOwned(ChunkyObject owner, String ownableType) {
+        return database.getOwned(owner, ownableType);
     }
 
     public static void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        database.addOwnership(owner,ownable);
+        database.addOwnership(owner, ownable);
     }
 
     public static void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        database.removeOwnership(owner,ownable);
+        database.removeOwnership(owner, ownable);
     }
 
-    public static void addType(int hash, String name) {
-        database.addType(hash,name);
-    }
-
-    public static String getTypeName(int hash) {
-        ResultSet results = database.getTypeName(hash);
-        if(results==null) return null;
-        try {
-            if(!results.next()) return null;
-            return results.getString("name");
-        } catch (SQLException e) {
-            return null;
-        }
-
+    public static String getTableTypeName(String type) {
+        return type.substring(type.lastIndexOf("."));
     }
 
     public static void closeDB() {
@@ -83,19 +71,19 @@ public class DatabaseManager {
         return database.query(query);
     }
 
-    public static void updatePermissions(int permissiblehash, int objecthash, EnumSet<ChunkyPermissions.Flags> flags) {
-        database.updatePermissions(permissiblehash, objecthash, flags);
+    public static void updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        database.updatePermissions(permissibleId, objectId, flags);
     }
 
-    public static void updateDefaultPermissions(int permissiblehash, EnumSet<ChunkyPermissions.Flags> flags) {
-        database.updatePermissions(permissiblehash, permissiblehash, flags);
+    public static void updateDefaultPermissions(String permissibleId, EnumSet<ChunkyPermissions.Flags> flags) {
+        database.updatePermissions(permissibleId, permissibleId, flags);
     }
 
-    public static void removePermissions(int permissbileHash, int objectHash) {
-        database.removePermissions(permissbileHash, objectHash);
+    public static void removePermissions(String permissibleId, String objectId) {
+        database.removePermissions(permissibleId, objectId);
     }
 
-    public static void removeAllPermissions(int objecthash) {
-        database.removeAllPermissions(objecthash);
+    public static void removeAllPermissions(String objectId) {
+        database.removeAllPermissions(objectId);
     }
 }
