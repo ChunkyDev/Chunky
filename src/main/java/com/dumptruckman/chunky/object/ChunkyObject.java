@@ -24,37 +24,44 @@ public abstract class ChunkyObject {
     protected HashMap<Integer, HashSet<ChunkyObject>> ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
 
     private String name;
+    private final String id;
     private int classHash;
 
-    public ChunkyObject(String name) {
+    public ChunkyObject(String name, final String id) {
         this.name = name;
+        this.id = id;
         classHash = this.getClass().getName().hashCode();
+        ChunkyManager.registerObject(this);
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final String getId() {
+        return id;
+    }
+
+    public final void setName(String name) {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return;
         this.name = event.getNewName();
     }
 
-    public int hashCode() {
-        return (getType() + ":" + getName()).hashCode();
+    public final int hashCode() {
+        return (getType() + ":" + getId()).hashCode();
     }
 
-    public boolean equals(Object obj) {
-        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getName().equals(this.getName());
+    public final boolean equals(Object obj) {
+        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getType().equals(this.getType()) && ((ChunkyObject)obj).getId().equals(this.getId());
     }
 
-    public Integer getType() {
+    public final Integer getType() {
         return classHash;
     }
 
-    final public boolean isOwned() {
+    public final boolean isOwned() {
         return !(owner == null);
     }
 
@@ -104,7 +111,7 @@ public abstract class ChunkyObject {
         if(removeOwnable(o)) takeChildren(o);
     }
 
-    public void takeChildren(ChunkyObject o) {
+    public final void takeChildren(ChunkyObject o) {
         // If a child is removed, parent reposesses all their objects.
         // ex. If a child of a town is removed then their plots are owned by town.
 
@@ -122,7 +129,7 @@ public abstract class ChunkyObject {
      * @param o object to hasPerm ownership for
      * @return true if this object owns o
      */
-    final public boolean isOwnerOf(ChunkyObject o) {
+    public final boolean isOwnerOf(ChunkyObject o) {
         return o.isOwnedBy(this);
     }
 
@@ -130,7 +137,7 @@ public abstract class ChunkyObject {
      * @param owner Check if this object is an ancestor.
      * @return
      */
-    final public boolean isOwnedBy(ChunkyObject owner) {
+    public final boolean isOwnedBy(ChunkyObject owner) {
         if (owner == null)
             return false;
         ChunkyObject current = this;
@@ -139,14 +146,14 @@ public abstract class ChunkyObject {
         return current == owner;
     }
 
-    final public boolean isDirectlyOwnedBy(ChunkyObject owner) {
+    public final boolean isDirectlyOwnedBy(ChunkyObject owner) {
         return this.owner == owner;
     }
 
     /**
      * Returns the owner <code>TreeNode</code> of the receiver.
      */
-    public ChunkyObject getOwner() {
+    public final ChunkyObject getOwner() {
         return owner;
     }
 
@@ -154,7 +161,7 @@ public abstract class ChunkyObject {
      * @param object the object that will become the owner.
      * @param keepChildren false transfers the object's children to current owner.
      */
-    public void setOwner(ChunkyObject object, Boolean keepChildren) {
+    public final void setOwner(ChunkyObject object, Boolean keepChildren) {
         ChunkyObject oldowner = this.owner;
         if (owner != null)
             if(keepChildren) owner.removeOwnable(this);
@@ -171,21 +178,21 @@ public abstract class ChunkyObject {
         DatabaseManager.removeAllPermissions(this.hashCode());
     }
 
-    public Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
+    public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
         Logging.debug("default perms: " + perms + " contains " + type + "?");
         return perms.contains(type);
     }
 
-    public EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
+    public final EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
         return ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).getFlags();
     }
 
-    public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
+    public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
         setDefaultPerm(type, status, true);
     }
 
-    public void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
+    public final void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).clearFlags();
             DatabaseManager.removePermissions(this.hashCode(), this.hashCode());
@@ -201,7 +208,7 @@ public abstract class ChunkyObject {
         }
     }
 
-    public void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
+    public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
         // Set flag
         perms.setFlag(type, status);
@@ -215,7 +222,7 @@ public abstract class ChunkyObject {
     /**
      * Returns true if the receiver is a leaf.
      */
-    public boolean isLeaf() {
+    public final boolean isLeaf() {
         return ownables.size() == 0;
     }
 
@@ -224,7 +231,7 @@ public abstract class ChunkyObject {
      * Returns all ownables of this object.  You may not change the structure/values of this HashMap.
      * @return
      */
-    public HashMap<Integer, HashSet<ChunkyObject>> getOwnables() {
+    public final HashMap<Integer, HashSet<ChunkyObject>> getOwnables() {
         @SuppressWarnings("unchecked")
         HashMap<Integer, HashSet<ChunkyObject>> ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
         return ownables;

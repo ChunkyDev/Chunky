@@ -8,7 +8,7 @@ public class ChunkyChunk extends ChunkyPermissionsObject {
     private ChunkyCoordinates coord;
 
     public ChunkyChunk(ChunkyCoordinates coord) {
-        super("");
+        super("", coord.toString());
         this.coord = coord;
     }
 
@@ -18,13 +18,5 @@ public class ChunkyChunk extends ChunkyPermissionsObject {
 
     public ChunkyCoordinates getCoord() {
         return coord;
-    }
-
-    public int hashCode() {
-        return (getType() + ":" + getCoord().toString()).hashCode();
-    }
-
-    public boolean equals(Object obj) {
-        return obj != null && obj instanceof ChunkyChunk && ((ChunkyChunk) obj).getCoord().equals(this.getCoord());
     }
 }
