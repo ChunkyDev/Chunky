@@ -21,15 +21,16 @@ public abstract class ChunkyObject {
      * <code>childIndex</code>.
      */
     protected ChunkyObject owner;
-    protected HashMap<Integer, HashSet<ChunkyObject>> ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
+    protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
 
     protected String name;
     private final String id;
-    private final int classHash;
+    private final String className;
 
     public ChunkyObject(final String id) {
         this.id = id;
-        classHash = this.getClass().getName().hashCode();
+        this.name = "";
+        className = this.getClass().getName();
         ChunkyManager.registerObject(this);
     }
 
@@ -38,7 +39,7 @@ public abstract class ChunkyObject {
     }
 
     public final String getId() {
-        return id;
+        return className + ":" + id;
     }
 
     public final void setName(String name) {
@@ -49,15 +50,15 @@ public abstract class ChunkyObject {
     }
 
     public final int hashCode() {
-        return (getType() + ":" + getId()).hashCode();
+        return getId().hashCode();
     }
 
     public final boolean equals(Object obj) {
-        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getType().equals(this.getType()) && ((ChunkyObject)obj).getId().equals(this.getId());
+        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getId().equals(this.getId());
     }
 
-    public final Integer getType() {
-        return classHash;
+    public final String getType() {
+        return className;
     }
 
     public final boolean isOwned() {
@@ -115,7 +116,7 @@ public abstract class ChunkyObject {
         // ex. If a child of a town is removed then their plots are owned by town.
 
         HashMap<Integer, HashSet<ChunkyObject>> reposess = o.getOwnables();
-        o.ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
+        o.ownables = new HashMap<String, HashSet<ChunkyObject>>();
         for(Integer key : reposess.keySet()) {
             for(ChunkyObject co : reposess.get(key)) {
                 this.addOwnable(co);
