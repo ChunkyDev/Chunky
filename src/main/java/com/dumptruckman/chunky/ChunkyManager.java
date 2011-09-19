@@ -17,19 +17,19 @@ public class ChunkyManager {
 
     private static HashMap<String, ChunkyPlayer> PLAYERS = new HashMap<String, ChunkyPlayer>();
     private static HashMap<ChunkyCoordinates, ChunkyChunk> CHUNKS = new HashMap<ChunkyCoordinates, ChunkyChunk>();
-    private static HashMap<Integer, HashMap<Integer, ChunkyPermissions>> permissions = new HashMap<Integer, HashMap<Integer, ChunkyPermissions>>();
-    private static HashMap<Integer, ChunkyObject> OBJECTS = new HashMap<Integer, ChunkyObject>();
+    private static HashMap<String, HashMap<String, ChunkyPermissions>> permissions = new HashMap<String, HashMap<String, ChunkyPermissions>>();
+    private static HashMap<String, ChunkyObject> OBJECTS = new HashMap<String, ChunkyObject>();
 
     public static boolean registerObject(ChunkyObject object) {
-        if (OBJECTS.containsKey(object.hashCode())) {
+        if (OBJECTS.containsKey(object.getId())) {
             return false;
         }
-        OBJECTS.put(object.hashCode(), object);
+        OBJECTS.put(object.getId(), object);
         return true;
     }
 
-    public static ChunkyObject getObject(int hashCode) {
-        return OBJECTS.get(hashCode);
+    public static ChunkyObject getObject(String id) {
+        return OBJECTS.get(id);
     }
 
     /**
@@ -40,24 +40,11 @@ public class ChunkyManager {
      */
     public static ChunkyPlayer getChunkyPlayer(String name)
     {
-        if(PLAYERS.containsKey(name)) return PLAYERS.get(name);
+        if(PLAYERS.containsKey(ChunkyPlayer.class.getName() + ":" + name)) return PLAYERS.get(name);
         ChunkyPlayer player = new ChunkyPlayer(name);
         PLAYERS.put(name,player);
         DatabaseManager.addPlayer(player);
         return player;
-    }
-
-    /**
-     * This will attempt to get a ChunkyPlayer with the given hash code.
-     *
-     * @param hashCode Hash code for player
-     * @return If exists, a ChunkyPlayer object. If not, null.
-     */
-    public static ChunkyPlayer getChunkyPlayer(int hashCode) {
-        String name = unhashChunkyObject(hashCode);
-        if (!name.startsWith(ChunkyPlayer.class.getName())) return null;
-        name = name.substring(name.indexOf(":"));
-        return getChunkyPlayer(name);
     }
 
     /**
@@ -97,22 +84,22 @@ public class ChunkyManager {
     }
 
     /**
-     * Gets the permissions object for the permissions relationship between permObject and object.
+     * Gets the permissions object for the permissions relationship between permObjectId and objectId.
      * 
-     * @param object Object being interacted with
-     * @param permObject Object doing the interacting
-     * @return a ChunkyPermissions object containing the permissions for this relationship
+     * @param objectId Object being interacted with
+     * @param permObjectId Object doing the interacting
+     * @return a ChunkyPermissions objectId containing the permissions for this relationship
      */
-    public static ChunkyPermissions getPermissions(int object, int permObject) {
-        if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
+    public static ChunkyPermissions getPermissions(String objectId, String permObjectId) {
+        if (!permissions.containsKey(objectId)) {
+            permissions.put(objectId, new HashMap<String, ChunkyPermissions>());
         }
-        HashMap<Integer, ChunkyPermissions> perms = permissions.get(object);
-        if (!perms.containsKey(permObject)) {
-            perms.put(permObject, new ChunkyPermissions());
+        HashMap<String, ChunkyPermissions> perms = permissions.get(objectId);
+        if (!perms.containsKey(permObjectId)) {
+            perms.put(permObjectId, new ChunkyPermissions());
         }
-        Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObject).toString());
-        return perms.get(permObject);
+        Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObjectId).toString());
+        return perms.get(permObjectId);
     }
 
     /**
@@ -121,9 +108,9 @@ public class ChunkyManager {
      * @param object Object in question
      * @return HashMap of object permissions
      */
-    public static HashMap<Integer, ChunkyPermissions> getAllPermissions(int object) {
+    public static HashMap<String, ChunkyPermissions> getAllPermissions(String object) {
         if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<Integer, ChunkyPermissions>());
+            permissions.put(object, new HashMap<String, ChunkyPermissions>());
         }
         return permissions.get(object);
     }
