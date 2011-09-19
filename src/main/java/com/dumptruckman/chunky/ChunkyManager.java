@@ -41,7 +41,7 @@ public class ChunkyManager {
      */
     public static String getNameFromId(String id) {
         try {
-            return id.substring(id.indexOf(":"));
+            return id.substring(id.indexOf(":") + 1);
         } catch (Exception ignore) {
             return null;
         }
