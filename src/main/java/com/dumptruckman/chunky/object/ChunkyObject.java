@@ -174,18 +174,18 @@ public abstract class ChunkyObject {
         if(oldowner != null) {
 
         }
-        ChunkyManager.getAllPermissions(this.hashCode()).clear();
+        ChunkyManager.getAllPermissions(getId()).clear();
         DatabaseManager.removeAllPermissions(this.hashCode());
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(getId(), getId());
         Logging.debug("default perms: " + perms + " contains " + type + "?");
         return perms.contains(type);
     }
 
     public final EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
-        return ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).getFlags();
+        return ChunkyManager.getPermissions(getId(), getId()).getFlags();
     }
 
     public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
@@ -194,7 +194,7 @@ public abstract class ChunkyObject {
 
     public final void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
-            ChunkyManager.getPermissions(this.hashCode(), this.hashCode()).clearFlags();
+            ChunkyManager.getPermissions(getId(), getId()).clearFlags();
             DatabaseManager.removePermissions(this.hashCode(), this.hashCode());
             return;
         }
@@ -209,7 +209,7 @@ public abstract class ChunkyObject {
     }
 
     public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(this.hashCode(), this.hashCode());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(getId(), getId());
         // Set flag
         perms.setFlag(type, status);
 
