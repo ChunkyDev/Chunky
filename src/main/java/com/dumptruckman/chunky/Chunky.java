@@ -107,8 +107,6 @@ public class Chunky extends JavaPlugin {
             pm.disablePlugin(this);
         }
 
-        DatabaseManager.addType(ChunkyChunk.class.getName().hashCode(), "ChunkyChunk");
-        DatabaseManager.addType(ChunkyPlayer.class.getName().hashCode(), "ChunkyPlayer");
         DatabaseManager.loadData();
 
         // Register Events
