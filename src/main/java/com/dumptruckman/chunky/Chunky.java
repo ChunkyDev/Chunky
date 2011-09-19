@@ -103,7 +103,7 @@ public class Chunky extends JavaPlugin {
         //Loads the data.
         if(!DatabaseManager.load())
         {
-            Logging.severe("Encoutered an error while  loading data. Disabling...");
+            Logging.severe("Encountered an error while  loading data. Disabling...");
             pm.disablePlugin(this);
         }
 
