@@ -4,6 +4,7 @@ import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -33,18 +34,34 @@ public class ChunkyManager {
     }
 
     /**
-     * Gets a ChunkyPlayer object from the given player name.  If there is no instance already created, a new one will be created.  It is probably best to only use this if the name is from Player.getName().
+     * Strips the type from an id and returns just the name.
+     *
+     * @param id
+     * @return
+     */
+    public static String getNameFromId(String id) {
+        try {
+            return id.substring(id.indexOf(":"));
+        } catch (Exception ignore) {
+            return null;
+        }
+    }
+
+    /**
+     * Gets a ChunkyPlayer object from the given player name.  The given name will first try a case-insensitive match for any online player, and then a case-sensitive match of offline players.  If no player is found, null is returned.  If a player is found, this will retrieve the ChunkyPlayer instance for them.  It will create a new instance if there is no instance already created.
      *
      * @param name Name of the player
      * @return A ChunkyPlayer object for the given name.
      */
     public static ChunkyPlayer getChunkyPlayer(String name)
     {
-        if(PLAYERS.containsKey(ChunkyPlayer.class.getName() + ":" + name)) return PLAYERS.get(name);
-        ChunkyPlayer player = new ChunkyPlayer(name);
-        PLAYERS.put(name,player);
-        DatabaseManager.addPlayer(player);
-        return player;
+        Player player = Bukkit.getServer().getPlayer(name);
+        if (player == null) {
+            player = Bukkit.getServer().getPlayerExact(name);
+        }
+        if (player == null) return null;
+
+        return getChunkyPlayer(player);
     }
 
     /**
@@ -56,7 +73,12 @@ public class ChunkyManager {
      */
     public static ChunkyPlayer getChunkyPlayer(Player player)
     {
-        return getChunkyPlayer(player.getName());
+        String id = ChunkyPlayer.class.getName() + ":" + player.getName();
+        if(PLAYERS.containsKey(id)) return PLAYERS.get(id);
+        ChunkyPlayer cPlayer = new ChunkyPlayer(player.getName());
+        PLAYERS.put(id, cPlayer);
+        DatabaseManager.addPlayer(cPlayer);
+        return cPlayer;
     }
 
     /**
