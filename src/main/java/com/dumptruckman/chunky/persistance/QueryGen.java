@@ -7,8 +7,12 @@ import java.util.EnumSet;
 
 public class QueryGen {
 
-    public static String getAllPlayers() {
-        return "select * from chunky_ChunkyPlayer";
+    public static String getPlayersWithOwnership() {
+        return "SELECT * FROM chunky_ChunkyPlayer WHERE " +
+                "Hash IN " +
+                "(SELECT OwnerHash from chunky_ownership group by OwnerHash) " +
+                "OR Hash IN " +
+                "(SELECT PermissibleHash from chunky_permissions group by PermissibleHash)";
     }
 
     public static String getOwned(ChunkyObject owner, int ownableType) {
