@@ -48,7 +48,7 @@ public class DatabaseManager {
     }
 
     public static String getTableTypeName(String type) {
-        return type.substring(type.lastIndexOf("."));
+        return type.substring(type.lastIndexOf(".") + 1);
     }
 
     public static void closeDB() {
