@@ -8,7 +8,7 @@ public class ChunkyChunk extends ChunkyPermissionsObject {
     private ChunkyCoordinates coord;
 
     public ChunkyChunk(ChunkyCoordinates coord) {
-        super("", coord.toString());
+        super(coord.toString());
         this.coord = coord;
     }
 

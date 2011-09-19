@@ -5,7 +5,7 @@ package com.dumptruckman.chunky.object;
  */
 public class ChunkyPermissionsObject extends ChunkyObject {
 
-    public ChunkyPermissionsObject(String name, String id) {
-        super(name, id);
+    public ChunkyPermissionsObject(String id) {
+        super(id);
     }
 }

@@ -23,12 +23,11 @@ public abstract class ChunkyObject {
     protected ChunkyObject owner;
     protected HashMap<Integer, HashSet<ChunkyObject>> ownables = new HashMap<Integer, HashSet<ChunkyObject>>();
 
-    private String name;
+    protected String name;
     private final String id;
-    private int classHash;
+    private final int classHash;
 
-    public ChunkyObject(String name, final String id) {
-        this.name = name;
+    public ChunkyObject(final String id) {
         this.id = id;
         classHash = this.getClass().getName().hashCode();
         ChunkyManager.registerObject(this);

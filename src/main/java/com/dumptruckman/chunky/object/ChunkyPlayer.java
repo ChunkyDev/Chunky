@@ -12,7 +12,8 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     private ChunkyChunk currentChunk;
 
     public ChunkyPlayer(String name) {
-        super(name, name);
+        super(name);
+        this.name = name;
     }
 
     public void setCurrentChunk(ChunkyChunk chunk) {

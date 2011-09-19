@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 public class ChunkyPermissibleObject extends ChunkyObject {
 
-    public ChunkyPermissibleObject(String name, String id) {
-        super(name, id);
+    public ChunkyPermissibleObject(String id) {
+        super(id);
     }
 
     public Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
