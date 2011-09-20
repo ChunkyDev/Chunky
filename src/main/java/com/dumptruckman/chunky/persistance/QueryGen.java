@@ -79,7 +79,7 @@ public class QueryGen {
             "CREATE TABLE chunky_ChunkyPlayer (" +
             "Id VARCHAR(64) NOT NULL," +
             "Name VARCHAR(16) NOT NULL," +
-            "PRIMARY KEY (Hash) )";
+            "PRIMARY KEY (Id) )";
     }
 
     public static String getCreateOwnerShipTable() {
