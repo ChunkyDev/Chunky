@@ -50,7 +50,10 @@ public class ChunkyPermissionChain {
             return true;
         }
 
-        Boolean permission = permObject.hasPerm(object, flag);
+        ChunkyPermissionCache permCache = permObject.getPermCache();
+        permCache.cache(object);
+
+        Boolean permission = permCache.getDirectPerms().contains(flag);
         if (permission != null) {
             if (permission) {
                 accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
@@ -59,19 +62,16 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        ChunkyObject owner = object.getOwner();
-        if (owner != null) {
-            permission = permObject.hasPerm(object.getOwner(), flag);
-            if (permission != null) {
-                if (permission) {
-                    accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
-                    return true;
-                }
-                return false;
+        permission = permCache.getGlobalPerms().contains(flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                return true;
             }
+            return false;
         }
 
-        permission = object.hasDefaultPerm(flag);
+        permission = permCache.getDirectDefaultPerms().contains(flag);
         if (permission != null) {
             if (permission) {
                 accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
@@ -80,16 +80,13 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        owner = object.getOwner();
-        if (owner != null) {
-            permission = object.getOwner().hasDefaultPerm(flag);
-            if (permission != null) {
-                if (permission) {
-                    accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
-                    return true;
-                }
-                return false;
+        permission = permCache.getGlobalDefaultPerms().contains(flag);
+        if (permission != null) {
+            if (permission) {
+                accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+                return true;
             }
+            return false;
         }
         
         return false;
