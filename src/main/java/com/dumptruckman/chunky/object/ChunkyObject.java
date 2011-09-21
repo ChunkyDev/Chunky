@@ -115,9 +115,9 @@ public abstract class ChunkyObject {
         // If a child is removed, parent reposesses all their objects.
         // ex. If a child of a town is removed then their plots are owned by town.
 
-        HashMap<Integer, HashSet<ChunkyObject>> reposess = o.getOwnables();
+        HashMap<String, HashSet<ChunkyObject>> reposess = o.getOwnables();
         o.ownables = new HashMap<String, HashSet<ChunkyObject>>();
-        for(Integer key : reposess.keySet()) {
+        for(String key : reposess.keySet()) {
             for(ChunkyObject co : reposess.get(key)) {
                 this.addOwnable(co);
             }
@@ -231,9 +231,9 @@ public abstract class ChunkyObject {
      * Returns all ownables of this object.  You may not change the structure/values of this HashMap.
      * @return
      */
-    public final HashMap<Integer, HashSet<ChunkyObject>> getOwnables() {
+    public final HashMap<String, HashSet<ChunkyObject>> getOwnables() {
         @SuppressWarnings("unchecked")
-        HashMap<Integer, HashSet<ChunkyObject>> ownables = (HashMap<Integer, HashSet<ChunkyObject>>)this.ownables.clone();
+        HashMap<String, HashSet<ChunkyObject>> ownables = (HashMap<String, HashSet<ChunkyObject>>)this.ownables.clone();
         return ownables;
     }
 }

@@ -46,8 +46,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             else if (tokens.length == 2){
                 // Flags are global
                 if (tokens[0].equals("*")){
-                    HashMap<Integer, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
-                    if (!ownables.containsKey(ChunkyChunk.class.getName().hashCode())){
+                    HashMap<String, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
+                    if (!ownables.containsKey(ChunkyChunk.class.getName())){
                         Language.CHUNK_NONE_OWNED.bad(cPlayer);
                         return;
                     }

@@ -38,8 +38,8 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
 
             ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
             if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(player) ||
-                    !chunkyPlayer.getOwnables().containsKey(ChunkyChunk.class.getName().hashCode()) ||
-                    chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName().hashCode()).size() < chunkLimit) {
+                    !chunkyPlayer.getOwnables().containsKey(ChunkyChunk.class.getName()) ||
+                    chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName()).size() < chunkLimit) {
                 ChunkyChunk chunkyChunk;
                 Location location = player.getLocation();
                 chunkyChunk = ChunkyManager.getChunk(location);

@@ -42,7 +42,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
 
     private void displayInfo(ChunkyPlayer chunkyPlayer, CommandSender sender) {
         Language.PLAYER_MENU_TITLE.normal(sender,chunkyPlayer.getName());
-        HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName().hashCode());
+        HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
 
         if(chunks != null && chunks.size() > 0) {
             Language.PLAYER_MENU_OWNEDCHUNKS.normal(sender);
