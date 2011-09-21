@@ -70,20 +70,24 @@ public enum Language {
     CHUNK_LIMIT_REACHED ("chunky.limit", "You have claimed have claimed your maximum amount of chunks! (%1)", 0),
     CHUNK_CLAIMED ("chunk.claimed", "You have claimed chunk at [%1, %2]!", 0),
     CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", 0),
-    YOUR_PROPERTY("your_property", "your property", 0),
-    THIS_CHUNK("this_chunk", "this chunk", 0),
-    EVERYONE("everyone", "everyone", 0),
-    THEIR_PROPERTY("their_property", "their property", 0),
     CHUNK_AT("chunk_at", "chunk at [%1]", 0),
-    PERMISSIONS("permissions.check", "Permissions on %1 are [%2] for %3", 0),
-    PERMS_FOR_YOU("permissions.foryou", "%1 set [%2] permissions for you on %3", 0),
-    PERMISSIONS_STATUS("permissions.status","BUILD: %1 | DESTROY: %2 | SWITCH: %3 | ITEMUSE: %4",0),
 
     PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
     PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0),
 
+    PERMISSIONS("permissions.check", "Permissions on %1 are [%2] for %3", 0),
+    PERMS_FOR_YOU("permissions.foryou", "%1 set [%2] permissions for you on %3", 0),
+    PERMISSIONS_STATUS("permissions.status","BUILD: %1 | DESTROY: %2 | SWITCH: %3 | ITEMUSE: %4",0),
+
     PLAYER_PERMISSIONS("permissions.player", "&aPlayer Permissions for %1: %2", 0),
     DEFAULT_PERMISSIONS("permissions.default", "&aDefault Permissions for %1:",0),
+    YOUR_PERMISSIONS("permissions.yours", "&aYour permissions for %1:", 0),
+
+    YOUR_PROPERTY("your_property", "your property", 0),
+    SOMEONES_PROPERTY("someones_property", "%1's property", 0),
+    THIS_CHUNK("this_chunk", "this chunk", 0),
+    EVERYONE("everyone", "everyone", 0),
+    THEIR_PROPERTY("their_property", "their property", 0),
     
     FEATURE_NYI("feature_nyi", "Sorry, that feature is not yet implemented.", 0),
     NO_SUCH_PLAYER("no_such_player", "There is no player named: %1", 0),
