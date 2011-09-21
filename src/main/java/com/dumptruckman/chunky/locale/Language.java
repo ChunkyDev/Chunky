@@ -29,8 +29,10 @@ public enum Language {
      */
     CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
             "&fVersion: %1", "Loaded Modules - %2",
-            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!"), 0),
-    CMD_CHUNKY_HELP ("command.chunky_help", "This command contains the main functions of Chunky.", 0),
+            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!",
+            "Try typing &6/chunky help"), 0),
+    CMD_CHUNKY_HELP ("command.chunky_help", Arrays.asList("This command contains the main functions of Chunky.",
+            "Type &6/chunky ? &fto see a list of sub-commands!"), 0),
     CMD_CHUNKY_CLAIM_DESC ("command.chunky_claim_desc", "Claims the chunk the user stands in.", 0),
     CMD_CHUNKY_CLAIM_HELP ("command.chunky_claim_help", "Claims the chunk you are standing in.", 0),
     CMD_CHUNKY_UNCLAIM_DESC ("command.chunky_unclaim_desc", "Unclaims the chunk the user stands in.", 0),
