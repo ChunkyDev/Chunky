@@ -22,6 +22,12 @@ public class ChunkyManager {
     private static HashMap<String, HashMap<String, ChunkyPermissions>> permissions = new HashMap<String, HashMap<String, ChunkyPermissions>>();
     private static HashMap<String, ChunkyObject> OBJECTS = new HashMap<String, ChunkyObject>();
 
+    /**
+     * Allows objects to be registered for lookup by ID.  You probably shouldn't call this method as all ChunkyObjects are automatically registered.
+     *
+     * @param object ChunkyObject to register
+     * @return true if object was not yet registered
+     */
     public static boolean registerObject(ChunkyObject object) {
         if (OBJECTS.containsKey(object.getId())) {
             return false;
@@ -30,6 +36,12 @@ public class ChunkyManager {
         return true;
     }
 
+    /**
+     * Looks up an object by ID.  This method will return null if the object has not been initialized.
+     *
+     * @param id Object id
+     * @return Object associated with id or null
+     */
     public static ChunkyObject getObject(String id) {
         return OBJECTS.get(id);
     }
@@ -46,6 +58,18 @@ public class ChunkyManager {
         } catch (Exception ignore) {
             return null;
         }
+    }
+
+    /**
+     * Compares a ChunkyObject id with a class to determine if the id is a for an object of a certain type.
+     *
+     * @param id ID of ChunkyObject
+     * @param type Class for ChunkyObject to compare to
+     * @return true if ID is for object of class type
+     */
+    public static boolean isType(String id, Class type) {
+        String typeName = id.substring(0, id.indexOf(":"));
+        return type.getName().equals(typeName);
     }
 
     /**
