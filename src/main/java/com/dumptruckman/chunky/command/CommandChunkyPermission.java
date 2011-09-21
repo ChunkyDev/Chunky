@@ -127,6 +127,10 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             // Player
             else {
                 object = ChunkyManager.getChunkyPlayer(args[1]);
+                if (object == null) {
+                    Language.NO_SUCH_PLAYER.bad(cPlayer, args[1]);
+                    return;
+                }
             }
 
             switch (state) {

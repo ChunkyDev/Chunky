@@ -84,6 +84,7 @@ public enum Language {
     DEFAULT_PERMISSIONS("permissions.default", "&aDefault Permissions for %1:",0),
     
     FEATURE_NYI("feature_nyi", "Sorry, that feature is not yet implemented.", 0),
+    NO_SUCH_PLAYER("no_such_player", "There is no player named: %1", 0),
 
     ;
 
