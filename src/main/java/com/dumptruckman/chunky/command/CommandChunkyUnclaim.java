@@ -27,7 +27,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
         }
         Player player = (Player)sender;
         if (Permissions.CHUNKY_UNCLAIM.hasPerm(player)) {
-            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player.getName());
+            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
             HashSet<ChunkyObject> ownables = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName().hashCode());
             if (ownables == null || ownables.isEmpty()) {
                 Language.CHUNK_NONE_OWNED.bad(player);

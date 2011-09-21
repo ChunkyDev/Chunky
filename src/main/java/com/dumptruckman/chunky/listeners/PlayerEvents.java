@@ -29,7 +29,7 @@ public class PlayerEvents extends PlayerListener{
         if(event.isCancelled()) return;
         if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
-        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk fromChunk = ChunkyManager.getChunk(event.getFrom());
         if(fromChunk.equals(toChunk)) return;
         onPlayerChunkChange(chunkyPlayer,toChunk,fromChunk);
@@ -57,7 +57,7 @@ public class PlayerEvents extends PlayerListener{
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
-        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
     }
 
@@ -75,7 +75,7 @@ public class PlayerEvents extends PlayerListener{
         
         if(event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if(event.getItem() != null && MinecraftTools.isUsable(event.getItem().getTypeId())) {
-                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
@@ -89,7 +89,7 @@ public class PlayerEvents extends PlayerListener{
                 event.setCancelled(chunkyEvent.isCancelled());
             }
             if(MinecraftTools.isSwitchable(event.getClickedBlock().getTypeId())) {
-                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer().getName());
+                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
                 ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
