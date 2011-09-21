@@ -12,11 +12,21 @@ public class ChunkyChunk extends ChunkyPermissionsObject {
         this.coord = coord;
     }
 
-    public void setCoord(ChunkyCoordinates coord) {
+    /**
+     * Sets the coordinates of this chunk.  You probably don't need to use this.
+     * 
+     * @param coord Coordinates of chunk
+     */
+    public final void setCoord(ChunkyCoordinates coord) {
         this.coord = coord;
     }
 
-    public ChunkyCoordinates getCoord() {
+    /**
+     * Gets the coordinates of this chunk.
+     *
+     * @return Chunk coordinates
+     */
+    public final ChunkyCoordinates getCoord() {
         return coord;
     }
 }
