@@ -38,7 +38,7 @@ public class QueryGen {
         int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1:0;
         int sw = flags.contains(ChunkyPermissions.Flags.SWITCH) ? 1:0;
         return
-            String.format("INSERT OR REPLACE INTO chunky_permissions (" +
+            String.format("REPLACE INTO chunky_permissions (" +
             "PermissibleId, " +
             "ObjectId, " +
             "BUILD," +
