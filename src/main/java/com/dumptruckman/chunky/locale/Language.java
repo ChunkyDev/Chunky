@@ -77,11 +77,11 @@ public enum Language {
 
     PERMISSIONS("permissions.check", "Permissions on %1 are [%2] for %3", 0),
     PERMS_FOR_YOU("permissions.foryou", "%1 set [%2] permissions for you on %3", 0),
-    PERMISSIONS_STATUS("permissions.status","BUILD: %1 | DESTROY: %2 | SWITCH: %3 | ITEMUSE: %4",0),
+    PERMISSIONS_STATUS("permissions.status","BUILD: %1 | DESTROY: %2 | ITEMUSE: %4 | SWITCH: %3",0),
 
     PLAYER_PERMISSIONS("permissions.player", "&aPlayer Permissions for %1: %2", 0),
     DEFAULT_PERMISSIONS("permissions.default", "&aDefault Permissions for %1:",0),
-    YOUR_PERMISSIONS("permissions.yours", "&aYour permissions for %1: %2", 0),
+    YOUR_PERMISSIONS("permissions.yours", "&aYour permissions for %1:", 0),
 
     YOUR_PROPERTY("your_property", "your property", 0),
     SOMEONES_PROPERTY("someones_property", "%1's property", 0),

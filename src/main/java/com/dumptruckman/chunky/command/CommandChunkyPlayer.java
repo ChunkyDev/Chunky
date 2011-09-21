@@ -106,11 +106,11 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         } else if (sender instanceof Player) {
             ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getId(), ChunkyManager.getChunkyPlayer((Player)sender).getId());
             if (perms != null && perms.getFlags() != null) {
-                Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()),
-                        Language.PERMISSIONS_STATUS.getString(perms.contains(ChunkyPermissions.Flags.BUILD)
+                Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()));
+                Language.PERMISSIONS_STATUS.normal(sender, perms.contains(ChunkyPermissions.Flags.BUILD)
                             ,perms.contains(ChunkyPermissions.Flags.DESTROY)
                             ,perms.contains(ChunkyPermissions.Flags.SWITCH)
-                            ,perms.contains(ChunkyPermissions.Flags.ITEMUSE)));
+                            ,perms.contains(ChunkyPermissions.Flags.ITEMUSE));
             }
         }
     }
