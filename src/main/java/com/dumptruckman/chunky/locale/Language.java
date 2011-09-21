@@ -51,7 +51,7 @@ public enum Language {
     CMD_CHUNKY_PLAYER_DESC ("command.chunky_player_desc", "Contains sub-commands related to players and info regarding yourself", 0),
     CMD_CHUNKY_PLAYER_HELP ("command.chunky_player_help", "This command will tell you a little about yourself and contains some sub-commands related to players.", 0),
 
-    CMD_CHUNKY_CHUNK_DESC ("command.chunky_chunk_desc", "", 0),
+    CMD_CHUNKY_CHUNK_DESC ("command.chunky_chunk_desc", "Information about the chunk you are in.", 0),
     CMD_CHUNKY_CHUNK_HELP ("command.chunky_chunk_help", "This command will tell you a little about the chunk you're standing in.", 0),
 
 
@@ -72,8 +72,11 @@ public enum Language {
     CHUNK_UNCLAIMED ("chunk.unclaimed", "You have unclaimed chunk at [%1, %2]!", 0),
     CHUNK_AT("chunk_at", "chunk at [%1]", 0),
 
-    PLAYER_MENU_TITLE("playermenu.title","&8|----------&9%1&8----------|",0),
-    PLAYER_MENU_OWNEDCHUNKS("playermenu.ownedchunks","&aOwned Chunks:",0),
+    PLAYER_MENU_TITLE("player_menu.title","&8|----------&9%1&8----------|",0),
+    PLAYER_MENU_OWNEDCHUNKS("player_menu.ownedchunks","&aOwned Chunks:",0),
+
+    CHUNK_MENU_TITLE("chunk_menu.title","&8|----------&9%1&8----------|",0),
+    CHUNK_MENU_OWNER("chunk_menu.owner","&aChunk Owner: &f%1",0),
 
     PERMISSIONS("permissions.check", "Permissions on %1 are [%2] for %3", 0),
     PERMS_FOR_YOU("permissions.foryou", "%1 set [%2] permissions for you on %3", 0),
