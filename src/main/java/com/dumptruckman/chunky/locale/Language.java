@@ -29,7 +29,7 @@ public enum Language {
      */
     CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
             "&fVersion: %1", "Loaded Modules - %2",
-            "Try using &ehelp&f or &e?&f after chunky sub-commands",
+            "You can use &ehelp&f or &e?&f after chunky sub-commands",
             "&e/chunky <sub-cmd> help&f and &e/chunky <sub-cmd> ?&f",
             "Try typing &6/chunky help"), 0),
     CMD_CHUNKY_HELP ("command.chunky_help", Arrays.asList("This command contains the main functions of Chunky.",
