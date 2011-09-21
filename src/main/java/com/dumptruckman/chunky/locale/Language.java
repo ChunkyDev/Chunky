@@ -99,7 +99,7 @@ public enum Language {
 
     private static List<String> deprecatedPaths = Arrays.asList(
             // Put old unused paths in here to be removed from the language file
-            
+            ""
     );
 
 
