@@ -85,7 +85,9 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         String players = "";
         if (!playerPermissions.isEmpty()) {
             for (Map.Entry<String, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
-                ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(permPlayer.getKey());
+                String id = permPlayer.getKey();
+                if (!ChunkyManager.isType(id, ChunkyPlayer.class)) continue;
+                ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(ChunkyManager.getNameFromId(id));
                 if (cPlayer == null) continue;
                 if (!players.isEmpty()) players += ", ";
                 ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getId(), cPlayer.getId());
