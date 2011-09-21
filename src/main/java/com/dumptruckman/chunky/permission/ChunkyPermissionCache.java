@@ -22,6 +22,11 @@ public class ChunkyPermissionCache {
         this.permObject = permObject;
     }
 
+    /**
+     * Checks to see if the permissions cached are for object.  If they are not, the cache is updated with permissions for object.
+     *
+     * @param object Object permissions are for
+     */
     public void cache(ChunkyObject object) {
         if (this.object != null && this.object.equals(object)) {
             if (this.owner != null && this.owner.equals(this.object.getOwner())) {
@@ -39,6 +44,10 @@ public class ChunkyPermissionCache {
 
     }
 
+    /**
+     * Sets up the cache for object's owner.
+     * @param object Object whose owner to cache permissions for
+     */
     private void setOwnerCache(ChunkyObject object) {
         owner = object.getOwner();
         if (owner == null)  {
@@ -51,18 +60,38 @@ public class ChunkyPermissionCache {
         globalDefaultPerms = ChunkyManager.getPermissions(owner.getId(), owner.getId());
     }
 
+    /**
+     * Retrieves the direct permissions from the cache.  Make sure to cache() first!
+     *
+     * @return Permissions
+     */
     public ChunkyPermissions getDirectPerms() {
         return directPerms;
     }
 
+    /**
+     * Retrieves the global permissions from the cache.  Make sure to cache() first!
+     *
+     * @return Permissions
+     */
     public ChunkyPermissions getGlobalPerms() {
         return globalPerms;
     }
 
+    /**
+     * Retrieves the direct default permissions from the cache.  Make sure to cache() first!
+     *
+     * @return Permissions
+     */
     public ChunkyPermissions getDirectDefaultPerms() {
         return directDefaultPerms;
     }
 
+    /**
+     * Retrieves the global default permissions from the cache.  Make sure to cache() first!
+     *
+     * @return Permissions
+     */
     public ChunkyPermissions getGlobalDefaultPerms() {
         return globalDefaultPerms;
     }
