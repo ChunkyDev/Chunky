@@ -20,28 +20,16 @@ public class QueryGen {
         return
             String.format("SELECT * FROM chunky_%s WHERE Id IN " +
             "(SELECT OwnableId from chunky_ownership " +
-            "where OwnerId = %s " +
-            "AND OwnableType = %s AND OwnerType = %s)", DatabaseManager.getTableTypeName(ownableType), owner.getId(), ownableType, owner.getType());
-    }
-
-    public static String getCreatePermissionsTable() {
-        return
-            "CREATE TABLE chunky_permissions (" +
-            "PermissibleId VARCHAR(255) NOT NULL," +
-            "ObjectId VARCHAR(255) NOT NULL," +
-            "BUILD TINYINT NOT NULL DEFAULT 0," +
-            "DESTROY TINYINT NOT NULL DEFAULT 0," +
-            "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
-            "SWITCH TINYINT NOT NULL DEFAULT 0," +
-            "PRIMARY KEY (PermissibleId, ObjectId) )";
+            "where OwnerId = '%s' " +
+            "AND OwnableType = '%s' AND OwnerType = '%s')", DatabaseManager.getTableTypeName(ownableType), owner.getId(), ownableType, owner.getType());
     }
 
     public static String getSelectPermissions(String id) {
-        return "SELECT * FROM chunky_permissions WHERE PermissibleId = " + id;
+        return "SELECT * FROM chunky_permissions WHERE PermissibleId = '" + id + "'";
     }
 
     public static String getSelectDefaultPermissions(String id) {
-        return "SELECT * FROM chunky_permissions WHERE PermissibleId = " + id + " AND ObjectId = " + id;
+        return "SELECT * FROM chunky_permissions WHERE PermissibleId = '" + id + "' AND ObjectId = '" + id + "'";
     }
 
     public static String getUpdatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
@@ -57,27 +45,39 @@ public class QueryGen {
             "DESTROY," +
             "ITEMUSE," +
             "SWITCH) " +
-            "VALUES (%s,%s,%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
+            "VALUES ('%s','%s',%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
     }
     
     public static String getRemovePermissions(String permissibleId, String objectId) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-            "PermissibleId = %s " +
-            "AND ObjectId = %s", permissibleId, objectId);
+            "PermissibleId = '%s' " +
+            "AND ObjectId = '%s'", permissibleId, objectId);
 
     }
 
     public static String getRemoveAllPermissions(String objectId) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-                    "ObjectId = %s", objectId);
+                    "ObjectId = '%s'", objectId);
+    }
+
+    public static String getCreatePermissionsTable() {
+        return
+            "CREATE TABLE chunky_permissions (" +
+            "PermissibleId VARCHAR(255) NOT NULL," +
+            "ObjectId VARCHAR(255) NOT NULL," +
+            "BUILD TINYINT NOT NULL DEFAULT 0," +
+            "DESTROY TINYINT NOT NULL DEFAULT 0," +
+            "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
+            "SWITCH TINYINT NOT NULL DEFAULT 0," +
+            "PRIMARY KEY (PermissibleId, ObjectId) )";
     }
 
     public static String getCreatePlayerTable() {
         return
             "CREATE TABLE chunky_ChunkyPlayer (" +
-            "Id VARCHAR(64) NOT NULL," +
+            "Id VARCHAR(255) NOT NULL," +
             "Name VARCHAR(16) NOT NULL," +
             "PRIMARY KEY (Id) )";
     }
@@ -110,14 +110,14 @@ public class QueryGen {
             "OwnableId, " +
             "OwnerType, " +
             "OwnableType) " +
-            "VALUES (%s,%s,%s,%s)",owner.getId(), ownable.getId(), owner.getType(), ownable.getType());
+            "VALUES ('%s','%s','%s','%s')",owner.getId(), ownable.getId(), owner.getType(), ownable.getType());
     }
 
     public static String getRemoveOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
             String.format("DELETE FROM chunky_ownership where " +
-            "OwnerId = %s " +
-            "AND OwnableId = %s",owner.getId(), ownable.getId());
+            "OwnerId = '%s' " +
+            "AND OwnableId = '%s'",owner.getId(), ownable.getId());
 
     }
 
@@ -128,7 +128,7 @@ public class QueryGen {
             "World, " +
             "x, " +
             "z) " +
-            "VALUES (%s,'%s','%s',%s,%s)", chunk.getId(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+            "VALUES ('%s','%s','%s',%s,%s)", chunk.getId(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
     }
 
     public static String getAddPlayer(ChunkyPlayer player) {
@@ -136,7 +136,7 @@ public class QueryGen {
             String.format("REPLACE INTO chunky_ChunkyPlayer (" +
             "Id, " +
             "Name) " +
-            "VALUES (%s,'%s')", player.getId(), player.getName());
+            "VALUES ('%s','%s')", player.getId(), player.getName());
 
     }
 }
