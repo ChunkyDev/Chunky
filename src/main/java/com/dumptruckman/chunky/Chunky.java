@@ -128,6 +128,11 @@ public class Chunky extends JavaPlugin {
         return INSTANCE;
     }
 
+    /**
+     * Gets the build number of this plugin.
+     *
+     * @return Build number of this plugin
+     */
     public static Integer getBuildNumber() {
         return BUILD;
     }
