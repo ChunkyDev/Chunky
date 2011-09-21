@@ -29,7 +29,8 @@ public enum Language {
      */
     CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
             "&fVersion: %1", "Loaded Modules - %2",
-            "You may follow ANY command with &ehelp&f for useful info or &e?&f for a list of sub-commands!",
+            "Try using &ehelp&f or &e?&f after chunky sub-commands",
+            "&e/chunky <sub-cmd> help&f and &e/chunky <sub-cmd> ?&f",
             "Try typing &6/chunky help"), 0),
     CMD_CHUNKY_HELP ("command.chunky_help", Arrays.asList("This command contains the main functions of Chunky.",
             "Type &6/chunky ? &fto see a list of sub-commands!"), 0),
@@ -43,7 +44,7 @@ public enum Language {
     CMD_CHUNKY_PERMISSION_HELP("command.chunky_permission_set_help",
             Arrays.asList("&eUsage: /chunky permission [*:][+/-]<flags/clear> [player]",
                     //"Note: ChunkName and g:group flags are not yet availiable.",
-                    "&e(Optional) *: &fallows settings a player's permissions for ALL of your chunks", // or chunks with a specific name.",
+                    "&e(Optional) *: &fallows setting a player's permissions for ALL of your chunks", // or chunks with a specific name.",
                     "&eFlags: &fThe type of permissions to give.  ",
                     "&eFlags: &fb: build, d: destroy, i: item use, s: switch.  clear: removes all flags.",
                     "&e(Optional) +/-: &fThese will allow you to ADD to or REMOVE from the existing flags.",
