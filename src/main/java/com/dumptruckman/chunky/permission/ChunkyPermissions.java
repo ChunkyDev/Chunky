@@ -25,10 +25,20 @@ public class ChunkyPermissions {
             this.rep = rep;
         }
 
+        /**
+         * Retrieves the character representation of this flag
+         * 
+         * @return character representation of flag
+         */
         private char getRep() {
             return rep;
         }
 
+        /**
+         * Retrieves a flag represented by the specified character
+         * @param c Character representation of flag
+         * @return Flag represented by c or null if no flag for c
+         */
         public static Flags get(char c) {
             return lookup.get(c);
         }
@@ -36,6 +46,11 @@ public class ChunkyPermissions {
 
     protected EnumSet<Flags> flags;
 
+    /**
+     * Instantiates a ChunkyPermissions object.
+     *
+     * @param flags Optional parameter to indicate initial flags
+     */
     public ChunkyPermissions(Flags... flags) {
         if (flags.length == 0) {
             this.flags = null;
@@ -44,19 +59,39 @@ public class ChunkyPermissions {
         this.flags.addAll(Arrays.asList(flags));
     }
 
+    /**
+     * Checks to see if this permission set has a certain flag.
+     *
+     * @param flag Flag to check for
+     * @return true if contains, false if not contains, null if no permissions set at all
+     */
     public Boolean contains(Flags flag) {
         if (flags == null) return null;
         return flags.contains(flag);
     }
 
+    /**
+     * Returns the set of flags
+     *
+     * @return Flag set
+     */
     public EnumSet<Flags> getFlags() {
         return flags;
     }
 
+    /**
+     * Wipes the flag set
+     */
     public void clearFlags() {
         flags = null;
     }
 
+    /**
+     * Sets the status of a certain flag in this permission set
+     *
+     * @param flag Flag to set
+     * @param status Status of the flag
+     */
     public void setFlag(Flags flag, boolean status) {
         if (flags == null) {
             flags = EnumSet.noneOf(Flags.class);
@@ -68,10 +103,20 @@ public class ChunkyPermissions {
         }
     }
 
+    /**
+     * Sets all the flags at once
+     *
+     * @param flags Set of new flags
+     */
     public void setFlags(EnumSet<Flags> flags) {
         this.flags = flags;
     }
 
+    /**
+     * Returns a string representation of the permissions flags
+     *
+     * @return String representation of permission flags
+     */
     public String toString() {
         if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
         if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
@@ -85,6 +130,11 @@ public class ChunkyPermissions {
         return sFlags;
     }
 
+    /**
+     * Returns a string representation of the permissions flags that is shorter than the normal toString()
+     *
+     * @return Small string representation of permission flags
+     */
     public String toSmallString() {
         if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
         if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
