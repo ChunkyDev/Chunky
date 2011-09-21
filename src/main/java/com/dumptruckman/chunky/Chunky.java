@@ -66,7 +66,7 @@ public class Chunky extends JavaPlugin {
         final PluginManager pm = getServer().getPluginManager();
 
         //Load Logging class
-        Logging.load(this);
+        Logging.load();
 
         // Grab the Plugin Description File
         PluginDescriptionFile pdf = getDescription();
