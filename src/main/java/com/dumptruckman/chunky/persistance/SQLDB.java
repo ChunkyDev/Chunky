@@ -48,7 +48,6 @@ public abstract class SQLDB implements Database {
         try {
             while(rows.next()) {
                 ChunkyPlayer player = ChunkyManager.getChunkyPlayer(rows.getString("name"));
-                System.out.println(player.getName());
                 addOwnedChunks(player);
                 addOwnedPlayers(player);
                 setPermissions(player);
