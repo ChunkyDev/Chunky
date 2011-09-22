@@ -62,13 +62,15 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        permission = permCache.getGlobalPerms().contains(flag);
-        if (permission != null) {
-            if (permission) {
-                accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
-                return true;
+        if (permCache.getGlobalPerms() != null) {
+            permission = permCache.getGlobalPerms().contains(flag);
+            if (permission != null) {
+                if (permission) {
+                    accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
 
         permission = permCache.getDirectDefaultPerms().contains(flag);
@@ -80,13 +82,15 @@ public class ChunkyPermissionChain {
             return false;
         }
 
-        permission = permCache.getGlobalDefaultPerms().contains(flag);
-        if (permission != null) {
-            if (permission) {
-                accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
-                return true;
+        if (permCache.getGlobalDefaultPerms() != null) {
+            permission = permCache.getGlobalDefaultPerms().contains(flag);
+            if (permission != null) {
+                if (permission) {
+                    accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+                    return true;
+                }
+                return false;
             }
-            return false;
         }
         
         return false;
