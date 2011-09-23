@@ -44,11 +44,13 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
 
         Language.DEFAULT_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
         ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk.getId(), chunkyChunk.getId());
-        Language.PERMISSIONS_STATUS.normal(player
-                    ,perms.contains(ChunkyPermissions.Flags.BUILD)
-                    ,perms.contains(ChunkyPermissions.Flags.DESTROY)
-                    ,perms.contains(ChunkyPermissions.Flags.SWITCH)
-                    ,perms.contains(ChunkyPermissions.Flags.ITEMUSE));
+        if (perms != null && perms.getFlags() != null) {
+            Language.PERMISSIONS_STATUS.normal(player
+                        ,perms.contains(ChunkyPermissions.Flags.BUILD)
+                        ,perms.contains(ChunkyPermissions.Flags.DESTROY)
+                        ,perms.contains(ChunkyPermissions.Flags.SWITCH)
+                        ,perms.contains(ChunkyPermissions.Flags.ITEMUSE));
+        }
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
         if (!chunkyChunk.getOwner().equals(chunkyPlayer)) {
