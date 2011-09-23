@@ -92,6 +92,7 @@ public enum Language {
     THIS_CHUNK("this_chunk", "this chunk", 0),
     EVERYONE("everyone", "everyone", 0),
     THEIR_PROPERTY("their_property", "their property", 0),
+    NO_ONE("no_one", "no one", 0),
     
     FEATURE_NYI("feature_nyi", "Sorry, that feature is not yet implemented.", 0),
     NO_SUCH_PLAYER("no_such_player", "There is no player named: %1", 0),

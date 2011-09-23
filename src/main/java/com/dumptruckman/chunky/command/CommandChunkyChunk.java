@@ -36,7 +36,11 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
     private void displayInfo(ChunkyChunk chunkyChunk, Player player) {
         Language.CHUNK_MENU_TITLE.normal(player, chunkyChunk.getCoord().toString());
         ChunkyObject owner = chunkyChunk.getOwner();
-        Language.CHUNK_MENU_OWNER.normal(player, owner.getName());
+
+        if (owner != null)
+            Language.CHUNK_MENU_OWNER.normal(player, owner.getName());
+        else
+            Language.CHUNK_MENU_OWNER.normal(player, Language.NO_ONE.getString());
 
         Language.DEFAULT_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
         ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk.getId(), chunkyChunk.getId());
