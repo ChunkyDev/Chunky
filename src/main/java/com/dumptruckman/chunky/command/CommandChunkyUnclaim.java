@@ -14,6 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -57,7 +58,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
     }
 
     private void unclaimAll(ChunkyPlayer player) {
-        for(ChunkyObject obj : player.getOwnables().get(ChunkyChunk.class.getName())) {
+        for(ChunkyObject obj : (HashSet<ChunkyObject>)player.getOwnables().get(ChunkyChunk.class.getName()).clone()) {
             ChunkyChunk chunk = (ChunkyChunk)obj;
             chunk.setOwner(player.getOwner(),true);
             chunk.setName(Language.UNREGISTERED_CHUNK_NAME.getString());
