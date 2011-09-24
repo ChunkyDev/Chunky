@@ -9,6 +9,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
 import com.dumptruckman.chunky.util.Logging;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,6 +27,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
             return;
         }
         Player player = (Player)sender;
+        if(args.length>0 && args[0].equalsIgnoreCase("*")) unclaimAll(ChunkyManager.getChunkyPlayer(player.getName()));
         if (Permissions.CHUNKY_UNCLAIM.hasPerm(player)) {
             ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
             HashSet<ChunkyObject> ownables = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
@@ -46,6 +48,17 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
             Language.CHUNK_UNCLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
         } else {
             Language.NO_COMMAND_PERMISSION.bad(player);
+        }
+
+
+    }
+
+    private void unclaimAll(ChunkyPlayer player) {
+        for(ChunkyObject obj : player.getOwnables().get(ChunkyChunk.class.getName())) {
+            ChunkyChunk chunk = (ChunkyChunk)obj;
+            chunk.setOwner(player.getOwner(),true);
+            chunk.setName(Language.UNREGISTERED_CHUNK_NAME.getString());
+
         }
     }
 }
