@@ -53,7 +53,7 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
         }
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
-        if (!chunkyChunk.getOwner().equals(chunkyPlayer)) {
+        if (owner != null && !owner.equals(chunkyPlayer)) {
             perms = ChunkyManager.getPermissions(chunkyChunk.getId(), chunkyPlayer.getId());
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
