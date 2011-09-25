@@ -13,6 +13,7 @@ public enum Permissions {
     PLAYER_NO_CHUNK_LIMIT ("chunky.no_chunk_limit"),
     PLAYER_BUILD_ANYWHERE ("chunky.build_anywhere"),
     ENABLED("chunky.enabled"),
+    ADMIN_UNCLAIM("chunky.adminunclaim")
     ;
 
     String node;
