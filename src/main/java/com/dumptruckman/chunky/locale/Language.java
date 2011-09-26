@@ -22,7 +22,7 @@ import java.util.List;
 public enum Language {
     NO_COMMAND_PERMISSION ("command.no_permission", "You do not have permission to access this command!", 0),
     IN_GAME_ONLY ("misc.in_game_only", "Only in game players may use this feature!", 0),
-    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "Wilderness", 0),
+    UNREGISTERED_CHUNK_NAME("misc.unregistered_chunk_name", "(Wilderness)", 0),
 
     /**
      * Command Language
