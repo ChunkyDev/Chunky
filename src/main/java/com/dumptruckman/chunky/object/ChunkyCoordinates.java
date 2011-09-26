@@ -2,6 +2,7 @@ package com.dumptruckman.chunky.object;
 
 
 import com.dumptruckman.chunky.Chunky;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 /**
@@ -19,7 +20,7 @@ public class ChunkyCoordinates {
      */
     public ChunkyCoordinates(Location location)
     {
-        this(location.getWorld().getName(), location.getX(), location.getZ());
+        this(location.getWorld().getName(),location.getBlock().getChunk().getX(),location.getBlock().getChunk().getZ());
 
     }
 
@@ -31,7 +32,7 @@ public class ChunkyCoordinates {
      */
     public ChunkyCoordinates(String world, double x, double z)
     {
-        this(world, (int)(x/16) - ((x<0) ? 1 : 0), (int)(z/16) - ((z<0) ? 1 : 0));
+        this(new Location(Bukkit.getServer().getWorld(world),x,128,z));
     }
 
     /**

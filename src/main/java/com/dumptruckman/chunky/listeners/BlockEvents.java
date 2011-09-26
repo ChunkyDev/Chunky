@@ -44,7 +44,6 @@ public class BlockEvents extends BlockListener {
         ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
 
         Boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.DESTROY, permType);
-
         ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);
         chunkyEvent.setCancelled(isCancelled);
         Chunky.getModuleManager().callEvent(chunkyEvent);

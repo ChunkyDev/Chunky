@@ -6,7 +6,6 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
-import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.entity.Player;
 
 import javax.swing.plaf.TreeUI;
@@ -26,7 +25,6 @@ public class ChunkyPermissionChain {
      * @return true if permObject has permission to flag action
      */
     public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
-
         if (permObject instanceof ChunkyPlayer) {
             try {
                 if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(((ChunkyPlayer) permObject).getPlayer())) {
@@ -52,12 +50,11 @@ public class ChunkyPermissionChain {
         permCache.cache(object);
 
         Boolean permission = permCache.getDirectPerms().contains(flag);
-        if (permission != null) {
+        if (permission != null)
             if (permission) {
                 accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
-                return true;
-            }
-        }
+                return true;}
+
 
         if (permCache.getGlobalPerms() != null) {
             permission = permCache.getGlobalPerms().contains(flag);
@@ -86,7 +83,6 @@ public class ChunkyPermissionChain {
                 }
             }
         }
-        
         return false;
     }
 }
