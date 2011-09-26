@@ -17,6 +17,7 @@ public enum Permissions {
     ENABLED("chunky.enabled"),
     ADMIN_UNCLAIM("chunky.admin.unclaim"),
     ADMIN_SETPERM("chunky.admin.setperm"),
+    ADMIN_SET_CHUNK_NAME("chunky.admin.set_chunk_name"),
     ;
 
     String node;
