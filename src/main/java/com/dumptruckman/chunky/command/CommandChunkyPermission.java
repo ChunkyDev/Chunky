@@ -9,6 +9,8 @@ import com.dumptruckman.chunky.module.ChunkyCommandExecutor;
 import com.dumptruckman.chunky.object.*;
 
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
+import com.dumptruckman.chunky.permission.bukkit.Permissions;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,146 +29,167 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
     }
 
     public void setPerms(ChunkyPlayer cPlayer, String[] args){
-
-        String permissions = "";
-        ChunkyObject target = null;
-
-        if (args.length != 0) {
-            String[] tokens = args[0].split(":", 2);
-            // Not global, just flags
-            if (tokens.length == 1){
-                if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
-                    Language.CHUNK_NOT_OWNED.bad(cPlayer);
-                    return;
-                }
-                target = cPlayer.getCurrentChunk();
-                permissions = tokens[0];
-            }
-
-            else if (tokens.length == 2){
-                // Flags are global
-                if (tokens[0].equals("*")){
-                    HashMap<String, HashSet<ChunkyObject>> ownables = cPlayer.getOwnables();
-                    if (!ownables.containsKey(ChunkyChunk.class.getName())){
-                        Language.CHUNK_NONE_OWNED.bad(cPlayer);
-                        return;
-                    }
-                    target = cPlayer;
-                }
-                // Specific chunk name
-                else {
-                    Language.FEATURE_NYI.bad(cPlayer);
-                    return;
-                }
-                permissions = tokens[1];
-            } else {
-                // WILL NEVER REACH THIS POINT
-                return;
-            }
-        } else {
-            if (!cPlayer.getCurrentChunk().isDirectlyOwnedBy(cPlayer)){
-                Language.CHUNK_NOT_OWNED.bad(cPlayer);
-                return;
-            }
-            target = cPlayer.getCurrentChunk();
+        if (args.length != 3) {
+            Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+            return;
         }
 
-        // State is either add, subtract or set flags
-        int state = 0;
-        if (permissions.startsWith("-")) state = -1;
-        if (permissions.startsWith("+")) state = 1;
-        // Set of flags
+        // The target(s) ChunkyObjects that permissions are being set for
+        HashSet<ChunkyObject> targets = new HashSet<ChunkyObject>();
+        // sTarget refers to the object that a permissible will receive permissions for
+        String sTarget = "";
+
+        if (args[0].equalsIgnoreCase("global")) {
+            // Wants to set default perms for their stuff
+
+            // What to refer to target as "your property"
+            sTarget = Language.YOUR_PROPERTY.getString();
+            // Default perms means it sets the perms on the ChunkyPlayer sending the command
+            targets.add(cPlayer);
+        } else if (args[0].equalsIgnoreCase("this")) {
+            // Wants to set perms for current chunk
+
+            // What to refer to the target as "this chunk"
+            sTarget = Language.THIS_CHUNK.getString();
+            // Retrieve the current chunk
+            ChunkyChunk cChunk = cPlayer.getCurrentChunk();
+
+            // Determine if command sender is chunk owner or admin to continue
+            ChunkyObject chunkOwner = cChunk.getOwner();
+            if (chunkOwner == null || !cPlayer.equals(chunkOwner)) {
+                if (!Permissions.ADMIN_SETPERM.hasPerm(cPlayer)) {
+                    if (chunkOwner != null) {
+                        Language.CHUNK_OWNED.bad(cPlayer, chunkOwner.getName());
+                    } else {
+                        Language.CHUNK_NOT_OWNED.bad(cPlayer);
+                    }
+                    return;
+                }
+            }
+            // Setting perms for the current chunk
+            targets.add(cChunk);
+        } else if (args[0].equalsIgnoreCase("all")) {
+            // Wants to set perms for currently owned chunks
+
+            // What to refer to the target as "your current property"
+            sTarget = Language.YOUR_CURRENT_PROPERTY.getString();
+
+            // Grabs all the players current property, errors out if null
+            targets = cPlayer.getOwnables().get(ChunkyChunk.class.getName());
+            if (targets == null || targets.isEmpty()) {
+                Language.CHUNK_NONE_OWNED.bad(cPlayer);
+                return;
+            }
+        } else {
+            // Wants to set perms for named chunks
+            // TODO
+            Language.FEATURE_NYI.bad(cPlayer);
+            return;
+        }
+
+
+        // Converts the flags into an EnumSet<ChunkyPermissions.Flags>
         EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
-        if (permissions.equalsIgnoreCase("clear")) {
-            state = 0;
+        if (args[1].equalsIgnoreCase("clear")) {
+            // Flags of "clear" means it will null out the flag set.  This is necessary to indicate that permissions are "not set" for this relationship.
             flags = null;
         } else {
-            for (char perm : permissions.toLowerCase().toCharArray()) {
+            for (char perm : args[1].toLowerCase().toCharArray()) {
                 ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
                 if (flag == null) continue;
                 flags.add(flag);
             }
         }
 
-        String sTarget = "";
+        // sTargetForPermissible refers to the object the permissible is gaining/losing permissions for from their perspective
+        String sTargetForPermissible = "";
+        // sPermObject refers to the target for the sender's perspective
         String sPermObject = "";
+        // The permissions for the target/object relationship for displaying to sender and target
         ChunkyPermissions perms = null;
-        if (target instanceof ChunkyChunk) {
-            sTarget = Language.THIS_CHUNK.getString();
-        } else if (target instanceof ChunkyPlayer) {
-            sTarget = Language.YOUR_PROPERTY.getString();
-        }
-        // No player or group defined
-        if (args.length <= 1){
-            switch (state) {
-                case -1:
-                    for (ChunkyPermissions.Flags flag : flags) {
-                        target.setDefaultPerm(flag, false);
-                    }
-                    break;
-
-                case 1:
-                    for (ChunkyPermissions.Flags flag : flags) {
-                        target.setDefaultPerm(flag, true);
-                    }
-                    break;
-
-                case 0:
-                    target.setDefaultPerms(flags);
-                    break;
-            }
+        
+        if (args[2].equalsIgnoreCase("global")) {
+            // "everyone"
             sPermObject = Language.EVERYONE.getString();
-            perms = ChunkyManager.getPermissions(target.getId(), target.getId());
-        } else if (args.length == 2) {
-            ChunkyPermissibleObject object = null;
-            // Groups
-            if (args[1].startsWith("g:")){
-                Language.FEATURE_NYI.bad(cPlayer);
+            for (ChunkyObject target : targets) {
+                target.setDefaultPerms(flags);
+                if (perms == null)
+                    perms = ChunkyManager.getPermissions(target.getId(), target.getId());
+            }
+        } else if (args[2].equalsIgnoreCase("all")) {
+            // "all specific players"
+            sPermObject = Language.ALL_SPECIFIC_PLAYERS.getString();
+
+            // Incremental counter for determining first for loop
+            int i = 0;
+            for (ChunkyObject target : targets) {
+                if (i == 0) {
+                    // On the first loop through, get word reference for current target
+                    if (target instanceof ChunkyChunk) {
+                        sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                    } else if (target instanceof ChunkyPlayer) {
+                        sTargetForPermissible = Language.THEIR_PROPERTY.getString();
+                    }
+                }
+
+                // Grab the permissions for the current target object and loop through the objects with permissions in order to set those perms
+                Set<String> objectPerms = ChunkyManager.getAllPermissions(target.getId()).keySet();
+                for (String permObjectId : objectPerms) {
+                    if (flags == null) {
+                        ChunkyManager.getPermissions(target.getId(), permObjectId).clearFlags();
+                        DatabaseManager.removePermissions(target.getId(), permObjectId);
+                        return;
+                    } else {
+                        ChunkyManager.setPermissions(target.getId(), permObjectId, flags);
+                    }
+
+                    if (i == 0) {
+                        perms = ChunkyManager.getPermissions(target.getId(), permObjectId);
+                        ChunkyObject tempPlayer = ChunkyManager.getObject(permObjectId);
+                        if (tempPlayer != null && tempPlayer instanceof ChunkyPlayer) {
+                            if (targets.size() == 1) {
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) tempPlayer, cPlayer.getName(), perms, sTargetForPermissible);
+                            } else {
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) tempPlayer, cPlayer.getName(), perms, Language.ALL_THEIR_CURRENT_PROPERTY.getString());
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+        } else {
+            // Specific player "name"
+
+            // Grab ChunkyPlayer from args
+            ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(args[2]);
+            if (permPlayer == null) {
+                Language.NO_SUCH_PLAYER.bad(cPlayer, args[2]);
                 return;
             }
-            // Player
-            else {
-                object = ChunkyManager.getChunkyPlayer(args[1]);
-                if (object == null) {
-                    Language.NO_SUCH_PLAYER.bad(cPlayer, args[1]);
-                    return;
+            sPermObject = permPlayer.getName();
+
+            for (ChunkyObject target : targets) {
+                permPlayer.setPerms(target, flags);
+                if (sTargetForPermissible.isEmpty()) {
+                    perms = ChunkyManager.getPermissions(target.getId(), permPlayer.getId());
+                    if (targets.size() == 1) {
+                        if (target instanceof ChunkyChunk) {
+                            sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                        } else if (target instanceof ChunkyPlayer) {
+                            sTargetForPermissible = Language.THEIR_PROPERTY.getString();
+                        }
+                    } else {
+                        sTargetForPermissible = Language.ALL_THEIR_CURRENT_PROPERTY.toString();
+                    }
                 }
             }
 
-            switch (state) {
-                case -1:
-                    for (ChunkyPermissions.Flags flag : flags) {
-                        object.setPerm(target, flag, false);
-                    }
-                    break;
-
-                case 1:
-                    for (ChunkyPermissions.Flags flag : flags) {
-                        object.setPerm(target, flag, true);
-                    }
-                    break;
-
-                case 0:
-                    object.setPerms(target, flags);
-                    break;
-            }
-
-            sPermObject = object.getName();
-            perms = ChunkyManager.getPermissions(target.getId(), object.getId());
-
-            if (object instanceof ChunkyPlayer) {
-                String sTarget2 = "";
-                if (target instanceof ChunkyChunk) {
-                    sTarget2 = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
-                } else if (target instanceof ChunkyPlayer) {
-                    sTarget2 = Language.THEIR_PROPERTY.getString();
-                }
-                Language.PERMS_FOR_YOU.good((ChunkyPlayer)object, cPlayer.getName(), perms, sTarget2);
-            }
-        } else if (args.length > 2){
-            Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
-            return;
+            System.out.println("permPlayer: " + permPlayer + " cPlayer.getName(): " + cPlayer.getName() + " perms: " + perms + " sTargetForPermissible: " + sTargetForPermissible);
+            
+            Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
         }
-        Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
+        
+        if (perms != null)
+            Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
     }
 }
