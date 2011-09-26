@@ -8,12 +8,6 @@ commands:
     aliases: c
 
 permissions:
-    chunky.build_anywhere:
-        description: Allows building anywhere.
-        default: op
-    chunky.no_chunk_limit:
-        description: Allows building anywhere.
-        default: op
     chunky.claim:
         description: Allows players to claim chunks.
         default: true
@@ -23,6 +17,15 @@ permissions:
     chunky.enabled:
         description: Allows this player to be affected by Chunky whatsoever.
         default: true
-    chunky.adminunclaim:
+    chunky.admin.unclaim:
         description: Allows players to unclaim anyone's chunk.
+        default: op
+    chunky.admin.setperm:
+        description: Allows players to set permissions in anyone's chunk.
+        default: op
+    chunky.admin.modify:
+        description: Allows building/destroying anywhere.
+        default: op
+    chunky.admin.unlimited:
+        description: Unlimited chunk claiming.
         default: op
