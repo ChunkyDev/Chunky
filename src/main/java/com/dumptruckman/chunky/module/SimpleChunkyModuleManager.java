@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.module;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.event.ChunkyListener;
 import com.dumptruckman.chunky.event.CustomChunkyEventListener;
@@ -207,7 +208,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             }
             return false;
         } else {
-            ChunkyCommand parentCommand = registeredCommands.get(command.getParent().getFullName());
+            ChunkyCommand parentCommand = Chunky.getModuleManager().getCommandByName(command.getParent().getFullName());
             if (parentCommand != null) {
                 return parentCommand.addChild(command);
             } else {
@@ -315,6 +316,8 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 argsList.add(commands[i]);
             }
         }
+
+        System.out.println(chunkyCommand.getChildren());
 
         String label = commands[i-1];
         String[] args = argsList.toArray(new String[argsList.size()]);
