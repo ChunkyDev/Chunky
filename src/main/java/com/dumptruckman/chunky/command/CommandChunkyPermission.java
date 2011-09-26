@@ -184,8 +184,6 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 }
             }
 
-            System.out.println("permPlayer: " + permPlayer + " cPlayer.getName(): " + cPlayer.getName() + " perms: " + perms + " sTargetForPermissible: " + sTargetForPermissible);
-            
             Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
         }
         
