@@ -45,9 +45,9 @@ public class PlayerEvents extends PlayerListener{
         //Logging.debug(chunkyPlayer.getName() + " moved to chunk: [" + toChunk.getCoord().getX() + ", "+ toChunk.getCoord().getZ() + "]");
         String message = "";
         if(!toChunk.isOwned() && fromChunk.isOwned()) message = " " + Language.UNREGISTERED_CHUNK_NAME.getString();
-        else if (!toChunk.getName().equals(fromChunk.getName())) {
+        else if (!toChunk.getName().equals(fromChunk.getName()) || toChunk.getOwner() != fromChunk.getOwner())
             message += toChunk.getName().equals("") ? "~"+toChunk.getOwner().getName() : toChunk.getName() + ": " + toChunk.getOwner().getName();
-        }
+
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
         if(!message.equals("")) Language.sendMessage(chunkyPlayer, event.getMessage());
