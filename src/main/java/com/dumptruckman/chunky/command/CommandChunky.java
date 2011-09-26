@@ -19,6 +19,6 @@ public class CommandChunky implements ChunkyCommandExecutor {
             if (!modules.isEmpty()) modules += ", ";
             modules += module.getDescription().getName() + " " + module.getDescription().getVersion();
         }
-        Language.CMD_CHUNKY.normal(sender, Logging.getNameVersion(), modules);
+        Language.CMD_CHUNKY_DESC.normal(sender, Logging.getNameVersion(), modules);
     }
 }
