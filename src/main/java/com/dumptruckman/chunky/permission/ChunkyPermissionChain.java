@@ -6,6 +6,7 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPermissibleObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.bukkit.Permissions;
+import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.entity.Player;
 
 import javax.swing.plaf.TreeUI;
@@ -25,10 +26,12 @@ public class ChunkyPermissionChain {
      * @return true if permObject has permission to flag action
      */
     public static boolean hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag, ChunkyAccessLevel accessLevel) {
+
         if (permObject instanceof ChunkyPlayer) {
             try {
                 if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(((ChunkyPlayer) permObject).getPlayer())) {
                     accessLevel = ChunkyAccessLevel.ADMIN;
+                    return true;
                 }
             } catch (ChunkyPlayerOfflineException ignore) {}
         }
@@ -38,6 +41,7 @@ public class ChunkyPermissionChain {
                 accessLevel = ChunkyAccessLevel.UNOWNED;
                 return true;
             }
+            return false;
         }
 
         if (object.isOwnedBy(permObject)) {
@@ -50,11 +54,13 @@ public class ChunkyPermissionChain {
         permCache.cache(object);
 
         Boolean permission = permCache.getDirectPerms().contains(flag);
-        if (permission != null)
+        if (permission != null) {
             if (permission) {
                 accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
-                return true;}
-
+                return true;
+            }
+            return false;
+        }
 
         if (permCache.getGlobalPerms() != null) {
             permission = permCache.getGlobalPerms().contains(flag);
@@ -63,6 +69,7 @@ public class ChunkyPermissionChain {
                     accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
                     return true;
                 }
+                return false;
             }
         }
 
@@ -72,6 +79,7 @@ public class ChunkyPermissionChain {
                 accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
                 return true;
             }
+            return false;
         }
 
         if (permCache.getGlobalDefaultPerms() != null) {
@@ -81,8 +89,10 @@ public class ChunkyPermissionChain {
                     accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
                     return true;
                 }
+                return false;
             }
         }
+
         return false;
     }
 }
