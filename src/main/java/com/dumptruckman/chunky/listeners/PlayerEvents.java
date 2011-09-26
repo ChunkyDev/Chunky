@@ -47,7 +47,7 @@ public class PlayerEvents extends PlayerListener{
         if (!toChunk.getName().equals(fromChunk.getName())) message += toChunk.getName();
         if(!toChunk.isOwned() && fromChunk.isOwned()) message += " " + Language.UNREGISTERED_CHUNK_NAME.getString();
         else if(toChunk.isOwned()) {
-            if(fromChunk.isOwned() && !fromChunk.getName().equals(toChunk.getName()) ) message += " (~" + toChunk.getOwner().getName() + ")";
+            if(fromChunk.isOwned() && !fromChunk.getName().equals(toChunk.getName()) ) message += ": " + toChunk.getOwner().getName();
             else if(!fromChunk.isOwned()) message += " (~" + toChunk.getOwner().getName() + ")";
         }
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
