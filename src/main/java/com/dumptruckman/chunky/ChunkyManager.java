@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,7 +138,7 @@ public class ChunkyManager {
     }
 
     /**
-     * Gets the permissions object for the permissions relationship between permObjectId and objectId.
+     * Gets the permissions object for the permissions relationship between permObjectId and objectId.  Altering this permission object will NOT persist changes.
      * 
      * @param objectId Object being interacted with
      * @param permObjectId Object doing the interacting
@@ -153,6 +154,18 @@ public class ChunkyManager {
         }
         Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObjectId).toString());
         return perms.get(permObjectId);
+    }
+
+    /**
+     * Allows you to set permissions for an object without having the ChunkyObjects.  This WILL persist changes.
+     *
+     * @param objectId Object being interacted with
+     * @param permObjectId Object doing the interacting
+     * @param flags Flag Set to change permissions to
+     */
+    public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        ChunkyManager.getPermissions(objectId, permObjectId).setFlags(flags);
+        DatabaseManager.updatePermissions(permObjectId, objectId, flags);
     }
 
     /**
