@@ -48,7 +48,7 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
                     return;
                 }
                 chunkyChunk.setOwner(chunkyPlayer, true);
-                chunkyChunk.setName("~" + chunkyPlayer.getName());
+                chunkyChunk.setName("");
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
                 Language.CHUNK_CLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
             } else {

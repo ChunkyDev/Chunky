@@ -47,7 +47,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
                 return;
             }
             chunkyChunk.setOwner(chunkyPlayer.getOwner(), true);
-            chunkyChunk.setName(Language.UNREGISTERED_CHUNK_NAME.getString());
+            chunkyChunk.setName("");
             Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             Language.CHUNK_UNCLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
         } else {
@@ -61,7 +61,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
         for(ChunkyObject obj : (HashSet<ChunkyObject>)player.getOwnables().get(ChunkyChunk.class.getName()).clone()) {
             ChunkyChunk chunk = (ChunkyChunk)obj;
             chunk.setOwner(player.getOwner(),true);
-            chunk.setName(Language.UNREGISTERED_CHUNK_NAME.getString());
+            chunk.setName("");
 
         }
     }
