@@ -31,7 +31,6 @@ public class ChunkyPermissionChain {
             try {
                 if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(((ChunkyPlayer) permObject).getPlayer())) {
                     accessLevel = ChunkyAccessLevel.ADMIN;
-                    return true;
                 }
             } catch (ChunkyPlayerOfflineException ignore) {}
         }
@@ -41,7 +40,6 @@ public class ChunkyPermissionChain {
                 accessLevel = ChunkyAccessLevel.UNOWNED;
                 return true;
             }
-            return false;
         }
 
         if (object.isOwnedBy(permObject)) {
@@ -59,7 +57,6 @@ public class ChunkyPermissionChain {
                 accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
                 return true;
             }
-            return false;
         }
 
         if (permCache.getGlobalPerms() != null) {
@@ -69,7 +66,6 @@ public class ChunkyPermissionChain {
                     accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
                     return true;
                 }
-                return false;
             }
         }
 
@@ -79,7 +75,6 @@ public class ChunkyPermissionChain {
                 accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
                 return true;
             }
-            return false;
         }
 
         if (permCache.getGlobalDefaultPerms() != null) {
@@ -89,7 +84,6 @@ public class ChunkyPermissionChain {
                     accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
                     return true;
                 }
-                return false;
             }
         }
         
