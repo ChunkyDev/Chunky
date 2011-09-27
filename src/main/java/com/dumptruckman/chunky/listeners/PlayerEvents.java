@@ -46,7 +46,7 @@ public class PlayerEvents extends PlayerListener{
         String message = "";
         if(!toChunk.isOwned() && fromChunk.isOwned()) message = " " + Language.UNREGISTERED_CHUNK_NAME.getString();
         else if (!toChunk.getName().equals(fromChunk.getName()) || toChunk.getOwner() != fromChunk.getOwner())
-            message += toChunk.getName().equals("") ? "~"+toChunk.getOwner().getName() : toChunk.getName() + ": " + toChunk.getOwner().getName();
+            message += Config.getChunkDisplayName(toChunk);
 
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer,toChunk,fromChunk,message);
         Chunky.getModuleManager().callEvent(event);
