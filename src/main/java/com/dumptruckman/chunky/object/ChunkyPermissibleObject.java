@@ -10,7 +10,7 @@ import java.util.EnumSet;
 /**
  * @author dumptruckman
  */
-public class ChunkyPermissibleObject extends ChunkyObject {
+public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     private ChunkyPermissionCache permCache;
 
