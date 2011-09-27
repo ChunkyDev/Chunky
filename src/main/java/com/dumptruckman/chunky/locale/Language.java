@@ -212,7 +212,7 @@ public enum Language {
         }
     }
 
-    private static String formatString(String string, Object...args) {
+    public static String formatString(String string, Object...args) {
         // Replaces & with the Section character
         string = string.replaceAll("&", Character.toString((char)167));
         // If there are arguments, %n notations in the message will be
