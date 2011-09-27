@@ -9,8 +9,6 @@ import com.dumptruckman.chunky.locale.Language;
 import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.module.ChunkyModuleManager;
 import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
-import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.payment.Method;
 import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
