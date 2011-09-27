@@ -3,7 +3,7 @@ package com.dumptruckman.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyChunk extends ChunkyPermissionsObject {
+public class ChunkyChunk extends ChunkyObject {
 
     private ChunkyCoordinates coord;
 
