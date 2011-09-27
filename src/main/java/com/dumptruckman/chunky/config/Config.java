@@ -192,8 +192,18 @@ public class Config {
             }
         }
 
+        begin = nameFormat.indexOf("\\");
+        end = nameFormat.indexOf("/");
+        if (begin > -1 && end > -1 && end > begin) {
+            if (!chunkName.isEmpty()) {
+                nameFormat = nameFormat.replace(nameFormat.substring(begin, end + 1), "");
+            } else {
+                nameFormat = nameFormat.replace("\\", "");
+                nameFormat = nameFormat.replace("/", "");
+            }
+        }
+        
         displayName = Language.formatString(nameFormat, chunkName, ownerName);
-
         return displayName;
     }
 }
