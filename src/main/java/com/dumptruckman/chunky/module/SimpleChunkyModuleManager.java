@@ -317,8 +317,6 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             }
         }
 
-        System.out.println(chunkyCommand.getChildren());
-
         String label = commands[i-1];
         String[] args = argsList.toArray(new String[argsList.size()]);
         if (!argsList.isEmpty()) {

@@ -27,7 +27,7 @@ public enum Language {
     /**
      * Command Language
      */
-    CMD_CHUNKY ("command.chunky", Arrays.asList("&e=== Chunky Information ===",
+    CMD_CHUNKY_DESC ("command.chunky.description", Arrays.asList("&e=== Chunky Information ===",
             "&fVersion: %1", "Loaded Modules - %2",
             "You can use &ehelp&f or &e?&f after chunky sub-commands",
             "&e/chunky <sub-cmd> help&f and &e/chunky <sub-cmd> ?&f",
@@ -212,7 +212,7 @@ public enum Language {
         }
     }
 
-    private static String formatString(String string, Object...args) {
+    public static String formatString(String string, Object...args) {
         // Replaces & with the Section character
         string = string.replaceAll("&", Character.toString((char)167));
         // If there are arguments, %n notations in the message will be

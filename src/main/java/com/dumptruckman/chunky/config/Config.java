@@ -1,6 +1,9 @@
 package com.dumptruckman.chunky.config;
 
 import com.dumptruckman.chunky.Chunky;
+import com.dumptruckman.chunky.locale.Language;
+import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
 import java.io.File;
@@ -160,5 +163,47 @@ public class Config {
             map.put(key, config.getInt(PLAYER_CHUNK_LIMIT_CUSTOM.getPath() + "." + key, (Integer)PLAYER_CHUNK_LIMIT.getDefault()));
         }
         return map;
+    }
+
+    public static Boolean isChunkNamedAfterOwner() {
+        return getBoolean(CHUNK_NAMED_AFTER_OWNER);
+    }
+
+    private static String getChunkNameFormat() {
+        return getString(CHUNK_NAME_FORMAT_STRING);
+    }
+
+    public static String getChunkDisplayName(ChunkyChunk cChunk) {
+        String nameFormat = getChunkNameFormat();
+        String chunkName = cChunk.getName();
+        String ownerName = "";
+        String displayName = "";
+        ChunkyObject chunkOwner = cChunk.getOwner();
+        if (chunkOwner != null) ownerName = chunkOwner.getName();
+
+        int begin = nameFormat.indexOf("{");
+        int end = nameFormat.indexOf("}");
+        if (begin > -1 && end > -1 && end > begin) {
+            if (chunkName.isEmpty()) {
+                nameFormat = nameFormat.replace(nameFormat.substring(begin, end + 1), "");
+            } else {
+                nameFormat = nameFormat.replace("{", "");
+                nameFormat = nameFormat.replace("}", "");
+            }
+        }
+
+        begin = nameFormat.indexOf("\\");
+        end = nameFormat.indexOf("/");
+        if (begin > -1 && end > -1 && end > begin) {
+            if (!chunkName.isEmpty()) {
+                nameFormat = nameFormat.replace(nameFormat.substring(begin, end + 1), "");
+            } else {
+                nameFormat = nameFormat.replace("\\", "");
+                nameFormat = nameFormat.replace("/", "");
+            }
+        }
+        
+        displayName = Language.formatString(nameFormat, chunkName, ownerName);
+        return displayName;
     }
 }

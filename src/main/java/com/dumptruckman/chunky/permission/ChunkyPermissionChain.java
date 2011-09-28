@@ -100,7 +100,7 @@ public class ChunkyPermissionChain {
                 return false;
             }
         }
-        
+
         return false;
     }
 }
