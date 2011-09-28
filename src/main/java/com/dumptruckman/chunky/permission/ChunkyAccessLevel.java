@@ -54,4 +54,16 @@ public enum ChunkyAccessLevel {
      * No permission given.
      */
     NONE,
+
+    ;
+    
+    private boolean denied = false;
+
+    public void setDenied(boolean deny) {
+        this.denied = deny;
+    }
+
+    public boolean causedDenial() {
+        return denied;
+    }
 }
