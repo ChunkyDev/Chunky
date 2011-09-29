@@ -1,5 +1,6 @@
 package com.dumptruckman.chunky.dynamicpersistance;
 
+import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyObject;
@@ -8,6 +9,7 @@ import org.bukkit.Chunk;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class SQLDB implements Database{
@@ -24,24 +26,28 @@ public abstract class SQLDB implements Database{
         catch (SQLException e) {return null;}
     }
 
-    public ChunkyPlayer loadChunkyPlayer(String name) {
-        ChunkyPlayer chunkyPlayer = new ChunkyPlayer(name);
-
+    private int getInt(ResultSet data, String label) {
+        try {return data.getInt("name");}
+        catch (SQLException e) {return 0;}
     }
 
-    public ChunkyChunk loadChunk(ChunkyCoordinates coordinates) {
-        ChunkyChunk chunk = new ChunkyChunk(coordinates);
-        ResultSet data = query(QueryGen.selectChunk(chunk));
-        if(iterateData(data))
-            chunk.setName(getString(data,"name"));
-        chunk.setOwner();
+    public void loadAllPlayers() {
+        ResultSet data = query(QueryGen.selectAllPlayers());
+        while (iterateData(data)) {
+            ChunkyManager.getChunkyPlayer(getString(data,"name"));}
     }
 
-    public List<ChunkyChunk> getOwnedChunks(ChunkyObject chunkyObject) {
-        ResultSet ownedChunks = query(QueryGen.getOwned(chunkyObject,ChunkyChunk.class.getName()));
-        List<ChunkyChunk>
-        while (iterateData(ownedChunks)) {
+    public void loadAllChunks() {
+        ResultSet data = query(QueryGen.selectAllChunks());
+        while (iterateData(data)) {
+            ChunkyChunk chunk = ChunkyManager.getChunk(new ChunkyCoordinates(getString(data,"world"),getInt(data,"x"),getInt(data,"z")));
+            chunk.setName(getString(data,"name"));}
+    }
 
+    public void loadAllPermissions() {
+        ResultSet data = query(QueryGen.selectAllChunks());
+        while (iterateData(data)) {
+            ChunkyManager.set
         }
 
     }

@@ -9,7 +9,7 @@ import org.bukkit.Location;
  * @author dumptruckman, SwearWord
  */
 public class ChunkyCoordinates {
-    
+
     private int x;
     private int z;
     private String world;

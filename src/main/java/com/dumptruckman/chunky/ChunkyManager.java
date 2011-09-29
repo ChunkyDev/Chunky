@@ -120,7 +120,7 @@ public class ChunkyManager {
      */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
-        ChunkyChunk chunkyChunk = DatabaseManager.database.loadChunk(coords);
+        ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
         CHUNKS.put(coords,chunkyChunk);
         return chunkyChunk;
     }

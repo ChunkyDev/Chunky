@@ -2,7 +2,6 @@ package com.dumptruckman.chunky.dynamicpersistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
-import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import org.bukkit.plugin.Plugin;
 
@@ -14,11 +13,11 @@ public interface Database {
 
     public void disconnect();
 
-    public ChunkyPlayer loadChunkyPlayer(String name);
+    public void loadAllChunks();
 
-    public ChunkyChunk loadChunk(ChunkyCoordinates coordinates);
+    public void loadAllPlayers();
 
-    public List<ChunkyChunk> getOwnedChunks(ChunkyObject chunkyObject);
+    public void loadAllPermissions();
 
 
 }

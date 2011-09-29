@@ -5,9 +5,14 @@ import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.persistance.*;
 
 public class QueryGen {
-    public static String selectChunk(ChunkyChunk chunk) {
-        return String.format(
-                "SELECT * FROM chunky_ChunkyChunk WHERE Id='%s'",chunk.getId());}
+    public static String selectAllChunks() {
+        return "SELECT * FROM chunky_ChunkyChunk";}
+
+    public static String selectAllPlayers() {
+        return "SELECT * FROM chunky_ChunkyPlayer";}
+
+    public static String selectAllPermissions(String permissibleType) {
+        return "SELECT * FROM chunky_Permissions";}
 
     public static String getCreatePermissionsTable() {
         return
