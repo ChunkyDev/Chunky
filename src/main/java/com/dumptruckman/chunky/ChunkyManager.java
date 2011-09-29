@@ -164,8 +164,21 @@ public class ChunkyManager {
      * @param flags Flag Set to change permissions to
      */
     public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        setPermissions(objectId, permObjectId, flags, true);
+    }
+
+    /**
+     * Allows you to set permissions for an object without having the ChunkyObjects.  This will optionally persist changes.
+     *
+     * @param objectId Object being interacted with
+     * @param permObjectId Object doing the interacting
+     * @param flags Flag Set to change permissions to
+     * @param persist Whether or not to persist these changes.  Generally you should persist the changes.
+     */
+    public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
         ChunkyManager.getPermissions(objectId, permObjectId).setFlags(flags);
-        DatabaseManager.updatePermissions(permObjectId, objectId, flags);
+        if (persist)
+            DatabaseManager.updatePermissions(permObjectId, objectId, flags);
     }
 
     /**
