@@ -1,8 +1,8 @@
 package com.dumptruckman.chunky;
 
+import com.dumptruckman.chunky.dynamicpersistance.DatabaseManager;
 import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
-import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -106,9 +106,8 @@ public class ChunkyManager {
     {
         String id = ChunkyPlayer.class.getName() + ":" + player.getName();
         if(PLAYERS.containsKey(id)) return PLAYERS.get(id);
-        ChunkyPlayer cPlayer = new ChunkyPlayer(player.getName());
+        ChunkyPlayer cPlayer = DatabaseManager.database.loadChunkyPlayer(player.getName());
         PLAYERS.put(id, cPlayer);
-        DatabaseManager.addPlayer(cPlayer);
 
         return cPlayer;
     }
@@ -121,7 +120,7 @@ public class ChunkyManager {
      */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
-        ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
+        ChunkyChunk chunkyChunk = DatabaseManager.database.loadChunk(coords);
         CHUNKS.put(coords,chunkyChunk);
         return chunkyChunk;
     }

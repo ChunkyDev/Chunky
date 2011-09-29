@@ -2,6 +2,7 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.*;
 import com.dumptruckman.chunky.config.Config;
+import com.dumptruckman.chunky.dynamicpersistance.DatabaseManager;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.listeners.*;
@@ -10,7 +11,6 @@ import com.dumptruckman.chunky.module.ChunkyCommand;
 import com.dumptruckman.chunky.module.ChunkyModuleManager;
 import com.dumptruckman.chunky.module.SimpleChunkyModuleManager;
 import com.dumptruckman.chunky.payment.Method;
-import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.util.Logging;
 import org.blockface.bukkitstats.CallHome;
 import org.bukkit.event.Event;
@@ -44,7 +44,7 @@ public class Chunky extends JavaPlugin {
     final public void onDisable() {
         // Save the module data
 
-        DatabaseManager.closeDB();
+        DatabaseManager.database.disconnect();
 
         // Display disable message/version info
         Logging.info("disabled.", true);
@@ -99,13 +99,11 @@ public class Chunky extends JavaPlugin {
         CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager();
 
         //Loads the data.
-        if(!DatabaseManager.load())
-        {
+        if(!DatabaseManager.load()) {
             Logging.severe("Encountered an error while  loading data. Disabling...");
             pm.disablePlugin(this);
+            return;
         }
-
-        DatabaseManager.loadData();
 
         // Register Events
         registerBukkitEvents();

@@ -45,8 +45,7 @@ public class MySQLDB extends SQLDB{
             checkTables();
         } catch (Exception e) {
             Logging.severe("Could not access MySQL tables.");
-            return false;
-        }
+            return false;}
 
         Logging.info("Connected to MySQL database and verified tables.");
         return true;
