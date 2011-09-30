@@ -42,12 +42,12 @@ public abstract class SQLDB implements Database{
     }
 
     public void removeAllPermissions(String objectId) {
-        Logging.info("REMOVING");
+        Logging.debug("REMOVING");
         query(QueryGen.removeAllPermissions(objectId));
     }
 
     public void removePermissions(String permissibleId, String objectId) {
-        Logging.info("REMOVING");
+        Logging.debug("REMOVING");
         query(QueryGen.removePermissions(permissibleId,objectId));
     }
 
