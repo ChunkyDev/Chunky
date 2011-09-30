@@ -2,6 +2,7 @@ name: Chunky
 main: com.dumptruckman.chunky.Chunky
 version: ${project.version}-b${build.number}
 author: dumptruckman, SwearWord
+website: http://build.blockface.org
 
 commands:
   chunky:
