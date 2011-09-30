@@ -1,8 +1,9 @@
 package com.dumptruckman.chunky.dynamicpersistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
-import com.dumptruckman.chunky.object.ChunkyObject;
-import com.dumptruckman.chunky.persistance.*;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
+
+import java.util.EnumSet;
 
 public class QueryGen {
     public static String selectAllChunks() {
@@ -13,6 +14,12 @@ public class QueryGen {
 
     public static String selectAllPermissions(String permissibleType) {
         return "SELECT * FROM chunky_Permissions";}
+
+    public static String selectAllOwnership(String ownerType,String ownableType) {
+        return String.format("SELECT * FROM chunky_Ownership WHERE " +
+                "OwnerType='%s' AND " +
+                "OwnableType='%s'",ownerType,ownableType);
+    }
 
     public static String getCreatePermissionsTable() {
         return
@@ -49,13 +56,32 @@ public class QueryGen {
             "World VARCHAR(50) NOT NULL," +
             "x INT NOT NULL," +
             "z INT NOT NULL," +
-            "PRIMARY KEY (Id) )";}
+            "PRIMARY KEY (Id) )";
+    }
 
-    public static String getOwned(ChunkyObject owner, String ownableType) {
+    public static String updateChunk(ChunkyChunk chunk, String name) {
+        return String.format("REPLACE INTO chunky_ChunkyChunk (" +
+            "Id, " +
+            "Name, " +
+            "World, " +
+            "x, " +
+            "z) " +
+            "VALUES ('%s','%s','%s',%s,%s)", chunk.getId(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
+    }
+
+    public static String updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        int build = flags.contains(ChunkyPermissions.Flags.BUILD) ? 1:0;
+        int destroy = flags.contains(ChunkyPermissions.Flags.DESTROY) ? 1:0;
+        int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1:0;
+        int sw = flags.contains(ChunkyPermissions.Flags.SWITCH) ? 1:0;
         return
-            String.format("SELECT * FROM chunky_%s WHERE Id IN " +
-            "(SELECT OwnableId from chunky_ownership " +
-            "where OwnerId = '%s' " +
-            "AND OwnableType = '%s' AND OwnerType = '%s')", com.dumptruckman.chunky.persistance.DatabaseManager.getTableTypeName(ownableType), owner.getId(), ownableType, owner.getType());}
-
+            String.format("REPLACE INTO chunky_permissions (" +
+            "PermissibleId, " +
+            "ObjectId, " +
+            "BUILD," +
+            "DESTROY," +
+            "ITEMUSE," +
+            "SWITCH) " +
+            "VALUES ('%s','%s',%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
+    }
 }

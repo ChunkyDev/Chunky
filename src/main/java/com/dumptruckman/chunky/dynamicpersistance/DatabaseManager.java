@@ -10,6 +10,10 @@ public class DatabaseManager {
 
     public static boolean load() {
         if(Config.isUsingMySQL()) return loadMySQL();
+        database.loadAllChunks();
+        database.loadAllPlayers();
+        database.loadAllPermissions();
+        database.loadAllChunkOwnership();
         return false;
     }
 

@@ -106,7 +106,7 @@ public class ChunkyManager {
     {
         String id = ChunkyPlayer.class.getName() + ":" + player.getName();
         if(PLAYERS.containsKey(id)) return PLAYERS.get(id);
-        ChunkyPlayer cPlayer = DatabaseManager.database.loadChunkyPlayer(player.getName());
+        ChunkyPlayer cPlayer = new ChunkyPlayer(player.getName());
         PLAYERS.put(id, cPlayer);
 
         return cPlayer;
@@ -177,7 +177,7 @@ public class ChunkyManager {
     public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
         ChunkyManager.getPermissions(objectId, permObjectId).setFlags(flags);
         if (persist)
-            DatabaseManager.updatePermissions(permObjectId, objectId, flags);
+            DatabaseManager.database.updatePermissions(permObjectId, objectId, flags);
     }
 
     /**

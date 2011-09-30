@@ -5,12 +5,11 @@ import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
-import org.bukkit.Chunk;
+import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.EnumSet;
 
 public abstract class SQLDB implements Database{
 
@@ -31,6 +30,14 @@ public abstract class SQLDB implements Database{
         catch (SQLException e) {return 0;}
     }
 
+    public void updateChunk(ChunkyChunk chunk, String name) {
+        query(QueryGen.updateChunk(chunk,name));
+    }
+
+    public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.updatePermissions(permObjectId,objectId,flags));
+    }
+
     public void loadAllPlayers() {
         ResultSet data = query(QueryGen.selectAllPlayers());
         while (iterateData(data)) {
@@ -47,8 +54,24 @@ public abstract class SQLDB implements Database{
     public void loadAllPermissions() {
         ResultSet data = query(QueryGen.selectAllChunks());
         while (iterateData(data)) {
-            ChunkyManager.set
-        }
+            EnumSet<ChunkyPermissions.Flags> flags = null;
+            if(getInt(data,"BUILD")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            if(getInt(data,"DESTROY")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            if(getInt(data,"ITEM")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            ChunkyManager.setPermissions(
+                    getString(data,"PermissibleId"),
+                    getString(data,"ObjectId"),
+                    flags,false);}}
 
+    public void loadAllChunkOwnership() {
+        ResultSet data = query(QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName()));
+        while(iterateData(data)) {
+            ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerId"));
+            ChunkyObject ownable = ChunkyManager.getObject(getString(data,"OwnableId"));
+            if(owner==null || ownable==null) return;
+            ownable.setOwner(owner,true);
+        }
     }
+
 }
