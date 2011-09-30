@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import org.bukkit.plugin.Plugin;
 
@@ -28,4 +29,9 @@ public interface Database {
 
     public void removeAllPermissions(String objectId);
 
+    public void addOwnership(ChunkyObject owner, ChunkyObject ownable);
+
+    public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
+
+    public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags);
 }

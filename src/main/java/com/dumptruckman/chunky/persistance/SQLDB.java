@@ -6,6 +6,7 @@ import com.dumptruckman.chunky.object.ChunkyCoordinates;
 import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.object.ChunkyPlayer;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
+import com.dumptruckman.chunky.util.Logging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,12 +22,12 @@ public abstract class SQLDB implements Database{
     }
 
     private String getString(ResultSet data, String label) {
-        try {return data.getString("name");}
+        try {return data.getString(label);}
         catch (SQLException e) {return null;}
     }
 
     private int getInt(ResultSet data, String label) {
-        try {return data.getInt("name");}
+        try {return data.getInt(label);}
         catch (SQLException e) {return 0;}
     }
 
@@ -67,19 +68,35 @@ public abstract class SQLDB implements Database{
             if(getInt(data,"DESTROY")==1) flags.add(ChunkyPermissions.Flags.BUILD);
             if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.BUILD);
             if(getInt(data,"ITEM")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            String permId = getString(data,"PermissibleId");
+            String objectId = getString(data,"ObjectId");
             ChunkyManager.setPermissions(
-                    getString(data,"PermissibleId"),
-                    getString(data,"ObjectId"),
+                    permId,
+                    objectId,
                     flags,false);}}
 
     public void loadAllChunkOwnership() {
-        ResultSet data = query(QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName()));
+        String query = QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName());
+        ResultSet data = query(query);
         while(iterateData(data)) {
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerId"));
             ChunkyObject ownable = ChunkyManager.getObject(getString(data,"OwnableId"));
             if(owner==null || ownable==null) return;
             ownable.setOwner(owner,true);
         }
+    }
+
+    public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        query(QueryGen.addOwnership(owner,ownable));
+    }
+
+    public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        query(QueryGen.removeOwnership(owner,ownable));
+
+    }
+
+    public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.updatePermissions(id,id,flags));
     }
 
 }

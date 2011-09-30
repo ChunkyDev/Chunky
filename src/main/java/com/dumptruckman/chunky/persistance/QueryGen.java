@@ -1,6 +1,7 @@
 package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
+import com.dumptruckman.chunky.object.ChunkyObject;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 
 import java.util.EnumSet;
@@ -16,7 +17,7 @@ public class QueryGen {
         return "SELECT * FROM chunky_Permissions";}
 
     public static String selectAllOwnership(String ownerType,String ownableType) {
-        return String.format("SELECT * FROM chunky_Ownership WHERE " +
+        return String.format("SELECT * FROM chunky_ownership WHERE " +
                 "OwnerType='%s' AND " +
                 "OwnableType='%s'",ownerType,ownableType);
     }
@@ -96,5 +97,23 @@ public class QueryGen {
         return
             String.format("DELETE FROM chunky_permissions where " +
                     "ObjectId = '%s'", objectId);
+    }
+
+     public static String addOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        return
+            String.format("REPLACE INTO chunky_ownership (" +
+            "OwnerId, " +
+            "OwnableId, " +
+            "OwnerType, " +
+            "OwnableType) " +
+            "VALUES ('%s','%s','%s','%s')",owner.getId(), ownable.getId(), owner.getType(), ownable.getType());
+    }
+
+    public static String removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
+        return
+            String.format("DELETE FROM chunky_ownership where " +
+            "OwnerId = '%s' " +
+            "AND OwnableId = '%s'",owner.getId(), ownable.getId());
+
     }
 }
