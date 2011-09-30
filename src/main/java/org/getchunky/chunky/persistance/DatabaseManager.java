@@ -1,6 +1,7 @@
 package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.util.Logging;
 
 public class DatabaseManager {
@@ -8,7 +9,8 @@ public class DatabaseManager {
     private static Database database;
 
     public static boolean load() {
-        loadMySQL();
+        if(Config.isUsingMySQL())
+            if(!loadMySQL()) loadSQLite();
         database.loadAllChunks();
         Logging.info("Loaded chunks.");
         database.loadAllPlayers();
@@ -22,6 +24,11 @@ public class DatabaseManager {
 
     private static Boolean loadMySQL() {
         database = new MySQLDB();
+        return database.connect(Chunky.getInstance());
+    }
+
+    private static Boolean loadSQLite() {
+        database = new SQLiteDB();
         return database.connect(Chunky.getInstance());
     }
 
