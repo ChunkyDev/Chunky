@@ -28,7 +28,6 @@ public class MySQLDB extends SQLDB {
                 Config.getUsername(),
                 Config.getPassword());
 
-        db = new MySQL(Logging.getLog(),Logging.getNameVersion(), Config.getHost(),Config.getPort(),Config.getDatabase(),Config.getUsername(),Config.getPassword());
         try {
             db.open();
             if(!db.checkConnection()) return false;
