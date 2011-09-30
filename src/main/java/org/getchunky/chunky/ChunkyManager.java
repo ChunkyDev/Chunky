@@ -175,7 +175,7 @@ public class ChunkyManager {
     public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
         ChunkyManager.getPermissions(objectId, permObjectId).setFlags(flags);
         if (persist)
-            DatabaseManager.database.updatePermissions(permObjectId, objectId, flags);
+            DatabaseManager.getDatabase().updatePermissions(permObjectId, objectId, flags);
     }
 
     /**

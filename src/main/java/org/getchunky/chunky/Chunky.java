@@ -44,7 +44,7 @@ public class Chunky extends JavaPlugin {
     final public void onDisable() {
         // Save the module data
 
-        DatabaseManager.database.disconnect();
+        DatabaseManager.getDatabase().disconnect();
 
         // Display disable message/version info
         Logging.info("disabled.", true);

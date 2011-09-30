@@ -82,13 +82,13 @@ public abstract class ChunkyObject {
         }
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
-            if(exists) DatabaseManager.database.addOwnership(this,o);
+            if(exists) DatabaseManager.getDatabase().addOwnership(this,o);
             return exists;
         } else {
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
-            DatabaseManager.database.addOwnership(this,o);
+            DatabaseManager.getDatabase().addOwnership(this,o);
             return true;
         }
     }
@@ -102,7 +102,7 @@ public abstract class ChunkyObject {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
         if(removed) {
             o.owner = null;
-            DatabaseManager.database.removeOwnership(this,o);
+            DatabaseManager.getDatabase().removeOwnership(this,o);
         }
         return removed;
     }
@@ -176,7 +176,7 @@ public abstract class ChunkyObject {
         }
         if(clearPermissions) {
             ChunkyManager.getAllPermissions(getId()).clear();
-            DatabaseManager.database.removeAllPermissions(this.getId());}
+            DatabaseManager.getDatabase().removeAllPermissions(this.getId());}
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
@@ -196,7 +196,7 @@ public abstract class ChunkyObject {
     public final void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(getId(), getId()).clearFlags();
-            DatabaseManager.database.removePermissions(this.getId(), this.getId());
+            DatabaseManager.getDatabase().removePermissions(this.getId(), this.getId());
             return;
         }
         
@@ -216,7 +216,7 @@ public abstract class ChunkyObject {
 
         // Persist if requested
         if (persist) {
-            DatabaseManager.database.updateDefaultPermissions(this.getId(), perms.getFlags());
+            DatabaseManager.getDatabase().updateDefaultPermissions(this.getId(), perms.getFlags());
         }
     }
 

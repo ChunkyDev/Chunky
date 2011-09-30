@@ -137,7 +137,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 for (String permObjectId : objectPerms) {
                     if (flags == null) {
                         ChunkyManager.getPermissions(target.getId(), permObjectId).clearFlags();
-                        DatabaseManager.database.removePermissions(target.getId(), permObjectId);
+                        DatabaseManager.getDatabase().removePermissions(target.getId(), permObjectId);
                         return;
                     } else {
                         ChunkyManager.setPermissions(target.getId(), permObjectId, flags);

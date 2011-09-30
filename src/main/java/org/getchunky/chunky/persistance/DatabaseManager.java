@@ -5,7 +5,7 @@ import org.getchunky.chunky.util.Logging;
 
 public class DatabaseManager {
 
-    public static Database database;
+    private static Database database;
 
     public static boolean load() {
         loadMySQL();
@@ -23,6 +23,10 @@ public class DatabaseManager {
     private static Boolean loadMySQL() {
         database = new MySQLDB();
         return database.connect(Chunky.getInstance());
+    }
+
+    public static Database getDatabase() {
+        return database;
     }
 
 }
