@@ -1,8 +1,7 @@
-package com.dumptruckman.chunky.dynamicpersistance;
+package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.Chunky;
 import com.dumptruckman.chunky.config.Config;
-import org.bukkit.plugin.Plugin;
 
 public class DatabaseManager {
 

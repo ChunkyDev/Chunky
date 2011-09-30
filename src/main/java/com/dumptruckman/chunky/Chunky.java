@@ -2,7 +2,7 @@ package com.dumptruckman.chunky;
 
 import com.dumptruckman.chunky.command.*;
 import com.dumptruckman.chunky.config.Config;
-import com.dumptruckman.chunky.dynamicpersistance.DatabaseManager;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.event.ChunkyEvent;
 import com.dumptruckman.chunky.exceptions.ChunkyUnregisteredException;
 import com.dumptruckman.chunky.listeners.*;

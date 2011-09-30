@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.dynamicpersistance;
+package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.config.Config;
 import com.dumptruckman.chunky.util.Logging;

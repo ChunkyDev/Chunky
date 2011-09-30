@@ -1,6 +1,6 @@
 package com.dumptruckman.chunky.listeners;
 
-import com.dumptruckman.chunky.dynamicpersistance.DatabaseManager;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.event.object.ChunkyObjectListener;
 import com.dumptruckman.chunky.event.object.ChunkyObjectNameEvent;
 import com.dumptruckman.chunky.object.ChunkyChunk;

@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.dynamicpersistance;
+package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.object.ChunkyChunk;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
@@ -83,5 +83,18 @@ public class QueryGen {
             "ITEMUSE," +
             "SWITCH) " +
             "VALUES ('%s','%s',%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
+    }
+
+    public static String removePermissions(String permissibleId, String objectId) {
+        return
+            String.format("DELETE FROM chunky_permissions where " +
+            "PermissibleId = '%s' " +
+            "AND ObjectId = '%s'", permissibleId, objectId);
+    }
+
+    public static String removeAllPermissions(String objectId) {
+        return
+            String.format("DELETE FROM chunky_permissions where " +
+                    "ObjectId = '%s'", objectId);
     }
 }

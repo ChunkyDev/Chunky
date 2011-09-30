@@ -1,9 +1,9 @@
 package com.dumptruckman.chunky.object;
 
 import com.dumptruckman.chunky.ChunkyManager;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.permission.ChunkyPermissionCache;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
-import com.dumptruckman.chunky.persistance.DatabaseManager;
 
 import java.util.EnumSet;
 
@@ -35,12 +35,12 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public final void setPerms(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(object.getId(), this.getId()).clearFlags();
-            DatabaseManager.removePermissions(object.getId(), this.getId());
+            DatabaseManager.database.removePermissions(object.getId(), this.getId());
             return;
         }
 
         ChunkyManager.getPermissions(object.getId(), this.getId()).setFlags(flags);
-        DatabaseManager.updatePermissions(this.getId(), object.getId(), flags);
+        DatabaseManager.database.updatePermissions(this.getId(), object.getId(), flags);
     }
 
     public final void setPerm(String objectId, ChunkyPermissions.Flags type, boolean status, boolean persist) {
@@ -49,7 +49,7 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
         
         // Persist if requested
         if (persist) {
-            DatabaseManager.updatePermissions(this.getId(), objectId, perms.getFlags());
+            DatabaseManager.database.updatePermissions(this.getId(), objectId, perms.getFlags());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dumptruckman.chunky.dynamicpersistance;
+package com.dumptruckman.chunky.persistance;
 
 import com.dumptruckman.chunky.ChunkyManager;
 import com.dumptruckman.chunky.object.ChunkyChunk;
@@ -36,6 +36,14 @@ public abstract class SQLDB implements Database{
 
     public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
         query(QueryGen.updatePermissions(permObjectId,objectId,flags));
+    }
+
+    public void removeAllPermissions(String objectId) {
+        query(QueryGen.removeAllPermissions(objectId));
+    }
+
+    public void removePermissions(String permissibleId, String objectId) {
+        query(QueryGen.removePermissions(permissibleId,objectId));
     }
 
     public void loadAllPlayers() {

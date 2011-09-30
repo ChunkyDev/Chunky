@@ -1,17 +1,15 @@
 package com.dumptruckman.chunky;
 
-import com.dumptruckman.chunky.dynamicpersistance.DatabaseManager;
+import com.dumptruckman.chunky.persistance.DatabaseManager;
 import com.dumptruckman.chunky.object.*;
 import com.dumptruckman.chunky.permission.ChunkyPermissions;
 import com.dumptruckman.chunky.util.Logging;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
