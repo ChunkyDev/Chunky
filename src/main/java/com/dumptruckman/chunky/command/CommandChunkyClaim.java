@@ -47,7 +47,7 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
                     Language.CHUNK_OWNED.bad(player, chunkyChunk.getOwner().getName());
                     return;
                 }
-                chunkyChunk.setOwner(chunkyPlayer, true);
+                chunkyChunk.setOwner(chunkyPlayer, true,true);
                 chunkyChunk.setName("");
                 Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
                 Language.CHUNK_CLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());

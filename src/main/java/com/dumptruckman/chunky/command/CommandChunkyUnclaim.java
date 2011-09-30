@@ -46,7 +46,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
                 Language.CHUNK_NOT_OWNED.bad(player, chunkyChunk.getOwner().getName());
                 return;
             }
-            chunkyChunk.setOwner(chunkyPlayer.getOwner(), true);
+            chunkyChunk.setOwner(chunkyPlayer.getOwner(), true,true);
             chunkyChunk.setName("");
             Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
             Language.CHUNK_UNCLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
@@ -60,7 +60,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
     private void unclaimAll(ChunkyPlayer player) {
         for(ChunkyObject obj : (HashSet<ChunkyObject>)player.getOwnables().get(ChunkyChunk.class.getName()).clone()) {
             ChunkyChunk chunk = (ChunkyChunk)obj;
-            chunk.setOwner(player.getOwner(),true);
+            chunk.setOwner(player.getOwner(),true,true);
             chunk.setName("");
 
         }

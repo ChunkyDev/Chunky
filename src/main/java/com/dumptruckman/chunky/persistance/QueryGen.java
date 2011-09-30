@@ -13,8 +13,8 @@ public class QueryGen {
     public static String selectAllPlayers() {
         return "SELECT * FROM chunky_ChunkyPlayer";}
 
-    public static String selectAllPermissions(String permissibleType) {
-        return "SELECT * FROM chunky_Permissions";}
+    public static String selectAllPermissions() {
+        return "SELECT * FROM chunky_permissions";}
 
     public static String selectAllOwnership(String ownerType,String ownableType) {
         return String.format("SELECT * FROM chunky_ownership WHERE " +

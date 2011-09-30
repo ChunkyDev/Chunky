@@ -13,10 +13,10 @@ public class DatabaseManager {
         Logging.info("Loaded chunks.");
         database.loadAllPlayers();
         Logging.info("Loaded players.");
-        database.loadAllPermissions();
-        Logging.info("Loaded permissions.");
         database.loadAllChunkOwnership();
         Logging.info("Loaded ownership.");
+        database.loadAllPermissions();
+        Logging.info("Loaded permissions.");
         return true;
     }
 

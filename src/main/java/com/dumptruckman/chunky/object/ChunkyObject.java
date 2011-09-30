@@ -161,7 +161,7 @@ public abstract class ChunkyObject {
      * @param object the object that will become the owner.
      * @param keepChildren false transfers the object's children to current owner.
      */
-    public final void setOwner(ChunkyObject object, Boolean keepChildren) {
+    public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions) {
         ChunkyObject oldowner = this.owner;
         if (owner != null)
             if(keepChildren) owner.removeOwnable(this);
@@ -174,8 +174,9 @@ public abstract class ChunkyObject {
         if(oldowner != null) {
 
         }
-        ChunkyManager.getAllPermissions(getId()).clear();
-        DatabaseManager.database.removeAllPermissions(this.getId());
+        if(clearPermissions) {
+            ChunkyManager.getAllPermissions(getId()).clear();
+            DatabaseManager.database.removeAllPermissions(this.getId());}
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {

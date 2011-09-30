@@ -40,10 +40,12 @@ public abstract class SQLDB implements Database{
     }
 
     public void removeAllPermissions(String objectId) {
+        Logging.info("REMOVING");
         query(QueryGen.removeAllPermissions(objectId));
     }
 
     public void removePermissions(String permissibleId, String objectId) {
+        Logging.info("REMOVING");
         query(QueryGen.removePermissions(permissibleId,objectId));
     }
 
@@ -61,18 +63,18 @@ public abstract class SQLDB implements Database{
     }
 
     public void loadAllPermissions() {
-        ResultSet data = query(QueryGen.selectAllChunks());
+        ResultSet data = query(QueryGen.selectAllPermissions());
         while (iterateData(data)) {
-            EnumSet<ChunkyPermissions.Flags> flags = null;
+            EnumSet<ChunkyPermissions.Flags> flags =EnumSet.noneOf(ChunkyPermissions.Flags.class);
             if(getInt(data,"BUILD")==1) flags.add(ChunkyPermissions.Flags.BUILD);
-            if(getInt(data,"DESTROY")==1) flags.add(ChunkyPermissions.Flags.BUILD);
-            if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.BUILD);
-            if(getInt(data,"ITEM")==1) flags.add(ChunkyPermissions.Flags.BUILD);
+            if(getInt(data,"DESTROY")==1) flags.add(ChunkyPermissions.Flags.DESTROY);
+            if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.SWITCH);
+            if(getInt(data,"ITEMUSE")==1) flags.add(ChunkyPermissions.Flags.ITEMUSE);
             String permId = getString(data,"PermissibleId");
-            String objectId = getString(data,"ObjectId");
+            String objectId = getString(data,"ObjectId");;
             ChunkyManager.setPermissions(
-                    permId,
                     objectId,
+                    permId,
                     flags,false);}}
 
     public void loadAllChunkOwnership() {
@@ -82,7 +84,7 @@ public abstract class SQLDB implements Database{
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerId"));
             ChunkyObject ownable = ChunkyManager.getObject(getString(data,"OwnableId"));
             if(owner==null || ownable==null) return;
-            ownable.setOwner(owner,true);
+            ownable.setOwner(owner,true,false);
         }
     }
 
