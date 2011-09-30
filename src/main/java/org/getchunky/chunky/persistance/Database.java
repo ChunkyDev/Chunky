@@ -6,6 +6,7 @@ import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.bukkit.plugin.Plugin;
 
 import java.util.EnumSet;
+import java.util.List;
 
 public interface Database {
 
@@ -34,4 +35,6 @@ public interface Database {
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
 
     public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags);
+
+    public List<String> getOwnablesOfType(ChunkyObject owner, String type);
 }

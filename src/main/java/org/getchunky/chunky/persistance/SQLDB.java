@@ -10,7 +10,9 @@ import org.getchunky.chunky.util.Logging;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 public abstract class SQLDB implements Database{
 
@@ -101,4 +103,11 @@ public abstract class SQLDB implements Database{
         query(QueryGen.updatePermissions(id,id,flags));
     }
 
+    public List<String> getOwnablesOfType(ChunkyObject owner, String type) {
+        ResultSet data = query(QueryGen.selectOwnablesOfType(owner,type));
+        List<String> result = new ArrayList<String>();
+        while(iterateData(data))
+            result.add(getString(data,"OwnableID"));
+        return result;
+    }
 }

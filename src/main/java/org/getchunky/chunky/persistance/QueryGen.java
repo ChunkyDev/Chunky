@@ -16,10 +16,20 @@ public class QueryGen {
     public static String selectAllPermissions() {
         return "SELECT * FROM chunky_permissions";}
 
-    public static String selectAllOwnership(String ownerType,String ownableType) {
+    public static String selectAllOwnership(String ownerType, String ownableType) {
         return String.format("SELECT * FROM chunky_ownership WHERE " +
                 "OwnerType='%s' AND " +
                 "OwnableType='%s'",ownerType,ownableType);
+    }
+
+    public static String selectOwnablesOfType(ChunkyObject owner, String ownableType) {
+        return String.format("SELECT * FROM chunky_ownership WHERE " +
+                "OwnerType='%s' AND " +
+                "OwnableType='%s' AND " +
+                "OwnerId='%s'",
+                owner.getClass().getName(),
+                ownableType,
+                owner.getName());
     }
 
     public static String getCreatePermissionsTable() {

@@ -9,7 +9,7 @@ public class ChunkyObjectEvents extends ChunkyObjectListener{
     @Override
     public void onObjectNameChange(ChunkyObjectNameEvent event) {
         if(!(event.getObject() instanceof ChunkyChunk) || event.isCancelled()) return;
-        DatabaseManager.database.updateChunk((ChunkyChunk) event.getObject(), event.getNewName());
+        DatabaseManager.getDatabase().updateChunk((ChunkyChunk) event.getObject(), event.getNewName());
     }
 
 
