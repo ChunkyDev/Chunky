@@ -130,6 +130,6 @@ public class QueryGen {
 
     public static String insertChunkyPlayer(ChunkyPlayer chunkyPlayer) {
         return
-                String.format("INSERT INTO chunky_ChunkyPlayer (Id,Name) VALUES ('%s','%s')",chunkyPlayer.getId(),chunkyPlayer.getName());
+                String.format("REPLACE INTO chunky_ChunkyPlayer (Id,Name) VALUES ('%s','%s')",chunkyPlayer.getId(),chunkyPlayer.getName());
     }
 }
