@@ -83,8 +83,7 @@ public class ChunkyCoordinates {
      */
     public Location toLocation() {
         World world = Bukkit.getServer().getWorld(this.world);
-        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();
-    }
+        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();}
 
     @Override
     public boolean equals(Object obj) {

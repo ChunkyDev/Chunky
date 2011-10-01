@@ -42,12 +42,10 @@ public abstract class SQLDB implements Database{
     }
 
     public void removeAllPermissions(String objectId) {
-        Logging.debug("REMOVING");
         query(QueryGen.removeAllPermissions(objectId));
     }
 
     public void removePermissions(String permissibleId, String objectId) {
-        Logging.debug("REMOVING");
         query(QueryGen.removePermissions(permissibleId,objectId));
     }
 
@@ -60,7 +58,7 @@ public abstract class SQLDB implements Database{
     public void loadAllChunks() {
         ResultSet data = query(QueryGen.selectAllChunks());
         while (iterateData(data)) {
-            ChunkyChunk chunk = ChunkyManager.getChunk(new ChunkyCoordinates(getString(data,"world"),getInt(data,"x"),getInt(data,"z")));
+            ChunkyChunk chunk = ChunkyManager.getChunk(new ChunkyCoordinates(getString(data,"World"),getInt(data,"x"),getInt(data,"z")));
             chunk.setName(getString(data,"name"));}
     }
 
@@ -81,13 +79,15 @@ public abstract class SQLDB implements Database{
 
     public void loadAllChunkOwnership() {
         String query = QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName());
+        Logging.info(query);
         ResultSet data = query(query);
         while(iterateData(data)) {
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerId"));
             ChunkyObject ownable = ChunkyManager.getObject(getString(data,"OwnableId"));
+            Logging.info(ownable.getId());
+            Logging.info(owner.getId());
             if(owner==null || ownable==null) return;
-            ownable.setOwner(owner,true,false);
-        }
+            ownable.setOwner(owner,true,false);}
     }
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
@@ -101,6 +101,10 @@ public abstract class SQLDB implements Database{
 
     public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags) {
         query(QueryGen.updatePermissions(id,id,flags));
+    }
+
+    public void addChunkyPlayer(ChunkyPlayer chunkyPlayer) {
+        query(QueryGen.insertChunkyPlayer(chunkyPlayer));
     }
 
     public List<String> getOwnablesOfType(ChunkyObject owner, String type) {

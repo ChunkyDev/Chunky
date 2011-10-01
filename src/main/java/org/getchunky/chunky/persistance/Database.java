@@ -2,6 +2,7 @@ package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.bukkit.plugin.Plugin;
 
@@ -21,6 +22,8 @@ public interface Database {
     public void loadAllPermissions();
 
     public void loadAllChunkOwnership();
+
+    public void addChunkyPlayer(ChunkyPlayer chunkyPlayer);
 
     public void updateChunk(ChunkyChunk chunk, String name);
 

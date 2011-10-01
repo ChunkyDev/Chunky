@@ -13,6 +13,7 @@ import org.getchunky.chunky.permission.ChunkyPermissionChain;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.permission.bukkit.Permissions;
+import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.MinecraftTools;
 import org.bukkit.Location;
 import org.bukkit.event.block.Action;
@@ -56,6 +57,7 @@ public class PlayerEvents extends PlayerListener{
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
+        DatabaseManager.getDatabase().addChunkyPlayer(cPlayer);
         cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
     }
 

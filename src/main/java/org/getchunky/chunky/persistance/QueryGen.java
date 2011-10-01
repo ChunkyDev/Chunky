@@ -2,6 +2,7 @@ package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 
 import java.util.EnumSet;
@@ -125,5 +126,10 @@ public class QueryGen {
             "OwnerId = '%s' " +
             "AND OwnableId = '%s'",owner.getId(), ownable.getId());
 
+    }
+
+    public static String insertChunkyPlayer(ChunkyPlayer chunkyPlayer) {
+        return
+                String.format("INSERT INTO chunky_ChunkyPlayer (Id,Name) VALUES ('%s','%s')",chunkyPlayer.getId(),chunkyPlayer.getName());
     }
 }
