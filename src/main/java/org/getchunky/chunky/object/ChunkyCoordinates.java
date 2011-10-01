@@ -3,6 +3,7 @@ package org.getchunky.chunky.object;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  * @author dumptruckman, SwearWord
@@ -81,7 +82,8 @@ public class ChunkyCoordinates {
      * @return Top-Left highest block Location
      */
     public Location toLocation() {
-        return Bukkit.getServer().getWorld(this.world).getChunkAt(this.x,this.z).getBlock(0,0,0).getLocation();
+        World world = Bukkit.getServer().getWorld(this.world);
+        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();
     }
 
     @Override
