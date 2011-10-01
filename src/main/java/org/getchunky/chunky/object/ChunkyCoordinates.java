@@ -75,6 +75,15 @@ public class ChunkyCoordinates {
         return this.world;
     }
 
+    /**
+     * Returns highest block at top left corner of the chunk.
+     *
+     * @return Top-Left highest block Location
+     */
+    public Location toLocation() {
+        return Bukkit.getServer().getWorld(this.world).getChunkAt(this.x,this.z).getBlock(0,0,0).getLocation();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ChunkyCoordinates)) return false;
