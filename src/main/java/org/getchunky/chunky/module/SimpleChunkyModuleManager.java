@@ -159,6 +159,13 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                     }
                 };
 
+            case PLAYER_CHUNK_CLAIM:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerChunkClaim((ChunkyPlayerChunkClaimEvent) event);
+                    }
+                };
+
             // Command Events
             case COMMAND_PROCESS:
                 return new ChunkyEventExecutor() {

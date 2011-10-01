@@ -18,4 +18,6 @@ public class ChunkyPlayerListener extends ChunkyObjectListener {
     public void onPlayerSwitch(ChunkyPlayerSwitchEvent event) {}
 
     public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {}
+
+    public void onPlayerChunkClaim(ChunkyPlayerChunkClaimEvent event) {}
 }
