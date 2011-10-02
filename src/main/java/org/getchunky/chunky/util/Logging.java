@@ -50,7 +50,7 @@ public class Logging {
      * @return "$Name v$Version"
      */
     public static String getNameVersion() {
-        return NAME + " v" + VERSION;
+        return NAME + " " + VERSION;
     }
 
     /**
