@@ -1,5 +1,6 @@
 package org.getchunky.chunky;
 
+import org.bukkit.block.Block;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.object.*;
 import org.getchunky.chunky.permission.ChunkyPermissions;
@@ -132,6 +133,17 @@ public class ChunkyManager {
     public static ChunkyChunk getChunk(Location location)
     {
         return getChunk(new ChunkyCoordinates(location));
+    }
+
+    /**
+     * Gets the ChunkyChunk associated with the given chunk coordinates
+     *
+     * @param block Block within chunk
+     * @return ChunkyChunk at the given location
+     */
+    public static ChunkyChunk getChunk(Block block)
+    {
+        return getChunk(new ChunkyCoordinates(block.getChunk()));
     }
 
     /**

@@ -2,8 +2,10 @@ package org.getchunky.chunky.object;
 
 
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 /**
  * @author dumptruckman, SwearWord
@@ -21,7 +23,15 @@ public class ChunkyCoordinates {
     public ChunkyCoordinates(Location location)
     {
         this(location.getWorld().getName(),location.getBlock().getChunk().getX(),location.getBlock().getChunk().getZ());
+    }
 
+    /**
+     * Creates a ChunkyCoordinates object with the given Chunk object.
+     * @param chunk Chunk for ChunkyCoordinates
+     */
+    public ChunkyCoordinates(Chunk chunk)
+    {
+        this(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
     }
 
     /**
