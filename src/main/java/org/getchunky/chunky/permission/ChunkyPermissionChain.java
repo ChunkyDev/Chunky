@@ -1,5 +1,6 @@
 package org.getchunky.chunky.permission;
 
+import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.object.ChunkyObject;
@@ -51,10 +52,7 @@ public class ChunkyPermissionChain {
             return accessLevel;
         }
 
-        ChunkyPermissionCache permCache = permObject.getPermCache();
-        permCache.cache(object);
-
-        Boolean permission = permCache.getDirectPerms().contains(flag);
+        Boolean permission = permObject.hasPerm(object, flag);
         if (permission != null) {
             accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
             if (permission) {
@@ -64,8 +62,9 @@ public class ChunkyPermissionChain {
             return accessLevel;
         }
 
-        if (permCache.getGlobalPerms() != null) {
-            permission = permCache.getGlobalPerms().contains(flag);
+        ChunkyObject owner = object.getOwner();
+        if (owner != null) {
+            permission = permObject.hasPerm(object.getOwner(), flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
                 if (permission) {
@@ -76,7 +75,7 @@ public class ChunkyPermissionChain {
             }
         }
 
-        permission = permCache.getDirectDefaultPerms().contains(flag);
+        permission = object.hasDefaultPerm(flag);
         if (permission != null) {
             accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
             if (permission) {
@@ -86,8 +85,9 @@ public class ChunkyPermissionChain {
             return accessLevel;
         }
 
-        if (permCache.getGlobalDefaultPerms() != null) {
-            permission = permCache.getGlobalDefaultPerms().contains(flag);
+        owner = object.getOwner();
+        if (owner != null) {
+            permission = object.getOwner().hasDefaultPerm(flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
                 if (permission) {
