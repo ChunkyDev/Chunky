@@ -87,9 +87,8 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
-
-                boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.ITEMUSE, permType);
+                ChunkyAccessLevel permType = ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.ITEMUSE);
+                boolean isCancelled = permType.causedDenial();
 
                 ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer,chunkyChunk,event.getItem(), permType);
                 chunkyEvent.setCancelled(isCancelled);
@@ -101,9 +100,8 @@ public class PlayerEvents extends PlayerListener{
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                ChunkyAccessLevel permType = ChunkyAccessLevel.NONE;
-
-                boolean isCancelled = !ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.SWITCH, permType);
+                ChunkyAccessLevel permType = ChunkyPermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.Flags.SWITCH);
+                boolean isCancelled = permType.causedDenial();
 
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer,chunkyChunk,event.getClickedBlock(), permType);
                 chunkyEvent.setCancelled(isCancelled);
