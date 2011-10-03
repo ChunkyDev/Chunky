@@ -1,5 +1,7 @@
 package org.getchunky.chunky;
 
+import com.nijikokun.register.payment.Method;
+import com.nijikokun.register.payment.Methods;
 import org.getchunky.chunky.command.*;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.persistance.DatabaseManager;
@@ -10,7 +12,6 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyModuleManager;
 import org.getchunky.chunky.module.SimpleChunkyModuleManager;
-import org.getchunky.chunky.payment.Method;
 import org.getchunky.chunky.util.Logging;
 import org.blockface.bukkitstats.CallHome;
 import org.bukkit.event.Event;
@@ -26,7 +27,6 @@ import java.util.Arrays;
  */
 public class Chunky extends JavaPlugin {
 
-    private static Method METHOD = null;
     private static Chunky INSTANCE;
     private static Integer BUILD;
     private static ChunkyModuleManager CHUNKY_MODULE_MANAGER;
@@ -108,6 +108,10 @@ public class Chunky extends JavaPlugin {
         // Register Events
         registerBukkitEvents();
         registerChunkyEvents();
+
+        //Load Economy
+        Methods.setMethod(this.getServer().getPluginManager());
+
         // Register Commands
         registerChunkyCommands();
 
@@ -139,15 +143,7 @@ public class Chunky extends JavaPlugin {
      * @return Payment Method
      */
     public static Method getMethod() {
-        return METHOD;
-    }
-
-    /**
-     * Sets the Payment Method (Register)
-     * @param method new Payment Method
-     */
-    public static void setMethod(Method method) {
-        METHOD = method;
+        return Methods.getMethod();
     }
 
     /**
@@ -261,4 +257,5 @@ public class Chunky extends JavaPlugin {
     static public ChunkyModuleManager getModuleManager() {
         return CHUNKY_MODULE_MANAGER;
     }
+
 }

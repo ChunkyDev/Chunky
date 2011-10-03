@@ -39,7 +39,7 @@ public class ChunkRenderer extends MapRenderer{
     private void drawChunk(int x, int z, MapCanvas canvas, Byte palette) {
         for(int xo=0;xo<16;xo++) {
             for(int zo=0;zo<16;zo++) {
-                canvas.setPixel(x+xo,z+zo-12, palette);
+                canvas.setPixel(x+xo,z+zo, palette);
             }
         }
     }
