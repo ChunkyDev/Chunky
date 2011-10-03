@@ -27,8 +27,10 @@ public class ChunkRenderer extends MapRenderer{
                 ChunkyChunk chunk = ChunkyManager.getChunk(new Location(player.getWorld(),realx,0,realz));
                 if(chunk.getOwner()==null) continue;
                 Byte color = MapPalette.RED;
-                if(chunk.getOwner().getName().equals(chunkyPlayer)) color=MapPalette.BLUE;
-                else if(chunkyPlayer.hasPerm(chunk, ChunkyPermissions.Flags.BUILD)) color=MapPalette.LIGHT_GREEN;
+
+                if(chunk.getOwner().equals(chunkyPlayer)) color=MapPalette.BLUE;
+                //else if(chunkyPlayer.hasPerm(chunk, ChunkyPermissions.Flags.BUILD)) color=MapPalette.LIGHT_GREEN;
+
                 drawChunk(x,z,mapCanvas,color);
             }}
 
