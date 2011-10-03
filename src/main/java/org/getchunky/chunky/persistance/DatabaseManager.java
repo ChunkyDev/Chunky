@@ -9,8 +9,10 @@ public class DatabaseManager {
     private static Database database;
 
     public static boolean load() {
-        if(Config.isUsingMySQL())
+        if(Config.isUsingMySQL()) {
             if(!loadMySQL()) loadSQLite();
+        } else
+            loadSQLite();
         database.loadAllChunks();
         Logging.info("Loaded chunks.");
         database.loadAllPlayers();
