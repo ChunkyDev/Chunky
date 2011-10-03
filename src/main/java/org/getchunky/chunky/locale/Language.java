@@ -338,17 +338,6 @@ public enum Language {
 
 
     /**
-     * Sends a custom error string to a player.
-     *
-     * @param chunkyPlayer
-     * @param message
-     * @param args
-     */
-    public static void sendBad(ChunkyPlayer chunkyPlayer, String message, Object...args) {
-        sendMessage(chunkyPlayer, ChatColor.GREEN.toString() + Language.SUCCESS.getString() + " " + message);
-    }
-
-    /**
      * Sends a custom success string to a player.
      *
      * @param chunkyPlayer
@@ -356,6 +345,17 @@ public enum Language {
      * @param args
      */
     public static void sendGood(ChunkyPlayer chunkyPlayer, String message, Object...args) {
+        sendMessage(chunkyPlayer, ChatColor.GREEN.toString() + Language.SUCCESS.getString() + " " + message);
+    }
+
+    /**
+     * Sends a custom fail string to a player.
+     *
+     * @param chunkyPlayer
+     * @param message
+     * @param args
+     */
+    public static void sendBad(ChunkyPlayer chunkyPlayer, String message, Object...args) {
             sendMessage(chunkyPlayer, ChatColor.RED.toString() + Language.ERROR.getString() + " " + message);
     }
 
