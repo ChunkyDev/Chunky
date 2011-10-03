@@ -168,6 +168,7 @@ public class Chunky extends JavaPlugin {
         // Server events
         pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverEvents, Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverEvents, Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.MAP_INITIALIZE, serverEvents, Event.Priority.Normal, this);
     }
 
     /**

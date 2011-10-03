@@ -1,13 +1,11 @@
 package org.getchunky.chunky.listeners;
 
+import org.bukkit.event.server.*;
 import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.command.map.ChunkRenderer;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.payment.Methods;
 import org.getchunky.chunky.util.Logging;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.server.ServerCommandEvent;
-import org.bukkit.event.server.ServerListener;
 
 /**
  * @author dumptruckman
@@ -58,5 +56,11 @@ public class ServerEvents extends ServerListener {
             if (currentCommand == null) break;
             chunkyCommand = currentCommand;
         }
+    }
+
+    @Override
+    public void onMapInitialize(MapInitializeEvent event) {
+        ChunkRenderer.addToMap(event.getMap());
+        Logging.info("Map initialized.");
     }
 }
