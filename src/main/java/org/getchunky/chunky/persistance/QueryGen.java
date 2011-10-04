@@ -8,14 +8,12 @@ import org.getchunky.chunky.permission.ChunkyPermissions;
 import java.util.EnumSet;
 
 public class QueryGen {
-    public static String selectAllChunks() {
-        return "SELECT * FROM chunky_ChunkyChunk";}
-
-    public static String selectAllPlayers() {
-        return "SELECT * FROM chunky_ChunkyPlayer";}
 
     public static String selectAllPermissions() {
         return "SELECT * FROM chunky_permissions";}
+
+    public static String selectAllObjects() {
+        return "SELECT * FROM chunky_objects";}
 
     public static String selectAllOwnership(String ownerType, String ownableType) {
         return String.format("SELECT * FROM chunky_ownership WHERE " +
@@ -44,13 +42,6 @@ public class QueryGen {
             "SWITCH TINYINT NOT NULL DEFAULT 0," +
             "PRIMARY KEY (PermissibleId, ObjectId) )";}
 
-    public static String getCreatePlayerTable() {
-        return
-            "CREATE TABLE chunky_ChunkyPlayer (" +
-            "Id VARCHAR(255) NOT NULL," +
-            "Name VARCHAR(16) NOT NULL," +
-            "PRIMARY KEY (Id) )";}
-
     public static String getCreateOwnerShipTable() {
         return
             "CREATE TABLE chunky_ownership (" +
@@ -60,15 +51,14 @@ public class QueryGen {
             "OwnableType VARCHAR(128) NOT NULL,  " +
             "PRIMARY KEY (OwnerId, OwnableId) )";}
 
-    public static String getCreateChunkTable() {
+    public static String createObjectTable() {
         return
-            "CREATE TABLE chunky_ChunkyChunk (" +
-            "Id VARCHAR(255) NOT NULL," +
-            "Name VARCHAR(50) NOT NULL," +
-            "World VARCHAR(50) NOT NULL," +
-            "x INT NOT NULL," +
-            "z INT NOT NULL," +
-            "PRIMARY KEY (Id) )";
+                "CREATE TABLE chunky_objects (" +
+                        "id VARCHAR(50) NOT NULL," +
+                        "type VARCHAR(50) NOT NULL," +
+                        "data TEXT NULL," +
+                        "PRIMARY KEY (id, type)" +
+                        ")";
     }
 
     public static String updateChunk(ChunkyChunk chunk, String name) {
@@ -126,10 +116,5 @@ public class QueryGen {
             "OwnerId = '%s' " +
             "AND OwnableId = '%s'",owner.getId(), ownable.getId());
 
-    }
-
-    public static String insertChunkyPlayer(ChunkyPlayer chunkyPlayer) {
-        return
-                String.format("REPLACE INTO chunky_ChunkyPlayer (Id,Name) VALUES ('%s','%s')",chunkyPlayer.getId(),chunkyPlayer.getName());
     }
 }

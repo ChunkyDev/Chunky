@@ -13,10 +13,8 @@ public class DatabaseManager {
             if(!loadMySQL()) loadSQLite();
         } else
             loadSQLite();
-        database.loadAllChunks();
-        Logging.info("Loaded chunks.");
-        database.loadAllPlayers();
-        Logging.info("Loaded players.");
+        database.loadAllObjects();
+        Logging.info("Loaded objects.");
         database.loadAllChunkOwnership();
         Logging.info("Loaded ownership.");
         database.loadAllPermissions();
