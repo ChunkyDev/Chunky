@@ -62,7 +62,12 @@ public enum Language {
             // Player
             CMD_CHUNKY_PLAYER_DESC ("command.chunky.player.description"),
             CMD_CHUNKY_PLAYER_HELP ("command.chunky.player.help"),
-                // Mode
+                // Set
+                CMD_CHUNKY_PLAYER_SET_DESC ("command.chunky.player.set.description"),
+                CMD_CHUNKY_PLAYER_SET_HELP ("command.chunky.player.set.help"),
+                    // Mode
+                    CMD_CHUNKY_PLAYER_SET_MODE_DESC ("command.chunky.player.set.mode.description"),
+                    CMD_CHUNKY_PLAYER_SET_MODE_HELP ("command.chunky.player.set.mode.help"),
             // Chunk
             CMD_CHUNKY_CHUNK_DESC ("command.chunky.chunk.description"),
             CMD_CHUNKY_CHUNK_HELP ("command.chunky.chunk.help"),

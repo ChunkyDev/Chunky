@@ -30,40 +30,7 @@ public class CommandChunkyClaim implements ChunkyCommandExecutor {
             return;
         }
         Player player = (Player)sender;
-        if (Permissions.CHUNKY_CLAIM.hasPerm(player)) {
-            // Grab the chunk claim limit for the player
-            int chunkLimit = Config.getPlayerChunkLimitDefault();
-            for (Map.Entry<String,Integer> limit : Config.getCustomPlayerChunkLimits().entrySet()) {
-                if (Permissions.hasPerm(player, Permissions.PLAYER_CHUNK_LIMIT.getNode() + "." + limit.getKey())) {
-                    chunkLimit = limit.getValue();
-                    break;
-                }
-            }
-
-            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
-            if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(player) ||
-                    !chunkyPlayer.getOwnables().containsKey(ChunkyChunk.class.getName()) ||
-                    chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName()).size() < chunkLimit) {
-                ChunkyChunk chunkyChunk;
-                Location location = player.getLocation();
-                chunkyChunk = ChunkyManager.getChunk(location);
-                if (chunkyChunk.isOwned()) {
-                    Language.CHUNK_OWNED.bad(player, chunkyChunk.getOwner().getName());
-                    return;
-                }
-
-                ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(chunkyPlayer,chunkyChunk, ChunkyAccessLevel.UNOWNED);
-                event.setCancelled(false);
-                Chunky.getModuleManager().callEvent(event);
-
-                if(event.isCancelled()) return;
-                chunkyChunk.setOwner(chunkyPlayer, true,true);
-                chunkyChunk.setName("");
-                Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
-                Language.CHUNK_CLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
-            } else {Language.CHUNK_LIMIT_REACHED.bad(player, chunkLimit);}
-        } else {
-            Language.NO_COMMAND_PERMISSION.bad(player);
-        }
+        ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
+        chunkyPlayer.claimCurrentChunk();
     }
 }

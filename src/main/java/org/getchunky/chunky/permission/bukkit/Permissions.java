@@ -46,4 +46,12 @@ public enum Permissions {
     public static boolean hasPerm(Player player, String node) {
         return player.hasPermission(node);
     }
+
+    public static boolean hasPerm(ChunkyPlayer chunkyPlayer, String node) {
+        try {
+            return chunkyPlayer.getPlayer().hasPermission(node);
+        } catch (ChunkyPlayerOfflineException ignore) {
+            return false;
+        }
+    }
 }

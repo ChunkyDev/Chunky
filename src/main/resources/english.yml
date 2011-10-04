@@ -96,6 +96,19 @@ command:
       help:
       - 'This command will tell you a little about yourself and contains some sub-commands related to players.'
       
+      set:
+        description:
+        - 'Sets properties for you.'
+        help:
+        - 'Type &e/chunky player set ?&f to see a list of what you can set.'
+        
+        mode:
+          description:
+          - 'Setup modes for you.'
+          help:
+          - 'Allows you to set modes on yourself.'
+          - 'Modes available: &eclaim&f - claim as you walk, &eclear&f - turns off modes'
+      
     chunk:
       description:
       - 'Information about the chunk you are in.'
