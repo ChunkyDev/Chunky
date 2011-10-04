@@ -1,24 +1,25 @@
 package org.getchunky.chunky.object;
 
+import org.getchunky.chunky.util.Logging;
+import org.json.JSONException;
+
 /**
  * @author dumptruckman, SwearWord
  */
 public class ChunkyChunk extends ChunkyLocationObject {
 
-    private ChunkyCoordinates coord;
-
-    public ChunkyChunk(ChunkyCoordinates coord) {
-        super(coord.toString());
-        this.coord = coord;
-    }
-
     /**
      * Sets the coordinates of this chunk.  You probably don't need to use this.
-     * 
+     *
      * @param coord Coordinates of chunk
      */
-    public final void setCoord(ChunkyCoordinates coord) {
-        this.coord = coord;
+    public final ChunkyChunk setCoord(ChunkyCoordinates coord) {
+        try {
+            this.put("location", coord.toString());
+        } catch (JSONException e) {
+            Logging.warning(e.getMessage());
+        }
+        return this;
     }
 
     /**
@@ -27,6 +28,11 @@ public class ChunkyChunk extends ChunkyLocationObject {
      * @return Chunk coordinates
      */
     public final ChunkyCoordinates getCoord() {
-        return coord;
+        try {
+            return new ChunkyCoordinates(this.getString("location"));
+        } catch (JSONException e) {
+            Logging.severe(e.getMessage());
+            return null;
+        }
     }
 }
