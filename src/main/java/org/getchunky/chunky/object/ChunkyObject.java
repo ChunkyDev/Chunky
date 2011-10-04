@@ -6,7 +6,10 @@ import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,7 +17,7 @@ import java.util.HashSet;
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject {
+public abstract class ChunkyObject extends JSONObject {
 
     /**
      * Returns the child <code>TreeNode</code> at index
@@ -35,10 +38,23 @@ public abstract class ChunkyObject {
     }
 
     public final String getName() {
-        return name;
+        try {
+            return getString("name");
+        } catch (JSONException e) {
+            Logging.severe(e.getMessage());
+            return null;
+        }
     }
 
     public final String getId() {
+        return id;
+    }
+
+    public final String getType() {
+        return className;
+    }
+
+    public final String getFullId() {
         return className + ":" + id;
     }
 
@@ -46,19 +62,19 @@ public abstract class ChunkyObject {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return;
-        this.name = event.getNewName();
+        try {
+            this.put("name", event.getNewName());
+        } catch (JSONException e) {
+            Logging.warning(e.getMessage());
+        }
     }
 
     public final int hashCode() {
-        return getId().hashCode();
+        return getFullId().hashCode();
     }
 
     public final boolean equals(Object obj) {
-        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getId().equals(this.getId());
-    }
-
-    public final String getType() {
-        return className;
+        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getFullId().equals(this.getFullId());
     }
 
     public final boolean isOwned() {
