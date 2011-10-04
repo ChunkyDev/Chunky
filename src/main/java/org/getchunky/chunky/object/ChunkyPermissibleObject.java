@@ -12,8 +12,7 @@ import java.util.EnumSet;
  */
 public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
-    public ChunkyPermissibleObject(String id) {
-        super(id);
+    public ChunkyPermissibleObject() {
     }
 
     public final Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
