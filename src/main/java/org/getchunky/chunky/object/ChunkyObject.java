@@ -27,14 +27,17 @@ public abstract class ChunkyObject extends JSONObject {
     protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
 
     protected String name;
-    private final String id;
+    private String id;
     private final String className;
 
-    public ChunkyObject(final String id) {
-        this.id = id;
+    public ChunkyObject() {
         this.name = "";
         className = this.getClass().getName();
         ChunkyManager.registerObject(this);
+        try {
+            Class poop = Class.forName("bul");
+            poop.newInstance();
+        } catch (Exception e) {}
     }
 
     public final String getName() {
@@ -50,6 +53,11 @@ public abstract class ChunkyObject extends JSONObject {
         return id;
     }
 
+    public final ChunkyObject setId(String id) {
+        this.id = id;
+        return this;
+    }
+
     public final String getType() {
         return className;
     }
@@ -58,15 +66,16 @@ public abstract class ChunkyObject extends JSONObject {
         return className + ":" + id;
     }
 
-    public final void setName(String name) {
+    public final ChunkyObject setName(String name) {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
         Chunky.getModuleManager().callEvent(event);
-        if (event.isCancelled()) return;
+        if (event.isCancelled()) return this;
         try {
             this.put("name", event.getNewName());
         } catch (JSONException e) {
             Logging.warning(e.getMessage());
         }
+        return this;
     }
 
     public final int hashCode() {
