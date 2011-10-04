@@ -3,6 +3,7 @@ package org.getchunky.chunky.object;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
+import org.getchunky.chunky.exceptions.ChunkyObjectNotInitializedException;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
@@ -41,13 +42,14 @@ public abstract class ChunkyObject extends JSONObject {
         className = this.getClass().getName();
     }
 
-    public final void save() {
-        if(id==null) return;
+    public final ChunkyObject save() throws ChunkyObjectNotInitializedException {
+        if(id == null) throw new ChunkyObjectNotInitializedException("Object persistence failed: Null ID not allowed!");
         DatabaseManager.getDatabase().updateObject(this);
+        return this;
     }
 
     //TODO Should this be moved to super class?
-    public final void load(String json) throws JSONException {
+    public final ChunkyObject load(String json) throws JSONException {
         JSONTokener x = new JSONTokener(json);
         char c;
         String key;
@@ -61,7 +63,7 @@ public abstract class ChunkyObject extends JSONObject {
             case 0:
                 throw x.syntaxError("A JSONObject text must end with '}'");
             case '}':
-                return;
+                return this;
             default:
                 x.back();
                 key = x.nextValue().toString();
@@ -85,12 +87,12 @@ public abstract class ChunkyObject extends JSONObject {
             case ';':
             case ',':
                 if (x.nextClean() == '}') {
-                    return;
+                    return this;
                 }
                 x.back();
                 break;
             case '}':
-                return;
+                return this;
             default:
                 throw x.syntaxError("Expected a ',' or '}'");
             }
@@ -133,7 +135,11 @@ public abstract class ChunkyObject extends JSONObject {
         } catch (JSONException e) {
             //Logging.warning(e.getMessage());
         }
-        save();
+        try {
+            save();
+        } catch (ChunkyObjectNotInitializedException e) {
+            Logging.severe(e.getMessage());
+        }
         return this;
     }
 
