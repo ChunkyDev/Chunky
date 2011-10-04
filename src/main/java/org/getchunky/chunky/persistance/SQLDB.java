@@ -78,8 +78,8 @@ public abstract class SQLDB implements Database{
                     permId,
                     flags,false);}}
 
-    public void loadAllChunkOwnership() {
-        String query = QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName());
+    public void loadAllOwnership() {
+        String query = QueryGen.selectAllOwnership();
         ResultSet data = query(query);
         while(iterateData(data)) {
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"),getString(data, "OwnerId"));

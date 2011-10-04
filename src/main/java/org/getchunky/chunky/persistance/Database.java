@@ -19,7 +19,7 @@ public interface Database {
 
     public void loadAllPermissions();
 
-    public void loadAllChunkOwnership();
+    public void loadAllOwnership();
 
     public void updateObject(ChunkyObject object);
 

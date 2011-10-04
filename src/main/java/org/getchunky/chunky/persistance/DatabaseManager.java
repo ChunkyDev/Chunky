@@ -15,7 +15,7 @@ public class DatabaseManager {
             loadSQLite();
         database.loadAllObjects();
         Logging.info("Loaded objects.");
-        database.loadAllChunkOwnership();
+        database.loadAllOwnership();
         Logging.info("Loaded ownership.");
         database.loadAllPermissions();
         Logging.info("Loaded permissions.");
