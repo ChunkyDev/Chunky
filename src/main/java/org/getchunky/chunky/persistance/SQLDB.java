@@ -33,33 +33,25 @@ public abstract class SQLDB implements Database{
         catch (SQLException e) {return 0;}
     }
 
-    public void updateChunk(ChunkyChunk chunk, String name) {
-        query(QueryGen.updateChunk(chunk,name));
+
+    public void loadAllObjects() {
+        ResultSet data = query(QueryGen.selectAllObjects());
+        while(iterateData(data)) {
+            ChunkyObject
+        }
     }
 
-    public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(permObjectId,objectId,flags));
-    }
+    private Object createObject(String className) {
+        Object object = null;
+        Class classDefinition = null;
+        try {
+            classDefinition = Class.forName(className);
+            object = classDefinition.newInstance();
+        } catch (Exception e) {
+            Logging.debug("Failed to load object type:" + className);
+            return null;
+        }
 
-    public void removeAllPermissions(String objectId) {
-        query(QueryGen.removeAllPermissions(objectId));
-    }
-
-    public void removePermissions(String permissibleId, String objectId) {
-        query(QueryGen.removePermissions(permissibleId,objectId));
-    }
-
-    public void loadAllPlayers() {
-        ResultSet data = query(QueryGen.selectAllPlayers());
-        while (iterateData(data)) {
-            ChunkyManager.getChunkyPlayer(getString(data,"name"));}
-    }
-
-    public void loadAllChunks() {
-        ResultSet data = query(QueryGen.selectAllChunks());
-        while (iterateData(data)) {
-            ChunkyChunk chunk = ChunkyManager.getChunk(new ChunkyCoordinates(getString(data,"World"),getInt(data,"x"),getInt(data,"z")));
-            chunk.setName(getString(data,"name"));}
     }
 
     public void loadAllPermissions() {
@@ -90,28 +82,28 @@ public abstract class SQLDB implements Database{
             ownable.setOwner(owner,true,false);}
     }
 
+
+    public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.updatePermissions(permObjectId, objectId, flags));
+    }
+
+    public void removeAllPermissions(String objectId) {
+        query(QueryGen.removeAllPermissions(objectId));
+    }
+
+    public void removePermissions(String permissibleId, String objectId) {
+        query(QueryGen.removePermissions(permissibleId,objectId));
+    }
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        query(QueryGen.addOwnership(owner,ownable));
+        query(QueryGen.addOwnership(owner, ownable));
     }
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        query(QueryGen.removeOwnership(owner,ownable));
+        query(QueryGen.removeOwnership(owner, ownable));
 
     }
 
     public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags) {
         query(QueryGen.updatePermissions(id,id,flags));
-    }
-
-    public void addChunkyPlayer(ChunkyPlayer chunkyPlayer) {
-        query(QueryGen.insertChunkyPlayer(chunkyPlayer));
-    }
-
-    public List<String> getOwnablesOfType(ChunkyObject owner, String type) {
-        ResultSet data = query(QueryGen.selectOwnablesOfType(owner,type));
-        List<String> result = new ArrayList<String>();
-        while(iterateData(data))
-            result.add(getString(data,"OwnableID"));
-        return result;
     }
 }

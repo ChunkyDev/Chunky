@@ -44,13 +44,9 @@ public class MySQLDB extends SQLDB {
     }
 
     private Boolean checkTables() throws Exception {
-        if(!this.db.checkTable("chunky_ChunkyChunk")) {
-            if(!db.createTable(QueryGen.getCreateChunkTable())) return false;
-            Logging.info("Created chunky_ChunkyChunk table.");}
-
-        if(!this.db.checkTable("chunky_ChunkyPlayer")) {
-            if(!db.createTable(QueryGen.getCreatePlayerTable())) return false;
-            Logging.info("Created chunky_ChunkyPlayer table.");}
+        if(!this.db.checkTable("chunky_objects")) {
+            if(!db.createTable(QueryGen.createObjectTable())) return false;
+            Logging.info("Created chunky_objects table.");}
 
         if(!this.db.checkTable("chunky_ownership")) {
             if(!db.createTable(QueryGen.getCreateOwnerShipTable())) return false;

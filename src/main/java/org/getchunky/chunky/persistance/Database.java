@@ -15,17 +15,13 @@ public interface Database {
 
     public void disconnect();
 
-    public void loadAllChunks();
-
-    public void loadAllPlayers();
+    public void loadAllObjects();
 
     public void loadAllPermissions();
 
     public void loadAllChunkOwnership();
 
-    public void addChunkyPlayer(ChunkyPlayer chunkyPlayer);
-
-    public void updateChunk(ChunkyChunk chunk, String name);
+    public void updateObject(ChunkyObject object);
 
     public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags);
 
@@ -39,5 +35,4 @@ public interface Database {
 
     public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags);
 
-    public List<String> getOwnablesOfType(ChunkyObject owner, String type);
 }
