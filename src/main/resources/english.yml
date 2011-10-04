@@ -113,7 +113,7 @@ command:
       description:
       - 'Information about the chunk you are in.'
       help:
-      - 'This command will tell you a little about the chunk you're standing in.'
+      - 'This command will tell you a little about the chunk you are standing in.'
       
       set:
         description:
