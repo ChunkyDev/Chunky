@@ -6,6 +6,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.getchunky.chunky.util.Logging;
 
 /**
  * @author dumptruckman, SwearWord
@@ -34,15 +35,15 @@ public class ChunkyCoordinates {
         this(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
     }
 
-    /**
-     * Creates a ChunkyCoordinates object with the given world name and x and z values.
-     * @param world World block is in
-     * @param x Block x
-     * @param z Block z
-     */
-    public ChunkyCoordinates(String world, double x, double z)
-    {
-        this(new Location(Bukkit.getServer().getWorld(world),x,128,z));
+    public ChunkyCoordinates(String coords) {
+        String[] strings = coords.split(",");
+        try {
+            this.world = strings[0];
+            this.x = Integer.valueOf(strings[1]);
+            this.z = Integer.valueOf(strings[2]);
+        } catch (Exception e) {
+            Logging.severe("Error parsing chunky coordinates data: " + e.getMessage());
+        }
     }
 
     /**
@@ -93,7 +94,8 @@ public class ChunkyCoordinates {
      */
     public Location toLocation() {
         World world = Bukkit.getServer().getWorld(this.world);
-        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();}
+        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();
+    }
 
     @Override
     public boolean equals(Object obj) {
