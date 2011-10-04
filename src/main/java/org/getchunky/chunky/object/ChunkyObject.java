@@ -42,6 +42,7 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final void save() {
+        if(id==null) return;
         DatabaseManager.getDatabase().updateObject(this);
     }
 
@@ -132,6 +133,7 @@ public abstract class ChunkyObject extends JSONObject {
         } catch (JSONException e) {
             //Logging.warning(e.getMessage());
         }
+        save();
         return this;
     }
 

@@ -22,6 +22,7 @@ public class ChunkyChunk extends ChunkyLocationObject {
         return this;
     }
 
+
     /**
      * Gets the coordinates of this chunk.
      *

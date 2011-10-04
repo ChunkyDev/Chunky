@@ -121,7 +121,7 @@ public class ChunkyManager {
         ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(),id);
         if(chunkyObject!=null) return (ChunkyPlayer)chunkyObject;
         ChunkyPlayer cPlayer = new ChunkyPlayer();
-        cPlayer.setName(player.getName()).setId(id).save();
+        cPlayer.setId(id).setName(player.getName());
         return cPlayer;
     }
 
