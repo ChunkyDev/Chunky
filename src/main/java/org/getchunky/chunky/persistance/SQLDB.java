@@ -37,19 +37,21 @@ public abstract class SQLDB implements Database{
     public void loadAllObjects() {
         ResultSet data = query(QueryGen.selectAllObjects());
         while(iterateData(data)) {
-            ChunkyObject obj = (ChunkyObject)createObject(getString(data,"type"),getString(data,"data"));
+            ChunkyObject obj = (ChunkyObject)createObject(getString(data,"type"));
+            if(obj==null) continue;
+            obj.setId(getString(data,"id"));
         }
     }
 
-    private Object createObject(String className,String JSON) {
+    private Object createObject(String className) {
         Object object = null;
         try {
             Class classDefinition = Class.forName(className);
-            object = classDefinition.getConstructor(String.class).newInstance(JSON);
+            object = classDefinition.newInstance();
         } catch (Exception e) {
             Logging.debug("Failed to load object type:" + className);
-            return null;}
-
+        }
+        return null;
     }
 
     public void loadAllPermissions() {
