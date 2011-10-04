@@ -43,17 +43,16 @@ public class ChunkyManager {
      * @param id Object id
      * @return Object associated with id or null
      */
-    public static ChunkyObject getObject(String type,String id) {
+    public static ChunkyObject getObject(String type, String id) {
         HashMap<String, ChunkyObject> ids = getObjectsOfType(type);
         if(ids==null) return null;
         return ids.get(id);
     }
 
-    public static ChunkyObject getObject(String objectID) {
-        for(HashMap<String, ChunkyObject> ids : OBJECTS.values()) {
-            if(ids.containsKey(objectID)) return ids.get(objectID);
-        }
-        return null;
+    public static ChunkyObject getObject(String fullId) {
+        String[] typeId = fullId.split(":");
+        if (typeId.length != 2) return null;
+        return getObject(typeId[0], typeId[1]);
     }
 
     public static HashMap<String, ChunkyObject> getObjectsOfType(String type) {
