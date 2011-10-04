@@ -48,11 +48,11 @@ public class SQLiteDB extends SQLDB {
             if(!db.createTable(QueryGen.createObjectTable())) return false;
             Logging.info("Created chunky_objects table.");}
         if(!this.db.checkTable("chunky_ownership")) {
-            if(!db.createTable(QueryGen.getCreateOwnerShipTable())) return false;
+            if(!db.createTable(QueryGen.createOwnerShipTable())) return false;
             Logging.info("Created chunky_ownership table.");}
 
         if(!this.db.checkTable("chunky_permissions")) {
-            if(!db.createTable(QueryGen.getCreatePermissionsTable())) return false;
+            if(!db.createTable(QueryGen.createPermissionsTable())) return false;
             Logging.info("Created chunky_permissions table.");}
         return true;
     }

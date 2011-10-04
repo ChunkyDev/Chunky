@@ -21,35 +21,27 @@ public class QueryGen {
         return String.format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')",object.getId(),object.getType(),object.toString());
     }
 
-    public static String selectOwnablesOfType(ChunkyObject owner, String ownableType) {
-        return String.format("SELECT * FROM chunky_ownership WHERE " +
-                "OwnerType='%s' AND " +
-                "OwnableType='%s' AND " +
-                "OwnerId='%s'",
-                owner.getClass().getName(),
-                ownableType,
-                owner.getName());
-    }
-
-    public static String getCreatePermissionsTable() {
+    public static String createPermissionsTable() {
         return
             "CREATE TABLE chunky_permissions (" +
             "PermissibleId VARCHAR(255) NOT NULL," +
             "ObjectId VARCHAR(255) NOT NULL," +
+            "PermissibleType VARCHAR(128) NOT NULL,  " +
+            "ObjectType VARCHAR(128) NOT NULL,  " +
             "BUILD TINYINT NOT NULL DEFAULT 0," +
             "DESTROY TINYINT NOT NULL DEFAULT 0," +
             "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
             "SWITCH TINYINT NOT NULL DEFAULT 0," +
             "PRIMARY KEY (PermissibleId, ObjectId) )";}
 
-    public static String getCreateOwnerShipTable() {
+    public static String createOwnerShipTable() {
         return
             "CREATE TABLE chunky_ownership (" +
             "OwnerId VARCHAR(255) NOT NULL,  " +
             "OwnableId VARCHAR(255) NOT NULL,  " +
             "OwnerType VARCHAR(128) NOT NULL,  " +
             "OwnableType VARCHAR(128) NOT NULL,  " +
-            "PRIMARY KEY (OwnerId, OwnableId) )";}
+            "PRIMARY KEY (OwnableType, OwnableId) )";}
 
     public static String createObjectTable() {
         return
