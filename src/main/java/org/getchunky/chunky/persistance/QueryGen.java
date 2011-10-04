@@ -13,10 +13,8 @@ public class QueryGen {
     public static String selectAllObjects() {
         return "SELECT * FROM chunky_objects";}
 
-    public static String selectAllOwnership(String ownerType, String ownableType) {
-        return String.format("SELECT * FROM chunky_ownership WHERE " +
-                "OwnerType='%s' AND " +
-                "OwnableType='%s'",ownerType,ownableType);
+    public static String selectAllOwnership() {
+        return String.format("SELECT * FROM chunky_ownership");
     }
 
     public static String updateObject(ChunkyObject object) {
