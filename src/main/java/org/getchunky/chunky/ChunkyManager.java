@@ -105,7 +105,8 @@ public class ChunkyManager {
     {
         String id = ChunkyPlayer.class.getName() + ":" + player.getName();
         if(PLAYERS.containsKey(id)) return PLAYERS.get(id);
-        ChunkyPlayer cPlayer = new ChunkyPlayer(player.getName());
+        ChunkyPlayer cPlayer = new ChunkyPlayer();
+        cPlayer.setName(player.getName());
         PLAYERS.put(id, cPlayer);
 
         return cPlayer;
@@ -119,7 +120,8 @@ public class ChunkyManager {
      */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
         if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
-        ChunkyChunk chunkyChunk = new ChunkyChunk(coords);
+        ChunkyChunk chunkyChunk = new ChunkyChunk();
+        chunkyChunk.setCoord(coords);
         CHUNKS.put(coords,chunkyChunk);
         return chunkyChunk;
     }
