@@ -40,6 +40,15 @@ public abstract class ChunkyObject extends JSONObject {
         } catch (Exception e) {}
     }
 
+    public final void save() {
+
+    }
+
+    public final ChunkyObject load(String json) {
+
+        return this;
+    }
+
     public final String getName() {
         try {
             return getString("name");
