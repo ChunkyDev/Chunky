@@ -252,7 +252,6 @@ public abstract class ChunkyObject extends JSONObject {
      * @param keepChildren false transfers the object's children to current owner.
      */
     public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions) {
-        ChunkyObject oldowner = this.owner;
         if (owner != null)
             if(keepChildren) owner.removeOwnable(this);
             else owner.removeOwnableAndTakeChildren(this);
@@ -261,12 +260,10 @@ public abstract class ChunkyObject extends JSONObject {
         } else {
             owner = null;
         }
-        if(oldowner != null) {
-
-        }
         if(clearPermissions) {
             ChunkyManager.getAllPermissions(getFullId()).clear();
-            DatabaseManager.getDatabase().removeAllPermissions(this.getFullId());}
+            DatabaseManager.getDatabase().removeAllPermissions(this.getFullId());
+        }
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
