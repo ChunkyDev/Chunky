@@ -39,8 +39,8 @@ public class ChunkyPermissionCache {
 
         this.object = object;
 
-        directPerms = ChunkyManager.getPermissions(object.getId(), permObject.getId());
-        directDefaultPerms = ChunkyManager.getPermissions(object.getId(), object.getId());
+        directPerms = ChunkyManager.getPermissions(object.getFullId(), permObject.getFullId());
+        directDefaultPerms = ChunkyManager.getPermissions(object.getFullId(), object.getFullId());
 
     }
 
@@ -56,8 +56,8 @@ public class ChunkyPermissionCache {
             return;
         }
         
-        globalPerms = ChunkyManager.getPermissions(owner.getId(), permObject.getId());
-        globalDefaultPerms = ChunkyManager.getPermissions(owner.getId(), owner.getId());
+        globalPerms = ChunkyManager.getPermissions(owner.getFullId(), permObject.getFullId());
+        globalDefaultPerms = ChunkyManager.getPermissions(owner.getFullId(), owner.getFullId());
     }
 
     /**

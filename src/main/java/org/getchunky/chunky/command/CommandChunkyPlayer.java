@@ -85,7 +85,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                     , notSet);
         }
         if (chunkyPlayer.getName().equals(sender.getName())) {
-            HashMap<String, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer.getId());
+            HashMap<String, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer.getFullId());
             String players = "";
             if (!playerPermissions.isEmpty()) {
                 for (Map.Entry<String, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
@@ -94,7 +94,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                     ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(ChunkyManager.getNameFromId(id));
                     if (cPlayer == null) continue;
                     if (!players.isEmpty()) players += ", ";
-                    ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getId(), cPlayer.getId());
+                    ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getFullId(), cPlayer.getFullId());
                     if (perms != null && perms.getFlags() != null) {
                         players += cPlayer.getName() + ": [" + perms.toSmallString() + "]";
                     }
@@ -104,7 +104,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                 Language.PLAYER_PERMISSIONS.normal(sender, Language.YOUR_PROPERTY.getString(), players);
             }
         } else if (sender instanceof Player) {
-            ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getId(), ChunkyManager.getChunkyPlayer((Player)sender).getId());
+            ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer.getFullId(), ChunkyManager.getChunkyPlayer((Player)sender).getFullId());
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()));
                 Language.PERMISSIONS_STATUS.normal(sender, perms.contains(ChunkyPermissions.Flags.BUILD)

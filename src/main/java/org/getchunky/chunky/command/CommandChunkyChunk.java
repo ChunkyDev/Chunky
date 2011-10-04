@@ -41,7 +41,7 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
             Language.CHUNK_MENU_OWNER.normal(player, Language.NO_ONE.getString());
 
         Language.DEFAULT_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
-        ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk.getId(), chunkyChunk.getId());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk.getFullId(), chunkyChunk.getFullId());
         if (perms != null && perms.getFlags() != null) {
             Language.PERMISSIONS_STATUS.normal(player
                         ,perms.contains(ChunkyPermissions.Flags.BUILD)
@@ -52,7 +52,7 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
         if (owner != null && !owner.equals(chunkyPlayer)) {
-            perms = ChunkyManager.getPermissions(chunkyChunk.getId(), chunkyPlayer.getId());
+            perms = ChunkyManager.getPermissions(chunkyChunk.getFullId(), chunkyPlayer.getFullId());
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
                 Language.PERMISSIONS_STATUS.normal(player, perms.contains(ChunkyPermissions.Flags.BUILD)
