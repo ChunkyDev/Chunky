@@ -3,7 +3,7 @@ package org.getchunky.chunky.object;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyChunk extends ChunkyObject {
+public class ChunkyChunk extends ChunkyLocationObject {
 
     private ChunkyCoordinates coord;
 
