@@ -40,6 +40,7 @@ public class ChunkyManager {
     /**
      * Looks up an object by ID.  This method will return null if the object has not been initialized.
      *
+     * @param type Type of object (Class name)
      * @param id Object id
      * @return Object associated with id or null
      */
