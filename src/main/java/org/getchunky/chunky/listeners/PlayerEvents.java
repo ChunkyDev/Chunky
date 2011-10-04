@@ -74,6 +74,11 @@ public class PlayerEvents extends PlayerListener{
     }
 
     @Override
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        ChunkyPlayer.getClaimModePlayers().remove(ChunkyManager.getChunkyPlayer(event.getPlayer()));
+    }
+
+    @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) return;
         if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
