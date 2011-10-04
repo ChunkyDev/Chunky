@@ -34,10 +34,6 @@ public abstract class ChunkyObject extends JSONObject {
         this.name = "";
         className = this.getClass().getName();
         ChunkyManager.registerObject(this);
-        try {
-            Class poop = Class.forName("bul");
-            poop.newInstance();
-        } catch (Exception e) {}
     }
 
     public final void save() {
