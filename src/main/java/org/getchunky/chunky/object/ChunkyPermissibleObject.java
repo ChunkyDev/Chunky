@@ -12,11 +12,8 @@ import java.util.EnumSet;
  */
 public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
-    private ChunkyPermissionCache permCache;
-
     public ChunkyPermissibleObject(String id) {
         super(id);
-        permCache = new ChunkyPermissionCache(this);
     }
 
     public final Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
@@ -51,9 +48,5 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
         if (persist) {
             DatabaseManager.getDatabase().updatePermissions(this.getId(), objectId, perms.getFlags());
         }
-    }
-
-    public final ChunkyPermissionCache getPermCache() {
-        return permCache;
     }
 }
