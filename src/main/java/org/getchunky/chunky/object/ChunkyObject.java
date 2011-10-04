@@ -37,7 +37,7 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final void save() {
-
+        DatabaseManager.getDatabase().updateObject(this);
     }
 
     public final ChunkyObject load(String json) {

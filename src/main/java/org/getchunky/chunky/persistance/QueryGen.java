@@ -1,8 +1,6 @@
 package org.getchunky.chunky.persistance;
 
-import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
-import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 
 import java.util.EnumSet;
@@ -19,6 +17,10 @@ public class QueryGen {
         return String.format("SELECT * FROM chunky_ownership WHERE " +
                 "OwnerType='%s' AND " +
                 "OwnableType='%s'",ownerType,ownableType);
+    }
+
+    public static String updateObject(ChunkyObject object) {
+        return String.format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')",object.getId(),object.getType(),object.toString());
     }
 
     public static String selectOwnablesOfType(ChunkyObject owner, String ownableType) {
@@ -59,16 +61,6 @@ public class QueryGen {
                         "data TEXT NULL," +
                         "PRIMARY KEY (id, type)" +
                         ")";
-    }
-
-    public static String updateChunk(ChunkyChunk chunk, String name) {
-        return String.format("REPLACE INTO chunky_ChunkyChunk (" +
-            "Id, " +
-            "Name, " +
-            "World, " +
-            "x, " +
-            "z) " +
-            "VALUES ('%s','%s','%s',%s,%s)", chunk.getId(), name, chunk.getCoord().getWorld(), chunk.getCoord().getX(), chunk.getCoord().getZ());
     }
 
     public static String updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {

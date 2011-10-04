@@ -39,15 +39,19 @@ public abstract class SQLDB implements Database{
         while(iterateData(data)) {
             ChunkyObject obj = (ChunkyObject)createObject(getString(data,"type"));
             if(obj==null) continue;
-            obj.setId(getString(data,"id"));
+            obj.setId(getString(data, "id"));
         }
+    }
+
+    public void updateObject(ChunkyObject object) {
+        query(QueryGen.updateObject(object));
     }
 
     private Object createObject(String className) {
         Object object = null;
         try {
             Class classDefinition = Class.forName(className);
-            object = classDefinition.newInstance();
+            object = classDefinition.getConstructor().newInstance();
         } catch (Exception e) {
             Logging.debug("Failed to load object type:" + className);
         }
