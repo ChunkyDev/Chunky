@@ -24,6 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.getchunky.chunky.util.Logging;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
@@ -309,7 +311,6 @@ public class JSONObject {
     public JSONObject(String source) throws JSONException {
         this(new JSONTokener(source));
     }
-
 
     /**
      * Construct a JSONObject from a ResourceBundle.
@@ -1093,6 +1094,7 @@ public class JSONObject {
      *  or if the key is null.
      */
     public JSONObject put(String key, Object value) throws JSONException {
+        Logging.debug("Putting:" + key + ":" + value);
         if (key == null) {
             throw new JSONException("Null key.");
         }

@@ -8,6 +8,8 @@ import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 import java.util.EnumSet;
@@ -26,23 +28,72 @@ public abstract class ChunkyObject extends JSONObject {
     protected ChunkyObject owner;
     protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
 
-    protected String name;
     private String id;
     private final String className;
 
     public ChunkyObject() {
-        this.name = "";
+        super();
+        try {
+            this.put("name","");
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         className = this.getClass().getName();
-        ChunkyManager.registerObject(this);
     }
 
     public final void save() {
         DatabaseManager.getDatabase().updateObject(this);
     }
 
-    public final ChunkyObject load(String json) {
+    //TODO Should this be moved to super class?
+    public final void load(String json) throws JSONException {
+        JSONTokener x = new JSONTokener(json);
+        char c;
+        String key;
 
-        return this;
+        if (x.nextClean() != '{') {
+            throw x.syntaxError("A JSONObject text must begin with '{'");
+        }
+        for (;;) {
+            c = x.nextClean();
+            switch (c) {
+            case 0:
+                throw x.syntaxError("A JSONObject text must end with '}'");
+            case '}':
+                return;
+            default:
+                x.back();
+                key = x.nextValue().toString();
+            }
+
+            // The key is followed by ':'. We will also tolerate '=' or '=>'.
+
+            c = x.nextClean();
+            if (c == '=') {
+                if (x.next() != '>') {
+                    x.back();
+                }
+            } else if (c != ':') {
+                throw x.syntaxError("Expected a ':' after a key");
+            }
+            put(key, x.nextValue());
+
+            // Pairs are separated by ','. We will also tolerate ';'.
+
+            switch (x.nextClean()) {
+            case ';':
+            case ',':
+                if (x.nextClean() == '}') {
+                    return;
+                }
+                x.back();
+                break;
+            case '}':
+                return;
+            default:
+                throw x.syntaxError("Expected a ',' or '}'");
+            }
+        }
     }
 
     public final String getName() {
@@ -60,6 +111,7 @@ public abstract class ChunkyObject extends JSONObject {
 
     public final ChunkyObject setId(String id) {
         this.id = id;
+        ChunkyManager.registerObject(this);
         return this;
     }
 
@@ -78,7 +130,7 @@ public abstract class ChunkyObject extends JSONObject {
         try {
             this.put("name", event.getNewName());
         } catch (JSONException e) {
-            Logging.warning(e.getMessage());
+            //Logging.warning(e.getMessage());
         }
         return this;
     }

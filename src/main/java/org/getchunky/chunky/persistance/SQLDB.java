@@ -7,6 +7,7 @@ import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.util.Logging;
+import org.json.JSONException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,9 @@ public abstract class SQLDB implements Database{
         while(iterateData(data)) {
             ChunkyObject obj = (ChunkyObject)createObject(getString(data,"type"));
             if(obj==null) continue;
-            obj.setId(getString(data, "id"));
+            try {
+                obj.setId(getString(data, "id")).load(getString(data,"data"));
+            } catch (JSONException e) {Logging.severe(e.getMessage());}
         }
     }
 
@@ -51,9 +54,11 @@ public abstract class SQLDB implements Database{
         Object object = null;
         try {
             Class classDefinition = Class.forName(className);
-            object = classDefinition.getConstructor().newInstance();
+            object = classDefinition.newInstance();
+            return object;
         } catch (Exception e) {
-            Logging.debug("Failed to load object type:" + className);
+            Logging.severe(e.getMessage());
+            Logging.severe("Failed to load object of type:" + className);
         }
         return null;
     }
@@ -75,11 +80,10 @@ public abstract class SQLDB implements Database{
 
     public void loadAllChunkOwnership() {
         String query = QueryGen.selectAllOwnership(ChunkyPlayer.class.getName(), ChunkyChunk.class.getName());
-        Logging.info(query);
         ResultSet data = query(query);
         while(iterateData(data)) {
-            ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerId"));
-            ChunkyObject ownable = ChunkyManager.getObject(getString(data,"OwnableId"));
+            ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"),getString(data, "OwnerId"));
+            ChunkyObject ownable = ChunkyManager.getObject(getString(data, "OwnableType"),getString(data,"OwnableId"));
             Logging.info(ownable.getId());
             Logging.info(owner.getId());
             if(owner==null || ownable==null) return;

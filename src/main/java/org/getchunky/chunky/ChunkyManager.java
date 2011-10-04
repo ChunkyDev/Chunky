@@ -17,10 +17,8 @@ import java.util.HashMap;
  */
 public class ChunkyManager {
 
-    private static HashMap<String, ChunkyPlayer> PLAYERS = new HashMap<String, ChunkyPlayer>();
-    private static HashMap<ChunkyCoordinates, ChunkyChunk> CHUNKS = new HashMap<ChunkyCoordinates, ChunkyChunk>();
     private static HashMap<String, HashMap<String, ChunkyPermissions>> permissions = new HashMap<String, HashMap<String, ChunkyPermissions>>();
-    private static HashMap<String, ChunkyObject> OBJECTS = new HashMap<String, ChunkyObject>();
+    private static HashMap<String, HashMap<String,ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String,ChunkyObject>>();
 
     /**
      * Allows objects to be registered for lookup by ID.  You probably shouldn't call this method as all ChunkyObjects are automatically registered.
@@ -29,10 +27,13 @@ public class ChunkyManager {
      * @return true if object was not yet registered
      */
     public static boolean registerObject(ChunkyObject object) {
-        if (OBJECTS.containsKey(object.getId())) {
-            return false;
+        HashMap<String,ChunkyObject> ids = OBJECTS.get(object.getType());
+        if (ids==null) {
+            ids = new HashMap<String, ChunkyObject>();
+            OBJECTS.put(object.getType(),ids);
         }
-        OBJECTS.put(object.getId(), object);
+        if(ids.containsKey(object.getId())) return false;
+        ids.put(object.getId(), object);
         return true;
     }
 
@@ -42,8 +43,21 @@ public class ChunkyManager {
      * @param id Object id
      * @return Object associated with id or null
      */
-    public static ChunkyObject getObject(String id) {
-        return OBJECTS.get(id);
+    public static ChunkyObject getObject(String type,String id) {
+        HashMap<String, ChunkyObject> ids = getObjectsOfType(type);
+        if(ids==null) return null;
+        return ids.get(id);
+    }
+
+    public static ChunkyObject getObject(String objectID) {
+        for(HashMap<String, ChunkyObject> ids : OBJECTS.values()) {
+            if(ids.containsKey(objectID)) return ids.get(objectID);
+        }
+        return null;
+    }
+
+    public static HashMap<String, ChunkyObject> getObjectsOfType(String type) {
+        return OBJECTS.get(type);
     }
 
     /**
@@ -104,11 +118,10 @@ public class ChunkyManager {
     public static ChunkyPlayer getChunkyPlayer(OfflinePlayer player)
     {
         String id = player.getName();
-        if(PLAYERS.containsKey(id)) return PLAYERS.get(id);
+        ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(),id);
+        if(chunkyObject!=null) return (ChunkyPlayer)chunkyObject;
         ChunkyPlayer cPlayer = new ChunkyPlayer();
         cPlayer.setName(player.getName()).setId(id).save();
-        PLAYERS.put(id, cPlayer);
-
         return cPlayer;
     }
 
@@ -119,10 +132,10 @@ public class ChunkyManager {
      * @return ChunkyChunk at the given coordinates
      */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
-        if(CHUNKS.containsKey(coords)) return CHUNKS.get(coords);
+        ChunkyObject chunkyObject = getObject(ChunkyChunk.class.getName(),coords.toString());
+        if(chunkyObject!=null) return (ChunkyChunk)chunkyObject;
         ChunkyChunk chunkyChunk = new ChunkyChunk();
         chunkyChunk.setCoord(coords).setId(coords.toString());
-        CHUNKS.put(coords,chunkyChunk);
         return chunkyChunk;
     }
 
