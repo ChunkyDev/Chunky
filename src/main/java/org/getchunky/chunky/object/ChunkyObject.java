@@ -267,4 +267,8 @@ public abstract class ChunkyObject extends JSONObject {
         HashMap<String, HashSet<ChunkyObject>> ownables = (HashMap<String, HashSet<ChunkyObject>>)this.ownables.clone();
         return ownables;
     }
+
+    public final String toString() {
+        return super.toString();
+    }
 }
