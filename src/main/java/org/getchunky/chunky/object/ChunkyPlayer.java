@@ -44,8 +44,8 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     public void claimCurrentChunk() {
         ChunkyChunk chunkyChunk = this.getCurrentChunk();
         ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this,chunkyChunk, ChunkyAccessLevel.UNOWNED);
-        Chunky.getModuleManager().callEvent(event);
         event.setCancelled(false);
+        Chunky.getModuleManager().callEvent(event);
         if(event.isCancelled()) return;
         if (Permissions.CHUNKY_CLAIM.hasPerm(this)) {
             // Grab the chunk claim limit for the player
