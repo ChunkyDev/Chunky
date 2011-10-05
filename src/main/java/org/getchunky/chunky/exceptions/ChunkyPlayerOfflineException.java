@@ -1,6 +1,6 @@
 package org.getchunky.chunky.exceptions;
 
-public class ChunkyPlayerOfflineException extends ChunkyException{
+public class ChunkyPlayerOfflineException extends ChunkyException {
 
     public ChunkyPlayerOfflineException() {
         super();

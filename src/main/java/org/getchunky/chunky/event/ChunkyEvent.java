@@ -22,7 +22,7 @@ public class ChunkyEvent implements Serializable {
     }
 
     protected ChunkyEvent(final String name) {
-        if(name == null) {
+        if (name == null) {
             throw new IllegalArgumentException("Name is null");
         }
         this.type = Type.CUSTOM_EVENT;
@@ -75,7 +75,7 @@ public class ChunkyEvent implements Serializable {
         Highest,
         /**
          * Event is listened to purely for monitoring the outcome of an event.
-         *
+         * <p/>
          * No modifications to the event should be made under this priority
          */
         Monitor
@@ -119,10 +119,10 @@ public class ChunkyEvent implements Serializable {
         /**
          * Represents an object's name change event
          */
-        OBJECT_NAME (Category.OBJECT),
+        OBJECT_NAME(Category.OBJECT),
         //OBJECT_ADD_OWNER (Category.OBJECT),
         //OBJECT_REMOVE_OWNER (Category.OBJECT),
-        OBJECT_SET_OWNER (Category.OBJECT),
+        OBJECT_SET_OWNER(Category.OBJECT),
 
 
         /**
@@ -132,15 +132,15 @@ public class ChunkyEvent implements Serializable {
         /**
          * Represents a player switching chunks
          */
-        PLAYER_CHUNK_CHANGE (Category.PLAYER),
+        PLAYER_CHUNK_CHANGE(Category.PLAYER),
 
         PLAYER_BUILD(Category.PLAYER),
 
         PLAYER_DESTROY(Category.PLAYER),
 
-        PLAYER_ITEM_USE (Category.PLAYER),
+        PLAYER_ITEM_USE(Category.PLAYER),
 
-        PLAYER_SWITCH (Category.PLAYER),
+        PLAYER_SWITCH(Category.PLAYER),
 
         PLAYER_CHUNK_CLAIM(Category.PLAYER),
 
@@ -151,9 +151,9 @@ public class ChunkyEvent implements Serializable {
         /**
          * Represents the command event
          */
-        COMMAND_PROCESS (Category.COMMAND),
-        COMMAND_HELP (Category.COMMAND),
-        COMMAND_LIST (Category.COMMAND),
+        COMMAND_PROCESS(Category.COMMAND),
+        COMMAND_HELP(Category.COMMAND),
+        COMMAND_LIST(Category.COMMAND),
 
         /**
          * MISCELLANEOUS EVENTS
@@ -162,7 +162,7 @@ public class ChunkyEvent implements Serializable {
         /**
          * Represents a custom event
          */
-        CUSTOM_EVENT (Category.MISCELLANEOUS);
+        CUSTOM_EVENT(Category.MISCELLANEOUS);
 
         private final Category category;
 

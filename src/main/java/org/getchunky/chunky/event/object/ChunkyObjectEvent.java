@@ -17,6 +17,7 @@ public class ChunkyObjectEvent extends ChunkyEvent {
 
     /**
      * Returns the object involved in this event.
+     *
      * @return
      */
     public final ChunkyObject getObject() {

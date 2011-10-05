@@ -2,7 +2,10 @@ package org.getchunky.chunky.permission;
 
 import org.getchunky.chunky.locale.Language;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -17,7 +20,7 @@ public class ChunkyPermissions {
         private static final Map<Character, Flags> lookup = new HashMap<Character, Flags>();
 
         static {
-            for(Flags f : EnumSet.allOf(Flags.class))
+            for (Flags f : EnumSet.allOf(Flags.class))
                 lookup.put(f.getRep(), f);
         }
 
@@ -27,7 +30,7 @@ public class ChunkyPermissions {
 
         /**
          * Retrieves the character representation of this flag
-         * 
+         *
          * @return character representation of flag
          */
         private char getRep() {
@@ -36,6 +39,7 @@ public class ChunkyPermissions {
 
         /**
          * Retrieves a flag represented by the specified character
+         *
          * @param c Character representation of flag
          * @return Flag represented by c or null if no flag for c
          */
@@ -89,7 +93,7 @@ public class ChunkyPermissions {
     /**
      * Sets the status of a certain flag in this permission set
      *
-     * @param flag Flag to set
+     * @param flag   Flag to set
      * @param status Status of the flag
      */
     public void setFlag(Flags flag, boolean status) {

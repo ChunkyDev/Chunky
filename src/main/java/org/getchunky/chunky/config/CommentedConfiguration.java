@@ -138,10 +138,11 @@ public class CommentedConfiguration extends Configuration {
 
     /**
      * Adds a comment just before the specified path.  The comment can be multiple lines.  An empty string will indicate a blank line.
-     * @param path Configuration path to add comment.
+     *
+     * @param path         Configuration path to add comment.
      * @param commentLines Comments to add.  One String per line.
      */
-    public void addComment(String path, String...commentLines) {
+    public void addComment(String path, String... commentLines) {
         StringBuilder commentstring = new StringBuilder();
         String leadingSpaces = "";
         for (int n = 0; n < path.length(); n++) {
@@ -165,6 +166,7 @@ public class CommentedConfiguration extends Configuration {
 
     /**
      * Pass a file and it will return it's contents as a string.
+     *
      * @param file File to read.
      * @return Contents of file.  String will be empty in case of any errors.
      */
@@ -188,7 +190,8 @@ public class CommentedConfiguration extends Configuration {
                 if (is != null) {
                     try {
                         is.close();
-                    } catch (IOException ignore) {}
+                    } catch (IOException ignore) {
+                    }
                 }
             }
             return writer.toString();
@@ -199,14 +202,15 @@ public class CommentedConfiguration extends Configuration {
 
     /**
      * Writes the contents of a string to a file.
+     *
      * @param source String to write.
-     * @param file File to write to.
+     * @param file   File to write to.
      * @return True on success.
      * @throws IOException
      */
     private boolean stringToFile(String source, File file) throws IOException {
         try {
-            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+            OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
 
             source.replaceAll("\n", System.getProperty("line.separator"));
 

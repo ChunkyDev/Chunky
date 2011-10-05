@@ -7,7 +7,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
+public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent {
 
     private ChunkyChunk toChunk;
     private ChunkyChunk fromChunk;
@@ -22,6 +22,7 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
 
     /**
      * Gets the chunk the player is travelling into.
+     *
      * @return ChunkyChunk
      */
     public ChunkyChunk getToChunk() {
@@ -30,6 +31,7 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
 
     /**
      * Gets the chunk the player is travelling from.
+     *
      * @return ChunkyChunk
      */
     public ChunkyChunk getFromChunk() {
@@ -38,6 +40,7 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent{
 
     /**
      * Gets the message that is sent to the player on a chunk change.
+     *
      * @return String
      */
     public String getMessage() {

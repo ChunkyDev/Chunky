@@ -1,8 +1,8 @@
 package org.getchunky.chunky.event.object;
 
+import org.bukkit.event.Cancellable;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.object.ChunkyObject;
-import org.bukkit.event.Cancellable;
 
 /**
  * @author dumptruckman, SwearWord
@@ -10,7 +10,7 @@ import org.bukkit.event.Cancellable;
 public class ChunkyObjectNameEvent extends ChunkyObjectEvent implements Cancellable {
 
     private boolean cancel = false;
-    
+
     protected String oldName;
     protected String newName;
 

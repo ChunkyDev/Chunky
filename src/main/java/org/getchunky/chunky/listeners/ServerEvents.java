@@ -1,6 +1,8 @@
 package org.getchunky.chunky.listeners;
 
-import org.bukkit.event.server.*;
+import org.bukkit.event.server.MapInitializeEvent;
+import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.event.server.ServerListener;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.command.map.ChunkRenderer;
 import org.getchunky.chunky.module.ChunkyCommand;

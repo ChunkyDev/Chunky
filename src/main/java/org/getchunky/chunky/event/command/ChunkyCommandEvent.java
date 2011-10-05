@@ -1,9 +1,9 @@
 package org.getchunky.chunky.event.command;
 
-import org.getchunky.chunky.event.ChunkyEvent;
-import org.getchunky.chunky.module.ChunkyCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
+import org.getchunky.chunky.event.ChunkyEvent;
+import org.getchunky.chunky.module.ChunkyCommand;
 
 /**
  * @author dumptruckman, SwearWord
@@ -15,9 +15,9 @@ public class ChunkyCommandEvent extends ChunkyEvent implements Cancellable {
     private ChunkyCommand command;
     private String label;
     private String[] args;
-    
+
     public ChunkyCommandEvent(Type type, CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        super (type);
+        super(type);
 
         this.sender = sender;
         this.command = command;

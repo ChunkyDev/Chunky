@@ -1,6 +1,5 @@
 package org.getchunky.chunky.permission;
 
-import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.object.ChunkyGroup;
@@ -8,12 +7,8 @@ import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPermissibleObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
-import org.getchunky.chunky.util.Logging;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * @author dumptruckman
@@ -23,16 +18,16 @@ public class ChunkyPermissionChain {
     /**
      * This function checks the permission chain to see if permObject has permission for a specific action (which is indicated by flag.)
      *
-     * @param object Object that the permObject is trying to interact with
+     * @param object     Object that the permObject is trying to interact with
      * @param permObject PermissibleObject involved in event. (Usually a player)
-     * @param flag The permission action occuring
+     * @param flag       The permission action occuring
      * @return true if permObject has permission to flag action
      */
     public static ChunkyAccessLevel hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag) {
 
         ChunkyAccessLevel accessLevel = ChunkyAccessLevel.NONE;
         accessLevel.setDenied(true);
-        
+
         if (permObject instanceof ChunkyPlayer) {
             try {
                 if (Permissions.PLAYER_BUILD_ANYWHERE.hasPerm(((ChunkyPlayer) permObject).getPlayer())) {
@@ -40,7 +35,8 @@ public class ChunkyPermissionChain {
                     accessLevel.setDenied(false);
                     return accessLevel;
                 }
-            } catch (ChunkyPlayerOfflineException ignore) {}
+            } catch (ChunkyPlayerOfflineException ignore) {
+            }
         }
 
         if (!object.isOwned()) {

@@ -5,12 +5,14 @@ package org.getchunky.chunky.event;
  */
 public class CustomChunkyEventListener implements ChunkyListener {
 
-    public CustomChunkyEventListener() {}
+    public CustomChunkyEventListener() {
+    }
 
     /**
      * Called when a custom event is fired
      *
      * @param event Relevant event details
      */
-    public void onCustomEvent(ChunkyEvent event) {}
+    public void onCustomEvent(ChunkyEvent event) {
+    }
 }

@@ -1,48 +1,54 @@
 package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.ChunkyManager;
-import org.getchunky.chunky.object.ChunkyChunk;
-import org.getchunky.chunky.object.ChunkyCoordinates;
 import org.getchunky.chunky.object.ChunkyObject;
-import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 
-public abstract class SQLDB implements Database{
+public abstract class SQLDB implements Database {
 
     public abstract ResultSet query(String query);
 
     private boolean iterateData(ResultSet data) {
-        try {return data.next();}
-        catch (SQLException e) {return false;}
+        try {
+            return data.next();
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     private String getString(ResultSet data, String label) {
-        try {return data.getString(label);}
-        catch (SQLException e) {return null;}
+        try {
+            return data.getString(label);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
     private int getInt(ResultSet data, String label) {
-        try {return data.getInt(label);}
-        catch (SQLException e) {return 0;}
+        try {
+            return data.getInt(label);
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
 
     public void loadAllObjects() {
         ResultSet data = query(QueryGen.selectAllObjects());
-        while(iterateData(data)) {
-            ChunkyObject obj = (ChunkyObject)createObject(getString(data,"type"));
-            if(obj==null) continue;
+        while (iterateData(data)) {
+            ChunkyObject obj = (ChunkyObject) createObject(getString(data, "type"));
+            if (obj == null) continue;
             try {
-                obj.setId(getString(data, "id")).load(getString(data,"data"));
-            } catch (JSONException e) {Logging.severe(e.getMessage());}
+                obj.setId(getString(data, "id")).load(getString(data, "data"));
+            } catch (JSONException e) {
+                Logging.severe(e.getMessage());
+            }
         }
     }
 
@@ -66,35 +72,35 @@ public abstract class SQLDB implements Database{
     public void loadAllPermissions() {
         ResultSet data = query(QueryGen.selectAllPermissions());
         while (iterateData(data)) {
-            EnumSet<ChunkyPermissions.Flags> flags =EnumSet.noneOf(ChunkyPermissions.Flags.class);
-            if(getInt(data,"BUILD")==1) flags.add(ChunkyPermissions.Flags.BUILD);
-            if(getInt(data,"DESTROY")==1) flags.add(ChunkyPermissions.Flags.DESTROY);
-            if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.SWITCH);
-            if(getInt(data,"ITEMUSE")==1) flags.add(ChunkyPermissions.Flags.ITEMUSE);
-            String permId = getString(data,"PermissibleId");
-            String permType = getString(data,"PermissibleType");
-            String objectId = getString(data,"ObjectId");
-            String objectType = getString(data,"ObjectType");
+            EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
+            if (getInt(data, "BUILD") == 1) flags.add(ChunkyPermissions.Flags.BUILD);
+            if (getInt(data, "DESTROY") == 1) flags.add(ChunkyPermissions.Flags.DESTROY);
+            if (getInt(data, "SWITCH") == 1) flags.add(ChunkyPermissions.Flags.SWITCH);
+            if (getInt(data, "ITEMUSE") == 1) flags.add(ChunkyPermissions.Flags.ITEMUSE);
+            String permId = getString(data, "PermissibleId");
+            String permType = getString(data, "PermissibleType");
+            String objectId = getString(data, "ObjectId");
+            String objectType = getString(data, "ObjectType");
             ChunkyObject object = ChunkyManager.getObject(objectType, objectId);
             ChunkyObject permObject = ChunkyManager.getObject(permType, permId);
             if (object != null && permObject != null)
                 ChunkyManager.setPermissions(
                         object,
                         permObject,
-                        flags,false);
+                        flags, false);
         }
     }
 
     public void loadAllOwnership() {
         String query = QueryGen.selectAllOwnership();
         ResultSet data = query(query);
-        while(iterateData(data)) {
-            ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"),getString(data, "OwnerId"));
-            ChunkyObject ownable = ChunkyManager.getObject(getString(data, "OwnableType"),getString(data,"OwnableId"));
-            if(owner==null || ownable==null) return;
+        while (iterateData(data)) {
+            ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"), getString(data, "OwnerId"));
+            ChunkyObject ownable = ChunkyManager.getObject(getString(data, "OwnableType"), getString(data, "OwnableId"));
+            if (owner == null || ownable == null) return;
             Logging.debug(ownable.getId());
             Logging.debug(owner.getId());
-            ownable.setOwner(owner,true,false);
+            ownable.setOwner(owner, true, false);
         }
     }
 
@@ -108,8 +114,9 @@ public abstract class SQLDB implements Database{
     }
 
     public void removePermissions(ChunkyObject permissible, ChunkyObject object) {
-        query(QueryGen.removePermissions(permissible,object));
+        query(QueryGen.removePermissions(permissible, object));
     }
+
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
         query(QueryGen.addOwnership(owner, ownable));
     }
@@ -120,6 +127,6 @@ public abstract class SQLDB implements Database{
     }
 
     public void updateDefaultPermissions(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(object,object,flags));
+        query(QueryGen.updatePermissions(object, object, flags));
     }
 }

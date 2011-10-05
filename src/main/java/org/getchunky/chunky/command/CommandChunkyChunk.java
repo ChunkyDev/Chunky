@@ -1,5 +1,7 @@
 package org.getchunky.chunky.command;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
@@ -8,24 +10,22 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-public class CommandChunkyChunk implements ChunkyCommandExecutor{
+public class CommandChunkyChunk implements ChunkyCommandExecutor {
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
 
-        if(args.length == 0) {
-            Player player = (Player)sender;
+        if (args.length == 0) {
+            Player player = (Player) sender;
             displayInfo(ChunkyManager.getChunk(player.getLocation()), player);
             return;
         }
 
-        if(args.length > 0) {
+        if (args.length > 0) {
             Language.FEATURE_NYI.bad(sender);
             return;
         }
@@ -44,10 +44,10 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
         ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk, chunkyChunk);
         if (perms != null && perms.getFlags() != null) {
             Language.PERMISSIONS_STATUS.normal(player
-                        ,perms.contains(ChunkyPermissions.Flags.BUILD)
-                        ,perms.contains(ChunkyPermissions.Flags.DESTROY)
-                        ,perms.contains(ChunkyPermissions.Flags.SWITCH)
-                        ,perms.contains(ChunkyPermissions.Flags.ITEMUSE));
+                    , perms.contains(ChunkyPermissions.Flags.BUILD)
+                    , perms.contains(ChunkyPermissions.Flags.DESTROY)
+                    , perms.contains(ChunkyPermissions.Flags.SWITCH)
+                    , perms.contains(ChunkyPermissions.Flags.ITEMUSE));
         }
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
@@ -56,9 +56,9 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor{
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
                 Language.PERMISSIONS_STATUS.normal(player, perms.contains(ChunkyPermissions.Flags.BUILD)
-                            ,perms.contains(ChunkyPermissions.Flags.DESTROY)
-                            ,perms.contains(ChunkyPermissions.Flags.SWITCH)
-                            ,perms.contains(ChunkyPermissions.Flags.ITEMUSE));
+                        , perms.contains(ChunkyPermissions.Flags.DESTROY)
+                        , perms.contains(ChunkyPermissions.Flags.SWITCH)
+                        , perms.contains(ChunkyPermissions.Flags.ITEMUSE));
             }
         }
     }

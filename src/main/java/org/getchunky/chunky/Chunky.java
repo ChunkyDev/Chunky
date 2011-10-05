@@ -2,9 +2,13 @@ package org.getchunky.chunky;
 
 import com.nijikokun.register.payment.Method;
 import com.nijikokun.register.payment.Methods;
+import org.blockface.bukkitstats.CallHome;
+import org.bukkit.event.Event;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.getchunky.chunky.command.*;
 import org.getchunky.chunky.config.Config;
-import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.listeners.*;
@@ -12,12 +16,8 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyModuleManager;
 import org.getchunky.chunky.module.SimpleChunkyModuleManager;
+import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
-import org.blockface.bukkitstats.CallHome;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -99,7 +99,7 @@ public class Chunky extends JavaPlugin {
         CHUNKY_MODULE_MANAGER = new SimpleChunkyModuleManager();
 
         //Loads the data.
-        if(!DatabaseManager.load()) {
+        if (!DatabaseManager.load()) {
             Logging.severe("Encountered an error while  loading data. Disabling...");
             pm.disablePlugin(this);
             return;
@@ -259,13 +259,14 @@ public class Chunky extends JavaPlugin {
                     Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP),
                     new CommandChunkyPermission(), commandChunky);
             getModuleManager().registerCommand(commandChunkyPermission);
-            
-        } catch (ChunkyUnregisteredException ignore) {}
+
+        } catch (ChunkyUnregisteredException ignore) {
+        }
     }
 
     /**
      * Returns the ChunkyModuleManager.  With this manager you may register your plugins Chunky events and Chunky commands.
-     * 
+     *
      * @return the ModuleManager for Chunky
      */
     static public ChunkyModuleManager getModuleManager() {

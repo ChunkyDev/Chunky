@@ -7,13 +7,16 @@ import org.getchunky.chunky.event.ChunkyListener;
  */
 public class ChunkyObjectListener implements ChunkyListener {
 
-    public ChunkyObjectListener() {}
+    public ChunkyObjectListener() {
+    }
 
-    public void onObjectNameChange(ChunkyObjectNameEvent event) {}
+    public void onObjectNameChange(ChunkyObjectNameEvent event) {
+    }
 
     //public void onObjectAddOwner(ChunkyObjectOwnershipEvent event) {}
 
     //public void onObjectRemoveOwner(ChunkyObjectOwnershipEvent event) {}
 
-    public void onObjectSetOwner(ChunkyObjectOwnershipEvent event) {}
+    public void onObjectSetOwner(ChunkyObjectOwnershipEvent event) {
+    }
 }

@@ -5,7 +5,7 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyAccessLevel;
 
-public class ChunkyPlayerChunkClaimEvent extends ChunkyPlayerChunkEvent implements Cancellable{
+public class ChunkyPlayerChunkClaimEvent extends ChunkyPlayerChunkEvent implements Cancellable {
 
     private boolean cancel = false;
 

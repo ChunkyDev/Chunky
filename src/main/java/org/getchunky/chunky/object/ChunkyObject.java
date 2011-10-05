@@ -3,16 +3,13 @@ package org.getchunky.chunky.object;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
-import org.getchunky.chunky.exceptions.ChunkyObjectNotInitializedException;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import sun.rmi.runtime.Log;
 
-import java.io.IOException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,7 +32,7 @@ public abstract class ChunkyObject extends JSONObject {
     public ChunkyObject() {
         super();
         try {
-            this.put("name","");
+            this.put("name", "");
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -43,7 +40,7 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final boolean save() {
-        if(id == null) return false;
+        if (id == null) return false;
         DatabaseManager.getDatabase().updateObject(this);
         return true;
     }
@@ -57,16 +54,16 @@ public abstract class ChunkyObject extends JSONObject {
         if (x.nextClean() != '{') {
             throw x.syntaxError("A JSONObject text must begin with '{'");
         }
-        for (;;) {
+        for (; ; ) {
             c = x.nextClean();
             switch (c) {
-            case 0:
-                throw x.syntaxError("A JSONObject text must end with '}'");
-            case '}':
-                return this;
-            default:
-                x.back();
-                key = x.nextValue().toString();
+                case 0:
+                    throw x.syntaxError("A JSONObject text must end with '}'");
+                case '}':
+                    return this;
+                default:
+                    x.back();
+                    key = x.nextValue().toString();
             }
 
             // The key is followed by ':'. We will also tolerate '=' or '=>'.
@@ -84,17 +81,17 @@ public abstract class ChunkyObject extends JSONObject {
             // Pairs are separated by ','. We will also tolerate ';'.
 
             switch (x.nextClean()) {
-            case ';':
-            case ',':
-                if (x.nextClean() == '}') {
+                case ';':
+                case ',':
+                    if (x.nextClean() == '}') {
+                        return this;
+                    }
+                    x.back();
+                    break;
+                case '}':
                     return this;
-                }
-                x.back();
-                break;
-            case '}':
-                return this;
-            default:
-                throw x.syntaxError("Expected a ',' or '}'");
+                default:
+                    throw x.syntaxError("Expected a ',' or '}'");
             }
         }
     }
@@ -144,7 +141,7 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final boolean equals(Object obj) {
-        return obj instanceof ChunkyObject && ((ChunkyObject)obj).getFullId().equals(this.getFullId());
+        return obj instanceof ChunkyObject && ((ChunkyObject) obj).getFullId().equals(this.getFullId());
     }
 
     public final boolean isOwned() {
@@ -153,6 +150,7 @@ public abstract class ChunkyObject extends JSONObject {
 
     /**
      * Causes o to be owned by this object.
+     *
      * @param o object to become owned.
      * @return true if this object did not already own o.
      */
@@ -163,38 +161,39 @@ public abstract class ChunkyObject extends JSONObject {
         // If owner is a owned by the child, remove owner from tree first.
         // ex. town.setOwner(Peasant) Peasant is removed from parent (Town).
 
-        if(this.isOwnedBy(o) && this.owner != null) {
+        if (this.isOwnedBy(o) && this.owner != null) {
             this.getOwner().removeOwnableAndTakeChildren(this);
         }
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
-            if(exists) DatabaseManager.getDatabase().addOwnership(this,o);
+            if (exists) DatabaseManager.getDatabase().addOwnership(this, o);
             return exists;
         } else {
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
-            DatabaseManager.getDatabase().addOwnership(this,o);
+            DatabaseManager.getDatabase().addOwnership(this, o);
             return true;
         }
     }
 
     /**
      * Removes an ownable o from this object.
+     *
      * @param o the ownable to remove
      * @return true if the set contained the specified element
      */
     private boolean removeOwnable(ChunkyObject o) {
         Boolean removed = ownables.containsKey(o.getType()) && ownables.get(o.getType()).remove(o);
-        if(removed) {
+        if (removed) {
             o.owner = null;
-            DatabaseManager.getDatabase().removeOwnership(this,o);
+            DatabaseManager.getDatabase().removeOwnership(this, o);
         }
         return removed;
     }
 
     private void removeOwnableAndTakeChildren(ChunkyObject o) {
-        if(removeOwnable(o)) takeChildren(o);
+        if (removeOwnable(o)) takeChildren(o);
     }
 
     public final void takeChildren(ChunkyObject o) {
@@ -203,8 +202,8 @@ public abstract class ChunkyObject extends JSONObject {
 
         HashMap<String, HashSet<ChunkyObject>> reposess = o.getOwnables();
         o.ownables = new HashMap<String, HashSet<ChunkyObject>>();
-        for(String key : reposess.keySet()) {
-            for(ChunkyObject co : reposess.get(key)) {
+        for (String key : reposess.keySet()) {
+            for (ChunkyObject co : reposess.get(key)) {
                 this.addOwnable(co);
             }
         }
@@ -212,6 +211,7 @@ public abstract class ChunkyObject extends JSONObject {
 
     /**
      * Checks if o is owned by this object.
+     *
      * @param o object to hasPerm ownership for
      * @return true if this object owns o
      */
@@ -244,19 +244,19 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     /**
-     * @param object the object that will become the owner.
+     * @param object       the object that will become the owner.
      * @param keepChildren false transfers the object's children to current owner.
      */
     public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions) {
         if (owner != null)
-            if(keepChildren) owner.removeOwnable(this);
+            if (keepChildren) owner.removeOwnable(this);
             else owner.removeOwnableAndTakeChildren(this);
         if (object != null) {
             if (object.addOwnable(this)) owner = object;
         } else {
             owner = null;
         }
-        if(clearPermissions) {
+        if (clearPermissions) {
             ChunkyManager.getAllPermissions(this).clear();
             DatabaseManager.getDatabase().removeAllPermissions(this);
         }
@@ -282,7 +282,7 @@ public abstract class ChunkyObject extends JSONObject {
             DatabaseManager.getDatabase().removePermissions(this, this);
             return;
         }
-        
+
         EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
         for (ChunkyPermissions.Flags flag : flags) {
             setDefaultPerm(flag, true);
@@ -313,11 +313,12 @@ public abstract class ChunkyObject extends JSONObject {
 
     /**
      * Returns all ownables of this object.  You may not change the structure/values of this HashMap.
+     *
      * @return
      */
     public final HashMap<String, HashSet<ChunkyObject>> getOwnables() {
         @SuppressWarnings("unchecked")
-        HashMap<String, HashSet<ChunkyObject>> ownables = (HashMap<String, HashSet<ChunkyObject>>)this.ownables.clone();
+        HashMap<String, HashSet<ChunkyObject>> ownables = (HashMap<String, HashSet<ChunkyObject>>) this.ownables.clone();
         return ownables;
     }
 

@@ -19,7 +19,7 @@ public class MinecraftTools {
 
     /**
      * Determines if an item is a switchable item
-     * 
+     *
      * @param id Item id
      * @return true if item can be switched
      */

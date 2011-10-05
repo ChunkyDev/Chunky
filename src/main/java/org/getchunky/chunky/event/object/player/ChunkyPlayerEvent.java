@@ -6,7 +6,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPlayerEvent extends ChunkyEvent{
+public class ChunkyPlayerEvent extends ChunkyEvent {
 
     protected ChunkyPlayer chunkyPlayer;
 
@@ -17,6 +17,7 @@ public class ChunkyPlayerEvent extends ChunkyEvent{
 
     /**
      * Returns the player involved in this event.
+     *
      * @return
      */
     public final ChunkyPlayer getChunkyPlayer() {

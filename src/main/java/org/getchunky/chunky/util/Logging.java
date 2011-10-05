@@ -1,8 +1,8 @@
 package org.getchunky.chunky.util;
 
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.config.Config;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.util.logging.Logger;
 
@@ -26,7 +26,7 @@ public class Logging {
     /**
      * Adds the plugin name and optionally the version number to the log message.
      *
-     * @param message Log message
+     * @param message     Log message
      * @param showVersion Whether to show version in log message
      * @return Modified message
      */
@@ -47,6 +47,7 @@ public class Logging {
 
     /**
      * Returns the Name and Version as a combined string
+     *
      * @return "$Name v$Version"
      */
     public static String getNameVersion() {
@@ -65,7 +66,7 @@ public class Logging {
     /**
      * Info level logging.
      *
-     * @param message Log message
+     * @param message     Log message
      * @param showVersion True adds version into message
      */
     public static void info(String message, boolean showVersion) {
@@ -94,7 +95,7 @@ public class Logging {
     /**
      * Warning level logging.
      *
-     * @param message Log message
+     * @param message     Log message
      * @param showVersion True adds version into message
      */
     public static void warning(String message, boolean showVersion) {
@@ -113,7 +114,7 @@ public class Logging {
     /**
      * Severe level logging.
      *
-     * @param message Log message
+     * @param message     Log message
      * @param showVersion True adds version into message
      */
     public static void severe(String message, boolean showVersion) {

@@ -1,13 +1,13 @@
 package org.getchunky.chunky;
 
-import org.bukkit.block.Block;
-import org.getchunky.chunky.persistance.DatabaseManager;
-import org.getchunky.chunky.object.*;
-import org.getchunky.chunky.permission.ChunkyPermissions;
-import org.getchunky.chunky.util.Logging;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.getchunky.chunky.object.*;
+import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.persistance.DatabaseManager;
+import org.getchunky.chunky.util.Logging;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 public class ChunkyManager {
 
     private static HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>> permissions = new HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>>();
-    private static HashMap<String, HashMap<String,ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String,ChunkyObject>>();
+    private static HashMap<String, HashMap<String, ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String, ChunkyObject>>();
 
     /**
      * Allows objects to be registered for lookup by ID.  You probably shouldn't call this method as all ChunkyObjects are automatically registered.
@@ -28,12 +28,12 @@ public class ChunkyManager {
      * @return true if object was not yet registered
      */
     public static boolean registerObject(ChunkyObject object) {
-        HashMap<String,ChunkyObject> ids = OBJECTS.get(object.getType());
-        if (ids==null) {
+        HashMap<String, ChunkyObject> ids = OBJECTS.get(object.getType());
+        if (ids == null) {
             ids = new HashMap<String, ChunkyObject>();
-            OBJECTS.put(object.getType(),ids);
+            OBJECTS.put(object.getType(), ids);
         }
-        if(ids.containsKey(object.getId())) return false;
+        if (ids.containsKey(object.getId())) return false;
         ids.put(object.getId(), object);
         return true;
     }
@@ -42,12 +42,12 @@ public class ChunkyManager {
      * Looks up an object by ID.  This method will return null if the object has not been initialized.
      *
      * @param type Type of object (Class name)
-     * @param id Object id
+     * @param id   Object id
      * @return Object associated with id or null
      */
     public static ChunkyObject getObject(String type, String id) {
         HashMap<String, ChunkyObject> ids = getObjectsOfType(type);
-        if(ids==null) return null;
+        if (ids == null) return null;
         return ids.get(id);
     }
 
@@ -82,7 +82,7 @@ public class ChunkyManager {
     /**
      * Compares a ChunkyObject id with a class to determine if the id is a for an object of a certain type.
      *
-     * @param id ID of ChunkyObject
+     * @param id   ID of ChunkyObject
      * @param type Class for ChunkyObject to compare to
      * @return true if ID is for object of class type
      */
@@ -94,16 +94,14 @@ public class ChunkyManager {
     /**
      * Gets a ChunkyPlayer object from the given player name.  The given name will first try a case-insensitive match for any online player, and then a case-sensitive match of offline players.  If no player is found, null is returned.  If a player is found, this will retrieve the ChunkyPlayer instance for them.  It will create a new instance if there is no instance already created.
      *
-     * @see org.getchunky.chunky.ChunkyManager#getChunkyPlayer(OfflinePlayer player) for a quicker lookup method.
-     *
      * @param name Name of the player
      * @return A ChunkyPlayer object for the given name.
+     * @see org.getchunky.chunky.ChunkyManager#getChunkyPlayer(OfflinePlayer player) for a quicker lookup method.
      */
-    public static ChunkyPlayer getChunkyPlayer(String name)
-    {
+    public static ChunkyPlayer getChunkyPlayer(String name) {
         OfflinePlayer player = Bukkit.getServer().getPlayer(name);
         if (player == null) {
-            
+
             player = Bukkit.getServer().getPlayerExact(name);
             if (player == null) {
                 player = Bukkit.getServer().getOfflinePlayer(name);
@@ -120,14 +118,13 @@ public class ChunkyManager {
      * @param player
      * @return A ChunkyPlayer object for the given player.
      */
-    public static ChunkyPlayer getChunkyPlayer(OfflinePlayer player)
-    {
+    public static ChunkyPlayer getChunkyPlayer(OfflinePlayer player) {
         String id = player.getName();
-        ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(),id);
-        if(chunkyObject != null) {
-            ChunkyPlayer cPlayer = (ChunkyPlayer)chunkyObject;
+        ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(), id);
+        if (chunkyObject != null) {
+            ChunkyPlayer cPlayer = (ChunkyPlayer) chunkyObject;
             HashSet<ChunkyObject> groups = cPlayer.getOwnables().get(ChunkyGroup.class.getName());
-            ChunkyGroup friends = (ChunkyGroup)new ChunkyGroup().setId(id + "-friends");
+            ChunkyGroup friends = (ChunkyGroup) new ChunkyGroup().setId(id + "-friends");
             if (groups == null || !groups.contains(friends)) {
                 friends.setName("friends");
                 friends.setOwner(cPlayer, false, false);
@@ -149,8 +146,8 @@ public class ChunkyManager {
      * @return ChunkyChunk at the given coordinates
      */
     public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
-        ChunkyObject chunkyObject = getObject(ChunkyChunk.class.getName(),coords.toString());
-        if(chunkyObject!=null) return (ChunkyChunk)chunkyObject;
+        ChunkyObject chunkyObject = getObject(ChunkyChunk.class.getName(), coords.toString());
+        if (chunkyObject != null) return (ChunkyChunk) chunkyObject;
         ChunkyChunk chunkyChunk = new ChunkyChunk();
         chunkyChunk.setCoord(coords).setId(coords.toString());
         return chunkyChunk;
@@ -162,8 +159,7 @@ public class ChunkyManager {
      * @param location Location of chunk
      * @return ChunkyChunk at the given location
      */
-    public static ChunkyChunk getChunk(Location location)
-    {
+    public static ChunkyChunk getChunk(Location location) {
         return getChunk(new ChunkyCoordinates(location));
     }
 
@@ -173,15 +169,14 @@ public class ChunkyManager {
      * @param block Block within chunk
      * @return ChunkyChunk at the given location
      */
-    public static ChunkyChunk getChunk(Block block)
-    {
+    public static ChunkyChunk getChunk(Block block) {
         return getChunk(new ChunkyCoordinates(block.getChunk()));
     }
 
     /**
      * Gets the permissions object for the permissions relationship between permObject and object.  Altering this permission object will NOT persist changes.
-     * 
-     * @param object Object being interacted with
+     *
+     * @param object     Object being interacted with
      * @param permObject Object doing the interacting
      * @return a ChunkyPermissions object containing the permissions for this relationship
      */
@@ -200,9 +195,9 @@ public class ChunkyManager {
     /**
      * Allows you to set permissions for an object without having the ChunkyObjects.  This WILL persist changes.
      *
-     * @param object Object being interacted with
+     * @param object     Object being interacted with
      * @param permObject Object doing the interacting
-     * @param flags Flag Set to change permissions to
+     * @param flags      Flag Set to change permissions to
      */
     public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags) {
         setPermissions(object, permObject, flags, true);
@@ -211,10 +206,10 @@ public class ChunkyManager {
     /**
      * Allows you to set permissions for an object without having the ChunkyObjects.  This will optionally persist changes.
      *
-     * @param object Object being interacted with
+     * @param object     Object being interacted with
      * @param permObject Object doing the interacting
-     * @param flags Flag Set to change permissions to
-     * @param persist Whether or not to persist these changes.  Generally you should persist the changes.
+     * @param flags      Flag Set to change permissions to
+     * @param persist    Whether or not to persist these changes.  Generally you should persist the changes.
      */
     public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
         ChunkyManager.getPermissions(object, permObject).setFlags(flags);

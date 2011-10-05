@@ -1,8 +1,8 @@
 package org.getchunky.chunky.event.object.player;
 
 import org.getchunky.chunky.object.ChunkyChunk;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
 import org.getchunky.chunky.object.ChunkyPlayer;
+import org.getchunky.chunky.permission.ChunkyAccessLevel;
 
 /**
  * @author dumptruckman, SwearWord
@@ -29,9 +29,9 @@ public class ChunkyPlayerChunkEvent extends ChunkyPlayerEvent {
 
     /**
      * Returns the ChunkyAccessLevel of this event.
-     * @see org.getchunky.chunky.permission.ChunkyAccessLevel
      *
      * @return Type of permission for event, if any
+     * @see org.getchunky.chunky.permission.ChunkyAccessLevel
      */
     public ChunkyAccessLevel getAccessLevel() {
         return accessLevel;

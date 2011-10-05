@@ -9,8 +9,8 @@ public class DatabaseManager {
     private static Database database;
 
     public static boolean load() {
-        if(Config.isUsingMySQL()) {
-            if(!loadMySQL()) loadSQLite();
+        if (Config.isUsingMySQL()) {
+            if (!loadMySQL()) loadSQLite();
         } else
             loadSQLite();
         database.loadAllObjects();

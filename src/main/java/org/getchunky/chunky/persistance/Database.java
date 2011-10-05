@@ -1,14 +1,10 @@
 package org.getchunky.chunky.persistance;
 
-import org.getchunky.chunky.object.ChunkyChunk;
-import org.getchunky.chunky.object.ChunkyObject;
-import org.getchunky.chunky.object.ChunkyPermissibleObject;
-import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.permission.ChunkyPermissions;
 
 import java.util.EnumSet;
-import java.util.List;
 
 public interface Database {
 

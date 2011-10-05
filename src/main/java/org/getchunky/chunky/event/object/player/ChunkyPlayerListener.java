@@ -7,17 +7,24 @@ import org.getchunky.chunky.event.object.ChunkyObjectListener;
  */
 public class ChunkyPlayerListener extends ChunkyObjectListener {
 
-    public ChunkyPlayerListener() {}
+    public ChunkyPlayerListener() {
+    }
 
-    public void onPlayerUnownedBreak(ChunkyPlayerDestroyEvent event) {}
+    public void onPlayerUnownedBreak(ChunkyPlayerDestroyEvent event) {
+    }
 
-    public void onPlayerUnownedBuild(ChunkyPlayerBuildEvent event) {}
+    public void onPlayerUnownedBuild(ChunkyPlayerBuildEvent event) {
+    }
 
-    public void onPlayerItemUse(ChunkyPlayerItemUseEvent event) {}
+    public void onPlayerItemUse(ChunkyPlayerItemUseEvent event) {
+    }
 
-    public void onPlayerSwitch(ChunkyPlayerSwitchEvent event) {}
+    public void onPlayerSwitch(ChunkyPlayerSwitchEvent event) {
+    }
 
-    public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {}
+    public void onPlayerChunkChange(ChunkyPlayerChunkChangeEvent event) {
+    }
 
-    public void onPlayerChunkClaim(ChunkyPlayerChunkClaimEvent event) {}
+    public void onPlayerChunkClaim(ChunkyPlayerChunkClaimEvent event) {
+    }
 }

@@ -1,5 +1,8 @@
 package org.getchunky.chunky.module;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.event.ChunkyListener;
@@ -12,9 +15,6 @@ import org.getchunky.chunky.event.object.ChunkyObjectOwnershipEvent;
 import org.getchunky.chunky.event.object.player.*;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.getchunky.chunky.util.Logging;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -67,10 +67,10 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     /**
      * Registers the given Chunky event to the specified listener
      *
-     * @param type ChunkyEventType to register
+     * @param type     ChunkyEventType to register
      * @param listener ChunkyListener to register
      * @param priority Priority of this event
-     * @param plugin Plugin to register
+     * @param plugin   Plugin to register
      */
     public void registerEvent(ChunkyEvent.Type type, ChunkyListener listener,
                               ChunkyEvent.Priority priority, Plugin plugin) {
@@ -185,7 +185,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                         ((ChunkyCommandListener) listener).onCommandList((ChunkyCommandEvent) event);
                     }
                 };
-            
+
             // Custom Events
             case CUSTOM_EVENT:
                 return new ChunkyEventExecutor() {
@@ -243,7 +243,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         ChunkyCommand currentCommand = registeredCommands.get(commands[0]);
         for (int i = 0; i < commands.length; i++) {
             if (currentCommand == null) break;
-            
+
             if (i != 0) {
                 currentName += "." + commands[i];
                 currentCommand = currentCommand.getChild(currentName);
@@ -256,7 +256,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
      * Retrieves a command by an alias (or the normal name).  You must know the parent command in order to use this.
      *
      * @param parentCommand Parent command of command to look up
-     * @param alias Alias of command to look up
+     * @param alias         Alias of command to look up
      * @return Command found if any or null if none found
      */
     public ChunkyCommand getCommandByAlias(ChunkyCommand parentCommand, String alias) {
@@ -267,17 +267,17 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                     return registeredCommand.getValue();
                 }
                 if (registeredCommand.getValue().getAliases() != null
-                            &&registeredCommand.getValue().getAliases().contains(alias.toLowerCase())) {
+                        && registeredCommand.getValue().getAliases().contains(alias.toLowerCase())) {
                     command = registeredCommand.getValue();
                 }
             }
         } else {
-            for (Map.Entry<String,ChunkyCommand> childCommand : parentCommand.getChildren().entrySet()) {
+            for (Map.Entry<String, ChunkyCommand> childCommand : parentCommand.getChildren().entrySet()) {
                 if (childCommand.getValue().getName().equals(alias.toLowerCase())) {
                     return childCommand.getValue();
                 }
                 if (childCommand.getValue().getAliases() != null
-                            && childCommand.getValue().getAliases().contains(alias.toLowerCase())) {
+                        && childCommand.getValue().getAliases().contains(alias.toLowerCase())) {
                     command = childCommand.getValue();
                 }
             }
@@ -298,7 +298,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     /**
      * Mostly used internally to parse commands from PlayerCommandPreprocessEvents to see if they should fire a Chunky Command.
      *
-     * @param sender Sender of command
+     * @param sender   Sender of command
      * @param commands Array of words used in command
      */
     public void parseCommand(CommandSender sender, String[] commands) {
@@ -322,7 +322,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             }
         }
 
-        String label = commands[i-1];
+        String label = commands[i - 1];
         String[] args = argsList.toArray(new String[argsList.size()]);
         if (!argsList.isEmpty()) {
             if (argsList.get(0).equalsIgnoreCase("help")) {
@@ -340,7 +340,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         Logging.debug(sender + "'s command translated to: " + chunkyCommand.getFullName() + "[" + chunkyCommand.getChatName() + "] with alias: " + label + " and args: " + Arrays.asList(args));
         ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
         callEvent(event);
-        if (!event.isCancelled())  {
+        if (!event.isCancelled()) {
             chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);
         }
     }

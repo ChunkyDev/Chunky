@@ -1,8 +1,8 @@
 package org.getchunky.chunky.module;
 
+import org.bukkit.plugin.Plugin;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.event.ChunkyListener;
-import org.bukkit.plugin.Plugin;
 
 /**
  * @author dumptruckman, SwearWord
@@ -29,6 +29,7 @@ public class RegisteredChunkyListener {
 
     /**
      * Gets the listener for this registration
+     *
      * @return Registered Listener
      */
     public ChunkyListener getListener() {
@@ -37,6 +38,7 @@ public class RegisteredChunkyListener {
 
     /**
      * Gets the module for this registration
+     *
      * @return Registered Plugin
      */
     public Plugin getPlugin() {
@@ -45,6 +47,7 @@ public class RegisteredChunkyListener {
 
     /**
      * Gets the priority for this registration
+     *
      * @return Registered Priority
      */
     public ChunkyEvent.Priority getPriority() {
@@ -53,6 +56,7 @@ public class RegisteredChunkyListener {
 
     /**
      * Calls the event executor
+     *
      * @return Registered Priority
      */
     public void callEvent(ChunkyEvent event) {

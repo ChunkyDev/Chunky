@@ -17,7 +17,7 @@ import java.util.List;
 public class CommandChunkyPlayerSetMode implements ChunkyCommandExecutor {
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        if(!(sender instanceof Player)) {
+        if (!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
@@ -26,7 +26,7 @@ public class CommandChunkyPlayerSetMode implements ChunkyCommandExecutor {
             return;
         }
 
-        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer((Player)sender);
+        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer((Player) sender);
 
         List<String> modes = Arrays.asList(args);
         for (String mode : modes) {

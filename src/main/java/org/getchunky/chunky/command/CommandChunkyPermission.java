@@ -1,18 +1,22 @@
 package org.getchunky.chunky.command;
 
-import java.util.*;
-
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
-import org.getchunky.chunky.object.*;
-
+import org.getchunky.chunky.object.ChunkyChunk;
+import org.getchunky.chunky.object.ChunkyGroup;
+import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author dumptruckman, SwearWord
@@ -20,7 +24,7 @@ import org.bukkit.entity.Player;
 public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        if (!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
@@ -28,7 +32,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         setPerms(ChunkyManager.getChunkyPlayer((Player) sender), args);
     }
 
-    public void setPerms(ChunkyPlayer cPlayer, String[] args){
+    public void setPerms(ChunkyPlayer cPlayer, String[] args) {
         if (args.length != 3) {
             Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
             return;
@@ -107,7 +111,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         String sPermObject = "";
         // The permissions for the target/object relationship for displaying to sender and target
         ChunkyPermissions perms = null;
-        
+
         if (args[2].equalsIgnoreCase("global")) {
             // "everyone"
             sPermObject = Language.EVERYONE.getString();
@@ -126,7 +130,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 if (i == 0) {
                     // On the first loop through, get word reference for current target
                     if (target instanceof ChunkyChunk) {
-                        sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                        sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk) target).getCoord());
                     } else if (target instanceof ChunkyPlayer) {
                         sTargetForPermissible = Language.THEIR_PROPERTY.getString();
                     }
@@ -165,7 +169,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 for (ChunkyObject object : groups) {
                     if (object instanceof ChunkyGroup) {
                         if (object.getName().equalsIgnoreCase(groupName)) {
-                            group = (ChunkyGroup)object;
+                            group = (ChunkyGroup) object;
                             break;
                         }
                     }
@@ -195,7 +199,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                         perms = ChunkyManager.getPermissions(target, permPlayer);
                         if (targets.size() == 1) {
                             if (target instanceof ChunkyChunk) {
-                                sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                                sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk) target).getCoord());
                             } else if (target instanceof ChunkyPlayer) {
                                 sTargetForPermissible = Language.THEIR_PROPERTY.getString();
                             }
@@ -208,7 +212,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
             }
         }
-        
+
         if (perms != null)
             Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
     }

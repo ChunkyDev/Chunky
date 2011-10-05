@@ -1,8 +1,8 @@
 package org.getchunky.chunky.command;
 
+import org.bukkit.command.CommandSender;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
-import org.bukkit.command.CommandSender;
 
 /**
  * @author dumptruckman, SwearWord
@@ -10,6 +10,6 @@ import org.bukkit.command.CommandSender;
 public class CommandChunkyChunkSet implements ChunkyCommandExecutor {
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        
+
     }
 }

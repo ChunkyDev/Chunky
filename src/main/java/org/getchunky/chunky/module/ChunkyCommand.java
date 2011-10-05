@@ -22,12 +22,12 @@ public class ChunkyCommand {
 
     /**
      * Creates a Command that is registrable with Chunky.
-     * 
-     * @param name the name of the command. Example: "chunky" creates command /chunky
-     * @param aliases any aliases you wish to register for the command
+     *
+     * @param name        the name of the command. Example: "chunky" creates command /chunky
+     * @param aliases     any aliases you wish to register for the command
      * @param description the description that Chunky will show for this command
-     * @param helpLines a list of helpful information related to the command
-     * @param executor the class that will contain the onCommand() for this command
+     * @param helpLines   a list of helpful information related to the command
+     * @param executor    the class that will contain the onCommand() for this command
      */
     public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor) {
         this(name, aliases, description, helpLines, executor, null);
@@ -36,11 +36,11 @@ public class ChunkyCommand {
     /**
      * Creates a Command that is registrable with Chunky.
      *
-     * @param name the name of the command. Example: "chunky" creates command /chunky
-     * @param aliases any aliases you wish to register for the command
-     * @param description the description that Chunky will show for this command
-     * @param helpLines a list of helpful information related to the command
-     * @param executor the class that will contain the onCommand() for this command
+     * @param name          the name of the command. Example: "chunky" creates command /chunky
+     * @param aliases       any aliases you wish to register for the command
+     * @param description   the description that Chunky will show for this command
+     * @param helpLines     a list of helpful information related to the command
+     * @param executor      the class that will contain the onCommand() for this command
      * @param parentCommand the command to register this command as a subcommand of. Example, if you registered a command with name "claim" to an already register command "chunky" you will end up with /chunky claim
      */
     public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
@@ -60,17 +60,17 @@ public class ChunkyCommand {
         ChunkyCommand currentParent = parentCommand;
         while (true) {
             if (currentParent == null) break;
-            this.fullName  = currentParent.getName() + "." + this.fullName;
+            this.fullName = currentParent.getName() + "." + this.fullName;
             currentParent = currentParent.getParent();
         }
 
         String[] splitName = this.fullName.split("\\.");
         chatName = "/";
         //if (splitName.length != 0) {
-            for (int i = 0; i < splitName.length; i++) {
-                if (i != 0) chatName += " ";
-                chatName += splitName[i];
-            }
+        for (int i = 0; i < splitName.length; i++) {
+            if (i != 0) chatName += " ";
+            chatName += splitName[i];
+        }
         //} else {
         //    chatName += this.fullName;
         //}
@@ -96,7 +96,7 @@ public class ChunkyCommand {
 
     /**
      * Retrieves the name of this command as the way you would type it.  Example: /chunky claim radius
-     * 
+     *
      * @return the chat name of this command
      */
     public final String getChatName() {
@@ -159,7 +159,7 @@ public class ChunkyCommand {
 
     /**
      * Retrieves the class responsible for executing this command.
-     * 
+     *
      * @return the class responsible for executing this command
      */
     public final ChunkyCommandExecutor getExecutor() {
@@ -168,7 +168,7 @@ public class ChunkyCommand {
 
     /**
      * Adds a child command to this command.  This method is generally the responsibility of the Chunky API.
-     * 
+     *
      * @param child sub-command to add
      * @return true if the sub command did not already exist
      */
@@ -182,7 +182,7 @@ public class ChunkyCommand {
 
     /**
      * Retrieves a child command with the specific full name.
-     * 
+     *
      * @param fullName full name of child command
      * @return child command if registered to this command or null if not registered
      */
@@ -201,7 +201,7 @@ public class ChunkyCommand {
     }
 
     public boolean equals(Object o) {
-        return o instanceof ChunkyCommand && ((ChunkyCommand)o).getFullName().equals(this.getFullName());
+        return o instanceof ChunkyCommand && ((ChunkyCommand) o).getFullName().equals(this.getFullName());
     }
 
     public int hashCode() {

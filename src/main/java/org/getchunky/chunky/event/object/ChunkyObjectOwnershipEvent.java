@@ -1,8 +1,8 @@
 package org.getchunky.chunky.event.object;
 
+import org.bukkit.event.Cancellable;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.object.ChunkyObject;
-import org.bukkit.event.Cancellable;
 
 /**
  * @author dumptruckman

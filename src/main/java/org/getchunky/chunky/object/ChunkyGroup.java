@@ -5,7 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -22,7 +21,7 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
                 String id = this.getJSONObject("members").get(this.getJSONObject("members").names().get(i).toString()).toString();
                 ChunkyObject object = ChunkyManager.getObject(id);
                 if (object != null)
-                    members.put(this.getJSONObject("members").names().get(i).toString(), (ChunkyGroup)object);
+                    members.put(this.getJSONObject("members").names().get(i).toString(), (ChunkyGroup) object);
             }
             return members;
         } catch (JSONException e) {

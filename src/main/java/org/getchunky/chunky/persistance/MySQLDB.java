@@ -1,9 +1,9 @@
 package org.getchunky.chunky.persistance;
 
-import org.getchunky.chunky.config.Config;
-import org.getchunky.chunky.util.Logging;
 import lib.PatPeter.SQLibrary.MySQL;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.chunky.config.Config;
+import org.getchunky.chunky.util.Logging;
 
 import java.sql.ResultSet;
 
@@ -15,7 +15,10 @@ public class MySQLDB extends SQLDB {
     public ResultSet query(String query) {
         try {
             return db.query(query);
-        } catch (Exception e) {return null;}}
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public boolean connect(Plugin plugin) {
         Logging.info("Connecting to MySQL database.");
@@ -30,31 +33,37 @@ public class MySQLDB extends SQLDB {
 
         try {
             db.open();
-            if(!db.checkConnection()) return false;
+            if (!db.checkConnection()) return false;
         } catch (Exception e) {
             Logging.severe("Connection to MySQL database failed.");
-            return false;}
+            return false;
+        }
 
-        try {checkTables();}
-        catch (Exception e) {
+        try {
+            checkTables();
+        } catch (Exception e) {
             Logging.severe("Could not access MySQL tables.");
-            return false;}
+            return false;
+        }
         Logging.info("Connected to MySQL database and verified tables.");
         return true;
     }
 
     private Boolean checkTables() throws Exception {
-        if(!this.db.checkTable("chunky_objects")) {
-            if(!db.createTable(QueryGen.createObjectTable())) return false;
-            Logging.info("Created chunky_objects table.");}
+        if (!this.db.checkTable("chunky_objects")) {
+            if (!db.createTable(QueryGen.createObjectTable())) return false;
+            Logging.info("Created chunky_objects table.");
+        }
 
-        if(!this.db.checkTable("chunky_ownership")) {
-            if(!db.createTable(QueryGen.createOwnerShipTable())) return false;
-            Logging.info("Created chunky_ownership table.");}
+        if (!this.db.checkTable("chunky_ownership")) {
+            if (!db.createTable(QueryGen.createOwnerShipTable())) return false;
+            Logging.info("Created chunky_ownership table.");
+        }
 
-        if(!this.db.checkTable("chunky_permissions")) {
-            if(!db.createTable(QueryGen.createPermissionsTable())) return false;
-            Logging.info("Created chunky_permissions table.");}
+        if (!this.db.checkTable("chunky_permissions")) {
+            if (!db.createTable(QueryGen.createPermissionsTable())) return false;
+            Logging.info("Created chunky_permissions table.");
+        }
         return true;
     }
 

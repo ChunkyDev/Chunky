@@ -1,8 +1,8 @@
 package org.getchunky.chunky.object;
 
 import org.getchunky.chunky.ChunkyManager;
-import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +42,7 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public final void setPerm(ChunkyObject object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
         perms.setFlag(type, status);
-        
+
         // Persist if requested
         if (persist) {
             DatabaseManager.getDatabase().updatePermissions(this, object, perms.getFlags());
@@ -71,7 +71,7 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
                 String id = this.getJSONObject("groups").get(this.getJSONObject("groups").names().get(i).toString()).toString();
                 ChunkyObject object = ChunkyManager.getObject(id);
                 if (object != null)
-                    groups.put(this.getJSONObject("groups").names().get(i).toString(), (ChunkyGroup)object);
+                    groups.put(this.getJSONObject("groups").names().get(i).toString(), (ChunkyGroup) object);
             }
             Logging.debug("Groups for " + this.getName() + ": " + groups.toString());
             return groups;

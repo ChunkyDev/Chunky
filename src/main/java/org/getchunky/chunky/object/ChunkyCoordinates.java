@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.getchunky.chunky.util.Logging;
 
 /**
@@ -19,19 +18,19 @@ public class ChunkyCoordinates {
 
     /**
      * Creates a ChunkyCoordinates object with the given Location object.
+     *
      * @param location Location object for ChunkyCoordinates
      */
-    public ChunkyCoordinates(Location location)
-    {
-        this(location.getWorld().getName(),location.getBlock().getChunk().getX(),location.getBlock().getChunk().getZ());
+    public ChunkyCoordinates(Location location) {
+        this(location.getWorld().getName(), location.getBlock().getChunk().getX(), location.getBlock().getChunk().getZ());
     }
 
     /**
      * Creates a ChunkyCoordinates object with the given Chunk object.
+     *
      * @param chunk Chunk for ChunkyCoordinates
      */
-    public ChunkyCoordinates(Chunk chunk)
-    {
+    public ChunkyCoordinates(Chunk chunk) {
         this(chunk.getWorld().getName(), chunk.getX(), chunk.getZ());
     }
 
@@ -48,13 +47,12 @@ public class ChunkyCoordinates {
 
     /**
      * Creates a ChunkyCoordinates object with the given world value and CHUNK X and Z values.
-     * 
+     *
      * @param world World chunk is in
-     * @param x Chunk X (NOT BLOCK)
-     * @param z Chunk Z (NOT BLOCK)
+     * @param x     Chunk X (NOT BLOCK)
+     * @param z     Chunk Z (NOT BLOCK)
      */
-    public ChunkyCoordinates(String world, int x, int z)
-    {
+    public ChunkyCoordinates(String world, int x, int z) {
         this.world = world;
         this.x = x;
         this.z = z;
@@ -94,13 +92,13 @@ public class ChunkyCoordinates {
      */
     public Location toLocation() {
         World world = Bukkit.getServer().getWorld(this.world);
-        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0,0,0).getLocation()).getLocation();
+        return world.getHighestBlockAt(world.getChunkAt(this.x, this.z).getBlock(0, 0, 0).getLocation()).getLocation();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof ChunkyCoordinates)) return false;
-        ChunkyCoordinates coords = (ChunkyCoordinates)obj;
+        ChunkyCoordinates coords = (ChunkyCoordinates) obj;
         return coords.getWorld().equals(this.getWorld()) && coords.getX() == this.x && coords.getZ() == this.z;
     }
 

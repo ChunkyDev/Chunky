@@ -27,6 +27,7 @@ public class Config {
 
     /**
      * Loads the configuration data into memory and sets defaults
+     *
      * @param plugin Your module
      * @throws IOException
      */
@@ -74,19 +75,20 @@ public class Config {
     }
 
     private static Boolean getBoolean(ConfigPath path) {
-        return config.getBoolean(path.getPath(), (Boolean)path.getDefault());
+        return config.getBoolean(path.getPath(), (Boolean) path.getDefault());
     }
 
     private static Integer getInt(ConfigPath path) {
-        return config.getInt(path.getPath(), (Integer)path.getDefault());
+        return config.getInt(path.getPath(), (Integer) path.getDefault());
     }
 
     private static String getString(ConfigPath path) {
-        return config.getString(path.getPath(), (String)path.getDefault());
+        return config.getString(path.getPath(), (String) path.getDefault());
     }
 
     /**
      * Retrieves the language file name for this module
+     *
      * @return Language file name
      */
     public static String getLanguageFileName() {
@@ -95,6 +97,7 @@ public class Config {
 
     /**
      * Retrieves the period at which to save the data file in seconds
+     *
      * @return Period to save data file
      */
     @Deprecated
@@ -152,15 +155,16 @@ public class Config {
     public static HashSet<String> getSwitchables() {
         return SWITCHABLES;
     }
+
     public static HashSet<String> getUsables() {
         return USABLES;
     }
 
-    public static HashMap<String,Integer> getCustomPlayerChunkLimits() {
+    public static HashMap<String, Integer> getCustomPlayerChunkLimits() {
         List<String> keys = config.getKeys(PLAYER_CHUNK_LIMIT_CUSTOM.getPath());
-        HashMap<String,Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
         for (String key : keys) {
-            map.put(key, config.getInt(PLAYER_CHUNK_LIMIT_CUSTOM.getPath() + "." + key, (Integer)PLAYER_CHUNK_LIMIT.getDefault()));
+            map.put(key, config.getInt(PLAYER_CHUNK_LIMIT_CUSTOM.getPath() + "." + key, (Integer) PLAYER_CHUNK_LIMIT.getDefault()));
         }
         return map;
     }
@@ -202,7 +206,7 @@ public class Config {
                 nameFormat = nameFormat.replace("/", "");
             }
         }
-        
+
         displayName = Language.formatString(nameFormat, chunkName, ownerName);
         return displayName;
     }

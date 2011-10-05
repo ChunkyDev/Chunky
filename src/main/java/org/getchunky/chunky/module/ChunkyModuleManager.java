@@ -1,11 +1,11 @@
 package org.getchunky.chunky.module;
 
-import org.getchunky.chunky.event.ChunkyEvent;
-import org.getchunky.chunky.event.ChunkyListener;
-import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.getchunky.chunky.event.ChunkyEvent;
+import org.getchunky.chunky.event.ChunkyListener;
+import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,10 +25,10 @@ public interface ChunkyModuleManager {
     /**
      * Registers the given Chunky event to the specified listener
      *
-     * @param type ChunkyEventType to register
+     * @param type     ChunkyEventType to register
      * @param listener ChunkyListener to register
      * @param priority Priority of this event
-     * @param plugin Plugin to register
+     * @param plugin   Plugin to register
      */
     public void registerEvent(ChunkyEvent.Type type, ChunkyListener listener,
                               ChunkyEvent.Priority priority, Plugin plugin);
@@ -69,15 +69,15 @@ public interface ChunkyModuleManager {
      * Retrieves a command by an alias.  You must know the parent command in order to use this.
      *
      * @param parentCommand Parent command of command to look up
-     * @param alias Alias of command to look up
+     * @param alias         Alias of command to look up
      * @return Command found if any or null if none found
      */
     public ChunkyCommand getCommandByAlias(ChunkyCommand parentCommand, String alias);
 
     /**
      * Mostly used internally to parse commands from PlayerCommandPreprocessEvents to see if they should fire a Chunky Command.
-     * 
-     * @param sender Sender of command
+     *
+     * @param sender   Sender of command
      * @param commands Array of words used in command
      */
     public void parseCommand(CommandSender sender, String[] commands);

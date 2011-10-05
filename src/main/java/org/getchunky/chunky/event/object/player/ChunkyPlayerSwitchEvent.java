@@ -1,10 +1,10 @@
 package org.getchunky.chunky.event.object.player;
 
-import org.getchunky.chunky.object.ChunkyChunk;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
-import org.getchunky.chunky.object.ChunkyPlayer;
 import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
+import org.getchunky.chunky.object.ChunkyChunk;
+import org.getchunky.chunky.object.ChunkyPlayer;
+import org.getchunky.chunky.permission.ChunkyAccessLevel;
 
 /**
  * @author dumptruckman, SwearWord

@@ -10,6 +10,6 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 public class CommandChunkyPlayerSet implements ChunkyCommandExecutor {
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
-        
+
     }
 }

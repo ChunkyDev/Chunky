@@ -63,10 +63,8 @@ public enum ChunkyAccessLevel {
     /**
      * No permission given.
      */
-    NONE,
+    NONE,;
 
-    ;
-    
     private boolean denied = false;
 
     public void setDenied(boolean deny) {
