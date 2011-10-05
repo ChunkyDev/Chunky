@@ -14,6 +14,9 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
 
     public HashMap<String, ChunkyPermissibleObject> getMembers() {
         try {
+            if (!this.has("members")) {
+                this.put("members", new JSONObject());
+            }
             HashMap<String, ChunkyPermissibleObject> members = new HashMap<String, ChunkyPermissibleObject>();
             for (int i = 0; i < this.getJSONObject("members").names().length(); i++) {
                 String id = this.getJSONObject("members").get(this.getJSONObject("members").names().get(i).toString()).toString();
@@ -30,6 +33,9 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
 
     public JSONObject getMembersMap() {
         try {
+            if (!this.has("members")) {
+                this.put("members", new JSONObject());
+            }
             return this.getJSONObject("members");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -39,6 +45,9 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
 
     protected void addMember(ChunkyPermissibleObject object) {
         try {
+            if (!this.has("members")) {
+                this.put("members", new JSONObject());
+            }
             this.getJSONObject("members").put(object.getName(), object.getFullId());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -47,7 +56,8 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
 
     protected void removeMember(ChunkyPermissibleObject object) {
         try {
-            this.getJSONObject("members").remove(object.getName());
+            if (this.has("members"))
+                this.getJSONObject("members").remove(object.getName());
         } catch (JSONException e) {
             e.printStackTrace();
         }

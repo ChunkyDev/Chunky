@@ -5,6 +5,7 @@ import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.permission.ChunkyPermissionCache;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -54,6 +55,9 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public JSONObject getGroupsMap() {
         try {
+            if (!this.has("groups")) {
+                this.put("groups", new JSONObject());
+            }
             return this.getJSONObject("groups");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -63,6 +67,9 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public HashMap<String, ChunkyGroup> getGroups() {
         try {
+            if (!this.has("groups")) {
+                this.put("groups", new JSONObject());
+            }
             HashMap<String, ChunkyGroup> groups = new HashMap<String, ChunkyGroup>();
             for (int i = 0; i < this.getJSONObject("groups").names().length(); i++) {
                 String id = this.getJSONObject("groups").get(this.getJSONObject("groups").names().get(i).toString()).toString();
@@ -70,6 +77,7 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
                 if (object != null)
                     groups.put(this.getJSONObject("groups").names().get(i).toString(), (ChunkyGroup)object);
             }
+            Logging.debug("Groups for " + this.getName() + ": " + groups.toString());
             return groups;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -80,6 +88,9 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public void addGroup(ChunkyGroup group) {
         group.addMember(this);
         try {
+            if (!this.has("groups")) {
+                this.put("groups", new JSONObject());
+            }
             this.getJSONObject("groups").put(group.getName(), group.getFullId());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,7 +100,8 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public void removeGroup(ChunkyGroup group) {
         group.removeMember(this);
         try {
-            this.getJSONObject("groups").remove(group.getName());
+            if (this.has("groups"))
+                this.getJSONObject("groups").remove(group.getName());
         } catch (JSONException e) {
             e.printStackTrace();
         }
