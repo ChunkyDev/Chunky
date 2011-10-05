@@ -42,10 +42,10 @@ public abstract class ChunkyObject extends JSONObject {
         className = this.getClass().getName();
     }
 
-    public final ChunkyObject save() throws ChunkyObjectNotInitializedException {
-        if(id == null) throw new ChunkyObjectNotInitializedException("Object persistence failed: Null ID not allowed!");
+    public final boolean save() {
+        if(id == null) return false;
         DatabaseManager.getDatabase().updateObject(this);
-        return this;
+        return true;
     }
 
     //TODO Should this be moved to super class?
@@ -135,11 +135,7 @@ public abstract class ChunkyObject extends JSONObject {
         } catch (JSONException e) {
             //Logging.warning(e.getMessage());
         }
-        try {
-            save();
-        } catch (ChunkyObjectNotInitializedException e) {
-            Logging.severe(e.getMessage());
-        }
+        save();
         return this;
     }
 
