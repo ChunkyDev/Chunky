@@ -11,6 +11,8 @@ import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -67,7 +69,9 @@ public class ChunkyPermissionChain {
             return accessLevel;
         }
 
-        for (ChunkyGroup group : permObject.getGroups().values()) {
+        Collection<ChunkyGroup> groups = permObject.getGroups().values();
+
+        for (ChunkyGroup group : groups) {
             permission = group.hasPerm(object, flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.DIRECT_GROUP_PERMISSION;
@@ -92,7 +96,7 @@ public class ChunkyPermissionChain {
             }
         }
 
-        for (ChunkyGroup group : permObject.getGroups().values()) {
+        for (ChunkyGroup group : groups) {
             permission = group.hasPerm(object.getOwner(), flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_GROUP_PERMISSION;
