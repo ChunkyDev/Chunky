@@ -3,6 +3,7 @@ package org.getchunky.chunky.object;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
@@ -32,6 +33,11 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public ChunkyChunk getCurrentChunk() {
+        if (this.currentChunk == null) {
+            try {
+                this.currentChunk = ChunkyManager.getChunk(getPlayer().getLocation());
+            } catch (Exception ignore) {}
+        }
         return this.currentChunk;
     }
 
