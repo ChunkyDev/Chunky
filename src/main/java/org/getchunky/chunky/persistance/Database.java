@@ -2,6 +2,7 @@ package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
+import org.getchunky.chunky.object.ChunkyPermissibleObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.bukkit.plugin.Plugin;
@@ -23,16 +24,16 @@ public interface Database {
 
     public void updateObject(ChunkyObject object);
 
-    public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags);
+    public void updatePermissions(ChunkyObject permObject, ChunkyObject objectId, EnumSet<ChunkyPermissions.Flags> flags);
 
-    public void removePermissions(String permissibleId, String objectId);
+    public void removePermissions(ChunkyObject permissible, ChunkyObject object);
 
-    public void removeAllPermissions(String objectId);
+    public void removeAllPermissions(ChunkyObject object);
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable);
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
 
-    public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags);
+    public void updateDefaultPermissions(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags);
 
 }

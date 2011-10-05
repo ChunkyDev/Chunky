@@ -257,19 +257,19 @@ public abstract class ChunkyObject extends JSONObject {
             owner = null;
         }
         if(clearPermissions) {
-            ChunkyManager.getAllPermissions(getFullId()).clear();
-            DatabaseManager.getDatabase().removeAllPermissions(this.getFullId());
+            ChunkyManager.getAllPermissions(this).clear();
+            DatabaseManager.getDatabase().removeAllPermissions(this);
         }
     }
 
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(getFullId(), getFullId());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(this, this);
         Logging.debug("default perms: " + perms + " contains " + type + "?");
         return perms.contains(type);
     }
 
     public final EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
-        return ChunkyManager.getPermissions(getFullId(), getFullId()).getFlags();
+        return ChunkyManager.getPermissions(this, this).getFlags();
     }
 
     public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status) {
@@ -278,8 +278,8 @@ public abstract class ChunkyObject extends JSONObject {
 
     public final void setDefaultPerms(EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
-            ChunkyManager.getPermissions(getFullId(), getFullId()).clearFlags();
-            DatabaseManager.getDatabase().removePermissions(this.getFullId(), this.getFullId());
+            ChunkyManager.getPermissions(this, this).clearFlags();
+            DatabaseManager.getDatabase().removePermissions(this, this);
             return;
         }
         
@@ -293,13 +293,13 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final void setDefaultPerm(ChunkyPermissions.Flags type, boolean status, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(getFullId(), getFullId());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(this, this);
         // Set flag
         perms.setFlag(type, status);
 
         // Persist if requested
         if (persist) {
-            DatabaseManager.getDatabase().updateDefaultPermissions(this.getFullId(), perms.getFlags());
+            DatabaseManager.getDatabase().updateDefaultPermissions(this, perms.getFlags());
         }
     }
 

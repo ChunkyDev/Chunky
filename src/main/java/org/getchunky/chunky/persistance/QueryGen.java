@@ -53,7 +53,7 @@ public class QueryGen {
                         ")";
     }
 
-    public static String updatePermissions(String permissibleId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
+    public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
         int build = flags.contains(ChunkyPermissions.Flags.BUILD) ? 1:0;
         int destroy = flags.contains(ChunkyPermissions.Flags.DESTROY) ? 1:0;
         int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1:0;
@@ -62,24 +62,34 @@ public class QueryGen {
             String.format("REPLACE INTO chunky_permissions (" +
             "PermissibleId, " +
             "ObjectId, " +
+            "PermissibleType, " +
+            "ObjectType, " +
             "BUILD," +
             "DESTROY," +
             "ITEMUSE," +
             "SWITCH) " +
-            "VALUES ('%s','%s',%s,%s,%s,%s)", permissibleId, objectId, build, destroy, itemuse, sw);
+            "VALUES ('%s','%s',%s,'%s',%s,%s,%s,%s)",
+                    permissible.getId(), object.getId(),
+                    permissible.getType(), object.getType(),
+                    build, destroy, itemuse, sw);
     }
 
-    public static String removePermissions(String permissibleId, String objectId) {
+    public static String removePermissions(ChunkyObject permissible, ChunkyObject object) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-            "PermissibleId = '%s' " +
-            "AND ObjectId = '%s'", permissibleId, objectId);
+                    "PermissibleId = '%s' " +
+                    "AND ObjectId = '%s'" +
+                    "AND PermissibleType = '%s'" +
+                    "AND ObjectType = '%s'",
+                    permissible.getId(), object.getId(),
+                    permissible.getType(), object.getType());
     }
 
-    public static String removeAllPermissions(String objectId) {
+    public static String removeAllPermissions(ChunkyObject object) {
         return
             String.format("DELETE FROM chunky_permissions where " +
-                    "ObjectId = '%s'", objectId);
+                    "ObjectId = '%s'"+
+                    "AND ObjectType = '%s'", object.getId(), object.getType());
     }
 
      public static String addOwnership(ChunkyObject owner, ChunkyObject ownable) {

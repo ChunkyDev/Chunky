@@ -114,7 +114,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             for (ChunkyObject target : targets) {
                 target.setDefaultPerms(flags);
                 if (perms == null)
-                    perms = ChunkyManager.getPermissions(target.getFullId(), target.getFullId());
+                    perms = ChunkyManager.getPermissions(target, target);
             }
         } else if (args[2].equalsIgnoreCase("all")) {
             // "all specific players"
@@ -133,24 +133,23 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 }
 
                 // Grab the permissions for the current target object and loop through the objects with permissions in order to set those perms
-                Set<String> objectPerms = ChunkyManager.getAllPermissions(target.getFullId()).keySet();
-                for (String permObjectId : objectPerms) {
+                Set<ChunkyObject> objectPerms = ChunkyManager.getAllPermissions(target).keySet();
+                for (ChunkyObject permObject : objectPerms) {
                     if (flags == null) {
-                        ChunkyManager.getPermissions(target.getFullId(), permObjectId).clearFlags();
-                        DatabaseManager.getDatabase().removePermissions(target.getFullId(), permObjectId);
+                        ChunkyManager.getPermissions(target, permObject).clearFlags();
+                        DatabaseManager.getDatabase().removePermissions(target, permObject);
                         return;
                     } else {
-                        ChunkyManager.setPermissions(target.getFullId(), permObjectId, flags);
+                        ChunkyManager.setPermissions(target, permObject, flags);
                     }
 
                     if (i == 0) {
-                        perms = ChunkyManager.getPermissions(target.getFullId(), permObjectId);
-                        ChunkyObject tempPlayer = ChunkyManager.getObject(permObjectId);
-                        if (tempPlayer != null && tempPlayer instanceof ChunkyPlayer) {
+                        perms = ChunkyManager.getPermissions(target, permObject);
+                        if (permObject != null && permObject instanceof ChunkyPlayer) {
                             if (targets.size() == 1) {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) tempPlayer, cPlayer.getName(), perms, sTargetForPermissible);
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms, sTargetForPermissible);
                             } else {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) tempPlayer, cPlayer.getName(), perms, Language.ALL_THEIR_CURRENT_PROPERTY.getString());
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms, Language.ALL_THEIR_CURRENT_PROPERTY.getString());
                             }
                         }
                     }
@@ -193,7 +192,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 for (ChunkyObject target : targets) {
                     permPlayer.setPerms(target, flags);
                     if (sTargetForPermissible.isEmpty()) {
-                        perms = ChunkyManager.getPermissions(target.getFullId(), permPlayer.getFullId());
+                        perms = ChunkyManager.getPermissions(target, permPlayer);
                         if (targets.size() == 1) {
                             if (target instanceof ChunkyChunk) {
                                 sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());

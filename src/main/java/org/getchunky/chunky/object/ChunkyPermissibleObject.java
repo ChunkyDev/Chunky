@@ -1,9 +1,7 @@
 package org.getchunky.chunky.object;
 
-import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.persistance.DatabaseManager;
-import org.getchunky.chunky.permission.ChunkyPermissionCache;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
@@ -11,8 +9,6 @@ import org.json.JSONObject;
 
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * @author dumptruckman
@@ -20,36 +16,36 @@ import java.util.Iterator;
 public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public final Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(object.getFullId(), this.getFullId());
+        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
         return perms.contains(type);
     }
 
     public final EnumSet<ChunkyPermissions.Flags> getFlags(ChunkyObject object) {
-        return ChunkyManager.getPermissions(object.getFullId(), this.getFullId()).getFlags();
+        return ChunkyManager.getPermissions(object, this).getFlags();
     }
 
     public final void setPerm(ChunkyObject object, ChunkyPermissions.Flags type, boolean status) {
-        setPerm(object.getFullId(), type, status, true);
+        setPerm(object, type, status, true);
     }
 
     public final void setPerms(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
         if (flags == null) {
-            ChunkyManager.getPermissions(object.getFullId(), this.getFullId()).clearFlags();
-            DatabaseManager.getDatabase().removePermissions(object.getFullId(), this.getFullId());
+            ChunkyManager.getPermissions(object, this).clearFlags();
+            DatabaseManager.getDatabase().removePermissions(object, this);
             return;
         }
 
-        ChunkyManager.getPermissions(object.getFullId(), this.getFullId()).setFlags(flags);
-        DatabaseManager.getDatabase().updatePermissions(this.getFullId(), object.getFullId(), flags);
+        ChunkyManager.getPermissions(object, this).setFlags(flags);
+        DatabaseManager.getDatabase().updatePermissions(this, object, flags);
     }
 
-    public final void setPerm(String objectId, ChunkyPermissions.Flags type, boolean status, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(objectId, this.getFullId());
+    public final void setPerm(ChunkyObject object, ChunkyPermissions.Flags type, boolean status, boolean persist) {
+        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
         perms.setFlag(type, status);
         
         // Persist if requested
         if (persist) {
-            DatabaseManager.getDatabase().updatePermissions(this.getFullId(), objectId, perms.getFlags());
+            DatabaseManager.getDatabase().updatePermissions(this, object, perms.getFlags());
         }
     }
 

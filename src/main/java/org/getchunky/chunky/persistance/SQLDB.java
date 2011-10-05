@@ -72,11 +72,18 @@ public abstract class SQLDB implements Database{
             if(getInt(data,"SWITCH")==1) flags.add(ChunkyPermissions.Flags.SWITCH);
             if(getInt(data,"ITEMUSE")==1) flags.add(ChunkyPermissions.Flags.ITEMUSE);
             String permId = getString(data,"PermissibleId");
-            String objectId = getString(data,"ObjectId");;
-            ChunkyManager.setPermissions(
-                    objectId,
-                    permId,
-                    flags,false);}}
+            String permType = getString(data,"PermissibleType");
+            String objectId = getString(data,"ObjectId");
+            String objectType = getString(data,"ObjectType");
+            ChunkyObject object = ChunkyManager.getObject(objectType, objectId);
+            ChunkyObject permObject = ChunkyManager.getObject(permType, permId);
+            if (object != null && permObject != null)
+                ChunkyManager.setPermissions(
+                        object,
+                        permObject,
+                        flags,false);
+        }
+    }
 
     public void loadAllOwnership() {
         String query = QueryGen.selectAllOwnership();
@@ -84,23 +91,24 @@ public abstract class SQLDB implements Database{
         while(iterateData(data)) {
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"),getString(data, "OwnerId"));
             ChunkyObject ownable = ChunkyManager.getObject(getString(data, "OwnableType"),getString(data,"OwnableId"));
-            Logging.info(ownable.getId());
-            Logging.info(owner.getId());
             if(owner==null || ownable==null) return;
-            ownable.setOwner(owner,true,false);}
+            Logging.debug(ownable.getId());
+            Logging.debug(owner.getId());
+            ownable.setOwner(owner,true,false);
+        }
     }
 
 
-    public void updatePermissions(String permObjectId, String objectId, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(permObjectId, objectId, flags));
+    public void updatePermissions(ChunkyObject permObject, ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.updatePermissions(permObject, object, flags));
     }
 
-    public void removeAllPermissions(String objectId) {
-        query(QueryGen.removeAllPermissions(objectId));
+    public void removeAllPermissions(ChunkyObject object) {
+        query(QueryGen.removeAllPermissions(object));
     }
 
-    public void removePermissions(String permissibleId, String objectId) {
-        query(QueryGen.removePermissions(permissibleId,objectId));
+    public void removePermissions(ChunkyObject permissible, ChunkyObject object) {
+        query(QueryGen.removePermissions(permissible,object));
     }
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
         query(QueryGen.addOwnership(owner, ownable));
@@ -111,7 +119,7 @@ public abstract class SQLDB implements Database{
 
     }
 
-    public void updateDefaultPermissions(String id, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(id,id,flags));
+    public void updateDefaultPermissions(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
+        query(QueryGen.updatePermissions(object,object,flags));
     }
 }

@@ -18,7 +18,7 @@ import java.util.HashSet;
  */
 public class ChunkyManager {
 
-    private static HashMap<String, HashMap<String, ChunkyPermissions>> permissions = new HashMap<String, HashMap<String, ChunkyPermissions>>();
+    private static HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>> permissions = new HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>>();
     private static HashMap<String, HashMap<String,ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String,ChunkyObject>>();
 
     /**
@@ -179,47 +179,47 @@ public class ChunkyManager {
     }
 
     /**
-     * Gets the permissions object for the permissions relationship between permObjectId and objectId.  Altering this permission object will NOT persist changes.
+     * Gets the permissions object for the permissions relationship between permObject and object.  Altering this permission object will NOT persist changes.
      * 
-     * @param objectId Object being interacted with
-     * @param permObjectId Object doing the interacting
-     * @return a ChunkyPermissions objectId containing the permissions for this relationship
+     * @param object Object being interacted with
+     * @param permObject Object doing the interacting
+     * @return a ChunkyPermissions object containing the permissions for this relationship
      */
-    public static ChunkyPermissions getPermissions(String objectId, String permObjectId) {
-        if (!permissions.containsKey(objectId)) {
-            permissions.put(objectId, new HashMap<String, ChunkyPermissions>());
+    public static ChunkyPermissions getPermissions(ChunkyObject object, ChunkyObject permObject) {
+        if (!permissions.containsKey(object)) {
+            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
         }
-        HashMap<String, ChunkyPermissions> perms = permissions.get(objectId);
-        if (!perms.containsKey(permObjectId)) {
-            perms.put(permObjectId, new ChunkyPermissions());
+        HashMap<ChunkyObject, ChunkyPermissions> perms = permissions.get(object);
+        if (!perms.containsKey(permObject)) {
+            perms.put(permObject, new ChunkyPermissions());
         }
-        Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObjectId).toString());
-        return perms.get(permObjectId);
+        Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObject).toString());
+        return perms.get(permObject);
     }
 
     /**
      * Allows you to set permissions for an object without having the ChunkyObjects.  This WILL persist changes.
      *
-     * @param objectId Object being interacted with
-     * @param permObjectId Object doing the interacting
+     * @param object Object being interacted with
+     * @param permObject Object doing the interacting
      * @param flags Flag Set to change permissions to
      */
-    public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags) {
-        setPermissions(objectId, permObjectId, flags, true);
+    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags) {
+        setPermissions(object, permObject, flags, true);
     }
 
     /**
      * Allows you to set permissions for an object without having the ChunkyObjects.  This will optionally persist changes.
      *
-     * @param objectId Object being interacted with
-     * @param permObjectId Object doing the interacting
+     * @param object Object being interacted with
+     * @param permObject Object doing the interacting
      * @param flags Flag Set to change permissions to
      * @param persist Whether or not to persist these changes.  Generally you should persist the changes.
      */
-    public static void setPermissions(String objectId, String permObjectId, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
-        ChunkyManager.getPermissions(objectId, permObjectId).setFlags(flags);
+    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
+        ChunkyManager.getPermissions(object, permObject).setFlags(flags);
         if (persist)
-            DatabaseManager.getDatabase().updatePermissions(permObjectId, objectId, flags);
+            DatabaseManager.getDatabase().updatePermissions(permObject, object, flags);
     }
 
     /**
@@ -228,9 +228,9 @@ public class ChunkyManager {
      * @param object Object in question
      * @return HashMap of object permissions
      */
-    public static HashMap<String, ChunkyPermissions> getAllPermissions(String object) {
+    public static HashMap<ChunkyObject, ChunkyPermissions> getAllPermissions(ChunkyObject object) {
         if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<String, ChunkyPermissions>());
+            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
         }
         return permissions.get(object);
     }
