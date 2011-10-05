@@ -161,7 +161,14 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             if (args[2].startsWith("g:")) {
                 // groups
                 String groupName = args[2].substring(2);
-                ChunkyGroup group = cPlayer.getGroups().get(groupName);
+                HashSet<ChunkyObject> groups = cPlayer.getOwnables().get(ChunkyGroup.class.getName());
+                ChunkyGroup group = null;
+                for (ChunkyObject object : groups) {
+                    if (object instanceof ChunkyGroup) {
+                        if (object.getName().equalsIgnoreCase(groupName))
+                            group = (ChunkyGroup)object;
+                    }
+                }
                 if (group == null) {
                     Language.NO_SUCH_GROUP.bad(cPlayer, groupName);
                     return;
