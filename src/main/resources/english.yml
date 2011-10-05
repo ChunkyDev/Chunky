@@ -185,6 +185,13 @@ player:
     owned_chunks:
     - '&aOwned Chunks:'
     
+  mode:
+    set:
+    - 'Set player mode!'
+    - 'Type &e/chunky player set mode clear&f to turn off'
+    clear:
+    - 'Cleared player mode!'
+    
     
     
 group:

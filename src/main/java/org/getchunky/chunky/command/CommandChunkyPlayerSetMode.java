@@ -33,11 +33,18 @@ public class CommandChunkyPlayerSetMode implements ChunkyCommandExecutor {
             mode = mode.toLowerCase();
         }
 
+        boolean cleared = false;
         if (modes.contains("claim")) {
             ChunkyPlayer.getClaimModePlayers().add(cPlayer);
         }
         if (modes.contains("clear")) {
+            cleared = true;
             ChunkyPlayer.getClaimModePlayers().remove(cPlayer);
         }
+
+        if (!cleared)
+            Language.PLAYER_MODE_SET.good(cPlayer);
+        else
+            Language.PLAYER_MODE_CLEAR.good(cPlayer);
     }
 }

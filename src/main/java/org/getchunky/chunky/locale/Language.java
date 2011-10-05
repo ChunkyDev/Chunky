@@ -112,6 +112,9 @@ public enum Language {
         // Menu
         PLAYER_MENU_TITLE("player.menu.title"),
         PLAYER_MENU_OWNEDCHUNKS("player.menu.owned_chunks"),
+        // Mode
+        PLAYER_MODE_SET("player.mode.set"),
+        PLAYER_MODE_CLEAR("player.mode.clear"),
 
     /**
      * Group
