@@ -113,7 +113,10 @@ public enum Language {
         PLAYER_MENU_TITLE("player.menu.title"),
         PLAYER_MENU_OWNEDCHUNKS("player.menu.owned_chunks"),
 
-
+    /**
+     * Group
+     */
+    NO_SUCH_GROUP("group.no_such_group"),
     ;
 
     private String path;

@@ -184,3 +184,9 @@ player:
     - '&8|----------&9%1&8----------|'
     owned_chunks:
     - '&aOwned Chunks:'
+    
+    
+    
+group:
+  no_such_group:
+  - 'There is no group named: %1'

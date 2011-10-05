@@ -158,33 +158,54 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 i++;
             }
         } else {
-            // Specific player "name"
-
-            // Grab ChunkyPlayer from args
-            ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(args[2]);
-            if (permPlayer == null) {
-                Language.NO_SUCH_PLAYER.bad(cPlayer, args[2]);
-                return;
-            }
-            sPermObject = permPlayer.getName();
-
-            for (ChunkyObject target : targets) {
-                permPlayer.setPerms(target, flags);
-                if (sTargetForPermissible.isEmpty()) {
-                    perms = ChunkyManager.getPermissions(target.getFullId(), permPlayer.getFullId());
-                    if (targets.size() == 1) {
-                        if (target instanceof ChunkyChunk) {
-                            sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
-                        } else if (target instanceof ChunkyPlayer) {
-                            sTargetForPermissible = Language.THEIR_PROPERTY.getString();
-                        }
-                    } else {
-                        sTargetForPermissible = Language.ALL_THEIR_CURRENT_PROPERTY.toString();
+            if (args[2].startsWith("g:")) {
+                // groups
+                String groupName = args[2].substring(3);
+                ChunkyGroup group = null;
+                for (String groupId : cPlayer.getGroups()) {
+                    ChunkyObject object = ChunkyManager.getObject(groupId);
+                    if (object != null && object.getName().equalsIgnoreCase(groupName)) {
+                        group = (ChunkyGroup)object;
+                        break;
                     }
                 }
-            }
+                if (group == null) {
+                    Language.NO_SUCH_GROUP.bad(cPlayer, groupName);
+                    return;
+                }
+                sPermObject = "Group: " + group.getName();
+                for (ChunkyObject target : targets) {
+                    group.setPerms(target, flags);
+                }
+            } else {
+                // Specific player "name"
 
-            Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
+                // Grab ChunkyPlayer from args
+                ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(args[2]);
+                if (permPlayer == null) {
+                    Language.NO_SUCH_PLAYER.bad(cPlayer, args[2]);
+                    return;
+                }
+                sPermObject = permPlayer.getName();
+
+                for (ChunkyObject target : targets) {
+                    permPlayer.setPerms(target, flags);
+                    if (sTargetForPermissible.isEmpty()) {
+                        perms = ChunkyManager.getPermissions(target.getFullId(), permPlayer.getFullId());
+                        if (targets.size() == 1) {
+                            if (target instanceof ChunkyChunk) {
+                                sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk)target).getCoord());
+                            } else if (target instanceof ChunkyPlayer) {
+                                sTargetForPermissible = Language.THEIR_PROPERTY.getString();
+                            }
+                        } else {
+                            sTargetForPermissible = Language.ALL_THEIR_CURRENT_PROPERTY.toString();
+                        }
+                    }
+                }
+
+                Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
+            }
         }
         
         if (perms != null)
