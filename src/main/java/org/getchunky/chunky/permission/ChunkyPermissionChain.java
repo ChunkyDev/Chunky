@@ -3,6 +3,7 @@ package org.getchunky.chunky.permission;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
+import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPermissibleObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
@@ -96,6 +97,14 @@ public class ChunkyPermissionChain {
                 }
                 return accessLevel;
             }
+        }
+
+        // TODO something faster?
+        for (String groupId : permObject.getGroups()) {
+            ChunkyObject group = ChunkyManager.getObject(groupId);
+            if (group == null) continue;
+            accessLevel = hasPerm(object, (ChunkyGroup)group, flag);
+            if (accessLevel != ChunkyAccessLevel.NONE) break;
         }
 
         return accessLevel;

@@ -4,16 +4,18 @@ import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.permission.ChunkyPermissionCache;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.json.JSONException;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author dumptruckman
  */
 public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
-    public ChunkyPermissibleObject() {
-    }
+    private HashSet<String> groups = new HashSet<String>();
 
     public final Boolean hasPerm(ChunkyObject object, ChunkyPermissions.Flags type) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(object.getFullId(), this.getFullId());
@@ -46,6 +48,32 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
         // Persist if requested
         if (persist) {
             DatabaseManager.getDatabase().updatePermissions(this.getFullId(), objectId, perms.getFlags());
+        }
+    }
+
+    public HashSet<String> getGroups() {
+        @SuppressWarnings("unchecked")
+        HashSet<String> groups = (HashSet<String>)this.groups.clone();
+        return groups;
+    }
+
+    public void addGroup(ChunkyGroup group) {
+        group.addMember(this);
+        groups.add(group.getFullId());
+        try {
+            this.put("groups", groups);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeGroup(ChunkyGroup group) {
+        group.removeMember(this);
+        groups.remove(group.getFullId());
+        try {
+            this.put("groups", groups);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
