@@ -160,7 +160,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         } else {
             if (args[2].startsWith("g:")) {
                 // groups
-                String groupName = args[2].substring(3);
+                String groupName = args[2].substring(2);
                 ChunkyGroup group = null;
                 for (String groupId : cPlayer.getGroups()) {
                     ChunkyObject object = ChunkyManager.getObject(groupId);
