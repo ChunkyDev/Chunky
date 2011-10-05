@@ -56,11 +56,10 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
     }
 
     private void unclaimAll(ChunkyPlayer player) {
-        for (ChunkyObject obj : (HashSet<ChunkyObject>) player.getOwnables().get(ChunkyChunk.class.getName()).clone()) {
+        for (ChunkyObject obj : player.getOwnables().get(ChunkyChunk.class.getName())) {
             ChunkyChunk chunk = (ChunkyChunk) obj;
             chunk.setOwner(player.getOwner(), true, true);
             chunk.setName("");
-
         }
     }
 }
