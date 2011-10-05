@@ -11,6 +11,7 @@ import org.bukkit.OfflinePlayer;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author dumptruckman, SwearWord
@@ -123,9 +124,21 @@ public class ChunkyManager {
     {
         String id = player.getName();
         ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(),id);
-        if(chunkyObject!=null) return (ChunkyPlayer)chunkyObject;
+        if(chunkyObject != null) {
+            ChunkyPlayer cPlayer = (ChunkyPlayer)chunkyObject;
+            HashSet<ChunkyObject> groups = cPlayer.getOwnables().get(ChunkyGroup.class.getName());
+            ChunkyGroup friends = (ChunkyGroup)new ChunkyGroup().setId(id + "-friends");
+            if (!groups.contains(friends)) {
+                friends.setName("friends");
+                friends.setOwner(cPlayer, false, false);
+            }
+            return cPlayer;
+        }
         ChunkyPlayer cPlayer = new ChunkyPlayer();
-        cPlayer.setId(id).setName(player.getName());
+        cPlayer.setId(id).setName(id);
+        ChunkyGroup friends = new ChunkyGroup();
+        friends.setId(id + "-friends").setName("friends");
+        friends.setOwner(cPlayer, false, false);
         return cPlayer;
     }
 
