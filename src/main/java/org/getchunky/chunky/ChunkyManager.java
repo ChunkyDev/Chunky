@@ -126,14 +126,12 @@ public class ChunkyManager {
         ChunkyObject chunkyObject = getObject(ChunkyPlayer.class.getName(),id);
         if(chunkyObject != null) {
             ChunkyPlayer cPlayer = (ChunkyPlayer)chunkyObject;
-            /*
             HashSet<ChunkyObject> groups = cPlayer.getOwnables().get(ChunkyGroup.class.getName());
             ChunkyGroup friends = (ChunkyGroup)new ChunkyGroup().setId(id + "-friends");
-            if (!groups.contains(friends)) {
+            if (groups == null || !groups.contains(friends)) {
                 friends.setName("friends");
                 friends.setOwner(cPlayer, false, false);
             }
-            */
             return cPlayer;
         }
         ChunkyPlayer cPlayer = new ChunkyPlayer();
