@@ -42,6 +42,10 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public void claimCurrentChunk() {
+        ChunkyChunk chunkyChunk = this.getCurrentChunk();
+        ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this,chunkyChunk, ChunkyAccessLevel.UNOWNED);
+        Chunky.getModuleManager().callEvent(event);
+        event.setCancelled(false);
         if (Permissions.CHUNKY_CLAIM.hasPerm(this)) {
             // Grab the chunk claim limit for the player
             int chunkLimit = Config.getPlayerChunkLimitDefault();
@@ -54,15 +58,10 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
             if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(this) ||
                     !this.getOwnables().containsKey(ChunkyChunk.class.getName()) ||
                     this.getOwnables().get(ChunkyChunk.class.getName()).size() < chunkLimit) {
-                ChunkyChunk chunkyChunk = this.getCurrentChunk();
                 if (chunkyChunk.isOwned()) {
                     Language.CHUNK_OWNED.bad(this, chunkyChunk.getOwner().getName());
                     return;
                 }
-
-                ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this,chunkyChunk, ChunkyAccessLevel.UNOWNED);
-                event.setCancelled(false);
-                Chunky.getModuleManager().callEvent(event);
 
                 if(event.isCancelled()) return;
                 chunkyChunk.setOwner(this, true,true);
