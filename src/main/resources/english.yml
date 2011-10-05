@@ -146,7 +146,7 @@ command:
         help:
         - 'Usage: &e/chunky group remove <player> <group>'
         - 'Removes the specified player from the specified group.'
-        - 'Example: &e/chunky group remove dumptruckman friends
+        - 'Example: &e/chunky group remove dumptruckman friends'
       
       
       
