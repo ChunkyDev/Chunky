@@ -139,7 +139,7 @@ command:
         help:
         - 'Usage: &e/chunky group add <player> <group>'
         - 'Adds the specified player to the specified group.'
-        - 'Example: &e/chunky group add dumptruckman friends
+        - 'Example: &e/chunky group add dumptruckman friends'
       remove:
         description:
         - 'Removes a player from a group.'
