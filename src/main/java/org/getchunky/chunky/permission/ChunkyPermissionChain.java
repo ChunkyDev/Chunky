@@ -9,6 +9,9 @@ import org.getchunky.chunky.object.ChunkyPermissibleObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author dumptruckman
  */
@@ -63,11 +66,42 @@ public class ChunkyPermissionChain {
             return accessLevel;
         }
 
+        // TODO something faster?
+        List<ChunkyGroup> groups = new ArrayList<ChunkyGroup>();
+        for (String groupId : permObject.getGroups()) {
+            ChunkyObject group = ChunkyManager.getObject(groupId);
+            if (group != null) groups.add((ChunkyGroup)group);
+        }
+
+        for (ChunkyGroup group : groups) {
+            permission = group.hasPerm(object, flag);
+            if (permission != null) {
+                accessLevel = ChunkyAccessLevel.DIRECT_GROUP_PERMISSION;
+                if (permission) {
+                    accessLevel.setDenied(false);
+                    return accessLevel;
+                }
+                return accessLevel;
+            }
+        }
+
         ChunkyObject owner = object.getOwner();
         if (owner != null) {
             permission = permObject.hasPerm(object.getOwner(), flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                if (permission) {
+                    accessLevel.setDenied(false);
+                    return accessLevel;
+                }
+                return accessLevel;
+            }
+        }
+
+        for (ChunkyGroup group : groups) {
+            permission = group.hasPerm(object.getOwner(), flag);
+            if (permission != null) {
+                accessLevel = ChunkyAccessLevel.GLOBAL_GROUP_PERMISSION;
                 if (permission) {
                     accessLevel.setDenied(false);
                     return accessLevel;
@@ -97,14 +131,6 @@ public class ChunkyPermissionChain {
                 }
                 return accessLevel;
             }
-        }
-
-        // TODO something faster?
-        for (String groupId : permObject.getGroups()) {
-            ChunkyObject group = ChunkyManager.getObject(groupId);
-            if (group == null) continue;
-            accessLevel = hasPerm(object, (ChunkyGroup)group, flag);
-            if (accessLevel != ChunkyAccessLevel.NONE) break;
         }
 
         return accessLevel;

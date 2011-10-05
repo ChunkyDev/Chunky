@@ -36,9 +36,19 @@ public enum ChunkyAccessLevel {
     DIRECT_PERMISSION,
 
     /**
+     * Permission was given for this object to a group
+     */
+    DIRECT_GROUP_PERMISSION,
+
+    /**
      * Permission was given for this object's owners properties for a specific object.
      */
     GLOBAL_PERMISSION,
+
+    /**
+     * Permission was given for this object's owners properties for a specific group.
+     */
+    GLOBAL_GROUP_PERMISSION,
 
     /**
      * The default permission for this specific object (aka, what perms anyone has on this specific object.)
