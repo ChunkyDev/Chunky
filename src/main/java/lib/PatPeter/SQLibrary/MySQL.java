@@ -146,6 +146,7 @@ public class MySQL extends DatabaseHandler {
 		    }
 		} catch (SQLException ex) {
 			this.writeError("Error in SQL query: " + ex.getMessage(), false);
+            ex.printStackTrace();
 		}
 		return null;
 	}
@@ -190,6 +191,7 @@ public class MySQL extends DatabaseHandler {
 				return false;
 			} else {
 				this.writeError("Error in SQL query: " + e.getMessage(), false);
+                e.printStackTrace();
 			}
 		}
 		
