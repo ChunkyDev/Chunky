@@ -52,7 +52,11 @@ public class ChunkyManager {
 
     public static ChunkyObject getObject(String fullId) {
         String[] typeId = fullId.split(":");
-        if (typeId.length != 2) return null;
+        if (typeId.length < 2) return null;
+        String id = typeId[1];
+        for (int i = 2; i < typeId.length; i++) {
+            id += ":" + typeId[i];
+        }
         return getObject(typeId[0], typeId[1]);
     }
 
