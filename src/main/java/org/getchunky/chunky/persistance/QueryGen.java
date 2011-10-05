@@ -72,7 +72,7 @@ public class QueryGen {
                         "DESTROY," +
                         "ITEMUSE," +
                         "SWITCH) " +
-                        "VALUES ('%s','%s',%s,'%s',%s,%s,%s,%s)",
+                        "VALUES ('%s','%s','%s','%s',%s,%s,%s,%s)",
                         permissible.getId(), object.getId(),
                         permissible.getType(), object.getType(),
                         build, destroy, itemuse, sw);
