@@ -49,33 +49,42 @@ public enum Language {
     // Chunky
     CMD_CHUNKY_DESC("command.chunky.description"),
     CMD_CHUNKY_HELP("command.chunky.help"),
-    // Claim
+    // Chunky Claim
     CMD_CHUNKY_CLAIM_DESC("command.chunky.claim.description"),
     CMD_CHUNKY_CLAIM_HELP("command.chunky.claim.help"),
-    // Unclaim
+    // Chunky Unclaim
     CMD_CHUNKY_UNCLAIM_DESC("command.chunky.unclaim.description"),
     CMD_CHUNKY_UNCLAIM_HELP("command.chunky.unclaim.help"),
-    // Permission
+    // Chunky Permission
     CMD_CHUNKY_PERMISSION_DESC("command.chunky.permission.description"),
     CMD_CHUNKY_PERMISSION_HELP("command.chunky.permission.help"),
-    // Player
+    // Chunky Player
     CMD_CHUNKY_PLAYER_DESC("command.chunky.player.description"),
     CMD_CHUNKY_PLAYER_HELP("command.chunky.player.help"),
-    // Set
+    // Chunky Player Set
     CMD_CHUNKY_PLAYER_SET_DESC("command.chunky.player.set.description"),
     CMD_CHUNKY_PLAYER_SET_HELP("command.chunky.player.set.help"),
-    // Mode
+    // Chunky Player Set Mode
     CMD_CHUNKY_PLAYER_SET_MODE_DESC("command.chunky.player.set.mode.description"),
     CMD_CHUNKY_PLAYER_SET_MODE_HELP("command.chunky.player.set.mode.help"),
-    // Chunk
+    // Chunky Chunk
     CMD_CHUNKY_CHUNK_DESC("command.chunky.chunk.description"),
     CMD_CHUNKY_CHUNK_HELP("command.chunky.chunk.help"),
-    // Set
+    // Chunky Chunk Set
     CMD_CHUNKY_CHUNK_SET_DESC("command.chunky.chunk.set.description"),
     CMD_CHUNKY_CHUNK_SET_HELP("command.chunky.chunk.set.help"),
-    // Name
+    // Chunky Chunk Set Name
     CMD_CHUNKY_CHUNK_SET_NAME_DESC("command.chunky.chunk.set.name.description"),
     CMD_CHUNKY_CHUNK_SET_NAME_HELP("command.chunky.chunk.set.name.help"),
+    // Group
+    CMD_CHUNKY_GROUP_DESC("command.chunky.group.description"),
+    CMD_CHUNKY_GROUP_HELP("command.chunky.group.help"),
+    // Group Add
+    CMD_CHUNKY_GROUP_ADD_DESC("command.chunky.group.add.description"),
+    CMD_CHUNKY_GROUP_ADD_HELP("command.chunky.group.add.help"),
+    // Group Remove
+    CMD_CHUNKY_GROUP_RM_DESC("command.chunky.group.remove.description"),
+    CMD_CHUNKY_GROUP_RM_HELP("command.chunky.group.remove.help"),
 
     /**
      * Chunk

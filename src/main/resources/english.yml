@@ -126,6 +126,27 @@ command:
           - 'Changes the name of the current chunk.'
           help:
           - 'Usage: &e/chunky chunk set name <name> &f names the chunk <name>'
+          
+    group:
+      description:
+      - 'Contains commands for managing groups.'
+      help:
+      - 'Type &e/chunky group ?&f for a list of sub-commands.'
+      
+      add:
+        description:
+        - 'Adds a player to a group.'
+        help:
+        - 'Usage: &e/chunky group add <player> <group>'
+        - 'Adds the specified player to the specified group.'
+        - 'Example: &e/chunky group add dumptruckman friends
+      remove:
+        description:
+        - 'Removes a player from a group.'
+        help:
+        - 'Usage: &e/chunky group remove <player> <group>'
+        - 'Removes the specified player from the specified group.'
+        - 'Example: &e/chunky group remove dumptruckman friends
       
       
       

@@ -252,13 +252,33 @@ public class Chunky extends JavaPlugin {
                     new CommandChunkyChunkSetName(), commandChunkyChunkSet);
             getModuleManager().registerCommand(commandChunkyChunkSetName);
 
-
             // /chunky permission
             ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
                     Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC),
                     Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP),
                     new CommandChunkyPermission(), commandChunky);
             getModuleManager().registerCommand(commandChunkyPermission);
+
+            // /chunky group
+            ChunkyCommand commandChunkyGroup = new ChunkyCommand("group", Arrays.asList("gr"),
+                    Language.getString(Language.CMD_CHUNKY_GROUP_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_GROUP_HELP),
+                    new CommandChunkyGroup(), commandChunky);
+            getModuleManager().registerCommand(commandChunkyGroup);
+
+            // /chunky group
+            ChunkyCommand commandChunkyGroupAdd = new ChunkyCommand("add", Arrays.asList("a"),
+                    Language.getString(Language.CMD_CHUNKY_GROUP_ADD_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_GROUP_ADD_HELP),
+                    new CommandChunkyGroupAdd(), commandChunkyGroup);
+            getModuleManager().registerCommand(commandChunkyGroupAdd);
+
+            // /chunky group
+            ChunkyCommand commandChunkyGroupRemove = new ChunkyCommand("remove", Arrays.asList("r", "rm"),
+                    Language.getString(Language.CMD_CHUNKY_GROUP_RM_DESC),
+                    Language.getStrings(Language.CMD_CHUNKY_GROUP_RM_HELP),
+                    new CommandChunkyGroupRemove(), commandChunkyGroup);
+            getModuleManager().registerCommand(commandChunkyGroupRemove);
 
         } catch (ChunkyUnregisteredException ignore) {
         }
