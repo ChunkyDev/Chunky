@@ -43,7 +43,10 @@ public abstract class SQLDB implements Database {
         ResultSet data = query(QueryGen.selectAllObjects());
         while (iterateData(data)) {
             ChunkyObject obj = (ChunkyObject) createObject(getString(data, "type"));
-            if (obj == null) continue;
+            if (obj == null) {
+                Logging.warning("Created " + getString(data, "type") + " is null");
+                continue;
+            }
             try {
                 obj.setId(getString(data, "id")).load(getString(data, "data"));
             } catch (JSONException e) {
@@ -61,12 +64,11 @@ public abstract class SQLDB implements Database {
         try {
             Class classDefinition = Class.forName(className);
             object = classDefinition.newInstance();
-            return object;
         } catch (Exception e) {
             Logging.severe(e.getMessage());
             Logging.severe("Failed to load object of type:" + className);
         }
-        return null;
+        return object;
     }
 
     public void loadAllPermissions() {
