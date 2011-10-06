@@ -3,6 +3,7 @@ package org.getchunky.chunky.object;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
+import org.getchunky.chunky.exceptions.ChunkyObjectNotInitializedException;
 import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
@@ -40,7 +41,7 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final boolean save() {
-        if (id == null) return false;
+        if (id == null) throw new ChunkyObjectNotInitializedException();
         DatabaseManager.getDatabase().updateObject(this);
         return true;
     }

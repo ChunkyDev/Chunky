@@ -3,7 +3,7 @@ package org.getchunky.chunky.exceptions;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyObjectNotInitializedException extends ChunkyException {
+public class ChunkyObjectNotInitializedException extends ChunkyRuntimeException {
 
     public ChunkyObjectNotInitializedException() {
         super();
