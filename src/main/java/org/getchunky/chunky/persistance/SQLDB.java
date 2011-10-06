@@ -3,12 +3,14 @@ package org.getchunky.chunky.persistance;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public abstract class SQLDB implements Database {
 
@@ -74,22 +76,17 @@ public abstract class SQLDB implements Database {
     public void loadAllPermissions() {
         ResultSet data = query(QueryGen.selectAllPermissions());
         while (iterateData(data)) {
-            EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
-            if (getInt(data, "BUILD") == 1) flags.add(ChunkyPermissions.Flags.BUILD);
-            if (getInt(data, "DESTROY") == 1) flags.add(ChunkyPermissions.Flags.DESTROY);
-            if (getInt(data, "SWITCH") == 1) flags.add(ChunkyPermissions.Flags.SWITCH);
-            if (getInt(data, "ITEMUSE") == 1) flags.add(ChunkyPermissions.Flags.ITEMUSE);
+            HashMap<PermissionFlag, Boolean> flags = new HashMap<PermissionFlag, Boolean>();
             String permId = getString(data, "PermissibleId");
             String permType = getString(data, "PermissibleType");
             String objectId = getString(data, "ObjectId");
             String objectType = getString(data, "ObjectType");
             ChunkyObject object = ChunkyManager.getObject(objectType, objectId);
             ChunkyObject permObject = ChunkyManager.getObject(permType, permId);
+            ChunkyPermissions perms = new ChunkyPermissions();
+            perms.load(getString(data, "data"));
             if (object != null && permObject != null)
-                ChunkyManager.setPermissions(
-                        object,
-                        permObject,
-                        flags, false);
+                ChunkyManager.putPermissions(object, permObject, perms);
         }
     }
 
@@ -114,8 +111,8 @@ public abstract class SQLDB implements Database {
     }
 
 
-    public void updatePermissions(ChunkyObject permObject, ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(permObject, object, flags));
+    public void updatePermissions(ChunkyObject permObject, ChunkyObject object, ChunkyPermissions perms) {
+        query(QueryGen.updatePermissions(permObject, object, perms));
     }
 
     public void removeAllPermissions(ChunkyObject object) {
@@ -135,7 +132,7 @@ public abstract class SQLDB implements Database {
 
     }
 
-    public void updateDefaultPermissions(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
-        query(QueryGen.updatePermissions(object, object, flags));
+    public void updateDefaultPermissions(ChunkyObject object, ChunkyPermissions perms) {
+        query(QueryGen.updatePermissions(object, object, perms));
     }
 }

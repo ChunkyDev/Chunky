@@ -1,67 +1,18 @@
 package org.getchunky.chunky.permission;
 
 import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.util.Logging;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPermissions {
+public class ChunkyPermissions extends JSONObject {
 
-    public enum Flags {
-        BUILD('b'), DESTROY('d'), ITEMUSE('i'), SWITCH('s');
-
-        private char rep;
-
-        private static final Map<Character, Flags> lookup = new HashMap<Character, Flags>();
-
-        static {
-            for (Flags f : EnumSet.allOf(Flags.class))
-                lookup.put(f.getRep(), f);
-        }
-
-        Flags(char rep) {
-            this.rep = rep;
-        }
-
-        /**
-         * Retrieves the character representation of this flag
-         *
-         * @return character representation of flag
-         */
-        private char getRep() {
-            return rep;
-        }
-
-        /**
-         * Retrieves a flag represented by the specified character
-         *
-         * @param c Character representation of flag
-         * @return Flag represented by c or null if no flag for c
-         */
-        public static Flags get(char c) {
-            return lookup.get(c);
-        }
-    }
-
-    protected EnumSet<Flags> flags;
-
-    /**
-     * Instantiates a ChunkyPermissions object.
-     *
-     * @param flags Optional parameter to indicate initial flags
-     */
-    public ChunkyPermissions(Flags... flags) {
-        if (flags.length == 0) {
-            this.flags = null;
-            return;
-        }
-        this.flags.addAll(Arrays.asList(flags));
-    }
+    private HashMap<PermissionFlag, Boolean> flagsMap = new HashMap<PermissionFlag, Boolean>();
 
     /**
      * Checks to see if this permission set has a certain flag.
@@ -69,25 +20,25 @@ public class ChunkyPermissions {
      * @param flag Flag to check for
      * @return true if contains, false if not contains, null if no permissions set at all
      */
-    public Boolean contains(Flags flag) {
-        if (flags == null) return null;
-        return flags.contains(flag);
+    public Boolean hasFlag(PermissionFlag flag) {
+        return flagsMap.get(flag);
     }
 
     /**
-     * Returns the set of flags
+     * Returns the set of flags.  It would not be wise to change this HashMap.
      *
-     * @return Flag set
+     * @return Flag Map
      */
-    public EnumSet<Flags> getFlags() {
-        return flags;
+    public HashMap<PermissionFlag, Boolean> getFlags() {
+        return flagsMap;
     }
 
     /**
      * Wipes the flag set
      */
     public void clearFlags() {
-        flags = null;
+        flagsMap.clear();
+        save();
     }
 
     /**
@@ -96,15 +47,13 @@ public class ChunkyPermissions {
      * @param flag   Flag to set
      * @param status Status of the flag
      */
-    public void setFlag(Flags flag, boolean status) {
-        if (flags == null) {
-            flags = EnumSet.noneOf(Flags.class);
+    public void setFlag(PermissionFlag flag, Boolean status) {
+        if (status != null) {
+            flagsMap.put(flag, status);
+        } else {
+            flagsMap.remove(flag);
         }
-        if (flags.contains(flag) && !status) {
-            flags.remove(flag);
-        } else if (!flags.contains(flag) && status) {
-            flags.add(flag);
-        }
+        save();
     }
 
     /**
@@ -112,8 +61,9 @@ public class ChunkyPermissions {
      *
      * @param flags Set of new flags
      */
-    public void setFlags(EnumSet<Flags> flags) {
-        this.flags = flags;
+    public void setFlags(HashMap<PermissionFlag, Boolean> flags) {
+        this.flagsMap = flags;
+        save();
     }
 
     /**
@@ -122,14 +72,11 @@ public class ChunkyPermissions {
      * @return String representation of permission flags
      */
     public String toString() {
-        if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
-        if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
+        if (flagsMap.isEmpty()) return Language.NO_PERMISSIONS_SET.getString();
         String sFlags = "";
-        for (Flags flag : flags) {
-            if (!sFlags.isEmpty()) {
-                sFlags += ", ";
-            }
-            sFlags += flag.toString();
+        for (Map.Entry<PermissionFlag, Boolean> flag : flagsMap.entrySet()) {
+            if (!sFlags.isEmpty()) sFlags += " | ";
+            sFlags += flag.getKey().getName() + ": " + (flag.getValue() ? "T" : "F");
         }
         return sFlags;
     }
@@ -140,15 +87,50 @@ public class ChunkyPermissions {
      * @return Small string representation of permission flags
      */
     public String toSmallString() {
-        if (flags == null) return Language.NO_PERMISSIONS_SET.getString();
-        if (flags.isEmpty()) return Language.NO_PERMISSIONS_GRANTED.getString();
+        if (flagsMap.isEmpty()) return Language.NO_PERMISSIONS_SET.getString();
         String sFlags = "";
-        for (Flags flag : flags) {
-            if (!sFlags.isEmpty()) {
-                sFlags += ", ";
-            }
-            sFlags += Character.toString(flag.getRep()).toUpperCase();
+        for (Map.Entry<PermissionFlag, Boolean> flag : flagsMap.entrySet()) {
+            if (!sFlags.isEmpty()) sFlags += ", ";
+            sFlags += flag.getKey().getTag() + ": " + (flag.getValue() ? "T" : "F");
         }
         return sFlags;
+    }
+
+    public void load(String json) {
+        super.load(json);
+        JSONObject flags = this.getJSONObject("flags");
+        if (flags == null) {
+            flags = new JSONObject();
+            this.put("flags", flags);
+        }
+        if (flags.names() != null) {
+            for(int i = 0; i < flags.names().length(); i++) {
+                String flagName = flags.names().get(i).toString();
+                PermissionFlag flag = PermissionFlags.getFlag(flagName);
+                if (flag == null) {
+                    Logging.warning("Permission flag \"" + flagName + "\" is missing.  Registering it as new permission flag.");
+                    flag = new PermissionFlag(flagName, flagName);
+                    PermissionFlags.registerPermissionFlag(flag);
+                }
+                try {
+                    boolean hasPerm = flags.getBoolean(flagName);
+                    this.flagsMap.put(flag, hasPerm);
+                } catch (JSONException e) {
+                    Logging.warning("Faulty permission flag data for " + flagName + ". Must be boolean value.");
+                    Logging.warning(e.getMessage());
+                }
+            }
+        }
+    }
+
+    private void save() {
+        JSONObject flags = this.getJSONObject("flags");
+        if (flags == null) {
+            flags = new JSONObject();
+            this.put("flags", flags);
+        }
+        for (Map.Entry<PermissionFlag, Boolean> flag : this.flagsMap.entrySet()) {
+            flags.put(flag.getKey().getName(), flag.getValue());
+        }
     }
 }

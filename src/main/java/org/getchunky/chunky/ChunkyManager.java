@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.getchunky.chunky.object.*;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
@@ -199,7 +200,7 @@ public class ChunkyManager {
      * @param permObject Object doing the interacting
      * @param flags      Flag Set to change permissions to
      */
-    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags) {
+    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags) {
         setPermissions(object, permObject, flags, true);
     }
 
@@ -211,10 +212,19 @@ public class ChunkyManager {
      * @param flags      Flag Set to change permissions to
      * @param persist    Whether or not to persist these changes.  Generally you should persist the changes.
      */
-    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, EnumSet<ChunkyPermissions.Flags> flags, boolean persist) {
-        ChunkyManager.getPermissions(object, permObject).setFlags(flags);
+    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags, boolean persist) {
+        ChunkyPermissions perms = ChunkyManager.getPermissions(object, permObject);
+        perms.setFlags(flags);
         if (persist)
-            DatabaseManager.getDatabase().updatePermissions(permObject, object, flags);
+            DatabaseManager.getDatabase().updatePermissions(permObject, object, perms);
+    }
+
+    public static void putPermissions(ChunkyObject object, ChunkyObject permObject, ChunkyPermissions perms) {
+        if (!permissions.containsKey(object)) {
+            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
+        }
+        HashMap<ChunkyObject, ChunkyPermissions> permsMap = permissions.get(object);
+        permsMap.put(permObject, perms);
     }
 
     /**

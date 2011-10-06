@@ -12,6 +12,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.PermissionChain;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlags;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 
 public class BlockEvents extends BlockListener {
@@ -23,7 +24,7 @@ public class BlockEvents extends BlockListener {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
 
-        AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.BUILD);
+        AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, PermissionFlags.BUILD);
         Boolean isCancelled = permType.causedDenial();
 
         ChunkyPlayerBuildEvent chunkyEvent = new ChunkyPlayerBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
@@ -40,7 +41,7 @@ public class BlockEvents extends BlockListener {
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
 
-        AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.Flags.DESTROY);
+        AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, PermissionFlags.DESTROY);
         Boolean isCancelled = permType.causedDenial();
 
         ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);

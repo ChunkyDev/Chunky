@@ -2,8 +2,11 @@ package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunky.permission.PermissionFlags;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public class QueryGen {
 
@@ -30,10 +33,7 @@ public class QueryGen {
                         "ObjectId VARCHAR(255) NOT NULL," +
                         "PermissibleType VARCHAR(128) NOT NULL,  " +
                         "ObjectType VARCHAR(128) NOT NULL,  " +
-                        "BUILD TINYINT NOT NULL DEFAULT 0," +
-                        "DESTROY TINYINT NOT NULL DEFAULT 0," +
-                        "ITEMUSE TINYINT NOT NULL DEFAULT 0," +
-                        "SWITCH TINYINT NOT NULL DEFAULT 0," +
+                        "data TEXT NULL," +
                         "PRIMARY KEY (PermissibleId, ObjectId) )";
     }
 
@@ -57,25 +57,19 @@ public class QueryGen {
                         ")";
     }
 
-    public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags) {
-        int build = flags.contains(ChunkyPermissions.Flags.BUILD) ? 1 : 0;
-        int destroy = flags.contains(ChunkyPermissions.Flags.DESTROY) ? 1 : 0;
-        int itemuse = flags.contains(ChunkyPermissions.Flags.ITEMUSE) ? 1 : 0;
-        int sw = flags.contains(ChunkyPermissions.Flags.SWITCH) ? 1 : 0;
+    public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, ChunkyPermissions perms) {
+
         return
                 String.format("REPLACE INTO chunky_permissions (" +
                         "PermissibleId, " +
                         "ObjectId, " +
                         "PermissibleType, " +
                         "ObjectType, " +
-                        "BUILD," +
-                        "DESTROY," +
-                        "ITEMUSE," +
-                        "SWITCH) " +
-                        "VALUES ('%s','%s','%s','%s',%s,%s,%s,%s)",
+                        "data," +
+                        "VALUES ('%s','%s','%s','%s','%s')",
                         permissible.getId(), object.getId(),
                         permissible.getType(), object.getType(),
-                        build, destroy, itemuse, sw);
+                        perms.toString());
     }
 
     public static String removePermissions(ChunkyObject permissible, ChunkyObject object) {

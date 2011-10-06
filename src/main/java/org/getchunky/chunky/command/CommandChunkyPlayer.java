@@ -65,17 +65,13 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
     }
 
     private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer, CommandSender sender) {
-        EnumSet<ChunkyPermissions.Flags> flags = chunkyPlayer.getDefaultPerms();
+        ChunkyPermissions perms = chunkyPlayer.getDefaultPerms();
         if (chunkyPlayer.getName().equals(sender.getName()))
             Language.DEFAULT_PERMISSIONS.normal(sender, Language.YOUR_PROPERTY.getString());
         else
             Language.DEFAULT_PERMISSIONS.normal(sender, Language.THEIR_PROPERTY.getString());
-        if (flags != null)
-            Language.PERMISSIONS_STATUS.normal(sender
-                    , flags.contains(ChunkyPermissions.Flags.BUILD)
-                    , flags.contains(ChunkyPermissions.Flags.DESTROY)
-                    , flags.contains(ChunkyPermissions.Flags.SWITCH)
-                    , flags.contains(ChunkyPermissions.Flags.ITEMUSE));
+        if (perms != null)
+            Language.sendMessage(sender, perms.toString());
         else {
             String notSet = Language.NO_PERMISSIONS_SET.getString();
             Language.PERMISSIONS_STATUS.normal(sender
@@ -92,7 +88,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                     if (permPlayer.getKey() instanceof ChunkyPlayer) {
                         ChunkyPlayer cPlayer = (ChunkyPlayer) permPlayer.getKey();
                         if (!players.isEmpty()) players += ", ";
-                        ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer, cPlayer);
+                        perms = ChunkyManager.getPermissions(chunkyPlayer, cPlayer);
                         if (perms != null && perms.getFlags() != null) {
                             players += cPlayer.getName() + ": [" + perms.toSmallString() + "]";
                         }
@@ -103,13 +99,10 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                 Language.PLAYER_PERMISSIONS.normal(sender, Language.YOUR_PROPERTY.getString(), players);
             }
         } else if (sender instanceof Player) {
-            ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyPlayer, ChunkyManager.getChunkyPlayer((Player) sender));
+            perms = ChunkyManager.getPermissions(chunkyPlayer, ChunkyManager.getChunkyPlayer((Player) sender));
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()));
-                Language.PERMISSIONS_STATUS.normal(sender, perms.contains(ChunkyPermissions.Flags.BUILD)
-                        , perms.contains(ChunkyPermissions.Flags.DESTROY)
-                        , perms.contains(ChunkyPermissions.Flags.SWITCH)
-                        , perms.contains(ChunkyPermissions.Flags.ITEMUSE));
+                Language.sendMessage(sender, perms.toString());
             }
         }
     }

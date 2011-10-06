@@ -23,7 +23,7 @@ public class PermissionChain {
      * @param flag       The permission action occuring
      * @return true if permObject has permission to flag action
      */
-    public static AccessLevel hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, ChunkyPermissions.Flags flag) {
+    public static AccessLevel hasPerm(ChunkyObject object, ChunkyPermissibleObject permObject, PermissionFlag flag) {
 
         AccessLevel accessLevel = AccessLevel.NONE;
         accessLevel.setDenied(true);
@@ -40,13 +40,16 @@ public class PermissionChain {
         }
 
         if (!object.isOwned()) {
-            accessLevel = AccessLevel.UNOWNED;
-            accessLevel.setDenied(true);
-            if (Config.canUnowned(flag)) {
-                accessLevel.setDenied(false);
+            Boolean canUnowned = Config.canUnowned(flag);
+            if (canUnowned != null) {
+                accessLevel = AccessLevel.UNOWNED;
+                accessLevel.setDenied(true);
+                if (canUnowned) {
+                    accessLevel.setDenied(false);
+                    return accessLevel;
+                }
                 return accessLevel;
             }
-            return accessLevel;
         }
 
         if (object.isOwnedBy(permObject)) {

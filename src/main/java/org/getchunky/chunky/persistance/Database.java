@@ -3,8 +3,10 @@ package org.getchunky.chunky.persistance;
 import org.bukkit.plugin.Plugin;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlag;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public interface Database {
 
@@ -20,7 +22,7 @@ public interface Database {
 
     public void updateObject(ChunkyObject object);
 
-    public void updatePermissions(ChunkyObject permObject, ChunkyObject objectId, EnumSet<ChunkyPermissions.Flags> flags);
+    public void updatePermissions(ChunkyObject permObject, ChunkyObject objectId, ChunkyPermissions perms);
 
     public void removePermissions(ChunkyObject permissible, ChunkyObject object);
 
@@ -30,6 +32,6 @@ public interface Database {
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
 
-    public void updateDefaultPermissions(ChunkyObject object, EnumSet<ChunkyPermissions.Flags> flags);
+    public void updateDefaultPermissions(ChunkyObject object, ChunkyPermissions perms);
 
 }

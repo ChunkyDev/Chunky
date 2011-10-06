@@ -5,6 +5,8 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunky.permission.PermissionFlags;
 
 import java.io.File;
 import java.io.IOException;
@@ -133,19 +135,16 @@ public class Config {
         return getBoolean(DEBUG);
     }
 
-    public static Boolean canUnowned(ChunkyPermissions.Flags flag) {
-        switch (flag) {
-            case BUILD:
-                return getBoolean(UNOWNED_BUILD);
-            case DESTROY:
-                return getBoolean(UNOWNED_DESTROY);
-            case ITEMUSE:
-                return getBoolean(UNOWNED_ITEMUSE);
-            case SWITCH:
-                return getBoolean(UNOWNED_SWITCH);
-            default:
-                return false;
-        }
+    public static Boolean canUnowned(PermissionFlag flag) {
+        if (flag.equals(PermissionFlags.BUILD))
+            return getBoolean(UNOWNED_BUILD);
+        if (flag.equals(PermissionFlags.DESTROY))
+            return getBoolean(UNOWNED_DESTROY);
+        if (flag.equals(PermissionFlags.ITEM_USE))
+            return getBoolean(UNOWNED_SWITCH);
+        if (flag.equals(PermissionFlags.SWITCH))
+            return getBoolean(UNOWNED_SWITCH);
+        return null;
     }
 
     public static Integer getPlayerChunkLimitDefault() {
