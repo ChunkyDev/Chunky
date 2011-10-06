@@ -76,15 +76,20 @@ public enum Language {
     // Chunky Chunk Set Name
     CMD_CHUNKY_CHUNK_SET_NAME_DESC("command.chunky.chunk.set.name.description"),
     CMD_CHUNKY_CHUNK_SET_NAME_HELP("command.chunky.chunk.set.name.help"),
-    // Group
+    // Chunky Group
     CMD_CHUNKY_GROUP_DESC("command.chunky.group.description"),
     CMD_CHUNKY_GROUP_HELP("command.chunky.group.help"),
-    // Group Add
+    // Chunky Group Add
     CMD_CHUNKY_GROUP_ADD_DESC("command.chunky.group.add.description"),
     CMD_CHUNKY_GROUP_ADD_HELP("command.chunky.group.add.help"),
-    // Group Remove
+    // Chunky Group Remove
     CMD_CHUNKY_GROUP_RM_DESC("command.chunky.group.remove.description"),
     CMD_CHUNKY_GROUP_RM_HELP("command.chunky.group.remove.help"),
+    // Addfriend
+    CMD_ADDFRIEND_HELP("command.addfriend.help"),
+    // Removefriend
+    CMD_RMFRIEND_HELP("command.rmfriend.help"),
+
 
     /**
      * Chunk

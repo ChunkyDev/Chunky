@@ -147,7 +147,17 @@ command:
         - 'Usage: &e/chunky group remove <player> <group>'
         - 'Removes the specified player from the specified group.'
         - 'Example: &e/chunky group remove dumptruckman friends'
-      
+  
+  addfriend:
+    help:
+    - 'An easy way to add someone to your friends list.'
+    - 'Usage: &e/addfriend <name>'
+  
+  rmfriend:
+    help:
+    - 'An easy way to remove someone from your friends list.'
+    - 'Usage: &e/removefriend <name>'
+    
       
       
 chunk:

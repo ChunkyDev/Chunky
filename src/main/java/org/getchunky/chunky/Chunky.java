@@ -280,6 +280,20 @@ public class Chunky extends JavaPlugin {
                     new CommandChunkyGroupRemove(), commandChunkyGroup);
             getModuleManager().registerCommand(commandChunkyGroupRemove);
 
+            // /addfriend
+            ChunkyCommand commandAddfriend = new ChunkyCommand("addfriend", Arrays.asList("af", "addf"),
+                    null,
+                    Language.getStrings(Language.CMD_ADDFRIEND_HELP),
+                    new CommandAddfriend());
+            getModuleManager().registerCommand(commandAddfriend);
+
+            // /addfriend
+            ChunkyCommand commandRemovefriend = new ChunkyCommand("removefriend", Arrays.asList("rf", "rmfriend", "rmf"),
+                    null,
+                    Language.getStrings(Language.CMD_RMFRIEND_HELP),
+                    new CommandRemovefriend());
+            getModuleManager().registerCommand(commandRemovefriend);
+
         } catch (ChunkyUnregisteredException ignore) {
         }
     }
