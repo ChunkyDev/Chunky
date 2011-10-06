@@ -50,6 +50,7 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
                 this.put("members", new JSONObject());
             }
             this.getJSONObject("members").put(object.getName(), object.getFullId());
+            this.save();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -57,8 +58,10 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
 
     protected void removeMember(ChunkyPermissibleObject object) {
         try {
-            if (this.has("members"))
+            if (this.has("members")) {
                 this.getJSONObject("members").remove(object.getName());
+                this.save();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
