@@ -7,6 +7,7 @@ import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPermissibleObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
+import org.getchunky.chunky.util.Logging;
 
 import java.util.Collection;
 
@@ -41,6 +42,7 @@ public class ChunkyPermissionChain {
 
         if (!object.isOwned()) {
             accessLevel = ChunkyAccessLevel.UNOWNED;
+            accessLevel.setDenied(true);
             if (Config.canUnowned(flag)) {
                 accessLevel.setDenied(false);
                 return accessLevel;
@@ -50,6 +52,7 @@ public class ChunkyPermissionChain {
 
         if (object.isOwnedBy(permObject)) {
             accessLevel = ChunkyAccessLevel.OWNER;
+            accessLevel.setDenied(true);
             if (object.isDirectlyOwnedBy(permObject)) accessLevel = ChunkyAccessLevel.DIRECT_OWNER;
             accessLevel.setDenied(false);
             return accessLevel;
@@ -58,6 +61,7 @@ public class ChunkyPermissionChain {
         Boolean permission = permObject.hasPerm(object, flag);
         if (permission != null) {
             accessLevel = ChunkyAccessLevel.DIRECT_PERMISSION;
+            accessLevel.setDenied(true);
             if (permission) {
                 accessLevel.setDenied(false);
                 return accessLevel;
@@ -71,6 +75,7 @@ public class ChunkyPermissionChain {
             permission = group.hasPerm(object, flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.DIRECT_GROUP_PERMISSION;
+                accessLevel.setDenied(true);
                 if (permission) {
                     accessLevel.setDenied(false);
                     return accessLevel;
@@ -84,6 +89,7 @@ public class ChunkyPermissionChain {
             permission = permObject.hasPerm(object.getOwner(), flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_PERMISSION;
+                accessLevel.setDenied(true);
                 if (permission) {
                     accessLevel.setDenied(false);
                     return accessLevel;
@@ -96,6 +102,7 @@ public class ChunkyPermissionChain {
             permission = group.hasPerm(object.getOwner(), flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_GROUP_PERMISSION;
+                accessLevel.setDenied(true);
                 if (permission) {
                     accessLevel.setDenied(false);
                     return accessLevel;
@@ -107,6 +114,7 @@ public class ChunkyPermissionChain {
         permission = object.hasDefaultPerm(flag);
         if (permission != null) {
             accessLevel = ChunkyAccessLevel.DIRECT_DEFAULT_PERMISSION;
+            accessLevel.setDenied(true);
             if (permission) {
                 accessLevel.setDenied(false);
                 return accessLevel;
@@ -119,6 +127,7 @@ public class ChunkyPermissionChain {
             permission = object.getOwner().hasDefaultPerm(flag);
             if (permission != null) {
                 accessLevel = ChunkyAccessLevel.GLOBAL_DEFAULT_PERMISSION;
+                accessLevel.setDenied(true);
                 if (permission) {
                     accessLevel.setDenied(false);
                     return accessLevel;
