@@ -17,11 +17,13 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
                 this.put("members", new JSONObject());
             }
             HashMap<String, ChunkyPermissibleObject> members = new HashMap<String, ChunkyPermissibleObject>();
-            for (int i = 0; i < this.getJSONObject("members").names().length(); i++) {
-                String id = this.getJSONObject("members").get(this.getJSONObject("members").names().get(i).toString()).toString();
-                ChunkyObject object = ChunkyManager.getObject(id);
-                if (object != null)
-                    members.put(this.getJSONObject("members").names().get(i).toString(), (ChunkyGroup) object);
+            if (this.getJSONObject("members").length() > 0) {
+                for (int i = 0; i < this.getJSONObject("members").names().length(); i++) {
+                    String id = this.getJSONObject("members").get(this.getJSONObject("members").names().get(i).toString()).toString();
+                    ChunkyObject object = ChunkyManager.getObject(id);
+                    if (object != null)
+                        members.put(this.getJSONObject("members").names().get(i).toString(), (ChunkyGroup) object);
+                }
             }
             return members;
         } catch (JSONException e) {
