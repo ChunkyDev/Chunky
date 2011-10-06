@@ -40,8 +40,8 @@ public abstract class ChunkyObject extends JSONObject {
         className = this.getClass().getName();
     }
 
-    public final boolean save() {
-        if (id == null) throw new ChunkyObjectNotInitializedException();
+    public final boolean save() throws ChunkyObjectNotInitializedException {
+        if (id == null) throw new ChunkyObjectNotInitializedException("Object cannot be saved without ID!");
         DatabaseManager.getDatabase().updateObject(this);
         return true;
     }
