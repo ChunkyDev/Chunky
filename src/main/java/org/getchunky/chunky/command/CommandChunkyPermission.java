@@ -23,34 +23,40 @@ import java.util.Set;
  */
 public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
+    String sTarget;
+
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
         if (!(sender instanceof Player)) {
             Language.IN_GAME_ONLY.bad(sender);
             return;
         }
 
-        setPerms(ChunkyManager.getChunkyPlayer((Player) sender), args);
-    }
-
-    public void setPerms(ChunkyPlayer cPlayer, String[] args) {
         if (args.length != 3) {
-            Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+            Language.CMD_CHUNKY_PERMISSION_HELP.bad(sender);
             return;
         }
 
+        // sTarget refers to the object that a permissible will receive permissions for
+        sTarget = "";
+
+        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer((Player) sender);
+
+        HashSet<ChunkyObject> targets = getTargets(cPlayer, args[0]);
+        if (targets.isEmpty()) return;
+    }
+
+    public HashSet<ChunkyObject> getTargets(ChunkyPlayer cPlayer, String targetString) {
         // The target(s) ChunkyObjects that permissions are being set for
         HashSet<ChunkyObject> targets = new HashSet<ChunkyObject>();
-        // sTarget refers to the object that a permissible will receive permissions for
-        String sTarget = "";
 
-        if (args[0].equalsIgnoreCase("global")) {
+        if (targetString.equalsIgnoreCase("global")) {
             // Wants to set default perms for their stuff
 
             // What to refer to target as "your property"
             sTarget = Language.YOUR_PROPERTY.getString();
             // Default perms means it sets the perms on the ChunkyPlayer sending the command
             targets.add(cPlayer);
-        } else if (args[0].equalsIgnoreCase("this")) {
+        } else if (targetString.equalsIgnoreCase("this")) {
             // Wants to set perms for current chunk
 
             // What to refer to the target as "this chunk"
@@ -67,12 +73,12 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                     } else {
                         Language.CHUNK_NOT_OWNED.bad(cPlayer);
                     }
-                    return;
+                    return targets;
                 }
             }
             // Setting perms for the current chunk
             targets.add(cChunk);
-        } else if (args[0].equalsIgnoreCase("all")) {
+        } else if (targetString.equalsIgnoreCase("all")) {
             // Wants to set perms for currently owned chunks
 
             // What to refer to the target as "your current property"
@@ -82,14 +88,31 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             targets = cPlayer.getOwnables().get(ChunkyChunk.class.getName());
             if (targets == null || targets.isEmpty()) {
                 Language.CHUNK_NONE_OWNED.bad(cPlayer);
-                return;
+                return targets;
             }
+        } else if (targetString.startsWith("c:")) {
+            targetString = targetString.substring(2);
+            HashSet<ChunkyObject> chunks = cPlayer.getOwnables().get(ChunkyChunk.class.getName());
+            for (ChunkyObject chunk : chunks) {
+                if (chunk.getName().equalsIgnoreCase(targetString))
+                    targets.add(chunk);
+            }
+            if (targets.isEmpty()) {
+                Language.NO_SUCH_CHUNKS.bad(cPlayer, targetString);
+                return targets;
+            }
+            // What to refer to the target as "your current property"
+            sTarget = Language.CHUNKS_NAMED.getString(targetString);
         } else {
-            // Wants to set perms for named chunks
-            // TODO
-            Language.FEATURE_NYI.bad(cPlayer);
-            return;
+            Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
         }
+
+        return targets;
+    }
+
+    public void setPerms(ChunkyPlayer cPlayer, String[] args) {
+
+
 
 
         // Converts the flags into an EnumSet<ChunkyPermissions.Flags>
