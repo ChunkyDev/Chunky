@@ -155,7 +155,6 @@ public abstract class ChunkyObject extends JSONObject {
      * @return true if this object did not already own o.
      */
     private boolean addOwnable(ChunkyObject o, boolean persist) {
-        Logging.debug("Adding " + o + " as ownable to " + this);
         if (o == null)
             throw new IllegalArgumentException();
 
@@ -163,22 +162,16 @@ public abstract class ChunkyObject extends JSONObject {
         // ex. town.setOwner(Peasant) Peasant is removed from parent (Town).
 
         if (this.isOwnedBy(o) && this.owner != null) {
-            Logging.debug("removing ownable and taking children");
             this.getOwner().removeOwnableAndTakeChildren(this);
         }
-        Logging.debug("Checking ownables for: " + o.getType());
         if (ownables.containsKey(o.getType())) {
-            Logging.debug("Owns some " + o.getType() + " already...");
             Boolean exists = ownables.get(o.getType()).add(o);
             if (exists && persist) DatabaseManager.getDatabase().addOwnership(this, o);
-                Logging.debug("Already contained new ownable: " + !exists);
             return exists;
         } else {
-            Logging.debug("First ownable of type: " + o.getType());
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
-            Logging.debug("Adding to database....");
             if (persist)
                 DatabaseManager.getDatabase().addOwnership(this, o);
             return true;
