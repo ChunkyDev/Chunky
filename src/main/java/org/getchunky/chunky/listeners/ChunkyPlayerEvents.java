@@ -2,7 +2,7 @@ package org.getchunky.chunky.listeners;
 
 import org.getchunky.chunky.event.object.player.*;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
+import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 
 public class ChunkyPlayerEvents extends ChunkyPlayerListener {
@@ -13,7 +13,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if (event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
+        if (event.getAccessLevel().equals(AccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if (event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
+        if (event.getAccessLevel().equals(AccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if (event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
+        if (event.getAccessLevel().equals(AccessLevel.NONE)) event.setCancelled(true);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ChunkyPlayerEvents extends ChunkyPlayerListener {
         } catch (ChunkyPlayerOfflineException e) {
             return;
         }
-        if (event.getAccessLevel().equals(ChunkyAccessLevel.NONE)) event.setCancelled(true);
+        if (event.getAccessLevel().equals(AccessLevel.NONE)) event.setCancelled(true);
     }
 
 

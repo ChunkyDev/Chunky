@@ -3,7 +3,7 @@ package org.getchunky.chunky.permission;
 /**
  * @author dumptruckman, SwearWord
  */
-public enum ChunkyAccessLevel {
+public enum AccessLevel {
 
     /**
      * This enum shows the level of access that is granted when permissions for an object is checked.

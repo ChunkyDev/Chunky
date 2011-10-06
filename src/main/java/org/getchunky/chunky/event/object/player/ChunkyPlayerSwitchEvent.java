@@ -4,7 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
+import org.getchunky.chunky.permission.AccessLevel;
 
 /**
  * @author dumptruckman, SwearWord
@@ -14,7 +14,7 @@ public class ChunkyPlayerSwitchEvent extends ChunkyPlayerChunkEvent implements C
     private Block switchedBlock;
     private boolean cancel = false;
 
-    public ChunkyPlayerSwitchEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block switchedBlock, ChunkyAccessLevel accessLevel) {
+    public ChunkyPlayerSwitchEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block switchedBlock, AccessLevel accessLevel) {
         super(Type.PLAYER_SWITCH, chunkyPlayer, chunkyChunk, accessLevel);
         this.switchedBlock = switchedBlock;
     }

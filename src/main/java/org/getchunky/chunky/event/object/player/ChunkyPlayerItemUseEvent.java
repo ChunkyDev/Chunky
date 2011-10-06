@@ -4,14 +4,14 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.ItemStack;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
+import org.getchunky.chunky.permission.AccessLevel;
 
 public class ChunkyPlayerItemUseEvent extends ChunkyPlayerChunkEvent implements Cancellable {
 
     private ItemStack itemUsed;
     private boolean cancel = false;
 
-    public ChunkyPlayerItemUseEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack itemUsed, ChunkyAccessLevel accessLevel) {
+    public ChunkyPlayerItemUseEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, ItemStack itemUsed, AccessLevel accessLevel) {
         super(Type.PLAYER_BUILD, chunkyPlayer, chunkyChunk, accessLevel);
         this.itemUsed = itemUsed;
     }

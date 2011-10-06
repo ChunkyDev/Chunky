@@ -4,14 +4,14 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Cancellable;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
+import org.getchunky.chunky.permission.AccessLevel;
 
 public class ChunkyPlayerDestroyEvent extends ChunkyPlayerChunkEvent implements Cancellable {
 
     private Block block;
     private boolean cancel = false;
 
-    public ChunkyPlayerDestroyEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block, ChunkyAccessLevel accessLevel) {
+    public ChunkyPlayerDestroyEvent(ChunkyPlayer chunkyPlayer, ChunkyChunk chunkyChunk, Block block, AccessLevel accessLevel) {
         super(Type.PLAYER_DESTROY, chunkyPlayer, chunkyChunk, accessLevel);
         this.block = block;
     }

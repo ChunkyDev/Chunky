@@ -8,7 +8,7 @@ import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
-import org.getchunky.chunky.permission.ChunkyAccessLevel;
+import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
 
@@ -49,7 +49,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     public void claimCurrentChunk() {
         ChunkyChunk chunkyChunk = this.getCurrentChunk();
-        ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this, chunkyChunk, ChunkyAccessLevel.UNOWNED);
+        ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this, chunkyChunk, AccessLevel.UNOWNED);
         event.setCancelled(false);
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return;
