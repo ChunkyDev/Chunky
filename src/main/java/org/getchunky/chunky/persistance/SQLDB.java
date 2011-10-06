@@ -97,7 +97,14 @@ public abstract class SQLDB implements Database {
         while (iterateData(data)) {
             ChunkyObject owner = ChunkyManager.getObject(getString(data, "OwnerType"), getString(data, "OwnerId"));
             ChunkyObject ownable = ChunkyManager.getObject(getString(data, "OwnableType"), getString(data, "OwnableId"));
-            if (owner == null || ownable == null) return;
+            if (owner == null || ownable == null) {
+                Logging.warning("Unloadable ownership."
+                        + "OwnerType: " + getString(data, "OwnerType")
+                        + "OwnerId: " + getString(data, "OwnerId")
+                        + "OwnableType: " + getString(data, "OwnableType")
+                        + "OwnableId:" + getString(data, "OwnableId"));
+                return;
+            }
             Logging.debug(ownable.getId());
             Logging.debug(owner.getId());
             ownable.setOwner(owner, true, false);
