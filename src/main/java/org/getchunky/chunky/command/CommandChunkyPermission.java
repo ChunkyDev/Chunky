@@ -181,6 +181,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 sPermObject = "Group: " + group.getName();
                 for (ChunkyObject target : targets) {
                     group.setPerms(target, flags);
+                    if (perms == null)
+                        perms = ChunkyManager.getPermissions(target, group);
                 }
             } else {
                 // Specific player "name"
