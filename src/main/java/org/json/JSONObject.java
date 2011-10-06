@@ -1633,7 +1633,7 @@ public class JSONObject {
         }
      }
 
-    public final void load(String json) throws JSONException {
+    public void load(String json) throws JSONException {
         JSONTokener x = new JSONTokener(json);
         char c;
         String key;
