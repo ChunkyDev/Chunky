@@ -218,3 +218,7 @@ player:
 group:
   no_such_group:
   - 'There is no group named: %1'
+  add:
+  - 'Added %1 to group: %2'
+  remove:
+  - 'Removed %1 from group: %2'

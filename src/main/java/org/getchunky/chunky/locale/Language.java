@@ -127,7 +127,9 @@ public enum Language {
     /**
      * Group
      */
-    NO_SUCH_GROUP("group.no_such_group"),;
+    NO_SUCH_GROUP("group.no_such_group"),
+    GROUP_ADD("group.add"),
+    GROUP_REMOVE("group.remove"),;
 
     private String path;
 
