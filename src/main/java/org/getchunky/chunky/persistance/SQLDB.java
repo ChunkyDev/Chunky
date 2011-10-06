@@ -105,11 +105,11 @@ public abstract class SQLDB implements Database {
                         + "OwnerId: " + getString(data, "OwnerId")
                         + "OwnableType: " + getString(data, "OwnableType")
                         + "OwnableId:" + getString(data, "OwnableId"));
-                return;
+                continue;
             }
             Logging.debug(ownable.getId());
             Logging.debug(owner.getId());
-            ownable.setOwner(owner, true, false);
+            ownable.setOwner(owner, true, false, false);
         }
     }
 

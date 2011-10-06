@@ -154,7 +154,8 @@ public abstract class ChunkyObject extends JSONObject {
      * @param o object to become owned.
      * @return true if this object did not already own o.
      */
-    private boolean addOwnable(ChunkyObject o) {
+    private boolean addOwnable(ChunkyObject o, boolean persist) {
+        Logging.debug("Adding " + o + " as ownable to " + this);
         if (o == null)
             throw new IllegalArgumentException();
 
@@ -162,17 +163,24 @@ public abstract class ChunkyObject extends JSONObject {
         // ex. town.setOwner(Peasant) Peasant is removed from parent (Town).
 
         if (this.isOwnedBy(o) && this.owner != null) {
+            Logging.debug("removing ownable and taking children");
             this.getOwner().removeOwnableAndTakeChildren(this);
         }
+        Logging.debug("Checking ownables for: " + o.getType());
         if (ownables.containsKey(o.getType())) {
+            Logging.debug("Owns some " + o.getType() + " already...");
             Boolean exists = ownables.get(o.getType()).add(o);
-            if (exists) DatabaseManager.getDatabase().addOwnership(this, o);
+            if (exists && persist) DatabaseManager.getDatabase().addOwnership(this, o);
+                Logging.debug("Already contained new ownable: " + !exists);
             return exists;
         } else {
+            Logging.debug("First ownable of type: " + o.getType());
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
-            DatabaseManager.getDatabase().addOwnership(this, o);
+            Logging.debug("Adding to database....");
+            if (persist)
+                DatabaseManager.getDatabase().addOwnership(this, o);
             return true;
         }
     }
@@ -204,7 +212,7 @@ public abstract class ChunkyObject extends JSONObject {
         o.ownables = new HashMap<String, HashSet<ChunkyObject>>();
         for (String key : reposess.keySet()) {
             for (ChunkyObject co : reposess.get(key)) {
-                this.addOwnable(co);
+                this.addOwnable(co, true);
             }
         }
     }
@@ -248,11 +256,19 @@ public abstract class ChunkyObject extends JSONObject {
      * @param keepChildren false transfers the object's children to current owner.
      */
     public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions) {
-        if (owner != null)
-            if (keepChildren) owner.removeOwnable(this);
-            else owner.removeOwnableAndTakeChildren(this);
+        setOwner(object, keepChildren, clearPermissions, true);
+    }
+
+    public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions, boolean persist) {
+        if (owner != null) {
+            if (keepChildren)
+                owner.removeOwnable(this);
+            else
+                owner.removeOwnableAndTakeChildren(this);
+        }
         if (object != null) {
-            if (object.addOwnable(this)) owner = object;
+            if (object.addOwnable(this, persist))
+                owner = object;
         } else {
             owner = null;
         }
