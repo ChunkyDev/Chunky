@@ -36,7 +36,7 @@ public class CommandChunkyChunkSetName implements ChunkyCommandExecutor {
             Language.CHUNK_NOT_OWNED.bad(cPlayer);
             return;
         }
-        if (!cPlayer.equals(chunkOwner) && !Permissions.ADMIN_SET_CHUNK_NAME.hasPerm(cPlayer)) {
+        if (!cPlayer.isOwnerOf(chunkOwner) && !Permissions.ADMIN_SET_CHUNK_NAME.hasPerm(cPlayer)) {
             Language.CHUNK_OWNED.bad(cPlayer, cChunk.getOwner().getName());
             return;
         }
