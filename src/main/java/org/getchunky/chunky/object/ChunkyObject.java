@@ -46,57 +46,6 @@ public abstract class ChunkyObject extends JSONObject {
         return true;
     }
 
-    //TODO Should this be moved to super class?
-    public final ChunkyObject load(String json) throws JSONException {
-        JSONTokener x = new JSONTokener(json);
-        char c;
-        String key;
-
-        if (x.nextClean() != '{') {
-            throw x.syntaxError("A JSONObject text must begin with '{'");
-        }
-        for (; ; ) {
-            c = x.nextClean();
-            switch (c) {
-                case 0:
-                    throw x.syntaxError("A JSONObject text must end with '}'");
-                case '}':
-                    return this;
-                default:
-                    x.back();
-                    key = x.nextValue().toString();
-            }
-
-            // The key is followed by ':'. We will also tolerate '=' or '=>'.
-
-            c = x.nextClean();
-            if (c == '=') {
-                if (x.next() != '>') {
-                    x.back();
-                }
-            } else if (c != ':') {
-                throw x.syntaxError("Expected a ':' after a key");
-            }
-            put(key, x.nextValue());
-
-            // Pairs are separated by ','. We will also tolerate ';'.
-
-            switch (x.nextClean()) {
-                case ';':
-                case ',':
-                    if (x.nextClean() == '}') {
-                        return this;
-                    }
-                    x.back();
-                    break;
-                case '}':
-                    return this;
-                default:
-                    throw x.syntaxError("Expected a ',' or '}'");
-            }
-        }
-    }
-
     public final String getName() {
         try {
             return getString("name");
@@ -275,7 +224,7 @@ public abstract class ChunkyObject extends JSONObject {
     public final Boolean hasDefaultPerm(ChunkyPermissions.Flags type) {
         ChunkyPermissions perms = ChunkyManager.getPermissions(this, this);
         Logging.debug("default perms: " + perms + " contains " + type + "?");
-        return perms.contains(type);
+        return perms.hasFlag(type);
     }
 
     public final EnumSet<ChunkyPermissions.Flags> getDefaultPerms() {
