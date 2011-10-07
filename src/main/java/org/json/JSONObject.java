@@ -1332,7 +1332,7 @@ public class JSONObject {
      *  with <code>{</code>&nbsp;<small>(left brace)</small> and ending
      *  with <code>}</code>&nbsp;<small>(right brace)</small>.
      */
-    public String toString() {
+    public final String toString() {
         try {
             Iterator     keys = this.keys();
             StringBuffer sb = new StringBuffer("{");
