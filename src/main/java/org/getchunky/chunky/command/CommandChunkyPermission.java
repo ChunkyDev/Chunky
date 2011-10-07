@@ -11,11 +11,10 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
-import org.getchunky.chunky.util.Logging;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -136,7 +135,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 return permissions;
             }
             String[] flagsString = permString.toLowerCase().substring(1).split(",");
-            for (String flagString : flagsString)  {
+            for (String flagString : flagsString) {
                 PermissionFlag flag = ChunkyPermissions.getFlagByTag(flagString);
                 if (flag == null) continue;
                 permissions.put(flag, add);

@@ -1,8 +1,8 @@
 package org.getchunky.chunky.object;
 
 import org.getchunky.chunky.ChunkyManager;
-import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.json.JSONException;
 import org.json.JSONObject;

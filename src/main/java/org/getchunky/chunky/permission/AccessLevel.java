@@ -92,6 +92,7 @@ public enum AccessLevel {
 
     /**
      * Checks whether this access level caused denial or not
+     *
      * @return true if denied at this access level
      */
     public boolean causedDenial() {
@@ -112,5 +113,6 @@ public enum AccessLevel {
      *
      * @param name new name for access level
      */
-    public void setName(String name) { }
+    public void setName(String name) {
+    }
 }

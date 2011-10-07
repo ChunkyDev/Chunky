@@ -40,7 +40,7 @@ public class CommandChunkyGroupRemove implements ChunkyCommandExecutor {
         HashSet<ChunkyObject> objects = chunkyPlayer.getOwnables().get(ChunkyGroup.class.getName());
         for (ChunkyObject object : objects) {
             if (object.getName().equalsIgnoreCase(args[1])) {
-                group = (ChunkyGroup)object;
+                group = (ChunkyGroup) object;
                 break;
             }
         }

@@ -5,8 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.getchunky.chunky.object.*;
-import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
@@ -105,7 +105,7 @@ public class ChunkyManager {
             HashMap<String, ChunkyObject> players = getObjectsOfType(ChunkyPlayer.class.getName());
             for (ChunkyObject object : players.values()) {
                 if (name.equalsIgnoreCase(object.getName())) {
-                    return (ChunkyPlayer)object;
+                    return (ChunkyPlayer) object;
                 }
             }
         }

@@ -6,7 +6,6 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
-import org.getchunky.chunky.module.ChunkyModuleManager;
 
 /**
  * @author dumptruckman

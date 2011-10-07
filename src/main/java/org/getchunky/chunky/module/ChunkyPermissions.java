@@ -1,7 +1,6 @@
 package org.getchunky.chunky.module;
 
 import org.getchunky.chunky.permission.PermissionFlag;
-import org.getchunky.chunky.util.Logging;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -27,7 +26,7 @@ public class ChunkyPermissions {
                 try {
                     Object value = f.get(null);
                     if (value instanceof PermissionFlag) {
-                        PermissionFlag flag = (PermissionFlag)value;
+                        PermissionFlag flag = (PermissionFlag) value;
                         flagsMap.put(flag.getName(), flag);
                         lookupMap.put(flag.getTag().toLowerCase(), flag);
                     }

@@ -6,7 +6,8 @@ import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -105,7 +106,7 @@ public class PermissionRelationship extends JSONObject {
             this.put("flags", flags);
         }
         if (flags.names() != null) {
-            for(int i = 0; i < flags.names().length(); i++) {
+            for (int i = 0; i < flags.names().length(); i++) {
                 String flagName = flags.names().get(i).toString();
                 PermissionFlag flag = ChunkyPermissions.getFlag(flagName);
                 if (flag == null) {

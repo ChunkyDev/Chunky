@@ -1,20 +1,20 @@
 package com.nijikokun.register.payment;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The <code>Methods</code> initializes Methods that utilize the Method interface
  * based on a "first come, first served" basis.
- *
+ * <p/>
  * Allowing you to check whether a payment method exists or not.
- *
+ * <p/>
  * Methods also allows you to set a preferred method of payment before it captures
  * payment plugins in the initialization process.
- *
+ * <p/>
  * in <code>bukkit.yml</code>:
  * <blockquote><pre>
  *  economy:
@@ -74,6 +74,7 @@ public class Methods {
 
     /**
      * Use to get version of Register plugin
+     *
      * @return version
      */
     public static String getVersion() {
@@ -98,7 +99,7 @@ public class Methods {
      * @return Method <em>or</em> Null
      */
     public static Method createMethod(Plugin plugin) {
-        for (Method method: Methods)
+        for (Method method : Methods)
             if (method.isCompatible(plugin)) {
                 method.setPlugin(plugin);
                 return method;
@@ -169,7 +170,8 @@ public class Methods {
                             continue;
 
                         if (hasMethod()) {
-                            match = true; break;
+                            match = true;
+                            break;
                         }
 
                         if (preferred.isEmpty())
@@ -179,8 +181,8 @@ public class Methods {
                             if (preferred.equalsIgnoreCase(attached.getName()))
                                 Method = attached;
 
-                        else
-                            Method = attached;
+                            else
+                                Method = attached;
                     }
 
                     count++;
@@ -222,7 +224,7 @@ public class Methods {
      * @return <code>boolean</code>
      */
     public static boolean checkDisabled(Plugin method) {
-        if(!hasMethod())
+        if (!hasMethod())
             return true;
 
         if (Method.isCompatible(method))

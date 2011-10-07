@@ -2,17 +2,17 @@ package com.nijikokun.register;
 
 import com.nijikokun.register.listeners.server;
 import com.nijikokun.register.payment.Methods;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import java.io.File;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 
 /**
  * Register
- *
+ * <p/>
  * Initializes on startup and attaches to preferred method or
  * first found method.
  *
@@ -61,7 +61,7 @@ public class Register extends JavaPlugin {
         if (Methods.getMethod() != null)
             System.out.println("[" + info.getName() + "] Payment method found (" + Methods.getMethod().getName() + " version: " + Methods.getMethod().getVersion() + ")");
 
-        System.out.print("[" + info.getName() + "] version " + info.getVersion()+ " is enabled.");
+        System.out.print("[" + info.getName() + "] version " + info.getVersion() + " is enabled.");
     }
 
     public void onEnable() {

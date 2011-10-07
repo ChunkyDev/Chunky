@@ -1,10 +1,8 @@
 package com.nijikokun.register.payment.methods;
 
-import com.nijikokun.register.payment.Method;
 import com.nijiko.coelho.iConomy.iConomy;
 import com.nijiko.coelho.iConomy.system.Account;
-
-
+import com.nijikokun.register.payment.Method;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -28,9 +26,9 @@ public class iCo4 implements Method {
     public String getVersion() {
         return "4";
     }
-    
+
     public int fractionalDigits() {
-    	return 2;
+        return 2;
     }
 
     public String format(double amount) {
@@ -54,12 +52,12 @@ public class iCo4 implements Method {
     }
 
     public boolean createAccount(String name) {
-        if(hasAccount(name))
+        if (hasAccount(name))
             return false;
-        
+
         try {
             iConomy.getBank().addAccount(name);
-        } catch(Exception E) {
+        } catch (Exception E) {
             return false;
         }
 
@@ -67,12 +65,12 @@ public class iCo4 implements Method {
     }
 
     public boolean createAccount(String name, Double balance) {
-        if(hasAccount(name))
+        if (hasAccount(name))
             return false;
-        
+
         try {
             iConomy.getBank().addAccount(name, balance);
-        } catch(Exception E) {
+        } catch (Exception E) {
             return false;
         }
 
@@ -86,17 +84,17 @@ public class iCo4 implements Method {
     public MethodBankAccount getBankAccount(String bank, String name) {
         return null;
     }
-	
+
     public boolean isCompatible(Plugin plugin) {
-        return plugin.getDescription().getName().equalsIgnoreCase("iconomy") 
-            && plugin.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy")
-            && plugin instanceof iConomy;
+        return plugin.getDescription().getName().equalsIgnoreCase("iconomy")
+                && plugin.getClass().getName().equals("com.nijiko.coelho.iConomy.iConomy")
+                && plugin instanceof iConomy;
     }
 
     public void setPlugin(Plugin plugin) {
-        iConomy = (iConomy)plugin;
+        iConomy = (iConomy) plugin;
     }
-	
+
     public class iCoAccount implements MethodAccount {
         private Account account;
 
@@ -113,31 +111,31 @@ public class iCo4 implements Method {
         }
 
         public boolean set(double amount) {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.setBalance(amount);
             return true;
         }
 
         public boolean add(double amount) {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.add(amount);
             return true;
         }
 
         public boolean subtract(double amount) {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.subtract(amount);
             return true;
         }
 
         public boolean multiply(double amount) {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.multiply(amount);
             return true;
         }
 
         public boolean divide(double amount) {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.divide(amount);
             return true;
         }
@@ -159,7 +157,7 @@ public class iCo4 implements Method {
         }
 
         public boolean remove() {
-            if(this.account == null) return false;
+            if (this.account == null) return false;
             this.account.remove();
             return true;
         }
