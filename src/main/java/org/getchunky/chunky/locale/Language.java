@@ -58,6 +58,9 @@ public enum Language {
     // Chunky Permission
     CMD_CHUNKY_PERMISSION_DESC("command.chunky.permission.description"),
     CMD_CHUNKY_PERMISSION_HELP("command.chunky.permission.help"),
+    CMD_CHUNKY_PERMISSION_ADD_SUBTRACT("command.chunky.permission.add_subtract"),
+    CMD_CHUNKY_PERMISSION_HELP_REMINDER("command.chunky.permission.help_reminder"),
+    CMD_CHUNKY_PERMISSION_SPECIFY_FLAGS("command.chunky.permission.specify_flags"),
     // Chunky Player
     CMD_CHUNKY_PLAYER_DESC("command.chunky.player.description"),
     CMD_CHUNKY_PLAYER_HELP("command.chunky.player.help"),

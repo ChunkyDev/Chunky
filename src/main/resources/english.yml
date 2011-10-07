@@ -79,16 +79,23 @@ command:
       description:
       - 'Allows you to set permissions for other players and eventually groups.'
       help:
-      - '&eUsage: /chunky permission <this|all|global> <flags> <name|all|global>'
+      - '&eUsage: /chunky permission <this|all|global> <[<+|->flags]|[clear]> <name|all|global>'
       - '&ethis: &fPermissions for chunk you are in.'
       - '&eall: &fPermissions for all your current chunks.'
       - '&eglobal: &fPermissions for all your current and any new chunks.'
-      - '&eflags: &fThe type of permissions to give.  Explained below.'
-      - '&eb: &fbuild - &ed: &fdestroy - &ei: &fitem use - &es: &fswitch - &eclear: &fremoves all flags.'
+      - '&eflags: &fType of permission to give. Explained below. Separate each with comma.'
+      - '&eb: &fbuild - &ed: &fdestroy - &ei: &fitem use - &es: &fswitch'
+      - '&eclear: &fremoves all flags. (use instead of +/-flags)'
       - '&ename: &fName of player to given permission to.'
       - '&eall: &fAny players you have set permissions specifically for.'
       - '&eglobal: &fPermissions for everyone else. (un-set players)'
-      - '&eExample: &f"&e/c p all bd dumptruckman&f" gives only build/destroy permission for all your currently owned chunks to dumptruckman'
+      - '&eExample: &f"&e/c p all +b,d dumptruckman&f" adds build/destroy permission for all your currently owned chunks to dumptruckman'
+      add_subtract:
+      - 'You must specify whether to allow or deny these flags with a + or -.'
+      help_reminder:
+      - 'Type &e/chunky permission help&f for help.'
+      specify_flags:
+      - 'Make sure to specify the flags! (Example: +b,d,i,s)'
       
     player:
       description:
