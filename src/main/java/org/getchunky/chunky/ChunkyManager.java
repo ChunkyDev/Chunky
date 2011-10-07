@@ -102,10 +102,11 @@ public class ChunkyManager {
     public static ChunkyPlayer getChunkyPlayer(String name) {
         OfflinePlayer player = Bukkit.getServer().getPlayer(name);
         if (player == null) {
-
-            player = Bukkit.getServer().getPlayerExact(name);
-            if (player == null) {
-                player = Bukkit.getServer().getOfflinePlayer(name);
+            HashMap<String, ChunkyObject> players = getObjectsOfType(ChunkyPlayer.class.getName());
+            for (ChunkyObject object : players.values()) {
+                if (name.equalsIgnoreCase(object.getName())) {
+                    return (ChunkyPlayer)object;
+                }
             }
         }
         if (player == null) return null;
