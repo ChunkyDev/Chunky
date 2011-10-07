@@ -75,7 +75,7 @@ public enum AccessLevel {
     },;
 
     private boolean denied = false;
-    private String name;
+    protected String name;
 
     AccessLevel(String name) {
         this.name = name;
