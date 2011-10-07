@@ -2,11 +2,10 @@ package org.getchunky.chunky.config;
 
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
-import org.getchunky.chunky.permission.ChunkyPermissions;
 import org.getchunky.chunky.permission.PermissionFlag;
-import org.getchunky.chunky.permission.PermissionFlags;
 
 import java.io.File;
 import java.io.IOException;
@@ -136,13 +135,13 @@ public class Config {
     }
 
     public static Boolean canUnowned(PermissionFlag flag) {
-        if (flag.equals(PermissionFlags.BUILD))
+        if (flag.equals(ChunkyPermissions.BUILD))
             return getBoolean(UNOWNED_BUILD);
-        if (flag.equals(PermissionFlags.DESTROY))
+        if (flag.equals(ChunkyPermissions.DESTROY))
             return getBoolean(UNOWNED_DESTROY);
-        if (flag.equals(PermissionFlags.ITEM_USE))
+        if (flag.equals(ChunkyPermissions.ITEM_USE))
             return getBoolean(UNOWNED_SWITCH);
-        if (flag.equals(PermissionFlags.SWITCH))
+        if (flag.equals(ChunkyPermissions.SWITCH))
             return getBoolean(UNOWNED_SWITCH);
         return null;
     }

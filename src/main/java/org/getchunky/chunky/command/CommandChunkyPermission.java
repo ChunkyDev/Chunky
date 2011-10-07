@@ -6,15 +6,17 @@ import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
+import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 
-import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ import java.util.Set;
 public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
     String sTarget;
+    String sTargetForPermissible;
 
     public void onCommand(CommandSender sender, ChunkyCommand command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -31,7 +34,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             return;
         }
 
-        if (args.length != 3) {
+        if (args.length < 3) {
             Language.CMD_CHUNKY_PERMISSION_HELP.bad(sender);
             return;
         }
@@ -43,9 +46,12 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
         HashSet<ChunkyObject> targets = getTargets(cPlayer, args[0]);
         if (targets.isEmpty()) return;
+        HashMap<PermissionFlag, Boolean> permissions = getPermissions(cPlayer, args[1]);
+        if (permissions.isEmpty()) return;
+        
     }
 
-    public HashSet<ChunkyObject> getTargets(ChunkyPlayer cPlayer, String targetString) {
+    private HashSet<ChunkyObject> getTargets(ChunkyPlayer cPlayer, String targetString) {
         // The target(s) ChunkyObjects that permissions are being set for
         HashSet<ChunkyObject> targets = new HashSet<ChunkyObject>();
 
@@ -110,40 +116,56 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         return targets;
     }
 
-    public void setPerms(ChunkyPlayer cPlayer, String[] args) {
+    private HashMap<PermissionFlag, Boolean> getPermissions(ChunkyPlayer cPlayer, String permString) {
+        // Converts the flags into an EnumSet<PermissionRelationship.Flags>
+        HashMap<PermissionFlag, Boolean> permissions = new HashMap<PermissionFlag, Boolean>();
 
-
-
-
-        // Converts the flags into an EnumSet<ChunkyPermissions.Flags>
-        EnumSet<ChunkyPermissions.Flags> flags = EnumSet.noneOf(ChunkyPermissions.Flags.class);
-        if (args[1].equalsIgnoreCase("clear")) {
+        if (permString.equalsIgnoreCase("clear")) {
             // Flags of "clear" means it will null out the flag set.  This is necessary to indicate that permissions are "not set" for this relationship.
-            flags = null;
+            permissions = null;
         } else {
-            for (char perm : args[1].toLowerCase().toCharArray()) {
-                ChunkyPermissions.Flags flag = ChunkyPermissions.Flags.get(perm);
+            boolean add;
+            if (permString.startsWith("+")) {
+                add = true;
+            } else if (permString.startsWith("-")) {
+                add = false;
+            } else {
+                Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+                return permissions;
+            }
+            String[] flagsString = permString.toLowerCase().substring(1).split(",");
+            for (String flagString : flagsString)  {
+                PermissionFlag flag = ChunkyPermissions.getFlagByTag(flagString);
                 if (flag == null) continue;
-                flags.add(flag);
+                permissions.put(flag, add);
+            }
+            if (permissions.isEmpty()) {
+                Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+                return permissions;
             }
         }
 
+        return permissions;
+    }
+
+    private void setPermissions(ChunkyPlayer cPlayer, String permissibleString, HashSet<ChunkyObject> targets, HashMap<PermissionFlag, Boolean> permissions) {
+
         // sTargetForPermissible refers to the object the permissible is gaining/losing permissions for from their perspective
-        String sTargetForPermissible = "";
+        sTargetForPermissible = "";
         // sPermObject refers to the target for the sender's perspective
         String sPermObject = "";
         // The permissions for the target/object relationship for displaying to sender and target
-        ChunkyPermissions perms = null;
+        PermissionRelationship perms = null;
 
-        if (args[2].equalsIgnoreCase("global")) {
+        if (permissibleString.equalsIgnoreCase("global")) {
             // "everyone"
             sPermObject = Language.EVERYONE.getString();
             for (ChunkyObject target : targets) {
-                target.setDefaultPerms(flags);
+                target.setDefaultPerms(permissions);
                 if (perms == null)
                     perms = ChunkyManager.getPermissions(target, target);
             }
-        } else if (args[2].equalsIgnoreCase("all")) {
+        } else if (permissibleString.equalsIgnoreCase("all")) {
             // "all specific players"
             sPermObject = Language.ALL_SPECIFIC_PLAYERS.getString();
 
@@ -162,12 +184,12 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 // Grab the permissions for the current target object and loop through the objects with permissions in order to set those perms
                 Set<ChunkyObject> objectPerms = ChunkyManager.getAllPermissions(target).keySet();
                 for (ChunkyObject permObject : objectPerms) {
-                    if (flags == null) {
+                    if (permissions == null) {
                         ChunkyManager.getPermissions(target, permObject).clearFlags();
                         DatabaseManager.getDatabase().removePermissions(target, permObject);
                         return;
                     } else {
-                        ChunkyManager.setPermissions(target, permObject, flags);
+                        ChunkyManager.setPermissions(target, permObject, permissions);
                     }
 
                     if (i == 0) {
@@ -184,9 +206,9 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 i++;
             }
         } else {
-            if (args[2].startsWith("g:")) {
+            if (permissibleString.startsWith("g:")) {
                 // groups
-                String groupName = args[2].substring(2);
+                String groupName = permissibleString.substring(2);
                 HashSet<ChunkyObject> groups = cPlayer.getOwnables().get(ChunkyGroup.class.getName());
                 ChunkyGroup group = null;
                 for (ChunkyObject object : groups) {
@@ -203,7 +225,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 }
                 sPermObject = "Group: " + group.getName();
                 for (ChunkyObject target : targets) {
-                    group.setPerms(target, flags);
+                    group.setPerms(target, permissions);
                     if (perms == null)
                         perms = ChunkyManager.getPermissions(target, group);
                 }
@@ -211,15 +233,15 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 // Specific player "name"
 
                 // Grab ChunkyPlayer from args
-                ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(args[2]);
+                ChunkyPlayer permPlayer = ChunkyManager.getChunkyPlayer(permissibleString);
                 if (permPlayer == null) {
-                    Language.NO_SUCH_PLAYER.bad(cPlayer, args[2]);
+                    Language.NO_SUCH_PLAYER.bad(cPlayer, permissibleString);
                     return;
                 }
                 sPermObject = permPlayer.getName();
 
                 for (ChunkyObject target : targets) {
-                    permPlayer.setPerms(target, flags);
+                    permPlayer.setPerms(target, permissions);
                     if (sTargetForPermissible.isEmpty()) {
                         perms = ChunkyManager.getPermissions(target, permPlayer);
                         if (targets.size() == 1) {

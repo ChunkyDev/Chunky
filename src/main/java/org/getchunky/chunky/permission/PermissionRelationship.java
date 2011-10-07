@@ -1,6 +1,7 @@
 package org.getchunky.chunky.permission;
 
 import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +11,7 @@ import java.util.*;
 /**
  * @author dumptruckman, SwearWord
  */
-public class ChunkyPermissions extends JSONObject {
+public class PermissionRelationship extends JSONObject {
 
     private HashMap<PermissionFlag, Boolean> flagsMap = new HashMap<PermissionFlag, Boolean>();
 
@@ -106,11 +107,11 @@ public class ChunkyPermissions extends JSONObject {
         if (flags.names() != null) {
             for(int i = 0; i < flags.names().length(); i++) {
                 String flagName = flags.names().get(i).toString();
-                PermissionFlag flag = PermissionFlags.getFlag(flagName);
+                PermissionFlag flag = ChunkyPermissions.getFlag(flagName);
                 if (flag == null) {
                     Logging.warning("Permission flag \"" + flagName + "\" is missing.  Registering it as new permission flag.");
                     flag = new PermissionFlag(flagName, flagName);
-                    PermissionFlags.registerPermissionFlag(flag);
+                    ChunkyPermissions.registerPermissionFlag(flag);
                 }
                 try {
                     boolean hasPerm = flags.getBoolean(flagName);

@@ -5,21 +5,21 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.getchunky.chunky.object.*;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
  */
 public class ChunkyManager {
 
-    private static HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>> permissions = new HashMap<ChunkyObject, HashMap<ChunkyObject, ChunkyPermissions>>();
+    private static HashMap<ChunkyObject, HashMap<ChunkyObject, PermissionRelationship>> permissions = new HashMap<ChunkyObject, HashMap<ChunkyObject, PermissionRelationship>>();
     private static HashMap<String, HashMap<String, ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String, ChunkyObject>>();
 
     /**
@@ -179,15 +179,15 @@ public class ChunkyManager {
      *
      * @param object     Object being interacted with
      * @param permObject Object doing the interacting
-     * @return a ChunkyPermissions object containing the permissions for this relationship
+     * @return a PermissionRelationship object containing the permissions for this relationship
      */
-    public static ChunkyPermissions getPermissions(ChunkyObject object, ChunkyObject permObject) {
+    public static PermissionRelationship getPermissions(ChunkyObject object, ChunkyObject permObject) {
         if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
+            permissions.put(object, new HashMap<ChunkyObject, PermissionRelationship>());
         }
-        HashMap<ChunkyObject, ChunkyPermissions> perms = permissions.get(object);
+        HashMap<ChunkyObject, PermissionRelationship> perms = permissions.get(object);
         if (!perms.containsKey(permObject)) {
-            perms.put(permObject, new ChunkyPermissions());
+            perms.put(permObject, new PermissionRelationship());
         }
         Logging.debug("ChunkyManager.getPermissions() reports perms as: " + perms.get(permObject).toString());
         return perms.get(permObject);
@@ -213,17 +213,19 @@ public class ChunkyManager {
      * @param persist    Whether or not to persist these changes.  Generally you should persist the changes.
      */
     public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(object, permObject);
-        perms.setFlags(flags);
+        PermissionRelationship perms = ChunkyManager.getPermissions(object, permObject);
+        for (Map.Entry<PermissionFlag, Boolean> flag : flags.entrySet()) {
+            perms.setFlag(flag.getKey(), flag.getValue());
+        }
         if (persist)
             DatabaseManager.getDatabase().updatePermissions(permObject, object, perms);
     }
 
-    public static void putPermissions(ChunkyObject object, ChunkyObject permObject, ChunkyPermissions perms) {
+    public static void putPermissions(ChunkyObject object, ChunkyObject permObject, PermissionRelationship perms) {
         if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
+            permissions.put(object, new HashMap<ChunkyObject, PermissionRelationship>());
         }
-        HashMap<ChunkyObject, ChunkyPermissions> permsMap = permissions.get(object);
+        HashMap<ChunkyObject, PermissionRelationship> permsMap = permissions.get(object);
         permsMap.put(permObject, perms);
     }
 
@@ -233,9 +235,9 @@ public class ChunkyManager {
      * @param object Object in question
      * @return HashMap of object permissions
      */
-    public static HashMap<ChunkyObject, ChunkyPermissions> getAllPermissions(ChunkyObject object) {
+    public static HashMap<ChunkyObject, PermissionRelationship> getAllPermissions(ChunkyObject object) {
         if (!permissions.containsKey(object)) {
-            permissions.put(object, new HashMap<ChunkyObject, ChunkyPermissions>());
+            permissions.put(object, new HashMap<ChunkyObject, PermissionRelationship>());
         }
         return permissions.get(object);
     }

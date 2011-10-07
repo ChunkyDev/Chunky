@@ -4,17 +4,16 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
 import org.getchunky.chunky.exceptions.ChunkyObjectNotInitializedException;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -223,37 +222,33 @@ public abstract class ChunkyObject extends JSONObject {
     }
 
     public final Boolean hasDefaultPerm(PermissionFlag type) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(this, this);
+        PermissionRelationship perms = ChunkyManager.getPermissions(this, this);
         Logging.debug("default perms: " + perms + " contains " + type + "?");
         return perms.hasFlag(type);
     }
 
-    public final ChunkyPermissions getDefaultPerms() {
+    public final PermissionRelationship getDefaultPerms() {
         return ChunkyManager.getPermissions(this, this);
     }
 
-    public final void setDefaultPerm(PermissionFlag type, boolean status) {
-        setDefaultPerm(type, status, true);
-    }
-
-    /*public final void setDefaultPerms(HashMap<PermissionFlag, Boolean> flags) {
+    public final void setDefaultPerms(HashMap<PermissionFlag, Boolean> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(this, this).clearFlags();
             DatabaseManager.getDatabase().removePermissions(this, this);
             return;
         }
 
-        EnumSet<ChunkyPermissions.Flags> notSet = EnumSet.complementOf(flags);
-        for (ChunkyPermissions.Flags flag : flags) {
-            setDefaultPerm(flag, true);
+        for (Map.Entry<PermissionFlag, Boolean> flag : flags.entrySet()) {
+            setDefaultPerm(flag.getKey(), flag.getValue());
         }
-        for (ChunkyPermissions.Flags flag : notSet) {
-            setDefaultPerm(flag, false);
-        }
-    }*/
+    }
+
+    public final void setDefaultPerm(PermissionFlag type, boolean status) {
+        setDefaultPerm(type, status, true);
+    }
 
     public final void setDefaultPerm(PermissionFlag type, boolean status, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(this, this);
+        PermissionRelationship perms = ChunkyManager.getPermissions(this, this);
         // Set flag
         perms.setFlag(type, status);
 

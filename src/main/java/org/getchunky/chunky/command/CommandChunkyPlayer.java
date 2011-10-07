@@ -9,9 +9,8 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
     }
 
     private void displayGlobalPermissions(ChunkyPlayer chunkyPlayer, CommandSender sender) {
-        ChunkyPermissions perms = chunkyPlayer.getDefaultPerms();
+        PermissionRelationship perms = chunkyPlayer.getDefaultPerms();
         if (chunkyPlayer.getName().equals(sender.getName()))
             Language.DEFAULT_PERMISSIONS.normal(sender, Language.YOUR_PROPERTY.getString());
         else
@@ -81,10 +80,10 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                     , notSet);
         }
         if (chunkyPlayer.getName().equals(sender.getName())) {
-            HashMap<ChunkyObject, ChunkyPermissions> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer);
+            HashMap<ChunkyObject, PermissionRelationship> playerPermissions = ChunkyManager.getAllPermissions(chunkyPlayer);
             String players = "";
             if (!playerPermissions.isEmpty()) {
-                for (Map.Entry<ChunkyObject, ChunkyPermissions> permPlayer : playerPermissions.entrySet()) {
+                for (Map.Entry<ChunkyObject, PermissionRelationship> permPlayer : playerPermissions.entrySet()) {
                     if (permPlayer.getKey() instanceof ChunkyPlayer) {
                         ChunkyPlayer cPlayer = (ChunkyPlayer) permPlayer.getKey();
                         if (!players.isEmpty()) players += ", ";

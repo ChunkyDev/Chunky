@@ -30,7 +30,7 @@ public class ChunkRenderer extends MapRenderer {
                 Byte color = MapPalette.RED;
 
                 if (chunk.getOwner().equals(chunkyPlayer)) color = MapPalette.BLUE;
-                //else if(chunkyPlayer.hasPerm(chunk, ChunkyPermissions.Flags.BUILD)) color=MapPalette.LIGHT_GREEN;
+                //else if(chunkyPlayer.hasPerm(chunk, PermissionRelationship.Flags.BUILD)) color=MapPalette.LIGHT_GREEN;
 
                 drawChunk(x, z, mapCanvas, color);
             }

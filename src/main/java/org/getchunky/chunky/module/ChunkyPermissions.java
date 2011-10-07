@@ -1,4 +1,6 @@
-package org.getchunky.chunky.permission;
+package org.getchunky.chunky.module;
+
+import org.getchunky.chunky.permission.PermissionFlag;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -7,7 +9,7 @@ import java.util.HashMap;
 /**
  * @author dumptruckman
  */
-public class PermissionFlags {
+public class ChunkyPermissions {
 
     private static HashMap<String, PermissionFlag> flagsMap = new HashMap<String, PermissionFlag>();
     private static HashMap<String, PermissionFlag> lookupMap = new HashMap<String, PermissionFlag>();
@@ -18,7 +20,7 @@ public class PermissionFlags {
     public static PermissionFlag SWITCH = new PermissionFlag("Switch", "S");
 
     static {
-        Field[] fields = PermissionFlags.class.getFields();
+        Field[] fields = ChunkyPermissions.class.getFields();
         for (Field f : fields) {
             if (Modifier.isStatic(f.getModifiers())) {
                 try {
@@ -44,5 +46,9 @@ public class PermissionFlags {
 
     public static PermissionFlag getFlag(String name) {
         return flagsMap.get(name);
+    }
+
+    public static PermissionFlag getFlagByTag(String tag) {
+        return lookupMap.get(tag);
     }
 }

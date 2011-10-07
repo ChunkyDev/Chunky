@@ -163,6 +163,10 @@ command:
 chunk:
   unowned_chunk_name:
   - '(Wilderness)'
+  no_such_chunks:
+  - 'You own no chunks named: %1"
+  chunks_named:
+  - 'chunks named: %1'
   owned:
   - 'This chunk is owned by: %1'
   not_owned:

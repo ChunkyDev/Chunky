@@ -1,12 +1,7 @@
 package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.object.ChunkyObject;
-import org.getchunky.chunky.permission.ChunkyPermissions;
-import org.getchunky.chunky.permission.PermissionFlag;
-import org.getchunky.chunky.permission.PermissionFlags;
-
-import java.util.EnumSet;
-import java.util.HashMap;
+import org.getchunky.chunky.permission.PermissionRelationship;
 
 public class QueryGen {
 
@@ -57,7 +52,7 @@ public class QueryGen {
                         ")";
     }
 
-    public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, ChunkyPermissions perms) {
+    public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, PermissionRelationship perms) {
 
         return
                 String.format("REPLACE INTO chunky_permissions (" +

@@ -9,7 +9,7 @@ import org.getchunky.chunky.module.ChunkyCommandExecutor;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
 
 public class CommandChunkyChunk implements ChunkyCommandExecutor {
 
@@ -41,7 +41,7 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor {
             Language.CHUNK_MENU_OWNER.normal(player, Language.NO_ONE.getString());
 
         Language.DEFAULT_PERMISSIONS.normal(player, Language.THIS_CHUNK.getString());
-        ChunkyPermissions perms = ChunkyManager.getPermissions(chunkyChunk, chunkyChunk);
+        PermissionRelationship perms = ChunkyManager.getPermissions(chunkyChunk, chunkyChunk);
         if (perms != null && perms.getFlags() != null) {
             Language.sendMessage(player, perms.toString());
         }

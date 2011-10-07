@@ -1,13 +1,12 @@
 package org.getchunky.chunky.object;
 
 import org.getchunky.chunky.ChunkyManager;
-import org.getchunky.chunky.permission.ChunkyPermissions;
+import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 
 /**
@@ -16,7 +15,7 @@ import java.util.HashMap;
 public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public final Boolean hasPerm(ChunkyObject object, PermissionFlag type) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
+        PermissionRelationship perms = ChunkyManager.getPermissions(object, this);
         return perms.hasFlag(type);
     }
 
@@ -28,20 +27,20 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
         setPerm(object, type, status, true);
     }
 
-    /*public final void setPerms(ChunkyObject object, HashMap<PermissionFlag, Boolean> flags) {
+    public final void setPerms(ChunkyObject object, HashMap<PermissionFlag, Boolean> flags) {
         if (flags == null) {
             ChunkyManager.getPermissions(object, this).clearFlags();
             DatabaseManager.getDatabase().removePermissions(object, this);
             return;
         }
 
-        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
+        PermissionRelationship perms = ChunkyManager.getPermissions(object, this);
         perms.setFlags(flags);
         DatabaseManager.getDatabase().updatePermissions(this, object, perms);
-    }*/
+    }
 
     public final void setPerm(ChunkyObject object, PermissionFlag type, boolean status, boolean persist) {
-        ChunkyPermissions perms = ChunkyManager.getPermissions(object, this);
+        PermissionRelationship perms = ChunkyManager.getPermissions(object, this);
         perms.setFlag(type, status);
 
         // Persist if requested

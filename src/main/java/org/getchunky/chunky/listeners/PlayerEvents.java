@@ -10,12 +10,11 @@ import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkChangeEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerItemUseEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerSwitchEvent;
 import org.getchunky.chunky.locale.Language;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.PermissionChain;
-import org.getchunky.chunky.permission.ChunkyPermissions;
-import org.getchunky.chunky.permission.PermissionFlags;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.MinecraftTools;
 
@@ -95,7 +94,7 @@ public class PlayerEvents extends PlayerListener {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, PermissionFlags.ITEM_USE);
+                AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.ITEM_USE);
                 boolean isCancelled = permType.causedDenial();
 
                 ChunkyPlayerItemUseEvent chunkyEvent = new ChunkyPlayerItemUseEvent(chunkyPlayer, chunkyChunk, event.getItem(), permType);
@@ -108,7 +107,7 @@ public class PlayerEvents extends PlayerListener {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
                 ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
 
-                AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, PermissionFlags.SWITCH);
+                AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.SWITCH);
                 boolean isCancelled = permType.causedDenial();
 
                 ChunkyPlayerSwitchEvent chunkyEvent = new ChunkyPlayerSwitchEvent(chunkyPlayer, chunkyChunk, event.getClickedBlock(), permType);

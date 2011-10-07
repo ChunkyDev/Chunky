@@ -95,6 +95,8 @@ public enum Language {
      * Chunk
      */
     UNREGISTERED_CHUNK_NAME("chunk.unowned_chunk_name"),
+    NO_SUCH_CHUNKS("chunk.no_such_chunks"),
+    CHUNKS_NAMED("chunk.chunks_named"),
     CHUNK_OWNED("chunk.owned"),
     CHUNK_NOT_OWNED("chunk.not_owned"),
     CHUNK_NAME_CHANGED("chunk.name_changed"),
