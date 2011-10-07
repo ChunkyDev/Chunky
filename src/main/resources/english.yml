@@ -164,7 +164,7 @@ chunk:
   unowned_chunk_name:
   - '(Wilderness)'
   no_such_chunks:
-  - 'You own no chunks named: %1"
+  - 'You own no chunks named: %1'
   chunks_named:
   - 'chunks named: %1'
   owned:
