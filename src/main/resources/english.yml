@@ -88,7 +88,7 @@ command:
       - '&ename: &fName of player to given permission to.'
       - '&eall: &fAny players you have set permissions specifically for.'
       - '&eglobal: &fPermissions for everyone else. (un-set players)'
-      - '&eExample: &f\"&e/c p all bd dumptruckman&f\" gives only build/destroy permission for all your currently owned chunks to dumptruckman'
+      - '&eExample: &f"&e/c p all bd dumptruckman&f" gives only build/destroy permission for all your currently owned chunks to dumptruckman'
       
     player:
       description:
@@ -202,7 +202,7 @@ permission:
   status:
   - 'BUILD: %1 | DESTROY: %2 | ITEMUSE: %4 | SWITCH: %3'
   player:
-  - '&aPlayer Permissions for %1: %2'
+  - '&aPlayer Permissions for %1: &f%2'
   default:
   - '&aDefault Permissions for %1:'
   yours:
