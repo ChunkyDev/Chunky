@@ -21,5 +21,7 @@ public class PermissionFlag {
         return tag;
     }
 
-
+    public String toString() {
+        return name;
+    }
 }

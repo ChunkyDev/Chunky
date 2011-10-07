@@ -15,7 +15,7 @@ public class ChunkyChunk extends ChunkyLocationObject {
      */
     public final ChunkyChunk setCoord(ChunkyCoordinates coord) {
         try {
-            this.put("location", coord.toString());
+            data.put("location", coord.toString());
         } catch (JSONException e) {
             Logging.warning(e.getMessage());
         }
@@ -30,7 +30,7 @@ public class ChunkyChunk extends ChunkyLocationObject {
      */
     public final ChunkyCoordinates getCoord() {
         try {
-            return new ChunkyCoordinates(this.getString("location"));
+            return new ChunkyCoordinates(data.getString("location"));
         } catch (JSONException e) {
             Logging.severe(e.getMessage());
             return null;

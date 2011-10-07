@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ChunkyPlayer extends ChunkyPermissibleObject {
 
-    private static HashSet<ChunkyPlayer> claimMode = new HashSet<ChunkyPlayer>();
+    private transient static HashSet<ChunkyPlayer> claimMode = new HashSet<ChunkyPlayer>();
 
     public static HashSet<ChunkyPlayer> getClaimModePlayers() {
         return claimMode;

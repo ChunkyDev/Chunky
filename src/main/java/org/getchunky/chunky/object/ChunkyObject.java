@@ -11,6 +11,8 @@ import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,41 +20,33 @@ import java.util.Map;
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject extends JSONObject {
+public abstract class ChunkyObject extends ChunkyPersistable {
 
     /**
      * Returns the child <code>TreeNode</code> at index
      * <code>childIndex</code>.
      */
-    protected ChunkyObject owner;
-    protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
+    protected transient ChunkyObject owner;
+    protected transient HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
 
-    private String id;
-    private final String className;
+    private transient String id;
+    private transient final String className;
+
+    private String name = "";
 
     public ChunkyObject() {
         super();
-        try {
-            this.put("name", "");
-        } catch (JSONException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        name = "";
         className = this.getClass().getName();
     }
 
-    public final boolean save() throws ChunkyObjectNotInitializedException {
-        if (id == null) throw new ChunkyObjectNotInitializedException("Object cannot be saved without ID!");
+    public final void save() {
+        super.save();
         DatabaseManager.getDatabase().updateObject(this);
-        return true;
     }
 
     public final String getName() {
-        try {
-            return getString("name");
-        } catch (JSONException e) {
-            Logging.severe(e.getMessage());
-            return null;
-        }
+        return name;
     }
 
     public final String getId() {
@@ -77,11 +71,7 @@ public abstract class ChunkyObject extends JSONObject {
         ChunkyObjectNameEvent event = new ChunkyObjectNameEvent(this, name);
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return this;
-        try {
-            this.put("name", event.getNewName());
-        } catch (JSONException e) {
-            //Logging.warning(e.getMessage());
-        }
+        this.name = event.getNewName();
         save();
         return this;
     }
