@@ -45,7 +45,7 @@ import java.io.StringWriter;
  *         .key("JSON")
  *         .value("Hello, World!")
  *     .endObject()
- *     .toString();</pre> which produces the string <pre>
+ *     .toLongString();</pre> which produces the string <pre>
  * {"JSON":"Hello, World!"}</pre>
  * <p>
  * The first method called must be <code>array</code> or <code>object</code>.

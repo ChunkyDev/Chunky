@@ -43,7 +43,7 @@ import java.util.Map;
  * <code>JSONObject.NULL object</code>.
  * <p>
  * The constructor can convert a JSON text into a Java object. The
- * <code>toString</code> method converts to JSON text.
+ * <code>toLongString</code> method converts to JSON text.
  * <p>
  * A <code>get</code> method returns a value if one can be found, and throws an
  * exception if one cannot be found. An <code>opt</code> method returns a
@@ -55,7 +55,7 @@ import java.util.Map;
  * <code>get</code> and <code>opt</code> methods that do type checking and type
  * coercion for you.
  * <p>
- * The texts produced by the <code>toString</code> methods strictly conform to
+ * The texts produced by the <code>toLongString</code> methods strictly conform to
  * JSON syntax rules. The constructors are more forgiving in the texts they will
  * accept:
  * <ul>

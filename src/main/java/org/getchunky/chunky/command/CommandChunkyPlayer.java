@@ -70,7 +70,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         else
             Language.DEFAULT_PERMISSIONS.normal(sender, Language.THEIR_PROPERTY.getString());
         if (perms != null)
-            Language.sendMessage(sender, perms.toString());
+            Language.sendMessage(sender, perms.toLongString());
         else {
             String notSet = Language.NO_PERMISSIONS_SET.getString();
             Language.PERMISSIONS_STATUS.normal(sender
@@ -101,7 +101,7 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
             perms = ChunkyManager.getPermissions(chunkyPlayer, ChunkyManager.getChunkyPlayer((Player) sender));
             if (perms != null && perms.getFlags() != null) {
                 Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()));
-                Language.sendMessage(sender, perms.toString());
+                Language.sendMessage(sender, perms.toLongString());
             }
         }
     }

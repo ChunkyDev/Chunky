@@ -132,6 +132,7 @@ public abstract class SQLDB implements Database {
     }
 
     public void updateDefaultPermissions(ChunkyObject object, PermissionRelationship perms) {
+        Logging.debug("Updating default perms for " + object);
         query(QueryGen.updatePermissions(object, object, perms));
     }
 }

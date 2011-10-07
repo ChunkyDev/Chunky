@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  * object. A JSONObject constructor can be used to convert an external form
  * JSON text into an internal form whose values can be retrieved with the
  * <code>get</code> and <code>opt</code> methods, or to convert values into a
- * JSON text using the <code>put</code> and <code>toString</code> methods.
+ * JSON text using the <code>put</code> and <code>toLongString</code> methods.
  * A <code>get</code> method returns a value if one can be found, and throws an
  * exception if one cannot be found. An <code>opt</code> method returns a
  * default value instead of throwing an exception, and so is useful for
@@ -65,10 +65,10 @@ import java.util.ResourceBundle;
  * do not throw. Instead, they return a specified value, such as null.
  * <p>
  * The <code>put</code> methods add or replace values in an object. For example, 
- * <pre>myString = new JSONObject().put("JSON", "Hello, World!").toString();</pre>
+ * <pre>myString = new JSONObject().put("JSON", "Hello, World!").toLongString();</pre>
  * produces the string <code>{"JSON": "Hello, World"}</code>.
  * <p>
- * The texts produced by the <code>toString</code> methods strictly conform to
+ * The texts produced by the <code>toLongString</code> methods strictly conform to
  * the JSON syntax rules.
  * The constructors are more forgiving in the texts they will accept:
  * <ul>
@@ -139,7 +139,7 @@ public class JSONObject {
      * It is sometimes more convenient and less ambiguous to have a
      * <code>NULL</code> object than to use Java's <code>null</code> value.
      * <code>JSONObject.NULL.equals(null)</code> returns <code>true</code>.
-     * <code>JSONObject.NULL.toString()</code> returns <code>"null"</code>.
+     * <code>JSONObject.NULL.toLongString()</code> returns <code>"null"</code>.
      */
     public static final Object NULL = new Null();
 
@@ -1438,7 +1438,7 @@ public class JSONObject {
      * then a JSONArray will be made from it and its toJSONString method
      * will be called. If the value is a MAP, then a JSONObject will be made
      * from it and its toJSONString method will be called. Otherwise, the
-     * value's toString method will be called, and the result will be quoted.
+     * value's toLongString method will be called, and the result will be quoted.
      *
      * <p>
      * Warning: This method assumes that the data structure is acyclical.

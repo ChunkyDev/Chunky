@@ -72,7 +72,7 @@ public class PermissionRelationship extends JSONObject {
      *
      * @return String representation of permission flags
      */
-    public String toString() {
+    public String toLongString() {
         if (flagsMap.isEmpty()) return Language.NO_PERMISSIONS_SET.getString();
         String sFlags = "";
         for (Map.Entry<PermissionFlag, Boolean> flag : flagsMap.entrySet()) {
@@ -83,7 +83,7 @@ public class PermissionRelationship extends JSONObject {
     }
 
     /**
-     * Returns a string representation of the permissions flags that is shorter than the normal toString()
+     * Returns a string representation of the permissions flags that is shorter than the normal toLongString()
      *
      * @return Small string representation of permission flags
      */
@@ -125,6 +125,8 @@ public class PermissionRelationship extends JSONObject {
     }
 
     private void save() {
+        if (!this.has("flags"))
+            this.put("flags", new JSONObject());
         JSONObject flags = this.getJSONObject("flags");
         if (flags == null) {
             flags = new JSONObject();

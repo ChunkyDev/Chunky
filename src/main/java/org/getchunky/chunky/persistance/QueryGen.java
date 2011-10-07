@@ -60,7 +60,7 @@ public class QueryGen {
                         "ObjectId, " +
                         "PermissibleType, " +
                         "ObjectType, " +
-                        "data," +
+                        "data)" +
                         "VALUES ('%s','%s','%s','%s','%s')",
                         permissible.getId(), object.getId(),
                         permissible.getType(), object.getType(),

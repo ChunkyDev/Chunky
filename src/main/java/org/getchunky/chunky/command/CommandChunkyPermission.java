@@ -15,6 +15,7 @@ import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
+import org.getchunky.chunky.util.Logging;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +49,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         if (targets.isEmpty()) return;
         HashMap<PermissionFlag, Boolean> permissions = getPermissions(cPlayer, args[1]);
         if (permissions.isEmpty()) return;
-        
+        setPermissions(cPlayer, args[2], targets, permissions);
     }
 
     private HashSet<ChunkyObject> getTargets(ChunkyPlayer cPlayer, String targetString) {
@@ -130,7 +131,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             } else if (permString.startsWith("-")) {
                 add = false;
             } else {
-                Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+                Language.CMD_CHUNKY_PERMISSION_ADD_SUBTRACT.bad(cPlayer);
+                Language.CMD_CHUNKY_PERMISSION_HELP_REMINDER.help(cPlayer);
                 return permissions;
             }
             String[] flagsString = permString.toLowerCase().substring(1).split(",");
@@ -140,7 +142,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 permissions.put(flag, add);
             }
             if (permissions.isEmpty()) {
-                Language.CMD_CHUNKY_PERMISSION_HELP.bad(cPlayer);
+                Language.CMD_CHUNKY_PERMISSION_SPECIFY_FLAGS.bad(cPlayer);
+                Language.CMD_CHUNKY_PERMISSION_HELP_REMINDER.help(cPlayer);
                 return permissions;
             }
         }
@@ -196,9 +199,9 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                         perms = ChunkyManager.getPermissions(target, permObject);
                         if (permObject != null && permObject instanceof ChunkyPlayer) {
                             if (targets.size() == 1) {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms, sTargetForPermissible);
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), sTargetForPermissible);
                             } else {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms, Language.ALL_THEIR_CURRENT_PROPERTY.getString());
+                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), Language.ALL_THEIR_CURRENT_PROPERTY.getString());
                             }
                         }
                     }
@@ -256,11 +259,11 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                     }
                 }
 
-                Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms, sTargetForPermissible);
+                Language.PERMS_FOR_YOU.normal(permPlayer, cPlayer.getName(), perms.toLongString(), sTargetForPermissible);
             }
         }
 
         if (perms != null)
-            Language.PERMISSIONS.good(cPlayer, sTarget, perms, sPermObject);
+            Language.PERMISSIONS.good(cPlayer, sTarget, perms.toLongString(), sPermObject);
     }
 }
