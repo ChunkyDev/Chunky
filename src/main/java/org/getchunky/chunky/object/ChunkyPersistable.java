@@ -10,6 +10,8 @@ import org.json.JSONTokener;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -118,7 +120,26 @@ public class ChunkyPersistable {
                 field.setAccessible(true);
                 try {
                     Logging.debug("Setting field \"" + fieldName + "\" to \"" + data.get(fieldName) + "\"");
-                    field.set(this, data.get(fieldName));
+                    Object obj = data.get(fieldName);
+                    if (obj instanceof JSONObject) {
+                        try {
+                            Map map = (Map)field.getType().newInstance();
+                            map.putAll(getMap((JSONObject)obj));
+                            obj = map;
+                        } catch (Exception ignore) {
+                            Logging.warning("Non-map field \"" + field.getName() + "\" is linked to a JSONObject.  This should not happen.");
+                        }
+                    } else if (obj instanceof JSONArray) {
+                        try {
+                            Collection collection = (Collection)field.getType().newInstance();
+                            collection.addAll(getCollection((JSONArray) obj));
+                            obj = collection;
+                        } catch (Exception ignore) {
+                            Logging.warning("Non-collection field \"" + field.getName() + "\" is linked to a JSONArray.  This should not happen.");
+                        }
+                    }
+                    if (obj != null)
+                        field.set(this, obj);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -128,6 +149,33 @@ public class ChunkyPersistable {
         if (superClazz != null) {
             fillFields(superClazz);
         }
+    }
+
+    private Object getDataObject(Object obj) {
+        if (obj instanceof JSONObject)
+            return getMap((JSONObject)obj);
+        else if (obj instanceof JSONArray)
+            return getCollection((JSONArray)obj);
+        else
+            return obj;
+    }
+
+    private Map getMap(JSONObject obj) {
+        Map map = new HashMap();
+        if (obj.names() == null) return map;
+        for (int i = 0; i < obj.names().length(); i++) {
+            map.put(obj.names().get(i), getDataObject(obj.get(obj.names().get(i).toString())));
+        }
+        return map;
+    }
+
+    private Collection getCollection(JSONArray obj) {
+        Collection collection = new HashSet();
+        if (obj.length() < 1) return collection;
+        for (int i = 0; i < obj.length(); i++) {
+            collection.add(getDataObject(obj.get(i)));
+        }
+        return collection;
     }
 
     public String toString() {
