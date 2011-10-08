@@ -2,6 +2,7 @@ package org.getchunky.chunky.permission;
 
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyPermissions;
+import org.getchunky.chunky.persistance.ChunkyPersistable;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * @author dumptruckman, SwearWord
  */
-public class PermissionRelationship extends JSONObject {
+public class PermissionRelationship extends ChunkyPersistable {
 
     private HashMap<PermissionFlag, Boolean> flagsMap = new HashMap<PermissionFlag, Boolean>();
 
@@ -100,10 +101,10 @@ public class PermissionRelationship extends JSONObject {
 
     public void load(String json) {
         super.load(json);
-        JSONObject flags = this.getJSONObject("flags");
+        JSONObject flags = getData().getJSONObject("flags");
         if (flags == null) {
             flags = new JSONObject();
-            this.put("flags", flags);
+            getData().put("flags", flags);
         }
         if (flags.names() != null) {
             for (int i = 0; i < flags.names().length(); i++) {
@@ -126,12 +127,12 @@ public class PermissionRelationship extends JSONObject {
     }
 
     private void save() {
-        if (!this.has("flags"))
-            this.put("flags", new JSONObject());
-        JSONObject flags = this.getJSONObject("flags");
+        if (!getData().has("flags"))
+            getData().put("flags", new JSONObject());
+        JSONObject flags = getData().getJSONObject("flags");
         if (flags == null) {
             flags = new JSONObject();
-            this.put("flags", flags);
+            getData().put("flags", flags);
         }
         for (Map.Entry<PermissionFlag, Boolean> flag : this.flagsMap.entrySet()) {
             flags.put(flag.getKey().getName(), flag.getValue());

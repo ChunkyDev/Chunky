@@ -6,6 +6,7 @@ import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
 import org.getchunky.chunky.exceptions.ChunkyObjectNotInitializedException;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.PermissionRelationship;
+import org.getchunky.chunky.persistance.ChunkyPersistable;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  * @author dumptruckman, SwearWord
  */
-public abstract class ChunkyObject extends JSONObject {
+public abstract class ChunkyObject extends ChunkyPersistable {
 
     /**
      * Returns the child <code>TreeNode</code> at index
@@ -33,7 +34,7 @@ public abstract class ChunkyObject extends JSONObject {
     public ChunkyObject() {
         super();
         try {
-            this.put("name", "");
+            getData().put("name", "");
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -48,7 +49,7 @@ public abstract class ChunkyObject extends JSONObject {
 
     public final String getName() {
         try {
-            return getString("name");
+            return getData().getString("name");
         } catch (JSONException e) {
             Logging.severe(e.getMessage());
             return null;
@@ -78,7 +79,7 @@ public abstract class ChunkyObject extends JSONObject {
         Chunky.getModuleManager().callEvent(event);
         if (event.isCancelled()) return this;
         try {
-            this.put("name", event.getNewName());
+            getData().put("name", event.getNewName());
         } catch (JSONException e) {
             //Logging.warning(e.getMessage());
         }

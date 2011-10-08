@@ -18,7 +18,7 @@ public class QueryGen {
     }
 
     public static String updateObject(ChunkyObject object) {
-        return String.format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')", object.getId(), object.getType(), object.toString());
+        return String.format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')", object.getId(), object.getType(), object.toJSONString());
     }
 
     public static String createPermissionsTable() {
@@ -64,7 +64,7 @@ public class QueryGen {
                         "VALUES ('%s','%s','%s','%s','%s')",
                         permissible.getId(), object.getId(),
                         permissible.getType(), object.getType(),
-                        perms.toString());
+                        perms.toJSONString());
     }
 
     public static String removePermissions(ChunkyObject permissible, ChunkyObject object) {
