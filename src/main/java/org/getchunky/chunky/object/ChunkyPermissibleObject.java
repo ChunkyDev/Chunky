@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dumptruckman
@@ -35,7 +36,9 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
         }
 
         PermissionRelationship perms = ChunkyManager.getPermissions(object, this);
-        perms.setFlags(flags);
+        for (Map.Entry<PermissionFlag, Boolean> flag : flags.entrySet()) {
+            setPerm(object, flag.getKey(), flag.getValue());
+        }
         DatabaseManager.getDatabase().updatePermissions(this, object, perms);
     }
 
