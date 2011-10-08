@@ -19,7 +19,11 @@ import java.util.Map;
  */
 public class ChunkyPersistable {
 
-    protected transient JSONObject data = new JSONObject();
+    private transient JSONObject data = new JSONObject();
+
+    public final JSONObject getData() {
+        return data;
+    }
 
     public void save() throws ChunkyObjectNotInitializedException {
         save(this.getClass());

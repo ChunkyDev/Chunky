@@ -51,10 +51,10 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public JSONObject getGroupsMap() {
         try {
-            if (!data.has("groups")) {
-                data.put("groups", new JSONObject());
+            if (!getData().has("groups")) {
+                getData().put("groups", new JSONObject());
             }
-            return data.getJSONObject("groups");
+            return getData().getJSONObject("groups");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -63,16 +63,16 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
 
     public HashMap<String, ChunkyGroup> getGroups() {
         try {
-            if (!data.has("groups")) {
-                data.put("groups", new JSONObject());
+            if (!getData().has("groups")) {
+                getData().put("groups", new JSONObject());
             }
             HashMap<String, ChunkyGroup> groups = new HashMap<String, ChunkyGroup>();
-            if (data.getJSONObject("groups").length() > 0) {
-                for (int i = 0; i < data.getJSONObject("groups").names().length(); i++) {
-                    String id = data.getJSONObject("groups").get(data.getJSONObject("groups").names().get(i).toString()).toString();
+            if (getData().getJSONObject("groups").length() > 0) {
+                for (int i = 0; i < getData().getJSONObject("groups").names().length(); i++) {
+                    String id = getData().getJSONObject("groups").get(getData().getJSONObject("groups").names().get(i).toString()).toString();
                     ChunkyObject object = ChunkyManager.getObject(id);
                     if (object != null)
-                        groups.put(data.getJSONObject("groups").names().get(i).toString(), (ChunkyGroup) object);
+                        groups.put(getData().getJSONObject("groups").names().get(i).toString(), (ChunkyGroup) object);
                 }
             }
             return groups;
@@ -85,10 +85,10 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public void addGroup(ChunkyGroup group) {
         group.addMember(this);
         try {
-            if (!data.has("groups")) {
-                data.put("groups", new JSONObject());
+            if (!getData().has("groups")) {
+                getData().put("groups", new JSONObject());
             }
-            data.getJSONObject("groups").put(group.getName(), group.getFullId());
+            getData().getJSONObject("groups").put(group.getName(), group.getFullId());
             this.save();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -98,8 +98,8 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
     public void removeGroup(ChunkyGroup group) {
         group.removeMember(this);
         try {
-            if (data.has("groups")) {
-                data.getJSONObject("groups").remove(group.getName());
+            if (getData().has("groups")) {
+                getData().getJSONObject("groups").remove(group.getName());
                 this.save();
             }
         } catch (JSONException e) {
