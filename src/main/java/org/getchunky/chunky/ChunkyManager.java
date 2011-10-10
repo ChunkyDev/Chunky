@@ -222,6 +222,13 @@ public class ChunkyManager {
             DatabaseManager.getDatabase().updatePermissions(permObject, object, perms);
     }
 
+    /**
+     * Sets a new permission relationship for the two given objects.  This will NOT persist changes.
+     * 
+     * @param object Object being interacted with
+     * @param permObject Object doing the interacting
+     * @param perms new PermissionRelationship that will overwrite the old
+     */
     public static void putPermissions(ChunkyObject object, ChunkyObject permObject, PermissionRelationship perms) {
         if (!permissions.containsKey(object)) {
             permissions.put(object, new HashMap<ChunkyObject, PermissionRelationship>());
@@ -241,5 +248,14 @@ public class ChunkyManager {
             permissions.put(object, new HashMap<ChunkyObject, PermissionRelationship>());
         }
         return permissions.get(object);
+    }
+
+    /**
+     * Returns a String useable as a unique object id.  The ID is based off the systems nanotime.
+     *
+     * @return unique ID
+     */
+    public static String getUniqueId() {
+        return Long.toString(System.nanoTime());
     }
 }
