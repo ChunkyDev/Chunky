@@ -88,6 +88,12 @@ public enum Language {
     // Chunky Group Remove
     CMD_CHUNKY_GROUP_RM_DESC("command.chunky.group.remove.description"),
     CMD_CHUNKY_GROUP_RM_HELP("command.chunky.group.remove.help"),
+    // Chunky Admin
+    CMD_CHUNKY_ADMIN_HELP("command.chunky.admin.help"),
+    CMD_CHUNKY_ADMIN_DESC("command.chunky.admin.description"),
+    // Chunky Admin Chunklimit
+    CMD_CHUNKY_ADMIN_CHUNKLIMIT_HELP("command.chunky.admin.chunk_limit.help"),
+    CMD_CHUNKY_ADMIN_CHUNKLIMIT_DESC("command.chunky.admin.chunk_limit.description"),
     // Addfriend
     CMD_ADDFRIEND_HELP("command.addfriend.help"),
     // Removefriend

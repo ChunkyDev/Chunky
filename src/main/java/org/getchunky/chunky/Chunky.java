@@ -287,10 +287,23 @@ public class Chunky extends JavaPlugin {
                     .register();
 
             // /addfriend
-
             ChunkyCommand commandRemovefriend = new ChunkyCommand("removefriend", new CommandRemovefriend(), null)
                     .setAliases("rf", "rmfriend", "rmf")
                     .setHelpLines(Language.getStrings(Language.CMD_RMFRIEND_HELP))
+                    .register();
+
+            // /chunky admin
+            ChunkyCommand commandChunkyAdmin = new ChunkyCommand("admin", new CommandChunkyAdmin(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_DESC))
+                    .setAliases("a")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_HELP))
+                    .register();
+
+            // /chunky admin chunklimit
+            ChunkyCommand commandChunkyAdminChunklimit = new ChunkyCommand("chunklimit", new CommandChunkyAdminChunklimit(), commandChunkyAdmin)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_CHUNKLIMIT_DESC))
+                    .setAliases("cl", "limit")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_CHUNKLIMIT_HELP))
                     .register();
 
         } catch (ChunkyUnregisteredException ignore) {

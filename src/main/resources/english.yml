@@ -154,6 +154,19 @@ command:
         - 'Usage: &e/chunky group remove <player> <group>'
         - 'Removes the specified player from the specified group.'
         - 'Example: &e/chunky group remove dumptruckman friends'
+        
+    admin:
+      help:
+      - 'Type &e/chunky admin ?&f for a list of sub-commands.'
+      description:
+      - 'Contains admin-only commands.'
+      
+      chunk_limit:
+        help:
+        - 'Allows you to set a player's chunk claim limit.'
+        - 'Usage: &e/chunky admin chunklimit <amount> <name>'
+        description:
+        - 'Sets chunk claim limits.'
   
   addfriend:
     help:
