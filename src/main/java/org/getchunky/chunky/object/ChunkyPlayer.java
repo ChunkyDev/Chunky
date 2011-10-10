@@ -83,7 +83,6 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         if (limit == null) {
             limit = Config.getPlayerChunkLimitDefault();
             setClaimLimit(limit);
-            save();
         }
         return limit;
     }

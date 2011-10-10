@@ -158,15 +158,6 @@ public class Config {
         return USABLES;
     }
 
-    public static HashMap<String, Integer> getCustomPlayerChunkLimits() {
-        List<String> keys = config.getKeys(PLAYER_CHUNK_LIMIT_CUSTOM.getPath());
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-        for (String key : keys) {
-            map.put(key, config.getInt(PLAYER_CHUNK_LIMIT_CUSTOM.getPath() + "." + key, (Integer) PLAYER_CHUNK_LIMIT.getDefault()));
-        }
-        return map;
-    }
-
     public static Boolean isChunkNamedAfterOwner() {
         return getBoolean(CHUNK_NAMED_AFTER_OWNER);
     }

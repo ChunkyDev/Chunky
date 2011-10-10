@@ -27,9 +27,7 @@ public enum ConfigPath {
             "# If you leave out the owner name, you may want to enable named_after_owner."),
 
     PLAYER_CHUNK_LIMIT("player.chunk_limit.default", 10, "# The default number of chunks a player list allowed to claim."),
-    PLAYER_CHUNK_LIMIT_CUSTOM("player.chunk_limit.custom", "", "# The default number of chunks a player list allowed to claim."),
-    PLAYER_CHUNK_LIMIT_EXAMPLE("player.chunk_limit.custom.example", 25, "# This example creates a permission node: chunky.chunk_claim_limit.example", "# This allows players will that permission node to claim 25 chunks instead of the default."),
-
+    
     UNOWNED_BUILD("unowned.build", false, "# Can player build on unowned chunks"),
     UNOWNED_DESTROY("unowned.destroy", false, "# Can player destroy on unowned chunks"),
     UNOWNED_ITEMUSE("unowned.item_use", false, "# Can player use items on unowned chunks"),
