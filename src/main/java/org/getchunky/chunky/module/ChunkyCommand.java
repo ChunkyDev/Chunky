@@ -78,17 +78,6 @@ public class ChunkyCommand {
     }
 
     /**
-     * Sets the parent command for this command
-     *
-     * @param parentCommand the command to register this command as a subcommand of. Example, if you registered a command with name "claim" to an already register command "chunky" you will end up with /chunky claim
-     * @return this command
-     */
-    public final ChunkyCommand setParent(ChunkyCommand parentCommand) {
-
-        return this;
-    }
-
-    /**
      * Retrieves the owner command that this command is a sub-command of.
      *
      * @return the owner command of this command or null if this is a top level command
