@@ -191,108 +191,107 @@ public class Chunky extends JavaPlugin {
     final private void registerChunkyCommands() {
         try {
             // /chunky
-            ChunkyCommand commandChunky = new ChunkyCommand("chunky", Arrays.asList("c"),
-                    null, Language.getStrings(Language.CMD_CHUNKY_HELP),
-                    new CommandChunky());
-            getModuleManager().registerCommand(commandChunky);
+            ChunkyCommand commandChunky = new ChunkyCommand("chunky", new CommandChunky(), null)
+                    .setAliases("c")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_HELP))
+                    .register();
 
             // /chunky claim
-            ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", Arrays.asList("c"),
-                    Language.getString(Language.CMD_CHUNKY_CLAIM_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_CLAIM_HELP),
-                    new CommandChunkyClaim(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyClaim);
+            ChunkyCommand commandChunkyClaim = new ChunkyCommand("claim", new CommandChunkyClaim(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_CLAIM_DESC))
+                    .setAliases("c")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_CLAIM_HELP))
+                    .register();
 
             // /chunky unclaim
-            ChunkyCommand commandChunkyUnclaim = new ChunkyCommand("unclaim", Arrays.asList("u", "uc"),
-                    Language.getString(Language.CMD_CHUNKY_UNCLAIM_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_UNCLAIM_HELP),
-                    new CommandChunkyUnclaim(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyUnclaim);
+            ChunkyCommand commandChunkyUnclaim = new ChunkyCommand("unclaim", new CommandChunkyUnclaim(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_UNCLAIM_DESC))
+                    .setAliases("u", "uc")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_UNCLAIM_HELP))
+                    .register();
 
             // /chunky player
-            ChunkyCommand commandChunkyPlayer = new ChunkyCommand("player", Arrays.asList("pl"),
-                    Language.getString(Language.CMD_CHUNKY_PLAYER_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PLAYER_HELP),
-                    new CommandChunkyPlayer(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyPlayer);
+            ChunkyCommand commandChunkyPlayer = new ChunkyCommand("player", new CommandChunkyPlayer(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_PLAYER_DESC))
+                    .setAliases("pl")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_PLAYER_HELP))
+                    .register();
 
             // /chunky player set
-            ChunkyCommand commandChunkyPlayerSet = new ChunkyCommand("set", Arrays.asList("s"),
-                    Language.getString(Language.CMD_CHUNKY_PLAYER_SET_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PLAYER_SET_HELP),
-                    new CommandChunkyPlayerSet(), commandChunkyPlayer);
-            getModuleManager().registerCommand(commandChunkyPlayerSet);
+            ChunkyCommand commandChunkyPlayerSet = new ChunkyCommand("set", new CommandChunkyPlayerSet(), commandChunkyPlayer)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_PLAYER_SET_DESC))
+                    .setAliases("s")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_PLAYER_SET_HELP))
+                    .register();
 
             // /chunky player set mode
-            ChunkyCommand commandChunkyPlayerSetMode = new ChunkyCommand("mode", Arrays.asList("m"),
-                    Language.getString(Language.CMD_CHUNKY_PLAYER_SET_MODE_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PLAYER_SET_MODE_HELP),
-                    new CommandChunkyPlayerSetMode(), commandChunkyPlayerSet);
-            getModuleManager().registerCommand(commandChunkyPlayerSetMode);
+            ChunkyCommand commandChunkyPlayerSetMode = new ChunkyCommand("mode", new CommandChunkyPlayerSetMode(), commandChunkyPlayerSet)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_PLAYER_SET_MODE_DESC))
+                    .setAliases("m")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_PLAYER_SET_MODE_HELP))
+                    .register();
 
             // /chunky chunk
-            ChunkyCommand commandChunkyChunk = new ChunkyCommand("chunk", Arrays.asList("ch"),
-                    Language.getString(Language.CMD_CHUNKY_CHUNK_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_CHUNK_HELP),
-                    new CommandChunkyChunk(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyChunk);
+            ChunkyCommand commandChunkyChunk = new ChunkyCommand("chunk", new CommandChunkyChunk(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_CHUNK_DESC))
+                    .setAliases("ch")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_CHUNK_HELP))
+                    .register();
 
             // /chunky chunk set
-            ChunkyCommand commandChunkyChunkSet = new ChunkyCommand("set", Arrays.asList("s"),
-                    Language.getString(Language.CMD_CHUNKY_CHUNK_SET_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_CHUNK_SET_HELP),
-                    new CommandChunkyChunkSet(), commandChunkyChunk);
-            getModuleManager().registerCommand(commandChunkyChunkSet);
+            ChunkyCommand commandChunkyChunkSet = new ChunkyCommand("set", new CommandChunkyChunkSet(), commandChunkyChunk)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_CHUNK_SET_DESC))
+                    .setAliases("s")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_CHUNK_SET_HELP))
+                    .register();
 
             // /chunky chunk set name
-            ChunkyCommand commandChunkyChunkSetName = new ChunkyCommand("name", Arrays.asList("n"),
-                    Language.getString(Language.CMD_CHUNKY_CHUNK_SET_NAME_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_CHUNK_SET_NAME_HELP),
-                    new CommandChunkyChunkSetName(), commandChunkyChunkSet);
-            getModuleManager().registerCommand(commandChunkyChunkSetName);
+            ChunkyCommand commandChunkyChunkSetName = new ChunkyCommand("name", new CommandChunkyChunkSetName(), commandChunkyChunkSet)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_CHUNK_SET_NAME_DESC))
+                    .setAliases("n")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_CHUNK_SET_NAME_HELP))
+                    .register();
 
             // /chunky permission
-            ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", Arrays.asList("p", "perm", "perms"),
-                    Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP),
-                    new CommandChunkyPermission(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyPermission);
+            ChunkyCommand commandChunkyPermission = new ChunkyCommand("permission", new CommandChunkyPermission(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_PERMISSION_DESC))
+                    .setAliases("p", "perm", "perms")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_PERMISSION_HELP))
+                    .register();
 
             // /chunky group
-            ChunkyCommand commandChunkyGroup = new ChunkyCommand("group", Arrays.asList("gr"),
-                    Language.getString(Language.CMD_CHUNKY_GROUP_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_GROUP_HELP),
-                    new CommandChunkyGroup(), commandChunky);
-            getModuleManager().registerCommand(commandChunkyGroup);
+            ChunkyCommand commandChunkyGroup = new ChunkyCommand("group", new CommandChunkyGroup(), commandChunky)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_GROUP_DESC))
+                    .setAliases("gr")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_GROUP_HELP))
+                    .register();
 
-            // /chunky group
-            ChunkyCommand commandChunkyGroupAdd = new ChunkyCommand("add", Arrays.asList("a"),
-                    Language.getString(Language.CMD_CHUNKY_GROUP_ADD_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_GROUP_ADD_HELP),
-                    new CommandChunkyGroupAdd(), commandChunkyGroup);
-            getModuleManager().registerCommand(commandChunkyGroupAdd);
+            // /chunky group add
+            ChunkyCommand commandChunkyGroupAdd = new ChunkyCommand("add", new CommandChunkyGroupAdd(), commandChunkyGroup)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_GROUP_ADD_DESC))
+                    .setAliases("a")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_GROUP_ADD_HELP))
+                    .register();
 
-            // /chunky group
-            ChunkyCommand commandChunkyGroupRemove = new ChunkyCommand("remove", Arrays.asList("r", "rm"),
-                    Language.getString(Language.CMD_CHUNKY_GROUP_RM_DESC),
-                    Language.getStrings(Language.CMD_CHUNKY_GROUP_RM_HELP),
-                    new CommandChunkyGroupRemove(), commandChunkyGroup);
-            getModuleManager().registerCommand(commandChunkyGroupRemove);
+            // /chunky group remove
+            ChunkyCommand commandChunkyGroupRemove = new ChunkyCommand("remove", new CommandChunkyGroupRemove(), commandChunkyGroup)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_GROUP_RM_DESC))
+                    .setAliases("r", "rm")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_GROUP_RM_HELP))
+                    .register();
 
             // /addfriend
-            ChunkyCommand commandAddfriend = new ChunkyCommand("addfriend", Arrays.asList("af", "addf"),
-                    null,
-                    Language.getStrings(Language.CMD_ADDFRIEND_HELP),
-                    new CommandAddfriend());
-            getModuleManager().registerCommand(commandAddfriend);
+            ChunkyCommand commandAddfriend = new ChunkyCommand("addfriend", new CommandAddfriend(), null)
+                    .setAliases("af", "addf")
+                    .setHelpLines(Language.getStrings(Language.CMD_ADDFRIEND_HELP))
+                    .register();
 
             // /addfriend
-            ChunkyCommand commandRemovefriend = new ChunkyCommand("removefriend", Arrays.asList("rf", "rmfriend", "rmf"),
-                    null,
-                    Language.getStrings(Language.CMD_RMFRIEND_HELP),
-                    new CommandRemovefriend());
-            getModuleManager().registerCommand(commandRemovefriend);
+
+            ChunkyCommand commandRemovefriend = new ChunkyCommand("removefriend", new CommandRemovefriend(), null)
+                    .setAliases("rf", "rmfriend", "rmf")
+                    .setHelpLines(Language.getStrings(Language.CMD_RMFRIEND_HELP))
+                    .register();
 
         } catch (ChunkyUnregisteredException ignore) {
         }

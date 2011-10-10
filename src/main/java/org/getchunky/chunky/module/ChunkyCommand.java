@@ -1,8 +1,10 @@
 package org.getchunky.chunky.module;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.ChunkyManager;
+import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
+
+import java.util.*;
 
 /**
  * @author dumptruckman, SwearWord
@@ -10,53 +12,29 @@ import java.util.List;
 public class ChunkyCommand {
 
     private String name;
-    private ChunkyCommand parent;
-    private HashSet<String> aliases;
-    private String description;
-    private List<String> helpLines;
+    private ChunkyCommand parent = null;
+    private HashSet<String> aliases = new HashSet<String>();
+    private String description = null;
+    private ArrayList<String> helpLines = new ArrayList<String>();
     private ChunkyCommandExecutor executor;
 
     private String fullName;
-    private HashMap<String, ChunkyCommand> children;
+    private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
     private String chatName;
 
-    /**
-     * Creates a Command that is registrable with Chunky.
-     *
-     * @param name        the name of the command. Example: "chunky" creates command /chunky
-     * @param aliases     any aliases you wish to register for the command
-     * @param description the description that Chunky will show for this command
-     * @param helpLines   a list of helpful information related to the command
-     * @param executor    the class that will contain the onCommand() for this command
-     */
-    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor) {
-        this(name, aliases, description, helpLines, executor, null);
-    }
-
-    /**
+     /**
      * Creates a Command that is registrable with Chunky.
      *
      * @param name          the name of the command. Example: "chunky" creates command /chunky
-     * @param aliases       any aliases you wish to register for the command
-     * @param description   the description that Chunky will show for this command
-     * @param helpLines     a list of helpful information related to the command
      * @param executor      the class that will contain the onCommand() for this command
-     * @param parentCommand the command to register this command as a subcommand of. Example, if you registered a command with name "claim" to an already register command "chunky" you will end up with /chunky claim
      */
-    public ChunkyCommand(String name, List<String> aliases, String description, List<String> helpLines, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
+    public ChunkyCommand(String name, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
         this.name = name.toLowerCase();
-        this.aliases = new HashSet<String>();
-        if (aliases != null) {
-            for (int i = 0; i < aliases.size(); i++) {
-                this.aliases.add(aliases.get(i).toLowerCase());
-            }
-        }
-        this.description = description;
-        this.helpLines = helpLines;
-        this.parent = parentCommand;
         this.executor = executor;
-        this.children = new HashMap<String, ChunkyCommand>();
+        this.parent = parentCommand;
+
         this.fullName = name;
+
         ChunkyCommand currentParent = parentCommand;
         while (true) {
             if (currentParent == null) break;
@@ -66,14 +44,10 @@ public class ChunkyCommand {
 
         String[] splitName = this.fullName.split("\\.");
         chatName = "/";
-        //if (splitName.length != 0) {
         for (int i = 0; i < splitName.length; i++) {
             if (i != 0) chatName += " ";
             chatName += splitName[i];
         }
-        //} else {
-        //    chatName += this.fullName;
-        //}
     }
 
     /**
@@ -104,6 +78,17 @@ public class ChunkyCommand {
     }
 
     /**
+     * Sets the parent command for this command
+     *
+     * @param parentCommand the command to register this command as a subcommand of. Example, if you registered a command with name "claim" to an already register command "chunky" you will end up with /chunky claim
+     * @return this command
+     */
+    public final ChunkyCommand setParent(ChunkyCommand parentCommand) {
+
+        return this;
+    }
+
+    /**
      * Retrieves the owner command that this command is a sub-command of.
      *
      * @return the owner command of this command or null if this is a top level command
@@ -131,7 +116,33 @@ public class ChunkyCommand {
     }
 
     /**
-     * Retrieves the aliases for this command, if any.
+     * Sets aliases for this command.  If you put a slash before the alias, it will indicate you wish it to act as a top level command.  This means it would be /youralias instead of /chunky youralias, for example.
+     *
+     * @param aliases any aliases you wish to register for the command
+     * @return this command
+     */
+    public final ChunkyCommand setAliases(List<String> aliases) {
+        for (String alias : aliases) {
+            this.aliases.add(alias.toLowerCase());
+        }
+        return this;
+    }
+
+    /**
+     * Sets aliases for this command.  If you put a slash before the alias, it will indicate you wish it to act as a top level command.  This means it would be /youralias instead of /chunky youralias, for example.
+     *
+     * @param aliases any aliases you wish to register for the command
+     * @return this command
+     */
+    public final ChunkyCommand setAliases(String...aliases) {
+        for (String alias : aliases) {
+            this.aliases.add(alias.toLowerCase());
+        }
+        return this;
+    }
+
+    /**
+     * Retrieves the aliases for this command, if any
      *
      * @return aliases of this command or null if no aliases
      */
@@ -140,12 +151,46 @@ public class ChunkyCommand {
     }
 
     /**
+     * Sets the description for this command
+     *
+     * @param description the description that Chunky will show for this command
+     * @return this command
+     */
+    public final ChunkyCommand setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    /**
      * Gets the description of this command that chunky will display with command lists.
      *
      * @return the description of this command
      */
     public final String getDescription() {
+        if (description == null) return "NULL";
         return description;
+    }
+
+    /**
+     * Sets the help information for this command.  This is always viewable by /%cmd% help
+     *
+     * @param helpLines a list of helpful information related to the command
+     * @return this command
+     */
+    public final ChunkyCommand setHelpLines(List<String> helpLines) {
+        this.helpLines.addAll(helpLines);
+        return this;
+    }
+
+    /**
+     * Sets the help information for this command.  This is always viewable by /%cmd% help
+     *
+     * @param helpLines a list of helpful information related to the command
+     * @return this command
+     */
+    public final ChunkyCommand setHelpLines(String...helpLines) {
+        this.helpLines.addAll(Arrays.asList(helpLines));
+        return this;
     }
 
     /**
@@ -206,5 +251,10 @@ public class ChunkyCommand {
 
     public int hashCode() {
         return getFullName().hashCode();
+    }
+
+    public final ChunkyCommand register() throws ChunkyUnregisteredException {
+        Chunky.getModuleManager().registerCommand(this);
+        return this;
     }
 }
