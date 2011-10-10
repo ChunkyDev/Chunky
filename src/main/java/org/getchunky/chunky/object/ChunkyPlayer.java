@@ -56,13 +56,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         if (event.isCancelled()) return;
         if (Permissions.CHUNKY_CLAIM.hasPerm(this)) {
             // Grab the chunk claim limit for the player
-            int chunkLimit = Config.getPlayerChunkLimitDefault();
-            for (Map.Entry<String, Integer> limit : Config.getCustomPlayerChunkLimits().entrySet()) {
-                if (Permissions.hasPerm(this, Permissions.PLAYER_CHUNK_LIMIT.getNode() + "." + limit.getKey())) {
-                    chunkLimit = limit.getValue();
-                    break;
-                }
-            }
+            int chunkLimit = getClaimLimit();
             if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(this) ||
                     !this.getOwnables().containsKey(ChunkyChunk.class.getName()) ||
                     this.getOwnables().get(ChunkyChunk.class.getName()).size() < chunkLimit) {
@@ -82,5 +76,20 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         } else {
             Language.NO_COMMAND_PERMISSION.bad(this);
         }
+    }
+
+    public Integer getClaimLimit() {
+        Integer limit = getData().optInt("claim limit");
+        if (limit == null) {
+            limit = Config.getPlayerChunkLimitDefault();
+            setClaimLimit(limit);
+            save();
+        }
+        return limit;
+    }
+
+    public void setClaimLimit(Integer limit) {
+        getData().put("claim limit", limit);
+        save();
     }
 }
