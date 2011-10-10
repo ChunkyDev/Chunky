@@ -92,4 +92,8 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         getData().put("claim limit", limit);
         save();
     }
+
+    public void defaultClaimLimit() {
+        getData().remove("claim limit");
+    }
 }
