@@ -1,5 +1,7 @@
 package org.getchunky.chunky.module;
 
+import org.bukkit.Bukkit;
+import org.bukkit.permissions.Permission;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
@@ -17,6 +19,8 @@ public class ChunkyCommand {
     private String description = null;
     private ArrayList<String> helpLines = new ArrayList<String>();
     private ChunkyCommandExecutor executor;
+    private Permission permission = null;
+    private Boolean inGameOnly = false;
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
@@ -232,6 +236,38 @@ public class ChunkyCommand {
      */
     public final boolean hasChild(String fullName) {
         return getChild(fullName) != null;
+    }
+
+    /**
+     * Sets a required permission for this command.  If the command sender is a player and they do not have permission, they will be given Chunky's default permission denied message.
+     *
+     * @param node Bukkit permission required to use command
+     * @return this command
+     */
+    public ChunkyCommand setPermission(String node) {
+        return setPermission(Bukkit.getServer().getPluginManager().getPermission(node));
+    }
+
+    /**
+     * Sets a required permission for this command.  If the command sender is a player and they do not have permission, they will be given Chunky's default permission denied message.
+     *
+     * @param permission Bukkit permission required to use command
+     * @return this command
+     */
+    public ChunkyCommand setPermission(Permission permission) {
+        this.permission = permission;
+        return this;
+    }
+
+    /**
+     * Make this command only useable from in game.  If the command sender is not a player, they will be given Chunky's default "in game only" message.
+     *
+     * @param inGameOnly true to force this command to be used in game only
+     * @return this command
+     */
+    public ChunkyCommand setInGameOnly(boolean inGameOnly) {
+        this.inGameOnly = inGameOnly;
+        return this;
     }
 
     public boolean equals(Object o) {
