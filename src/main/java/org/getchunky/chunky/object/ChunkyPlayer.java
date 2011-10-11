@@ -80,8 +80,10 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public Integer getClaimLimit() {
-        Integer limit = getData().optInt("claim limit");
-        if (limit == null) {
+        Integer limit;
+        if (getData().has("chunk claim limit")) {
+            limit = getData().optInt("claim limit");
+        } else {
             limit = Config.getPlayerChunkLimitDefault();
             setClaimLimit(limit);
         }
@@ -89,12 +91,12 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public void setClaimLimit(Integer limit) {
-        getData().put("claim limit", limit);
+        getData().put("chunk claim limit", limit);
         save();
     }
 
     public void defaultClaimLimit() {
-        getData().remove("claim limit");
+        getData().remove("chunk claim limit");
     }
 
     public MapView getCommandMap() {
