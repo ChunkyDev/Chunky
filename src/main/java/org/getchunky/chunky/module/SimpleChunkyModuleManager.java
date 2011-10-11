@@ -365,7 +365,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 event.setCancelled(true);
             }
         }
-        if (sender instanceof Player && !((Player)sender).hasPermission(chunkyCommand.getPermission())) {
+        if (sender instanceof Player && chunkyCommand.getPermission() != null && !((Player)sender).hasPermission(chunkyCommand.getPermission())) {
             Language.NO_COMMAND_PERMISSION.bad(sender);
             event.setCancelled(true);
         }
