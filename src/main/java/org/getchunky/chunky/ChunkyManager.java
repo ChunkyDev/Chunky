@@ -214,6 +214,11 @@ public class ChunkyManager {
      * @param persist    Whether or not to persist these changes.  Generally you should persist the changes.
      */
     public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags, boolean persist) {
+        if (flags == null) {
+            ChunkyManager.getPermissions(object, permObject).clearFlags();
+            DatabaseManager.getDatabase().removePermissions(object, permObject);
+            return;
+        }
         PermissionRelationship perms = ChunkyManager.getPermissions(object, permObject);
         for (Map.Entry<PermissionFlag, Boolean> flag : flags.entrySet()) {
             perms.setFlag(flag.getKey(), flag.getValue());

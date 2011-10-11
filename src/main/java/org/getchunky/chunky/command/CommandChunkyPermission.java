@@ -15,6 +15,7 @@ import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
+import org.getchunky.chunky.util.Logging;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -171,10 +172,8 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             // "all specific players"
             sPermObject = Language.ALL_SPECIFIC_PLAYERS.getString();
 
-            // Incremental counter for determining first for loop
-            int i = 0;
             for (ChunkyObject target : targets) {
-                if (i == 0) {
+                if (sTargetForPermissible.isEmpty()) {
                     // On the first loop through, get word reference for current target
                     if (target instanceof ChunkyChunk) {
                         sTargetForPermissible = Language.CHUNK_AT.getString(((ChunkyChunk) target).getCoord());
@@ -186,26 +185,19 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
                 // Grab the permissions for the current target object and loop through the objects with permissions in order to set those perms
                 Set<ChunkyObject> objectPerms = ChunkyManager.getAllPermissions(target).keySet();
                 for (ChunkyObject permObject : objectPerms) {
-                    if (permissions == null) {
-                        ChunkyManager.getPermissions(target, permObject).clearFlags();
-                        DatabaseManager.getDatabase().removePermissions(target, permObject);
-                        return;
-                    } else {
-                        ChunkyManager.setPermissions(target, permObject, permissions);
-                    }
+                    ChunkyManager.setPermissions(target, permObject, permissions);
 
-                    if (i == 0) {
+                    if (perms == null)
                         perms = ChunkyManager.getPermissions(target, permObject);
-                        if (permObject != null && permObject instanceof ChunkyPlayer) {
-                            if (targets.size() == 1) {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), sTargetForPermissible);
-                            } else {
-                                Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), Language.ALL_THEIR_CURRENT_PROPERTY.getString());
-                            }
+                    
+                    if (permObject != null && permObject instanceof ChunkyPlayer) {
+                        if (targets.size() == 1) {
+                            Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), sTargetForPermissible);
+                        } else {
+                            Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), Language.ALL_THEIR_CURRENT_PROPERTY.getString());
                         }
                     }
                 }
-                i++;
             }
         } else {
             if (permissibleString.startsWith("g:")) {
@@ -262,6 +254,9 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
             }
         }
 
+        if (perms == null) {
+            Logging.debug("Perm Relationship null for " + sTarget + " by " + cPlayer.getName() + " for " + sPermObject);
+        }
         if (perms != null)
             Language.PERMISSIONS.good(cPlayer, sTarget, perms.toLongString(), sPermObject);
     }
