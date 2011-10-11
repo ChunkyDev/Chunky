@@ -47,7 +47,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
         HashSet<ChunkyObject> targets = getTargets(cPlayer, args[0]);
         if (targets.isEmpty()) return;
         HashMap<PermissionFlag, Boolean> permissions = getPermissions(cPlayer, args[1]);
-        if (permissions.isEmpty()) return;
+        if (permissions != null && permissions.isEmpty()) return;
         setPermissions(cPlayer, args[2], targets, permissions);
     }
 
