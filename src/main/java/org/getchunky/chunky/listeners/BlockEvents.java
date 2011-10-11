@@ -13,6 +13,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.PermissionChain;
 import org.getchunky.chunky.permission.bukkit.Permissions;
+import org.getchunky.chunky.util.Logging;
 
 public class BlockEvents extends BlockListener {
 
@@ -24,6 +25,7 @@ public class BlockEvents extends BlockListener {
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
 
         AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.BUILD);
+        Logging.debug(permType + " caused block place denial: " + permType.causedDenial());
         Boolean isCancelled = permType.causedDenial();
 
         ChunkyPlayerBuildEvent chunkyEvent = new ChunkyPlayerBuildEvent(chunkyPlayer, chunk, event.getBlock(), permType);
@@ -41,6 +43,7 @@ public class BlockEvents extends BlockListener {
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
 
         AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.DESTROY);
+        Logging.debug(permType + " caused block break denial: " + permType.causedDenial());
         Boolean isCancelled = permType.causedDenial();
 
         ChunkyPlayerDestroyEvent chunkyEvent = new ChunkyPlayerDestroyEvent(chunkyPlayer, chunk, event.getBlock(), permType);
