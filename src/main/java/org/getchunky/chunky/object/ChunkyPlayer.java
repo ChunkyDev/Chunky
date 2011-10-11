@@ -2,6 +2,7 @@ package org.getchunky.chunky.object;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.map.MapView;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
@@ -94,5 +95,22 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     public void defaultClaimLimit() {
         getData().remove("claim limit");
+    }
+
+    public MapView getCommandMap() {
+        MapView map = null;
+        Short mapId = (short)getData().optInt("command map id");
+        if (mapId == null) {
+            map = Bukkit.getServer().createMap(Bukkit.getServer().getWorlds().get(0));
+            getData().put("command map id", map.getId());
+        } else {
+            map = Bukkit.getServer().getMap(mapId);
+            if (map == null) {
+                getData().remove("command map id");
+                Logging.warning("Commmand map id for player pointed to an invalid map");
+                map = getCommandMap();
+            }
+        }
+        return map;
     }
 }
