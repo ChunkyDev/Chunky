@@ -163,7 +163,7 @@ command:
       
       chunk_limit:
         help:
-        - 'Allows you to set a player's chunk claim limit.'
+        - 'Allows you to set a player''s chunk claim limit.'
         - 'Usage: &e/chunky admin chunklimit <amount> <name>'
         description:
         - 'Sets chunk claim limits.'
