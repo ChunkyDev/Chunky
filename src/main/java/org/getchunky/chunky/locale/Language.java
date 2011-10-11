@@ -357,4 +357,14 @@ public enum Language {
             player.sendMessage(s);
         }
     }
+
+    public static String combineStringArray(String[] words, String separator) {
+        String string = "";
+        for (String word : words) {
+            if (!string.isEmpty())
+                string += separator;
+            string += word;
+        }
+        return string;
+    }
 }

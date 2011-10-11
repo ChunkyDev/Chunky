@@ -260,6 +260,24 @@ public class ChunkyCommand {
     }
 
     /**
+     * Retrieves the permission requires for this command
+     *
+     * @return permission required for this command
+     */
+    public Permission getPermission() {
+        return permission;
+    }
+
+    /**
+     * Checks if this command is only allowed in game
+     *
+     * @return true if only allowed in game
+     */
+    public Boolean isInGameOnly() {
+        return inGameOnly;
+    }
+
+    /**
      * Make this command only useable from in game.  If the command sender is not a player, they will be given Chunky's default "in game only" message.
      *
      * @param inGameOnly true to force this command to be used in game only

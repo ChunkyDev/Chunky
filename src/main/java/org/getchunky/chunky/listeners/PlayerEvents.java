@@ -81,7 +81,7 @@ public class PlayerEvents extends PlayerListener {
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) return;
         if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
-        String[] commands = event.getMessage().substring(1).split("\\s");
+        String[] commands = event.getMessage().split("\\s");
         Chunky.getModuleManager().parseCommand(event.getPlayer(), commands);
     }
 

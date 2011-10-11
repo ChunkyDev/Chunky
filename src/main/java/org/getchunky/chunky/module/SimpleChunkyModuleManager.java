@@ -1,6 +1,7 @@
 package org.getchunky.chunky.module;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getchunky.chunky.Chunky;
@@ -14,6 +15,7 @@ import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
 import org.getchunky.chunky.event.object.ChunkyObjectOwnershipEvent;
 import org.getchunky.chunky.event.object.player.*;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
+import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.util.Logging;
 
 import java.util.*;
@@ -25,6 +27,7 @@ import java.util.logging.Level;
 public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
     private HashMap<String, ChunkyCommand> registeredCommands;
+    private HashMap<String, ChunkyCommand> superAliases;
     private HashSet<JavaPlugin> registeredModules;
     private final Map<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>> listeners = new EnumMap<ChunkyEvent.Type, SortedSet<RegisteredChunkyListener>>(ChunkyEvent.Type.class);
     private final Comparator<RegisteredChunkyListener> comparer = new Comparator<RegisteredChunkyListener>() {
@@ -42,6 +45,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
     public SimpleChunkyModuleManager() {
         registeredCommands = new HashMap<String, ChunkyCommand>();
         registeredModules = new HashSet<JavaPlugin>();
+        superAliases = new HashMap<String, ChunkyCommand>();
     }
 
     /**
@@ -112,19 +116,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                         ((ChunkyObjectListener) listener).onObjectSetOwner((ChunkyObjectOwnershipEvent) event);
                     }
                 };
-            /*case OBJECT_ADD_OWNER:
-                return new ChunkyEventExecutor() {
-                    public void execute(ChunkyListener listener, ChunkyEvent event) {
-                        ((ChunkyObjectListener) listener).onObjectAddOwner((ChunkyObjectOwnershipEvent) event);
-                    }
-                };
-            case OBJECT_REMOVE_OWNER:
-                return new ChunkyEventExecutor() {
-                    public void execute(ChunkyListener listener, ChunkyEvent event) {
-                        ((ChunkyObjectListener) listener).onObjectRemoveOwner((ChunkyObjectOwnershipEvent) event);
-                    }
-                };*/
-
+            
             // Player Events
             case PLAYER_BUILD:
                 return new ChunkyEventExecutor() {
@@ -209,16 +201,25 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         if (command.getParent() == null) {
             if (!registeredCommands.containsKey(command.getFullName())) {
                 registeredCommands.put(command.getFullName(), command);
+                registerSuperAliases(command);
                 return true;
             }
             return false;
         } else {
             ChunkyCommand parentCommand = Chunky.getModuleManager().getCommandByName(command.getParent().getFullName());
             if (parentCommand != null) {
+                registerSuperAliases(command);
                 return parentCommand.addChild(command);
             } else {
                 throw new ChunkyUnregisteredException("Parent command not registered!");
             }
+        }
+    }
+
+    private void registerSuperAliases(ChunkyCommand command) {
+        for (String alias : command.getAliases()) {
+            if (alias.startsWith("/"))
+                superAliases.put(alias.toLowerCase(), command);
         }
     }
 
@@ -295,6 +296,16 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
         return getCommandByName(fullName) != null;
     }
 
+    private String getCommandBySuperAlias(ChunkyCommand command, String commandString) {
+        for (Map.Entry<String, ChunkyCommand> superAlias : superAliases.entrySet()) {
+            if (commandString.toLowerCase().startsWith(superAlias.getKey())) {
+                command = superAlias.getValue();
+                return superAlias.getKey();
+            }
+        }
+        return null;
+    }
+
     /**
      * Mostly used internally to parse commands from PlayerCommandPreprocessEvents to see if they should fire a Chunky Command.
      *
@@ -303,26 +314,35 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
      */
     public void parseCommand(CommandSender sender, String[] commands) {
         Logging.debug(sender + " sent " + Arrays.asList(commands));
-        ChunkyCommand chunkyCommand = getCommandByAlias(null, commands[0]);
-        if (chunkyCommand == null) return;
 
-        int i;
-        for (i = 1; i < commands.length; i++) {
-            ChunkyCommand currentCommand = getCommandByAlias(chunkyCommand, commands[i]);
-            if (currentCommand == null) {
-                break;
+        String label = null;
+        List<String> argsList = new ArrayList<String>();
+        
+        ChunkyCommand chunkyCommand = getCommandByAlias(null, commands[0].substring(1));
+        if (chunkyCommand == null) {
+            String commandString = Language.combineStringArray(commands, " ");
+            label = getCommandBySuperAlias(chunkyCommand, commandString);
+            if (chunkyCommand == null) return;
+            argsList.addAll(Arrays.asList(commandString.substring(label.length()).trim().split("//s")));
+        } else {
+            int i;
+            for (i = 1; i < commands.length; i++) {
+                ChunkyCommand currentCommand = getCommandByAlias(chunkyCommand, commands[i]);
+                if (currentCommand == null) {
+                    break;
+                }
+                chunkyCommand = currentCommand;
             }
-            chunkyCommand = currentCommand;
+
+            if (commands.length > 1 && i < commands.length) {
+                for (i = i; i < commands.length; i++) {
+                    argsList.add(commands[i]);
+                }
+            }
+            label = commands[i - 1];
         }
 
-        ArrayList<String> argsList = new ArrayList<String>();
-        if (commands.length > 1 && i < commands.length) {
-            for (i = i; i < commands.length; i++) {
-                argsList.add(commands[i]);
-            }
-        }
 
-        String label = commands[i - 1];
         String[] args = argsList.toArray(new String[argsList.size()]);
         if (!argsList.isEmpty()) {
             if (argsList.get(0).equalsIgnoreCase("help")) {
@@ -339,6 +359,16 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         Logging.debug(sender + "'s command translated to: " + chunkyCommand.getFullName() + "[" + chunkyCommand.getChatName() + "] with alias: " + label + " and args: " + Arrays.asList(args));
         ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
+        if (chunkyCommand.isInGameOnly()) {
+            if (!(sender instanceof Player)) {
+                Language.IN_GAME_ONLY.bad(sender);
+                event.setCancelled(true);
+            }
+        }
+        if (sender instanceof Player && !((Player)sender).hasPermission(chunkyCommand.getPermission())) {
+            Language.NO_COMMAND_PERMISSION.bad(sender);
+            event.setCancelled(true);
+        }
         callEvent(event);
         if (!event.isCancelled()) {
             chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);
