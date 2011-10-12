@@ -271,7 +271,7 @@ public class ChunkyManager {
      * @param worldName name of world
      * @return a ChunkyWorld object if worldName is for a valid world, else null
      */
-    public ChunkyWorld getChunkyWorld(String worldName) {
+    public static ChunkyWorld getChunkyWorld(String worldName) {
         ChunkyObject object = getObject(ChunkyWorld.class.getName(), worldName);
         if (object == null) {
             World world = Bukkit.getServer().getWorld(worldName);
