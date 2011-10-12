@@ -310,6 +310,22 @@ public class Chunky extends JavaPlugin {
                     .setRequiresEnabledWorld(false)
                     .register();
 
+            // /chunky admin enableworld
+            ChunkyCommand commandChunkyAdminEnableworld = new ChunkyCommand("enableworld", new CommandChunkyAdminEnableworld(), commandChunkyAdmin)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_ENABLEWORLD_DESC))
+                    .setAliases("ew")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_ENABLEWORLD_HELP))
+                    .setRequiresEnabledWorld(false)
+                    .register();
+
+            // /chunky admin disableworld
+            ChunkyCommand commandChunkyAdminDisableworld = new ChunkyCommand("disableworld", new CommandChunkyAdminDisableworld(), commandChunkyAdmin)
+                    .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_DISABLEWORLD_DESC))
+                    .setAliases("dw")
+                    .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_DISABLEWORLD_HELP))
+                    .setRequiresEnabledWorld(false)
+                    .register();
+
         } catch (ChunkyUnregisteredException ignore) {
         }
     }

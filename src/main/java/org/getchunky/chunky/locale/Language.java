@@ -95,6 +95,12 @@ public enum Language {
     // Chunky Admin Chunklimit
     CMD_CHUNKY_ADMIN_CHUNKLIMIT_HELP("command.chunky.admin.chunk_limit.help"),
     CMD_CHUNKY_ADMIN_CHUNKLIMIT_DESC("command.chunky.admin.chunk_limit.description"),
+    // Chunky Admin Chunklimit
+    CMD_CHUNKY_ADMIN_ENABLEWORLD_HELP("command.chunky.admin.enable_world.help"),
+    CMD_CHUNKY_ADMIN_ENABLEWORLD_DESC("command.chunky.admin.enable_world.description"),
+    // Chunky Admin Chunklimit
+    CMD_CHUNKY_ADMIN_DISABLEWORLD_HELP("command.chunky.admin.disable_world.help"),
+    CMD_CHUNKY_ADMIN_DISABLEWORLD_DESC("command.chunky.admin.disable_world.description"),
     // Addfriend
     CMD_ADDFRIEND_HELP("command.addfriend.help"),
     // Removefriend
@@ -146,7 +152,15 @@ public enum Language {
      */
     NO_SUCH_GROUP("group.no_such_group"),
     GROUP_ADD("group.add"),
-    GROUP_REMOVE("group.remove"),;
+    GROUP_REMOVE("group.remove"),
+
+    /**
+     * World
+     */
+    NO_SUCH_WORLD("world.no_such_world"),
+    ENABLED_WORLD("world.enabled_world"),
+    DISABLED_WORLD("world.disabled_world"),
+    ;
 
     private String path;
 

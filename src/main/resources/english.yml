@@ -169,6 +169,18 @@ command:
         - 'Usage: &e/chunky admin chunklimit <amount> <name>'
         description:
         - 'Sets chunk claim limits.'
+        
+      enable_world:
+        help:
+        - 'Allows you to enable chunky for your current world or a named world'
+        description:
+        - 'Enables Chunky per world.'
+        
+      disable_world:
+        help:
+        - 'Allows you to disable chunky for your current world or a named world'
+        description:
+        - 'Disables Chunky per world.'
   
   addfriend:
     help:
@@ -258,3 +270,13 @@ group:
   - 'Added %1 to group: %2'
   remove:
   - 'Removed %1 from group: %2'
+  
+  
+  
+world:
+  no_such_world:
+  - 'There is no world named: %1'
+  world_enabled:
+  - 'Enabled Chunky for world: %1'
+  world_disabled:
+  - 'Disabled Chunky for world: %1'
