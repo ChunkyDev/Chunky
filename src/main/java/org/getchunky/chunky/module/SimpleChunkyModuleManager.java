@@ -208,7 +208,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             return false;
         } else {
             ChunkyCommand parentCommand = Chunky.getModuleManager().getCommandByName(command.getParent().getFullName());
-            if (command.inheritsPermission()) {
+            if (command.inheritsPermission() && command.getPermission() == null) {
                 command.setPermission(parentCommand.getPermission());
             }
             if (parentCommand != null) {

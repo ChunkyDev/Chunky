@@ -250,7 +250,7 @@ public class ChunkyCommand {
     }
 
     /**
-     * Sets a required permission for this command.  If the command sender is a player and they do not have permission, they will be given Chunky's default permission denied message.
+     * Sets a required permission for this command.  If the command sender is a player and they do not have permission, they will be given Chunky's default permission denied message.  This will cause a command to NOT inherit permission node from it's parent command.
      *
      * @param permission Bukkit permission required to use command
      * @return this command
