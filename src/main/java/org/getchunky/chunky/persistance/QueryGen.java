@@ -14,11 +14,11 @@ public class QueryGen {
     }
 
     public static String selectAllOwnership() {
-        return String.format("SELECT * FROM chunky_ownership");
+        return format("SELECT * FROM chunky_ownership");
     }
 
     public static String updateObject(ChunkyObject object) {
-        return String.format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')", object.getId(), object.getType(), object.toJSONString());
+        return format("REPLACE INTO chunky_objects (id,type,data) VALUES ('%s','%s','%s')", object.getId(), object.getType(), object.toJSONString());
     }
 
     public static String createPermissionsTable() {
@@ -55,7 +55,7 @@ public class QueryGen {
     public static String updatePermissions(ChunkyObject permissible, ChunkyObject object, PermissionRelationship perms) {
 
         return
-                String.format("REPLACE INTO chunky_permissions (" +
+                format("REPLACE INTO chunky_permissions (" +
                         "PermissibleId, " +
                         "ObjectId, " +
                         "PermissibleType, " +
@@ -69,7 +69,7 @@ public class QueryGen {
 
     public static String removePermissions(ChunkyObject permissible, ChunkyObject object) {
         return
-                String.format("DELETE FROM chunky_permissions where " +
+                format("DELETE FROM chunky_permissions where " +
                         "PermissibleId = '%s' " +
                         "AND ObjectId = '%s'" +
                         "AND PermissibleType = '%s'" +
@@ -80,14 +80,14 @@ public class QueryGen {
 
     public static String removeAllPermissions(ChunkyObject object) {
         return
-                String.format("DELETE FROM chunky_permissions where " +
+                format("DELETE FROM chunky_permissions where " +
                         "ObjectId = '%s'" +
                         "AND ObjectType = '%s'", object.getId(), object.getType());
     }
 
     public static String addOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
-                String.format("REPLACE INTO chunky_ownership (" +
+                format("REPLACE INTO chunky_ownership (" +
                         "OwnerId, " +
                         "OwnableId, " +
                         "OwnerType, " +
@@ -97,9 +97,19 @@ public class QueryGen {
 
     public static String removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
         return
-                String.format("DELETE FROM chunky_ownership where " +
+                format("DELETE FROM chunky_ownership where " +
                         "OwnerId = '%s' " +
                         "AND OwnableId = '%s'", owner.getId(), ownable.getId());
 
+    }
+
+    private static String format(String input, String...args) {
+        for(int i=0;i<args.length;i++) {
+            args[i] = sanitize(args[i]);}
+        return String.format(input,args);
+    }
+
+    private static String sanitize(String input) {
+        return input.replace("'","\\'");
     }
 }
