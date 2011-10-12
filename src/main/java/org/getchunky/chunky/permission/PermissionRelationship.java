@@ -1,6 +1,5 @@
 package org.getchunky.chunky.permission;
 
-import org.bukkit.entity.CreatureType;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.persistance.ChunkyPersistable;
@@ -8,8 +7,6 @@ import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
