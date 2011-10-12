@@ -22,6 +22,7 @@ public class ChunkyCommand {
     private Boolean inGameOnly = false;
     private Boolean requiresEnabledWorld = true;
     private Boolean inheritsPermission = true;
+    private Boolean combiningQuotedArgs = true;
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
@@ -328,12 +329,24 @@ public class ChunkyCommand {
         return this;
     }
 
-    public boolean equals(Object o) {
-        return o instanceof ChunkyCommand && ((ChunkyCommand) o).getFullName().equals(this.getFullName());
+    /**
+     * Checks if this command will combine arguments contained in quotes into one argument. Default setting is true.
+     *
+     * @return true if combining quoted arguments
+     */
+    public Boolean isCombiningQuotedArgs() {
+        return combiningQuotedArgs;
     }
 
-    public int hashCode() {
-        return getFullName().hashCode();
+    /**
+     * Sets whether or not this command will combine quoted arguments into one argument.  Default setting is true.
+     *
+     * @param combineQuotedArgs true to combine quoted arguments
+     * @return this command
+     */
+    public ChunkyCommand setCombineQuotedArgs(Boolean combineQuotedArgs) {
+        this.combiningQuotedArgs = combineQuotedArgs;
+        return this;
     }
 
     /**
@@ -345,5 +358,13 @@ public class ChunkyCommand {
     public final ChunkyCommand register() throws ChunkyUnregisteredException {
         Chunky.getModuleManager().registerCommand(this);
         return this;
+    }
+
+    public boolean equals(Object o) {
+        return o instanceof ChunkyCommand && ((ChunkyCommand) o).getFullName().equals(this.getFullName());
+    }
+
+    public int hashCode() {
+        return getFullName().hashCode();
     }
 }

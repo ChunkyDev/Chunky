@@ -382,4 +382,14 @@ public enum Language {
         }
         return string;
     }
+
+    public static String combineStringList(List<String> words, String separator) {
+        String string = "";
+        for (String word : words) {
+            if (!string.isEmpty())
+                string += separator;
+            string += word;
+        }
+        return string;
+    }
 }

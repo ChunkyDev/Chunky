@@ -346,7 +346,6 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
             label = commands[i - 1];
         }
 
-
         String[] args = argsList.toArray(new String[argsList.size()]);
         if (!argsList.isEmpty()) {
             if (argsList.get(0).equalsIgnoreCase("help")) {
@@ -358,6 +357,36 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_LIST, sender, chunkyCommand, label, args);
                 callEvent(event);
                 return;
+            }
+        }
+
+        if (chunkyCommand.isCombiningQuotedArgs()) {
+            int quotedAt = -1;
+            List<String> tempArgs = new ArrayList<String>();
+            argsList.clear();
+            for (int i = 0; i < args.length; i++) {
+                if (args[i].startsWith("\\\"")) {
+                    args[i] = args[i].substring(1);
+                } else {
+                    if (quotedAt != -1) {
+                        if (args[i].startsWith("\"") && args[i].length() > 1) {
+                            quotedAt = i;
+                            tempArgs.add(args[i].substring(1));
+                        } else
+                            argsList.add(args[i]);
+                    } else {
+                        if (args[i].endsWith("\"")) {
+                            tempArgs.add(args[i].substring(0, args[i].length()-1));
+                            argsList.add(Language.combineStringList(tempArgs, " "));
+                            tempArgs.clear();
+                            quotedAt = -1;
+                        }
+                    }
+                }
+            }
+            if (!tempArgs.isEmpty()) {
+                tempArgs.set(0, "\"" + tempArgs.get(0));
+                argsList.addAll(tempArgs);
             }
         }
 
