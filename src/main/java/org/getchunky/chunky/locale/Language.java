@@ -44,6 +44,7 @@ public enum Language {
      * Command
      */
     NO_COMMAND_PERMISSION("command.no_permission"),
+    WORLD_DISABLED("command.world_disabled"),
     CMD_HELP("command.help"),
     CMD_LIST("command.list"),
     // Chunky

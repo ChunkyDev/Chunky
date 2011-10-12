@@ -21,6 +21,7 @@ public class ChunkyCommand {
     private ChunkyCommandExecutor executor;
     private Permission permission = null;
     private Boolean inGameOnly = false;
+    private Boolean requiresEnabledWorld = true;
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
@@ -269,7 +270,7 @@ public class ChunkyCommand {
     }
 
     /**
-     * Checks if this command is only allowed in game
+     * Checks if this command is only allowed in game.  Default setting is false.
      *
      * @return true if only allowed in game
      */
@@ -278,13 +279,33 @@ public class ChunkyCommand {
     }
 
     /**
-     * Make this command only useable from in game.  If the command sender is not a player, they will be given Chunky's default "in game only" message.
+     * Make this command only useable from in game.  If the command sender is not a player, they will be given Chunky's default "in game only" message.  Default is false.
      *
      * @param inGameOnly true to force this command to be used in game only
      * @return this command
      */
     public ChunkyCommand setInGameOnly(boolean inGameOnly) {
         this.inGameOnly = inGameOnly;
+        return this;
+    }
+
+    /**
+     * Checks if Chunky must be enabled in the world where the command is used.  Default is true.
+     *
+     * @return true if command requires Chunky to be enabled for world it is used in
+     */
+    public Boolean requiresEnabledWorld() {
+        return requiresEnabledWorld;
+    }
+
+    /**
+     * Makes this command only usable in worlds where Chunky is enabled (does not affect Console sender.)  Default setting is true.
+     *
+     * @param requiresEnabledWorld true to require this command to be used from enabled worlds
+     * @return this command
+     */
+    public ChunkyCommand setRequiresEnabledWorld(boolean requiresEnabledWorld) {
+        this.requiresEnabledWorld = requiresEnabledWorld;
         return this;
     }
 
@@ -296,6 +317,12 @@ public class ChunkyCommand {
         return getFullName().hashCode();
     }
 
+    /**
+     * Registers this command with Chunky.  This must be done to use it as a parent command or for it to even work at all.
+     *
+     * @return this command
+     * @throws ChunkyUnregisteredException if parent command is unregistered
+     */
     public final ChunkyCommand register() throws ChunkyUnregisteredException {
         Chunky.getModuleManager().registerCommand(this);
         return this;

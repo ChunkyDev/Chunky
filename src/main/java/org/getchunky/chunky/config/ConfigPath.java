@@ -31,7 +31,10 @@ public enum ConfigPath {
     UNOWNED_BUILD("unowned.build", false, "# Can player build on unowned chunks"),
     UNOWNED_DESTROY("unowned.destroy", false, "# Can player destroy on unowned chunks"),
     UNOWNED_ITEMUSE("unowned.item_use", false, "# Can player use items on unowned chunks"),
-    UNOWNED_SWITCH("unowned.switch", false, "# Can player switch on unowned chunks"),;
+    UNOWNED_SWITCH("unowned.switch", false, "# Can player switch on unowned chunks"),
+
+    WORLD_ENABLED("worlds.enabled_for_new_worlds", true, "# Whether or not chunky should be enabled for new worlds or not"),
+    ;
 
     private String path;
     private Object def;

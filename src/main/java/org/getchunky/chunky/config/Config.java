@@ -10,9 +10,7 @@ import org.getchunky.chunky.permission.PermissionFlag;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 import static org.getchunky.chunky.config.ConfigPath.*;
 
@@ -198,5 +196,9 @@ public class Config {
 
         displayName = Language.formatString(nameFormat, chunkName, ownerName);
         return displayName;
+    }
+
+    public static Boolean getDefaultWorldEnabled() {
+        return getBoolean(WORLD_ENABLED);
     }
 }

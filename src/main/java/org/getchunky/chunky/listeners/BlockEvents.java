@@ -19,7 +19,7 @@ public class BlockEvents extends BlockListener {
 
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
@@ -37,7 +37,7 @@ public class BlockEvents extends BlockListener {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());

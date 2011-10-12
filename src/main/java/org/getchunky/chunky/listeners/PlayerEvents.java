@@ -26,7 +26,7 @@ public class PlayerEvents extends PlayerListener {
     @Override
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.isCancelled()) return;
-        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        if (!ChunkyManager.getChunkyWorld(event.getTo().getWorld().getName()).isEnabled()) return;
         ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         ChunkyChunk fromChunk = ChunkyManager.getChunk(event.getFrom());
@@ -80,14 +80,13 @@ public class PlayerEvents extends PlayerListener {
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) return;
-        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
         String[] commands = event.getMessage().split("\\s");
         Chunky.getModuleManager().parseCommand(event.getPlayer(), commands);
     }
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!Permissions.ENABLED.hasPerm(event.getPlayer())) return;
+        if (!ChunkyManager.getChunkyWorld(event.getPlayer().getWorld().getName()).isEnabled()) return;
 
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if (event.getItem() != null && MinecraftTools.isUsable(event.getItem().getTypeId())) {

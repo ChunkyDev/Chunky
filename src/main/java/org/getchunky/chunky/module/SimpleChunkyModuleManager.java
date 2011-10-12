@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.event.ChunkyListener;
 import org.getchunky.chunky.event.CustomChunkyEventListener;
@@ -359,16 +360,23 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         Logging.debug(sender + "'s command translated to: " + chunkyCommand.getFullName() + "[" + chunkyCommand.getChatName() + "] with alias: " + label + " and args: " + Arrays.asList(args));
         ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
-        if (chunkyCommand.isInGameOnly()) {
-            if (!(sender instanceof Player)) {
+        
+        if (sender instanceof Player) {
+            Player player = (Player)sender;
+            if (chunkyCommand.isInGameOnly() && !ChunkyManager.getChunkyWorld(player.getWorld().getName()).isEnabled()) {
+                Language.WORLD_DISABLED.bad(sender);
+                event.setCancelled(true);
+            } else if (chunkyCommand.getPermission() != null && !player.hasPermission(chunkyCommand.getPermission())) {
+                Language.NO_COMMAND_PERMISSION.bad(sender);
+                event.setCancelled(true);
+            }
+        } else {
+            if (chunkyCommand.isInGameOnly()) {
                 Language.IN_GAME_ONLY.bad(sender);
                 event.setCancelled(true);
             }
         }
-        if (sender instanceof Player && chunkyCommand.getPermission() != null && !((Player)sender).hasPermission(chunkyCommand.getPermission())) {
-            Language.NO_COMMAND_PERMISSION.bad(sender);
-            event.setCancelled(true);
-        }
+        
         callEvent(event);
         if (!event.isCancelled()) {
             chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);

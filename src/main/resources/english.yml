@@ -47,6 +47,8 @@ generic:
 command:
   no_permission:
   - 'You do not have permission to access this command!'
+  world_disabled:
+  - 'Chunky is diabled in this world!'
   help:
   - 'Help for command: %1 (%2)'
   list:
