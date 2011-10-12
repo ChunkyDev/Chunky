@@ -3,6 +3,7 @@ package org.getchunky.chunky;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.getchunky.chunky.object.*;
 import org.getchunky.chunky.permission.PermissionFlag;
@@ -262,5 +263,23 @@ public class ChunkyManager {
      */
     public static String getUniqueId() {
         return Long.toString(System.nanoTime());
+    }
+
+    /**
+     * Retrieves the ChunkyObject representing a Bukkit World
+     *
+     * @param worldName name of world
+     * @return a ChunkyWorld object if worldName is for a valid world, else null
+     */
+    public ChunkyWorld getChunkyWorld(String worldName) {
+        ChunkyObject object = getObject(ChunkyWorld.class.getName(), worldName);
+        if (object == null) {
+            World world = Bukkit.getServer().getWorld(worldName);
+            if (world != null) {
+                object = new ChunkyWorld();
+                object.setId(world.getName()).setName(world.getName());
+            }
+        }
+        return (ChunkyWorld)object;
     }
 }
