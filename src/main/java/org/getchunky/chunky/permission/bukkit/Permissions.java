@@ -15,7 +15,8 @@ public enum Permissions {
     PLAYER_BUILD_ANYWHERE("chunky.admin.modify"),
     ADMIN_UNCLAIM("chunky.admin.unclaim"),
     ADMIN_SETPERM("chunky.admin.setperm"),
-    ADMIN_SET_CHUNK_NAME("chunky.admin.set_chunk_name"),;
+    ADMIN_SET_CHUNK_NAME("chunky.admin.set_chunk_name"),
+    CMD_ADMIN("chunky.admin.command"),;
 
     String node;
 

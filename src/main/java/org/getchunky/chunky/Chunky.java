@@ -16,6 +16,7 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyModuleManager;
 import org.getchunky.chunky.module.SimpleChunkyModuleManager;
+import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
@@ -297,6 +298,8 @@ public class Chunky extends JavaPlugin {
                     .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_DESC))
                     .setAliases("a")
                     .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_HELP))
+                    .setRequiresEnabledWorld(false)
+                    .setPermission(Permissions.CMD_ADMIN.getNode())
                     .register();
 
             // /chunky admin chunklimit
@@ -304,6 +307,7 @@ public class Chunky extends JavaPlugin {
                     .setDescription(Language.getString(Language.CMD_CHUNKY_ADMIN_CHUNKLIMIT_DESC))
                     .setAliases("cl", "limit")
                     .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_ADMIN_CHUNKLIMIT_HELP))
+                    .setRequiresEnabledWorld(false)
                     .register();
 
         } catch (ChunkyUnregisteredException ignore) {

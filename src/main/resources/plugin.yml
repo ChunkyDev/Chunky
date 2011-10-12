@@ -27,3 +27,6 @@ permissions:
     chunky.admin.unlimited:
         description: Unlimited chunk claiming.
         default: op
+    chunky.admin.command:
+        description: Allows use of /chunky admin and it's sub-commands.
+        default: op
