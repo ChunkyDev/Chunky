@@ -82,7 +82,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     public Integer getClaimLimit() {
         Integer limit;
         if (getData().has("chunk claim limit")) {
-            limit = getData().optInt("claim limit");
+            limit = getData().optInt("chunk claim limit");
         } else {
             limit = Config.getPlayerChunkLimitDefault();
             setClaimLimit(limit);
