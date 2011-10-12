@@ -15,9 +15,6 @@ permissions:
     chunky.unclaim:
         description: Allows players to unclaim chunks.
         default: true
-    chunky.enabled:
-        description: Allows this player to be affected by Chunky whatsoever.
-        default: true
     chunky.admin.unclaim:
         description: Allows players to unclaim anyone's chunk.
         default: op

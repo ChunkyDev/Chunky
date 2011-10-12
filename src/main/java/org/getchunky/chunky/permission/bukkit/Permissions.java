@@ -13,7 +13,6 @@ public enum Permissions {
     PLAYER_CHUNK_LIMIT("chunky.chunk_claim_limit"),
     PLAYER_NO_CHUNK_LIMIT("chunky.admin.unlimited"),
     PLAYER_BUILD_ANYWHERE("chunky.admin.modify"),
-    ENABLED("chunky.enabled"),
     ADMIN_UNCLAIM("chunky.admin.unclaim"),
     ADMIN_SETPERM("chunky.admin.setperm"),
     ADMIN_SET_CHUNK_NAME("chunky.admin.set_chunk_name"),;
