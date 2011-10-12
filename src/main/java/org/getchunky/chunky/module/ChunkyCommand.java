@@ -3,7 +3,6 @@ package org.getchunky.chunky.module;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.getchunky.chunky.Chunky;
-import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
 
 import java.util.*;
@@ -22,6 +21,7 @@ public class ChunkyCommand {
     private Permission permission = null;
     private Boolean inGameOnly = false;
     private Boolean requiresEnabledWorld = true;
+    private Boolean inheritsPermission = true;
 
     private String fullName;
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
@@ -304,8 +304,27 @@ public class ChunkyCommand {
      * @param requiresEnabledWorld true to require this command to be used from enabled worlds
      * @return this command
      */
-    public ChunkyCommand setRequiresEnabledWorld(boolean requiresEnabledWorld) {
+    public ChunkyCommand setRequiresEnabledWorld(Boolean requiresEnabledWorld) {
         this.requiresEnabledWorld = requiresEnabledWorld;
+        return this;
+    }
+
+    /**
+     * Checks if this command will inherit required permissions from it parent command. Default is true.
+     *
+     * @return true if command inherits permission node
+     */
+    public Boolean inheritsPermission() {
+        return inheritsPermission;
+    }
+
+    /**
+     * Sets whether this command inherit required permission nodes from it's parent command.  Default setting is true.
+     * 
+     * @return this command
+     */
+    public ChunkyCommand setInheritsPermission(Boolean inheritsPermission) {
+        this.inheritsPermission = inheritsPermission;
         return this;
     }
 
