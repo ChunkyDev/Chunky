@@ -43,7 +43,7 @@ public class ChunkyManager {
     public static void unregisterObject(ChunkyObject chunkyObject) {
         HashMap<String, ChunkyObject> ids = OBJECTS.get(chunkyObject.getType());
         if (ids == null) return;
-        ids.remove(chunkyObject);
+        ids.remove(chunkyObject.getId());
     }
 
     /**
