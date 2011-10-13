@@ -32,15 +32,10 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
         }
         if (Permissions.CHUNKY_UNCLAIM.hasPerm(player)) {
             ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
-            HashSet<ChunkyObject> ownables = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
-            if (ownables == null || ownables.isEmpty()) {
-                Language.CHUNK_NONE_OWNED.bad(player);
-                return;
-            }
             ChunkyChunk chunkyChunk;
             Location location = player.getLocation();
             chunkyChunk = ChunkyManager.getChunk(location);
-            if (!chunkyChunk.isOwned() || (!chunkyChunk.getOwner().equals(chunkyPlayer) && !Permissions.ADMIN_UNCLAIM.hasPerm(player))) {
+            if (!chunkyChunk.isOwned() || (!chunkyChunk.isOwnedBy(chunkyPlayer) && !Permissions.ADMIN_UNCLAIM.hasPerm(player))) {
                 Language.CHUNK_NOT_OWNED.bad(player, chunkyChunk.getOwner().getName());
                 return;
             }
