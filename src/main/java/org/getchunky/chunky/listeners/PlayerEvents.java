@@ -70,7 +70,7 @@ public class PlayerEvents extends PlayerListener {
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
         Long currentTime = System.currentTimeMillis();
-        if (cPlayer.getFirstLoginTime() == null) {
+        if (cPlayer.getFirstLoginTime() == 0) {
             cPlayer.getData().put("first login time", currentTime);
         }
         cPlayer.getData().put("last login time", currentTime);

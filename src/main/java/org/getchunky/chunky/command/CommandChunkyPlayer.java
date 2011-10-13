@@ -43,12 +43,12 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
     private void displayInfo(ChunkyPlayer chunkyPlayer, CommandSender sender) {
         String sFirstDate = "NA";
         Long lFirstDate = chunkyPlayer.getFirstLoginTime();
-        if (lFirstDate != null) {
+        if (lFirstDate != 0) {
             sFirstDate = new Date(lFirstDate).toString();
         }
         String sLastDate = "NA";
         Long lLastDate = chunkyPlayer.getLastLoginTime();
-        if (lLastDate != null) {
+        if (lLastDate != 0) {
             sLastDate = new Date(lLastDate).toString();
         }
         Language.PLAYER_MENU_TITLE.normal(sender, chunkyPlayer.getName(), sFirstDate, sLastDate);
