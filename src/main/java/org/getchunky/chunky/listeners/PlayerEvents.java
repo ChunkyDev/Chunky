@@ -70,11 +70,18 @@ public class PlayerEvents extends PlayerListener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
+        Long currentTime = System.currentTimeMillis();
+        if (cPlayer.getFirstLoginTime() == null) {
+            cPlayer.getData().put("first login time", currentTime);
+        }
+        cPlayer.getData().put("last login time", currentTime);
     }
 
     @Override
     public void onPlayerQuit(PlayerQuitEvent event) {
         ChunkyPlayer.getClaimModePlayers().remove(ChunkyManager.getChunkyPlayer(event.getPlayer()));
+        ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
+        cPlayer.getData().put("last logout time", System.currentTimeMillis());
     }
 
     @Override
