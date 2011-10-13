@@ -11,6 +11,7 @@ import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionRelationship;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -40,7 +41,17 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
     }
 
     private void displayInfo(ChunkyPlayer chunkyPlayer, CommandSender sender) {
-        Language.PLAYER_MENU_TITLE.normal(sender, chunkyPlayer.getName());
+        String sFirstDate = "NA";
+        Long lFirstDate = chunkyPlayer.getFirstLoginTime();
+        if (lFirstDate != null) {
+            sFirstDate = new Date(lFirstDate).toString();
+        }
+        String sLastDate = "NA";
+        Long lLastDate = chunkyPlayer.getLastLogoutTime();
+        if (lLastDate != null) {
+            sLastDate = new Date(lLastDate).toString();
+        }
+        Language.PLAYER_MENU_TITLE.normal(sender, chunkyPlayer.getName(), sFirstDate, sLastDate);
         HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
 
         if (chunks != null && chunks.size() > 0) {

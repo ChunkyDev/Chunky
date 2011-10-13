@@ -26,6 +26,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Retrieves the plugin stored in this menu, if any.
+     *
      * @return The plugin running the menu or null.
      */
     final public JavaPlugin getPlugin() {
@@ -55,6 +56,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns true if this menu contains the specified item. More formally, returns true if and only if this menu contains at least one item i such that (item==null ? i==null : item.equals(i)).
+     *
      * @param item Item whose presence in this menu is to be tested.
      * @return true If this menu contains the specified item.
      */
@@ -64,6 +66,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns the item at the specified position in this menu.
+     *
      * @param index Index of the item to return.
      * @return The item at the specified index of this menu.
      * @throws IndexOutOfBoundsException
@@ -74,6 +77,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns true if this menu contains no items.
+     *
      * @return true if this menu contains no items.
      */
     public boolean isEmpty() {
@@ -82,6 +86,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns an iterator over the items in this menu in proper sequence.
+     *
      * @return an iterator over the items in this menu in proper sequence.
      */
     public Iterator<ActionMenuItem> iterator() {
@@ -90,6 +95,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns the index of the first occurrence of the specified itme in this menu, or -1 if this menu does not contain the item. More formally, returns the lowest index i such that (item==null ? get(i)==null : item.equals(get(i))), or -1 if there is no such index.
+     *
      * @param item Item to search for.
      * @return The index of the first occurrence of the specified item in this menu, or -1 if this menu does not contain the item.
      */
@@ -99,6 +105,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns the index of the last occurrence of the specified item in this menu, or -1 if this menu does not contain the item. More formally, returns the highest index i such that (item==null ? get(i)==null : item.equals(get(i))), or -1 if there is no such index.
+     *
      * @param item Item to search for.
      * @return The index of the last occurrence of the specified item in this menu, or -1 if this menu does not contain the item.
      */
@@ -108,6 +115,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Removes the menu item at the specified position in this menu. Shifts any subsequent menu items to the left (subtracts one from their indices). Returns the menu item that was removed from the menu.
+     *
      * @param index Index of menu item to remove
      * @return Menu item removed.
      * @throws IndexOutOfBoundsException
@@ -132,8 +140,9 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Replaces the item at the specified position in this menu with the specified item.
+     *
      * @param index Index of the item to replace.
-     * @param item Item to be stored at the specified position.
+     * @param item  Item to be stored at the specified position.
      * @return The item previously at the specified position
      */
     public ActionMenuItem set(int index, ActionMenuItem item) {
@@ -144,6 +153,7 @@ public abstract class ActionMenu implements Iterable, Observer {
 
     /**
      * Returns the number of items in this menu. If this menu contains more than Integer.MAX_VALUE items, returns Integer.MAX_VALUE.
+     *
      * @return
      */
     public Integer size() {
@@ -320,7 +330,7 @@ public abstract class ActionMenu implements Iterable, Observer {
      * Empty method.  Called when menu contents are altered in any way or when the selection index is altered.
      */
     protected void onChange() {
-        
+
     }
 
     /**

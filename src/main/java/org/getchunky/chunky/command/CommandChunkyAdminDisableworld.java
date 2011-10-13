@@ -20,7 +20,7 @@ public class CommandChunkyAdminDisableworld implements ChunkyCommandExecutor {
                 Language.IN_GAME_ONLY.bad(sender);
                 return;
             }
-            worldName = ((Player)sender).getWorld().getName();
+            worldName = ((Player) sender).getWorld().getName();
         } else {
             worldName = Language.combineStringArray(args, " ");
         }

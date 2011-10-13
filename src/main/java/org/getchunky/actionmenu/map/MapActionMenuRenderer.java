@@ -28,19 +28,19 @@ public class MapActionMenuRenderer extends MapRenderer {
             if (scrollPos < 0) scrollPos = 0;
             for (int i = scrollPos; i < menu.size(); i++) {
                 if (!(menu.get(i) instanceof MapActionMenuItem)) continue;
-                MapActionMenuItem item = (MapActionMenuItem)menu.get(i);
+                MapActionMenuItem item = (MapActionMenuItem) menu.get(i);
                 String text = "";
                 if (menu.getIndex() == i) {
                     text += "-> ";
                 }
                 text += item.getText();
-                y = MapUtil.writeLines(menu, mapCanvas, menu.getX(), y+2, item.getFont(), text);
+                y = MapUtil.writeLines(menu, mapCanvas, menu.getX(), y + 2, item.getFont(), text);
             }
 
             scrollPos -= menu.size();
             if (scrollPos < 0) scrollPos = 0;
             for (int i = scrollPos; i < menu.getFooter().size(); i++) {
-                y = MapUtil.writeLines(menu, mapCanvas, menu.getX(), y+2, menu.getFont(), menu.getFooter().get(i));
+                y = MapUtil.writeLines(menu, mapCanvas, menu.getX(), y + 2, menu.getFont(), menu.getFooter().get(i));
             }
             menu.setChanged(false);
         }

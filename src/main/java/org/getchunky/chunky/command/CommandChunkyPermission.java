@@ -14,7 +14,6 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.PermissionRelationship;
 import org.getchunky.chunky.permission.bukkit.Permissions;
-import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
 import java.util.HashMap;
@@ -189,7 +188,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
                     if (perms == null)
                         perms = ChunkyManager.getPermissions(target, permObject);
-                    
+
                     if (permObject != null && permObject instanceof ChunkyPlayer) {
                         if (targets.size() == 1) {
                             Language.PERMS_FOR_YOU.normal((ChunkyPlayer) permObject, cPlayer.getName(), perms.toLongString(), sTargetForPermissible);

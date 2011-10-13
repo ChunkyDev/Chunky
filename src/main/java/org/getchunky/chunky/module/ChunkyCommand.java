@@ -28,11 +28,11 @@ public class ChunkyCommand {
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
     private String chatName;
 
-     /**
+    /**
      * Creates a Command that is registrable with Chunky.
      *
-     * @param name          the name of the command. Example: "chunky" creates command /chunky
-     * @param executor      the class that will contain the onCommand() for this command
+     * @param name     the name of the command. Example: "chunky" creates command /chunky
+     * @param executor the class that will contain the onCommand() for this command
      */
     public ChunkyCommand(String name, ChunkyCommandExecutor executor, ChunkyCommand parentCommand) {
         this.name = name.toLowerCase();
@@ -129,7 +129,7 @@ public class ChunkyCommand {
      * @param aliases any aliases you wish to register for the command
      * @return this command
      */
-    public final ChunkyCommand setAliases(String...aliases) {
+    public final ChunkyCommand setAliases(String... aliases) {
         for (String alias : aliases) {
             this.aliases.add(alias.toLowerCase());
         }
@@ -183,7 +183,7 @@ public class ChunkyCommand {
      * @param helpLines a list of helpful information related to the command
      * @return this command
      */
-    public final ChunkyCommand setHelpLines(String...helpLines) {
+    public final ChunkyCommand setHelpLines(String... helpLines) {
         this.helpLines.addAll(Arrays.asList(helpLines));
         return this;
     }
@@ -321,7 +321,7 @@ public class ChunkyCommand {
 
     /**
      * Sets whether this command inherit required permission nodes from it's parent command.  Default setting is true.
-     * 
+     *
      * @return this command
      */
     public ChunkyCommand setInheritsPermission(Boolean inheritsPermission) {

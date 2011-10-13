@@ -17,11 +17,12 @@ public abstract class PlayerActionMenuItem extends ActionMenuItem {
 
     /**
      * Retrieves the player interacting with this menu.
+     *
      * @return The player interacting with the sign or null if it is not a Player.
      */
     public Player getPlayer() {
         if (getSender() instanceof Player) {
-            return (Player)getSender();
+            return (Player) getSender();
         } else {
             return null;
         }

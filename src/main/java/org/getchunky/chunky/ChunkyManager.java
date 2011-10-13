@@ -230,10 +230,10 @@ public class ChunkyManager {
 
     /**
      * Sets a new permission relationship for the two given objects.  This will NOT persist changes.
-     * 
-     * @param object Object being interacted with
+     *
+     * @param object     Object being interacted with
      * @param permObject Object doing the interacting
-     * @param perms new PermissionRelationship that will overwrite the old
+     * @param perms      new PermissionRelationship that will overwrite the old
      */
     public static void putPermissions(ChunkyObject object, ChunkyObject permObject, PermissionRelationship perms) {
         if (!permissions.containsKey(object)) {
@@ -280,6 +280,6 @@ public class ChunkyManager {
                 object.setId(world.getName()).setName(world.getName());
             }
         }
-        return (ChunkyWorld)object;
+        return (ChunkyWorld) object;
     }
 }
