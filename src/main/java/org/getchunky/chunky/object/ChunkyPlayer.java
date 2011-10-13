@@ -12,6 +12,7 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
+import sun.rmi.runtime.Log;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -97,6 +98,18 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     public void defaultClaimLimit() {
         getData().remove("chunk claim limit");
+    }
+
+    public Long getFirstLoginTime() {
+        return getData().optLong("first login time");
+    }
+
+    public Long getLastLoginTime() {
+        return getData().optLong("last login time");
+    }
+
+    public Long getLastLogoutTime() {
+        return getData().optLong("last logout time");
     }
 
     public MapView getCommandMap() {
