@@ -1,5 +1,6 @@
 package org.getchunky.chunky.object;
 
+import com.iConomy.net.Database;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
@@ -44,6 +45,11 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         if (id == null) throw new ChunkyObjectNotInitializedException("Object cannot be saved without ID!");
         DatabaseManager.getDatabase().updateObject(this);
         return true;
+    }
+
+    public final void delete() {
+        DatabaseManager.getDatabase().deleteObject(this);
+        ChunkyManager.unregisterObject(this);
     }
 
     public final String getName() {

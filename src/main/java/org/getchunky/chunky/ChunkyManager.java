@@ -40,6 +40,12 @@ public class ChunkyManager {
         return true;
     }
 
+    public static void unregisterObject(ChunkyObject chunkyObject) {
+        HashMap<String, ChunkyObject> ids = OBJECTS.get(chunkyObject.getType());
+        if (ids == null) return;
+        ids.remove(chunkyObject);
+    }
+
     /**
      * Looks up an object by ID.  This method will return null if the object has not been initialized.
      *

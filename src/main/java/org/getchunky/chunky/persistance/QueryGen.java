@@ -1,5 +1,6 @@
 package org.getchunky.chunky.persistance;
 
+import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.PermissionRelationship;
 
@@ -101,6 +102,19 @@ public class QueryGen {
                         "OwnerId = '%s' " +
                         "AND OwnableId = '%s'", owner.getId(), ownable.getId());
 
+    }
+
+    public static String deleteObject(ChunkyObject chunkyObject) {
+        return format("DELETE FROM chunky_objects WHERE id = %s AND type='%s'",chunkyObject.getId(),chunkyObject.getType());
+
+    }
+
+    public static String deleteAllPermissions(ChunkyObject chunkyObject) {
+        return format("DELETE FROM chunky_permissions WHERE PermissibleId = %s OR ObjectId = %s",chunkyObject.getId(), chunkyObject.getId());
+    }
+
+    public static String deleteAllOwnership(ChunkyObject chunkyObject) {
+        return format("DELETE FROM chunky_ownership WHERE OwnerId = %s OR OwnableId = %s",chunkyObject.getId(), chunkyObject.getId());
     }
 
     private static String format(String input, String... args) {

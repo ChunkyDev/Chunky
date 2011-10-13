@@ -135,4 +135,10 @@ public abstract class SQLDB implements Database {
         Logging.debug("Updating default perms for " + object);
         query(QueryGen.updatePermissions(object, object, perms));
     }
+
+    public void deleteObject(ChunkyObject chunkyObject) {
+        query(QueryGen.deleteAllOwnership(chunkyObject));
+        query(QueryGen.deleteAllPermissions(chunkyObject));
+        query(QueryGen.deleteObject(chunkyObject));
+    }
 }

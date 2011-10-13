@@ -16,6 +16,8 @@ public interface Database {
 
     public void loadAllOwnership();
 
+    public void deleteObject(ChunkyObject chunkyObject);
+
     public void updateObject(ChunkyObject object);
 
     public void updatePermissions(ChunkyObject permObject, ChunkyObject objectId, PermissionRelationship perms);
