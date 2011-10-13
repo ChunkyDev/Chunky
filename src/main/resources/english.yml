@@ -251,7 +251,8 @@ player:
   menu:
     title:
     - '&8|----------&9%1&8----------|'
-    - '&7First joined: &f%2  %6Last seen: &f%3'
+    - '&7First joined: &f%2'
+    - '&7Last seen: &f%3'
     owned_chunks:
     - '&aOwned Chunks:'
     

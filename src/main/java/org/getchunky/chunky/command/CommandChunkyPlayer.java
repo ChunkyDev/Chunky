@@ -44,12 +44,12 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         String sFirstDate = "NA";
         Long lFirstDate = chunkyPlayer.getFirstLoginTime();
         if (lFirstDate != null) {
-            sFirstDate = new Date(lFirstDate).toString();
+            sFirstDate = new Date(lFirstDate/1000).toString();
         }
         String sLastDate = "NA";
         Long lLastDate = chunkyPlayer.getLastLogoutTime();
         if (lLastDate != null) {
-            sLastDate = new Date(lLastDate).toString();
+            sLastDate = new Date(lLastDate/1000).toString();
         }
         Language.PLAYER_MENU_TITLE.normal(sender, chunkyPlayer.getName(), sFirstDate, sLastDate);
         HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
