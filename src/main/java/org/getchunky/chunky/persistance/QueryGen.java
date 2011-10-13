@@ -103,13 +103,14 @@ public class QueryGen {
 
     }
 
-    private static String format(String input, String...args) {
-        for(int i=0;i<args.length;i++) {
-            args[i] = sanitize(args[i]);}
-        return String.format(input,args);
+    private static String format(String input, String... args) {
+        for (int i = 0; i < args.length; i++) {
+            args[i] = sanitize(args[i]);
+        }
+        return String.format(input, args);
     }
 
     private static String sanitize(String input) {
-        return input.replace("'","\\'");
+        return input.replace("'", "\\'");
     }
 }

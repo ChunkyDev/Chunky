@@ -1,10 +1,10 @@
 package org.getchunky.actionmenu.sign;
 
-import org.getchunky.actionmenu.ActionMenu;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.getchunky.actionmenu.ActionMenu;
 
 import java.util.logging.Logger;
 
@@ -17,6 +17,7 @@ public class SignActionMenu extends ActionMenu {
 
     /**
      * Create a sign based ActionMenu.
+     *
      * @param block Block that this menu is assigned to.  It must be a Sign.
      */
     public SignActionMenu(Block block) {
@@ -25,6 +26,7 @@ public class SignActionMenu extends ActionMenu {
 
     /**
      * Returns the block associated with this menu.
+     *
      * @return Block associated with this menu.
      */
     public Block getBlock() {
@@ -33,6 +35,7 @@ public class SignActionMenu extends ActionMenu {
 
     /**
      * Sets the block this menu is assigned to.
+     *
      * @param block Block menu will be assigned to.
      */
     public void setBlock(Block block) {
@@ -41,6 +44,7 @@ public class SignActionMenu extends ActionMenu {
 
     /**
      * Cause this menu to show on the sign.  If a sender is specified it will send a false block update to them first to ensure the text is displayed.
+     *
      * @param sender CommandSender to show menu to.  May be set to null.
      */
     public void showMenu(CommandSender sender) {
@@ -49,6 +53,7 @@ public class SignActionMenu extends ActionMenu {
 
     /**
      * Shows a single menu item on the sign.  Since signs are small, they a
+     *
      * @param sender
      */
     private void showSelectedMenuItem(CommandSender sender) {

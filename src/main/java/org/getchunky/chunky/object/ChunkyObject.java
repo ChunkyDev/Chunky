@@ -10,7 +10,6 @@ import org.getchunky.chunky.persistance.ChunkyPersistable;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;

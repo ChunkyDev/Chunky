@@ -16,6 +16,7 @@ public class DefaultActionMenu extends ActionMenu {
 
     /**
      * Shows this crappy text based menu.
+     *
      * @param sender CommandSender to show menu to.  Possibly null depending on implementation.
      */
     public void showMenu(CommandSender sender) {

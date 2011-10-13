@@ -159,8 +159,7 @@ public enum Language {
      */
     NO_SUCH_WORLD("world.no_such_world"),
     ENABLED_WORLD("world.enabled_world"),
-    DISABLED_WORLD("world.disabled_world"),
-    ;
+    DISABLED_WORLD("world.disabled_world"),;
 
     private String path;
 

@@ -1,6 +1,5 @@
 package org.getchunky.actionmenu.map;
 
-import org.getchunky.actionmenu.ActionMenu;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapFont;
@@ -8,6 +7,7 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.map.MinecraftFont;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.getchunky.actionmenu.ActionMenu;
 
 /**
  * @author dumptruckman
@@ -94,7 +94,7 @@ public class MapActionMenu extends ActionMenu {
         this.lineSpacing = space;
         return this;
     }
-    
+
     public int getLineSpacing() {
         return lineSpacing;
     }

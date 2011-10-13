@@ -1,6 +1,5 @@
 package org.getchunky.actionmenu.sign;
 
-import org.getchunky.actionmenu.ActionMenu;
 import org.getchunky.actionmenu.PlayerActionMenuItem;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public abstract class SignActionMenuItem extends PlayerActionMenuItem {
 
     /**
      * Get the lines of text on this sign.
+     *
      * @return Lines of text on the sign.
      */
     public List<String> getLines() {
@@ -31,6 +31,7 @@ public abstract class SignActionMenuItem extends PlayerActionMenuItem {
 
     /**
      * Returns a single line of text at specified index.
+     *
      * @param index Index of text line ot retrieve.
      * @return Line of text at index.
      */
@@ -40,6 +41,7 @@ public abstract class SignActionMenuItem extends PlayerActionMenuItem {
 
     /**
      * Sets the text for this menu item.
+     *
      * @param lines List of text.
      */
     public void setLines(List<String> lines) {
@@ -50,8 +52,9 @@ public abstract class SignActionMenuItem extends PlayerActionMenuItem {
 
     /**
      * Sets a specific line of this menu item's text.
+     *
      * @param index Index of line.
-     * @param line Text for line.
+     * @param line  Text for line.
      * @throws IndexOutOfBoundsException
      */
     public void setLine(int index, String line) throws IndexOutOfBoundsException {

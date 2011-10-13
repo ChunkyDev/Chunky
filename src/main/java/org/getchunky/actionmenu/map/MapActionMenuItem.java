@@ -1,6 +1,5 @@
 package org.getchunky.actionmenu.map;
 
-import org.getchunky.actionmenu.ActionMenu;
 import org.bukkit.map.MapFont;
 import org.bukkit.map.MinecraftFont;
 import org.getchunky.actionmenu.PlayerActionMenuItem;

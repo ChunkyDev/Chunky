@@ -12,7 +12,6 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.PermissionChain;
-import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
 
 public class BlockEvents extends BlockListener {

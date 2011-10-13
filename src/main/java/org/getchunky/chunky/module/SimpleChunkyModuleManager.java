@@ -117,7 +117,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                         ((ChunkyObjectListener) listener).onObjectSetOwner((ChunkyObjectOwnershipEvent) event);
                     }
                 };
-            
+
             // Player Events
             case PLAYER_BUILD:
                 return new ChunkyEventExecutor() {
@@ -321,7 +321,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         String label = null;
         List<String> argsList = new ArrayList<String>();
-        
+
         ChunkyCommand chunkyCommand = getCommandByAlias(null, commands[0].substring(1));
         if (chunkyCommand == null) {
             String commandString = Language.combineStringArray(commands, " ");
@@ -376,7 +376,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                             argsList.add(args[i]);
                     } else {
                         if (args[i].endsWith("\"")) {
-                            tempArgs.add(args[i].substring(0, args[i].length()-1));
+                            tempArgs.add(args[i].substring(0, args[i].length() - 1));
                             argsList.add(Language.combineStringList(tempArgs, " "));
                             tempArgs.clear();
                             quotedAt = -1;
@@ -392,9 +392,9 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         Logging.debug(sender + "'s command translated to: " + chunkyCommand.getFullName() + "[" + chunkyCommand.getChatName() + "] with alias: " + label + " and args: " + Arrays.asList(args));
         ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_PROCESS, sender, chunkyCommand, label, args);
-        
+
         if (sender instanceof Player) {
-            Player player = (Player)sender;
+            Player player = (Player) sender;
             if (chunkyCommand.isInGameOnly() && !ChunkyManager.getChunkyWorld(player.getWorld().getName()).isEnabled()) {
                 Language.WORLD_DISABLED.bad(sender);
                 event.setCancelled(true);
@@ -408,7 +408,7 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                 event.setCancelled(true);
             }
         }
-        
+
         callEvent(event);
         if (!event.isCancelled()) {
             chunkyCommand.getExecutor().onCommand(sender, chunkyCommand, label, args);

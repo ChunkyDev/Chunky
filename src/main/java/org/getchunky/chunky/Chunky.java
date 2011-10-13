@@ -21,7 +21,6 @@ import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * @author dumptruckman, SwearWord

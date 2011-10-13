@@ -12,10 +12,8 @@ import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
-import sun.rmi.runtime.Log;
 
 import java.util.HashSet;
-import java.util.Map;
 
 /**
  * @author dumptruckman, SwearWord
@@ -114,7 +112,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     public MapView getCommandMap() {
         MapView map = null;
-        Short mapId = (short)getData().optInt("command map id");
+        Short mapId = (short) getData().optInt("command map id");
         if (mapId == null) {
             map = Bukkit.getServer().createMap(Bukkit.getServer().getWorlds().get(0));
             getData().put("command map id", map.getId());

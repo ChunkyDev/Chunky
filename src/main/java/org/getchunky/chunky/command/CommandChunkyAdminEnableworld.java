@@ -1,6 +1,5 @@
 package org.getchunky.chunky.command;
 
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
@@ -21,7 +20,7 @@ public class CommandChunkyAdminEnableworld implements ChunkyCommandExecutor {
                 Language.IN_GAME_ONLY.bad(sender);
                 return;
             }
-            worldName = ((Player)sender).getWorld().getName();
+            worldName = ((Player) sender).getWorld().getName();
         } else {
             worldName = Language.combineStringArray(args, " ");
         }
