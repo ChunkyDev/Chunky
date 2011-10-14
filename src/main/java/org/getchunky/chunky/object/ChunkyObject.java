@@ -1,6 +1,5 @@
 package org.getchunky.chunky.object;
 
-import com.iConomy.net.Database;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
@@ -28,11 +27,10 @@ public abstract class ChunkyObject extends ChunkyPersistable {
     protected ChunkyObject owner;
     protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
 
-    private String id;
+    private Long id = null;
     private final String className;
 
     public ChunkyObject() {
-        super();
         try {
             getData().put("name", "");
         } catch (JSONException e) {
@@ -43,7 +41,6 @@ public abstract class ChunkyObject extends ChunkyPersistable {
 
     public final boolean save() throws ChunkyObjectNotInitializedException {
         if (id == null) throw new ChunkyObjectNotInitializedException("Object cannot be saved without ID!");
-        DatabaseManager.getDatabase().updateObject(this);
         return true;
     }
 
@@ -61,11 +58,11 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         }
     }
 
-    public final String getId() {
+    public final long getId() {
         return id;
     }
 
-    public final ChunkyObject setId(String id) {
+    public final ChunkyObject setId(long id) {
         this.id = id;
         ChunkyManager.registerObject(this);
         return this;

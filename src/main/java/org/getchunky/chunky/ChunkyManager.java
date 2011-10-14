@@ -1,5 +1,7 @@
 package org.getchunky.chunky;
 
+import cern.colt.function.ObjectProcedure;
+import cern.colt.map.OpenLongObjectHashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -21,7 +23,10 @@ import java.util.Map;
 public class ChunkyManager {
 
     private static HashMap<ChunkyObject, HashMap<ChunkyObject, PermissionRelationship>> permissions = new HashMap<ChunkyObject, HashMap<ChunkyObject, PermissionRelationship>>();
-    private static HashMap<String, HashMap<String, ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String, ChunkyObject>>();
+    //private static HashMap<String, HashMap<String, ChunkyObject>> OBJECTS = new HashMap<String, HashMap<String, ChunkyObject>>();
+    private static HashMap<String, OpenLongObjectHashMap> OBJECTS = new HashMap<String, OpenLongObjectHashMap>();
+    private static HashMap<String, Long> PLAYERS = new HashMap<String, Long>();
+    private static HashMap<ChunkyCoordinates, Long> CHUNKS = new HashMap<ChunkyCoordinates, Long>();
 
     /**
      * Allows objects to be registered for lookup by ID.  You probably shouldn't call this method as all ChunkyObjects are automatically registered.
@@ -30,20 +35,19 @@ public class ChunkyManager {
      * @return true if object was not yet registered
      */
     public static boolean registerObject(ChunkyObject object) {
-        HashMap<String, ChunkyObject> ids = OBJECTS.get(object.getType());
+        OpenLongObjectHashMap ids = OBJECTS.get(object.getType());
         if (ids == null) {
-            ids = new HashMap<String, ChunkyObject>();
+            ids = new OpenLongObjectHashMap();
             OBJECTS.put(object.getType(), ids);
         }
-        if (ids.containsKey(object.getId())) return false;
-        ids.put(object.getId(), object);
-        return true;
+
+        return ids.put(object.getId(), object);
     }
 
     public static void unregisterObject(ChunkyObject chunkyObject) {
-        HashMap<String, ChunkyObject> ids = OBJECTS.get(chunkyObject.getType());
+        OpenLongObjectHashMap ids = OBJECTS.get(chunkyObject.getType());
         if (ids == null) return;
-        ids.remove(chunkyObject.getId());
+        ids.removeKey(chunkyObject.getId());
     }
 
     /**
@@ -53,10 +57,10 @@ public class ChunkyManager {
      * @param id   Object id
      * @return Object associated with id or null
      */
-    public static ChunkyObject getObject(String type, String id) {
-        HashMap<String, ChunkyObject> ids = getObjectsOfType(type);
+    public static ChunkyObject getObject(String type, long id) {
+        OpenLongObjectHashMap ids = getObjectsOfType(type);
         if (ids == null) return null;
-        return ids.get(id);
+        return (ChunkyObject)ids.get(id);
     }
 
     public static ChunkyObject getObject(String fullId) {
@@ -66,37 +70,11 @@ public class ChunkyManager {
         for (int i = 2; i < typeId.length; i++) {
             id += ":" + typeId[i];
         }
-        return getObject(typeId[0], typeId[1]);
+        return getObject(typeId[0], Long.valueOf(typeId[1]));
     }
 
-    public static HashMap<String, ChunkyObject> getObjectsOfType(String type) {
+    public static OpenLongObjectHashMap getObjectsOfType(String type) {
         return OBJECTS.get(type);
-    }
-
-    /**
-     * Strips the type from an id and returns just the name.
-     *
-     * @param id
-     * @return
-     */
-    public static String getNameFromId(String id) {
-        try {
-            return id.substring(id.indexOf(":") + 1);
-        } catch (Exception ignore) {
-            return null;
-        }
-    }
-
-    /**
-     * Compares a ChunkyObject id with a class to determine if the id is a for an object of a certain type.
-     *
-     * @param id   ID of ChunkyObject
-     * @param type Class for ChunkyObject to compare to
-     * @return true if ID is for object of class type
-     */
-    public static boolean isType(String id, Class type) {
-        String typeName = id.substring(0, id.indexOf(":"));
-        return type.getName().equals(typeName);
     }
 
     /**
@@ -109,16 +87,31 @@ public class ChunkyManager {
     public static ChunkyPlayer getChunkyPlayer(String name) {
         OfflinePlayer player = Bukkit.getServer().getPlayer(name);
         if (player == null) {
-            HashMap<String, ChunkyObject> players = getObjectsOfType(ChunkyPlayer.class.getName());
-            for (ChunkyObject object : players.values()) {
-                if (name.equalsIgnoreCase(object.getName())) {
-                    return (ChunkyPlayer) object;
-                }
-            }
+            OpenLongObjectHashMap players = getObjectsOfType(ChunkyPlayer.class.getName());
+            ChunkyPlayer cPlayer = null;
+            PlayerFinder playerFinder = new PlayerFinder(name);
+            players.values().forEach(playerFinder);
+            return playerFinder.getChunkyPlayer();
         }
-        if (player == null) return null;
-
         return getChunkyPlayer(player);
+    }
+
+    private static class PlayerFinder implements ObjectProcedure {
+        String name;
+        ChunkyPlayer chunkyPlayer = null;
+        public PlayerFinder(String name) {
+            this.name = name;
+        }
+        public boolean apply(Object obj) {
+            if (name.equalsIgnoreCase(((ChunkyObject)obj).getName())) {
+                chunkyPlayer = (ChunkyPlayer)obj;
+                return false;
+            }
+            return true;
+        }
+        public ChunkyPlayer getChunkyPlayer() {
+            return chunkyPlayer;
+        }
     }
 
     /**
@@ -263,12 +256,12 @@ public class ChunkyManager {
     }
 
     /**
-     * Returns a String useable as a unique object id.  The ID is based off the systems nanotime.
+     * Returns a long useable as a unique object id.  The ID is based off the systems nanotime.
      *
      * @return unique ID
      */
-    public static String getUniqueId() {
-        return Long.toString(System.nanoTime());
+    public static long getUniqueId() {
+        return System.nanoTime();
     }
 
     /**
