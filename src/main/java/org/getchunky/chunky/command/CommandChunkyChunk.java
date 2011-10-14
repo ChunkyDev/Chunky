@@ -21,7 +21,7 @@ public class CommandChunkyChunk implements ChunkyCommandExecutor {
 
         if (args.length == 0) {
             Player player = (Player) sender;
-            displayInfo(ChunkyManager.getChunk(player.getLocation()), player);
+            displayInfo(ChunkyManager.getChunkyChunk(player.getLocation()), player);
             return;
         }
 

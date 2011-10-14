@@ -26,9 +26,9 @@ public class PlayerEvents extends PlayerListener {
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.isCancelled()) return;
         if (!ChunkyManager.getChunkyWorld(event.getTo().getWorld().getName()).isEnabled()) return;
-        ChunkyChunk toChunk = ChunkyManager.getChunk(event.getTo());
+        ChunkyChunk toChunk = ChunkyManager.getChunkyChunk(event.getTo());
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        ChunkyChunk fromChunk = ChunkyManager.getChunk(event.getFrom());
+        ChunkyChunk fromChunk = ChunkyManager.getChunkyChunk(event.getFrom());
         if (fromChunk.equals(toChunk)) return;
         onPlayerChunkChange(chunkyPlayer, toChunk, fromChunk);
     }
@@ -68,7 +68,7 @@ public class PlayerEvents extends PlayerListener {
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        cPlayer.setCurrentChunk(ChunkyManager.getChunk(event.getPlayer().getLocation()));
+        cPlayer.setCurrentChunk(ChunkyManager.getChunkyChunk(event.getPlayer().getLocation()));
         Long currentTime = System.currentTimeMillis();
         if (cPlayer.getFirstLoginTime() == 0) {
             cPlayer.getData().put("first login time", currentTime);
@@ -97,7 +97,7 @@ public class PlayerEvents extends PlayerListener {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if (event.getItem() != null && MinecraftTools.isUsable(event.getItem().getTypeId())) {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
+                ChunkyChunk chunkyChunk = ChunkyManager.getChunkyChunk(event.getClickedBlock().getLocation());
 
                 AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.ITEM_USE);
                 boolean isCancelled = permType.causedDenial();
@@ -110,7 +110,7 @@ public class PlayerEvents extends PlayerListener {
             }
             if (MinecraftTools.isSwitchable(event.getClickedBlock().getTypeId())) {
                 ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-                ChunkyChunk chunkyChunk = ChunkyManager.getChunk(event.getClickedBlock().getLocation());
+                ChunkyChunk chunkyChunk = ChunkyManager.getChunkyChunk(event.getClickedBlock().getLocation());
 
                 AccessLevel permType = PermissionChain.hasPerm(chunkyChunk, chunkyPlayer, ChunkyPermissions.SWITCH);
                 boolean isCancelled = permType.causedDenial();

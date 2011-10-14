@@ -25,7 +25,7 @@ public class ChunkRenderer extends MapRenderer {
             for (int z = 0; z < 128; z += 16) {
                 int realx = worldX + x;
                 int realz = worldZ + z;
-                ChunkyChunk chunk = ChunkyManager.getChunk(new Location(player.getWorld(), realx, 0, realz));
+                ChunkyChunk chunk = ChunkyManager.getChunkyChunk(new Location(player.getWorld(), realx, 0, realz));
                 if (chunk.getOwner() == null) continue;
                 Byte color = MapPalette.RED;
 

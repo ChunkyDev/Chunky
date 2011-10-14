@@ -13,8 +13,6 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.util.Logging;
 
-import java.util.HashSet;
-
 /**
  * @author dumptruckman, SwearWord
  */
@@ -34,7 +32,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
             ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
             ChunkyChunk chunkyChunk;
             Location location = player.getLocation();
-            chunkyChunk = ChunkyManager.getChunk(location);
+            chunkyChunk = ChunkyManager.getChunkyChunk(location);
             if (!chunkyChunk.isOwned() || (!chunkyChunk.isOwnedBy(chunkyPlayer) && !Permissions.ADMIN_UNCLAIM.hasPerm(player))) {
                 Language.CHUNK_NOT_OWNED.bad(player, chunkyChunk.getOwner().getName());
                 return;

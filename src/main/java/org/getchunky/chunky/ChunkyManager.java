@@ -154,7 +154,7 @@ public class ChunkyManager {
      * @param coords Chunk coordinates object
      * @return ChunkyChunk at the given coordinates
      */
-    public static ChunkyChunk getChunk(ChunkyCoordinates coords) {
+    public static ChunkyChunk getChunkyChunk(ChunkyCoordinates coords) {
         ChunkyObject chunkyObject = getObject(ChunkyChunk.class.getName(), coords.toString());
         if (chunkyObject != null) return (ChunkyChunk) chunkyObject;
         ChunkyChunk chunkyChunk = new ChunkyChunk();
@@ -168,8 +168,8 @@ public class ChunkyManager {
      * @param location Location of chunk
      * @return ChunkyChunk at the given location
      */
-    public static ChunkyChunk getChunk(Location location) {
-        return getChunk(new ChunkyCoordinates(location));
+    public static ChunkyChunk getChunkyChunk(Location location) {
+        return getChunkyChunk(new ChunkyCoordinates(location));
     }
 
     /**
@@ -178,8 +178,8 @@ public class ChunkyManager {
      * @param block Block within chunk
      * @return ChunkyChunk at the given location
      */
-    public static ChunkyChunk getChunk(Block block) {
-        return getChunk(new ChunkyCoordinates(block.getChunk()));
+    public static ChunkyChunk getChunkyChunk(Block block) {
+        return getChunkyChunk(new ChunkyCoordinates(block.getChunk()));
     }
 
     /**

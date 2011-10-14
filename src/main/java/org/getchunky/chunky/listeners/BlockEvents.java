@@ -21,7 +21,7 @@ public class BlockEvents extends BlockListener {
         if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
+        ChunkyChunk chunk = ChunkyManager.getChunkyChunk(event.getBlock().getLocation());
 
         AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.BUILD);
         Logging.debug(permType + " caused block place denial: " + permType.causedDenial());
@@ -39,7 +39,7 @@ public class BlockEvents extends BlockListener {
         if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 
         ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
-        ChunkyChunk chunk = ChunkyManager.getChunk(event.getBlock().getLocation());
+        ChunkyChunk chunk = ChunkyManager.getChunkyChunk(event.getBlock().getLocation());
 
         AccessLevel permType = PermissionChain.hasPerm(chunk, chunkyPlayer, ChunkyPermissions.DESTROY);
         Logging.debug(permType + " caused block break denial: " + permType.causedDenial());
