@@ -1,7 +1,7 @@
 package org.getchunky.chunky.persistance;
 
-import lib.PatPeter.SQLibrary.MySQL;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.SQLibrary.MySQL;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.util.Logging;
 

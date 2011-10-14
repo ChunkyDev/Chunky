@@ -1,7 +1,7 @@
 package org.getchunky.chunky.persistance;
 
-import lib.PatPeter.SQLibrary.SQLite;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.SQLibrary.SQLite;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.util.Logging;
 
