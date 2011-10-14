@@ -1,6 +1,7 @@
 package org.getchunky.chunky.persistance;
 
 import org.bukkit.plugin.Plugin;
+import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.PermissionRelationship;
 
@@ -13,6 +14,8 @@ public interface Database {
     public void loadAllObjects();
 
     public void loadAllPermissions();
+    
+    public void loadAllGroups();
 
     public void loadAllOwnership();
 
@@ -31,5 +34,11 @@ public interface Database {
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable);
 
     public void updateDefaultPermissions(ChunkyObject object, PermissionRelationship perms);
+
+    public void addGroupMember(ChunkyGroup group, ChunkyObject member);
+
+    public void removeGroupMember(ChunkyGroup group, ChunkyObject member);
+
+    public void removeGroup(ChunkyGroup group);
 
 }

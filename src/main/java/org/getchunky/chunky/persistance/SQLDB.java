@@ -1,6 +1,7 @@
 package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.ChunkyManager;
+import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.PermissionFlag;
 import org.getchunky.chunky.permission.PermissionRelationship;
@@ -89,6 +90,25 @@ public abstract class SQLDB implements Database {
         }
     }
 
+    public void loadAllGroups() {
+        ResultSet data = query(QueryGen.selectAllGroups());
+        while (iterateData(data)) {
+            HashMap<PermissionFlag, Boolean> flags = new HashMap<PermissionFlag, Boolean>();
+            String groupType = getString(data, "GroupType");
+            String groupId = getString(data, "GroupId");
+            String memberType = getString(data, "MemberType");
+            String memberId = getString(data, "MemberId");
+            ChunkyObject group = ChunkyManager.getObject(groupType, groupId);
+            if (group != null && !(group instanceof ChunkyGroup)) {
+                Logging.warning("Attempted to load a group that is NOT a group.");
+                continue;
+            }
+            ChunkyObject member = ChunkyManager.getObject(memberType, memberId);
+            if (group != null && member != null)
+                member.addGroup((ChunkyGroup)group);
+        }
+    }
+
     public void loadAllOwnership() {
         String query = QueryGen.selectAllOwnership();
         ResultSet data = query(query);
@@ -136,9 +156,23 @@ public abstract class SQLDB implements Database {
         query(QueryGen.updatePermissions(object, object, perms));
     }
 
+    public void addGroupMember(ChunkyGroup group, ChunkyObject member) {
+        query(QueryGen.addGroupMember(group, member));
+    }
+
+    public void removeGroupMember(ChunkyGroup group, ChunkyObject member) {
+        query(QueryGen.removeGroupMember(group, member));
+    }
+
+    public void removeGroup(ChunkyGroup group) {
+        query(QueryGen.removeGroup(group));
+    }
+
     public void deleteObject(ChunkyObject chunkyObject) {
         query(QueryGen.deleteAllOwnership(chunkyObject));
         query(QueryGen.deleteAllPermissions(chunkyObject));
         query(QueryGen.deleteObject(chunkyObject));
+        if (chunkyObject instanceof ChunkyGroup)
+            removeGroup((ChunkyGroup)chunkyObject);
     }
 }

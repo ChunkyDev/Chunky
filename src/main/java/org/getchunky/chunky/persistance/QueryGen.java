@@ -1,6 +1,7 @@
 package org.getchunky.chunky.persistance;
 
 import org.getchunky.chunky.Chunky;
+import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.permission.PermissionRelationship;
 
@@ -8,6 +9,10 @@ public class QueryGen {
 
     public static String selectAllPermissions() {
         return "SELECT * FROM chunky_permissions";
+    }
+
+    public static String selectAllGroups() {
+        return "SELECT * FROM chunky_groups";
     }
 
     public static String selectAllObjects() {
@@ -25,12 +30,22 @@ public class QueryGen {
     public static String createPermissionsTable() {
         return
                 "CREATE TABLE chunky_permissions (" +
+                        "PermissibleType VARCHAR(128) NOT NULL," +
                         "PermissibleId VARCHAR(255) NOT NULL," +
+                        "ObjectType VARCHAR(128) NOT NULL," +
                         "ObjectId VARCHAR(255) NOT NULL," +
-                        "PermissibleType VARCHAR(128) NOT NULL,  " +
-                        "ObjectType VARCHAR(128) NOT NULL,  " +
                         "data TEXT NULL," +
                         "PRIMARY KEY (PermissibleType, PermissibleId, ObjectType, ObjectId) )";
+    }
+
+    public static String createGroupsTable() {
+        return
+                "CREATE TABLE chunky_groups (" +
+                        "GroupType VARCHAR(128) NOT NULL," +
+                        "GroupId VARCHAR(255) NOT NULL," +
+                        "MemberType VARCHAR(128) NOT NULL," +
+                        "MemberId VARCHAR(255) NOT NULL," +
+                        "PRIMARY KEY (GroupType, GroupId, MemberType, MemberId) )";
     }
 
     public static String createOwnerShipTable() {
@@ -57,33 +72,63 @@ public class QueryGen {
 
         return
                 format("REPLACE INTO chunky_permissions (" +
-                        "PermissibleId, " +
-                        "ObjectId, " +
                         "PermissibleType, " +
+                        "PermissibleId, " +
                         "ObjectType, " +
+                        "ObjectId, " +
                         "data)" +
                         "VALUES ('%s','%s','%s','%s','%s')",
-                        permissible.getId(), object.getId(),
-                        permissible.getType(), object.getType(),
+                        permissible.getType(), permissible.getId(),
+                        object.getType(), object.getId(),
                         perms.toJSONString());
     }
 
     public static String removePermissions(ChunkyObject permissible, ChunkyObject object) {
         return
                 format("DELETE FROM chunky_permissions where " +
-                        "PermissibleId = '%s' " +
-                        "AND ObjectId = '%s'" +
-                        "AND PermissibleType = '%s'" +
-                        "AND ObjectType = '%s'",
-                        permissible.getId(), object.getId(),
-                        permissible.getType(), object.getType());
+                        "PermissibleType = '%s'" +
+                        "AND PermissibleId = '%s' " +
+                        "AND ObjectType = '%s'" +
+                        "AND ObjectId = '%s'",
+                        permissible.getType(), permissible.getId(),
+                        object.getType(), object.getId());
     }
 
     public static String removeAllPermissions(ChunkyObject object) {
         return
                 format("DELETE FROM chunky_permissions where " +
-                        "ObjectId = '%s'" +
-                        "AND ObjectType = '%s'", object.getId(), object.getType());
+                        "ObjectType = '%s'" +
+                        "AND ObjectId = '%s'", object.getType(), object.getId());
+    }
+
+    public static String addGroupMember(ChunkyGroup group, ChunkyObject member) {
+        return
+                format("REPLACE INTO chunky_groups (" +
+                        "GroupType, " +
+                        "GroupId, " +
+                        "MemberType, " +
+                        "MemberId)" +
+                        "VALUES ('%s','%s','%s','%s')",
+                        group.getType(), group.getId(),
+                        member.getType(), member.getId());
+    }
+
+    public static String removeGroupMember(ChunkyGroup group, ChunkyObject member) {
+        return
+                format("DELETE FROM chunky_groups where " +
+                        "GroupType = '%s'" +
+                        "AND GroupId = '%s' " +
+                        "AND MemberType = '%s'" +
+                        "AND MemberId = '%s'",
+                        group.getType(), group.getId(),
+                        member.getType(), member.getId());
+    }
+
+    public static String removeGroup(ChunkyGroup group) {
+        return
+                format("DELETE FROM chunky_groups where " +
+                        "GroupType = '%s'" +
+                        "AND GroupId = '%s'", group.getType(), group.getId());
     }
 
     public static String addOwnership(ChunkyObject owner, ChunkyObject ownable) {

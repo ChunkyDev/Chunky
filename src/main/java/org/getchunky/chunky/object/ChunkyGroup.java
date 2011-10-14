@@ -5,11 +5,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * @author dumptruckman, SwearWord
  */
 public class ChunkyGroup extends ChunkyPermissibleObject {
+
+    private HashMap<String, HashSet<ChunkyObject>> members = new HashMap<String, HashSet<ChunkyObject>>();
 
     public HashMap<String, ChunkyPermissibleObject> getMembers() {
         try {
@@ -44,26 +47,37 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
         }
     }
 
-    protected void addMember(ChunkyPermissibleObject object) {
-        try {
-            if (!getData().has("members")) {
-                getData().put("members", new JSONObject());
-            }
-            getData().getJSONObject("members").put(object.getName(), object.getFullId());
-            this.save();
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void addMember(ChunkyObject member) {
+        member._addGroup(this);
+        HashSet<ChunkyObject> membersOfType = members.get(member.getType());
+        if (membersOfType == null) {
+            membersOfType = new HashSet<ChunkyObject>();
+            members.put(member.getType(), membersOfType);
+        }
+        membersOfType.add(member);
+    }
+
+    protected void _addMember(ChunkyObject member) {
+        HashSet<ChunkyObject> membersOfType = members.get(member.getType());
+        if (membersOfType == null) {
+            membersOfType = new HashSet<ChunkyObject>();
+            members.put(member.getType(), membersOfType);
+        }
+        membersOfType.add(member);
+    }
+
+    public void removeMember(ChunkyObject member) {
+        member._removeGroup(this);
+        HashSet<ChunkyObject> membersOfType = members.get(member.getType());
+        if (membersOfType != null) {
+            membersOfType.remove(member);
         }
     }
 
-    protected void removeMember(ChunkyPermissibleObject object) {
-        try {
-            if (getData().has("members")) {
-                getData().getJSONObject("members").remove(object.getName());
-                this.save();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    protected void _removeMember(ChunkyObject member) {
+        HashSet<ChunkyObject> membersOfType = members.get(member.getType());
+        if (membersOfType != null) {
+            membersOfType.remove(member);
         }
     }
 }

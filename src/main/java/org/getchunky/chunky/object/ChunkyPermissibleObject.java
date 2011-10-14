@@ -84,29 +84,4 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
             return null;
         }
     }
-
-    public void addGroup(ChunkyGroup group) {
-        group.addMember(this);
-        try {
-            if (!getData().has("groups")) {
-                getData().put("groups", new JSONObject());
-            }
-            getData().getJSONObject("groups").put(group.getName(), group.getFullId());
-            this.save();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeGroup(ChunkyGroup group) {
-        group.removeMember(this);
-        try {
-            if (getData().has("groups")) {
-                getData().getJSONObject("groups").remove(group.getName());
-                this.save();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }

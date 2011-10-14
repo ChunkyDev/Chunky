@@ -64,6 +64,11 @@ public class MySQLDB extends SQLDB {
             if (!db.createTable(QueryGen.createPermissionsTable())) return false;
             Logging.info("Created chunky_permissions table.");
         }
+
+        if (!this.db.checkTable("chunky_groups")) {
+            if (!db.createTable(QueryGen.createGroupsTable())) return false;
+            Logging.info("Created chunky_groups table.");
+        }
         return true;
     }
 

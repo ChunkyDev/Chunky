@@ -11,6 +11,7 @@ import org.getchunky.chunky.persistance.ChunkyPersistable;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +27,8 @@ public abstract class ChunkyObject extends ChunkyPersistable {
      * <code>childIndex</code>.
      */
     protected ChunkyObject owner;
-    protected HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
+    private HashMap<String, HashSet<ChunkyObject>> ownables = new HashMap<String, HashSet<ChunkyObject>>();
+    private HashMap<String, HashSet<ChunkyGroup>> groups = new HashMap<String, HashSet<ChunkyGroup>>();
 
     private String id;
     private final String className;
@@ -281,5 +283,39 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         @SuppressWarnings("unchecked")
         HashMap<String, HashSet<ChunkyObject>> ownables = (HashMap<String, HashSet<ChunkyObject>>) this.ownables.clone();
         return ownables;
+    }
+
+    public void addGroup(ChunkyGroup group) {
+        group._addMember(this);
+        HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
+        if (groupsOfType == null) {
+            groupsOfType = new HashSet<ChunkyGroup>();
+            groups.put(group.getType(), groupsOfType);
+        }
+        groupsOfType.add(group);
+    }
+
+    protected void _addGroup(ChunkyGroup group) {
+        HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
+        if (groupsOfType == null) {
+            groupsOfType = new HashSet<ChunkyGroup>();
+            groups.put(group.getType(), groupsOfType);
+        }
+        groupsOfType.add(group);
+    }
+
+    public void removeGroup(ChunkyGroup group) {
+        group._removeMember(this);
+        HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
+        if (groupsOfType != null) {
+            groupsOfType.remove(group);
+        }
+    }
+
+    protected void _removeGroup(ChunkyGroup group) {
+        HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
+        if (groupsOfType != null) {
+            groupsOfType.remove(group);
+        }
     }
 }
