@@ -30,7 +30,7 @@ public class QueryGen {
                         "PermissibleType VARCHAR(128) NOT NULL,  " +
                         "ObjectType VARCHAR(128) NOT NULL,  " +
                         "data TEXT NULL," +
-                        "PRIMARY KEY (PermissibleId, ObjectId) )";
+                        "PRIMARY KEY (PermissibleType, PermissibleId, ObjectType, ObjectId) )";
     }
 
     public static String createOwnerShipTable() {
