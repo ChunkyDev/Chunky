@@ -1775,7 +1775,7 @@ public static void testMax() {
  
   DenseDoubleMatrix1D d1Double = new DenseDoubleMatrix1D(temp);
   
-  hep.aida.bin.DynamicBin1D d1ynamicBin = cern.colt.matrix.doublealgo.Statistic.bin(d1Double);
+  cern.hep.aida.bin.DynamicBin1D d1ynamicBin = cern.colt.matrix.doublealgo.Statistic.bin(d1Double);
   
   double max = d1ynamicBin.max();
   

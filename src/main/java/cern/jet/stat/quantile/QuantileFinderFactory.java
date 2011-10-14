@@ -13,7 +13,7 @@ import cern.jet.math.Arithmetic;
 import cern.jet.random.engine.RandomEngine;
 /**
  * Factory constructing exact and approximate quantile finders for both known and unknown <tt>N</tt>.
- * Also see {@link hep.aida.bin.QuantileBin1D}, demonstrating how this package can be used.
+ * Also see {@link cern.hep.aida.bin.QuantileBin1D}, demonstrating how this package can be used.
  *
  * The approx. algorithms compute approximate quantiles of large data sequences in a single pass.
  * The approximation guarantees are explicit, and apply for arbitrary value distributions and arrival distributions of the data sequence.

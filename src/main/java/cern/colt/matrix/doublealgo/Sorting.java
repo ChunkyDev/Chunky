@@ -379,7 +379,7 @@ Each aggregate is the sum of a row
 	  </tt></td>
 	<td align="left" valign="top"> 
 	  <tt>aggregates=<br>
-	  hep.aida.bin.BinFunctions1D.sum<br>
+	  cern.hep.aida.bin.BinFunctions1D.sum<br>
 	  ==></tt></td>
 	<td valign="top"> 
 	  <p><tt>4 x 2 matrix:<br>
@@ -402,8 +402,8 @@ matrix.assign(new cern.jet.random.engine.MersenneTwister()); // initialized rand
 cern.jet.math.Functions F = cern.jet.math.Functions.functions; // alias for convenience
 
 // THE QUICK VERSION (takes some 10 secs)
-DoubleMatrix2D sorted = quickSort(matrix,hep.aida.bin.BinFunctions1D.median);
-//DoubleMatrix2D sorted = quickSort(matrix,hep.aida.bin.BinFunctions1D.sumOfLogarithms);
+DoubleMatrix2D sorted = quickSort(matrix,cern.hep.aida.bin.BinFunctions1D.median);
+//DoubleMatrix2D sorted = quickSort(matrix,cern.hep.aida.bin.BinFunctions1D.sumOfLogarithms);
 
 // THE SLOW VERSION (takes some 300 secs)
 DoubleMatrix1DComparator comparator = new DoubleMatrix1DComparator() {
@@ -425,12 +425,12 @@ DoubleMatrix2D sorted = quickSort(matrix,comparator);
 @return a new matrix view having rows sorted.
 		<b>Note that the original matrix is left unaffected.</b>
 */
-public DoubleMatrix2D sort(DoubleMatrix2D matrix, hep.aida.bin.BinFunction1D aggregate) {
+public DoubleMatrix2D sort(DoubleMatrix2D matrix, cern.hep.aida.bin.BinFunction1D aggregate) {
 	// precompute aggregates over rows, as defined by "aggregate"
 
 	// a bit clumsy, because Statistic.aggregate(...) is defined on columns, so we need to transpose views
 	DoubleMatrix2D tmp = matrix.like(1,matrix.rows());
-	hep.aida.bin.BinFunction1D[] func = {aggregate};
+	cern.hep.aida.bin.BinFunction1D[] func = {aggregate};
 	Statistic.aggregate(matrix.viewDice(), func, tmp);
 	double[] aggr = tmp.viewRow(0).toArray();
 	return sort(matrix,aggr);
@@ -645,8 +645,8 @@ public static void zdemo5(int rows, int columns, boolean print) {
 	System.out.print("now sorting - quick version with precomputation... ");
 	timer.reset().start();
 	// THE QUICK VERSION (takes some 10 secs)
-	A = sort.sort(A,hep.aida.bin.BinFunctions1D.median);
-	//A = sort.sort(A,hep.aida.bin.BinFunctions1D.sumLog);
+	A = sort.sort(A, cern.hep.aida.bin.BinFunctions1D.median);
+	//A = sort.sort(A,cern.hep.aida.bin.BinFunctions1D.sumLog);
 	timer.stop().display();
 
 	// check results for correctness
@@ -654,7 +654,7 @@ public static void zdemo5(int rows, int columns, boolean print) {
 	// so we just show the first 5 rows
 	if (print) {
 		int r = Math.min(rows,5);
-		hep.aida.bin.BinFunction1D[] funs = {hep.aida.bin.BinFunctions1D.median, hep.aida.bin.BinFunctions1D.sumLog, hep.aida.bin.BinFunctions1D.geometricMean};
+		cern.hep.aida.bin.BinFunction1D[] funs = {cern.hep.aida.bin.BinFunctions1D.median, cern.hep.aida.bin.BinFunctions1D.sumLog, cern.hep.aida.bin.BinFunctions1D.geometricMean};
 		String[] rowNames = new String[r];
 		String[] columnNames = new String[columns];
 		for (int i=columns; --i >= 0; ) columnNames[i] = Integer.toString(i);

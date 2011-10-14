@@ -3,7 +3,7 @@ package cern.colt.matrix.impl;
 
 /**
  * Factory producing implementations of {@link cern.colt.matrix.impl.Former} via method create();
- * Implementations of can use existing libraries such as corejava.PrintfFormat or corejava.Format or other.
+ * Implementations of can use existing libraries such as cern.corejava.PrintfFormat or cern.corejava.Format or other.
  * Serves to isolate the interface of String formatting from the actual implementation.
  * If you want to plug in a different String formatting implementation, simply replace this class with your alternative.
  *
@@ -46,13 +46,13 @@ public class FormerFactory {
  */
 public Former create(final String format) {
 	return new Former() {
-		//private FormatStringBuffer f = (format!=null ? new corejava.FormatStringBuffer(format) : null);
-		private corejava.Format f = (format!=null ? new corejava.Format(format) : null);
-		//private corejava.PrintfFormat f = (format!=null ? new corejava.PrintfFormat(format) : null);
+		//private FormatStringBuffer f = (format!=null ? new cern.corejava.FormatStringBuffer(format) : null);
+		private cern.corejava.Format f = (format!=null ? new cern.corejava.Format(format) : null);
+		//private cern.corejava.PrintfFormat f = (format!=null ? new cern.corejava.PrintfFormat(format) : null);
 		public String form(double value) {
 			if (f==null || value == Double.POSITIVE_INFINITY || value == Double.NEGATIVE_INFINITY || value != value) {
 				// value != value <==> Double.isNaN(value)
-				// Work around bug in corejava.Format.form() for inf, -inf, NaN
+				// Work around bug in cern.corejava.Format.form() for inf, -inf, NaN
 				return String.valueOf(value);
 			}
 		//return f.format(value).toString();

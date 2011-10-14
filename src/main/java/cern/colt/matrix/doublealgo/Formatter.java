@@ -14,11 +14,11 @@ import cern.colt.matrix.DoubleMatrix3D;
 import cern.colt.matrix.impl.*;
 /** 
 Flexible, well human readable matrix print formatting; By default decimal point aligned. Build on top of the C-like <i>sprintf</i> functionality 
-  provided by the {@link corejava.Format} class written by Cay Horstmann.
+  provided by the {@link cern.corejava.Format} class written by Cay Horstmann.
   Currenly works on 1-d, 2-d and 3-d matrices.
   Note that in most cases you will not need to get familiar with this class; just call <tt>matrix.toString()</tt> and be happy with the default formatting.
   This class is for advanced requirements.
-<p> Can't exactly remember the syntax of printf format strings? See {@link corejava.Format} 
+<p> Can't exactly remember the syntax of printf format strings? See {@link cern.corejava.Format}
   or <a href="http://www.braju.com/docs/index.html">Henrik 
   Nordberg's documentation</a>, or the <a href="http://www.dinkumware.com/htm_cl/lib_prin.html#Print%20Functions">Dinkumware's 
   C Library Reference</a>.
@@ -169,8 +169,8 @@ Examples demonstrate usage on 2-d matrices. 1-d and 3-d matrices formatting work
 		String rowAxisName = "CPU"; <br>
 		String[] columnNames = {"1996", "1997", "1998", "1999"};<br>
 		String[] rowNames = { "PowerBar", "Benzol", "Mercedes", "Sparcling"};<br>
-		hep.aida.bin.BinFunctions1D F = hep.aida.bin.BinFunctions1D.functions; // alias<br>
-		hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.rms, F.quantile(0.25), F.median, F.quantile(0.75), F.stdDev, F.min, F.max};<br>
+		cern.hep.aida.bin.BinFunctions1D F = cern.hep.aida.bin.BinFunctions1D.functions; // alias<br>
+		cern.hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.rms, F.quantile(0.25), F.median, F.quantile(0.75), F.stdDev, F.min, F.max};<br>
 		String format = "%1.2G";<br>
 		DoubleMatrix2D matrix = new DenseDoubleMatrix2D(values); <br>
 		new Formatter(format).toTitleString(<br>
@@ -514,13 +514,13 @@ String[] rowNames = { "PowerBar", "Benzol", "Mercedes", "Sparcling"};
 String rowAxisName = "CPU";
 String columnAxisName = "Year";
 String title = "CPU performance over time [nops/sec]";
-hep.aida.bin.BinFunctions1D F = hep.aida.bin.BinFunctions1D.functions;
-hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.rms, F.quantile(0.25), F.median,F.quantile(0.75), F.stdDev, F.min, F.max};
+cern.hep.aida.bin.BinFunctions1D F = cern.hep.aida.bin.BinFunctions1D.functions;
+cern.hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.rms, F.quantile(0.25), F.median,F.quantile(0.75), F.stdDev, F.min, F.max};
 String format = "%1.2G";
 
 //String[] columnNames = { "W", "X", "Y", "Z", "mean", "median", "sum"};
 //String[] rowNames = { "SunJDK1.2.2 classic", "IBMJDK1.1.8", "SunJDK1.3 Hotspot", "other1", "other2", "mean", "median", "sum" };
-//hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.median, F.sum};
+//cern.hep.aida.bin.BinFunction1D[] aggr = {F.mean, F.median, F.sum};
 
 //System.out.println(cern.colt.matrix.DoubleFactory2D.dense.make(values)); 
 //System.out.println(new Formatter().toSourceCode(cern.colt.matrix.DoubleFactory2D.dense.make(values)));
@@ -686,10 +686,10 @@ Pass <tt>null</tt> to one or more parameters to indicate that the corresponding 
 @param title The overall title of the matrix to be formatted.
 @param aggr the aggregation functions to be applied to columns and rows.
 @return the matrix converted to a string.
-@see hep.aida.bin.BinFunction1D
-@see hep.aida.bin.BinFunctions1D
+@see cern.hep.aida.bin.BinFunction1D
+@see cern.hep.aida.bin.BinFunctions1D
 */
-public String toTitleString(DoubleMatrix2D matrix, String[] rowNames, String[] columnNames, String rowAxisName, String columnAxisName, String title, hep.aida.bin.BinFunction1D[] aggr) {
+public String toTitleString(DoubleMatrix2D matrix, String[] rowNames, String[] columnNames, String rowAxisName, String columnAxisName, String title, cern.hep.aida.bin.BinFunction1D[] aggr) {
 	if (matrix.size()==0) return "Empty matrix";
 	if (aggr==null || aggr.length==0) return toTitleString(matrix,rowNames,columnNames,rowAxisName,columnAxisName,title);
 	
@@ -764,10 +764,10 @@ Pass <tt>null</tt> to one or more parameters to indicate that the corresponding 
 @param title The overall title of the matrix to be formatted.
 @param aggr the aggregation functions to be applied to columns, rows.
 @return the matrix converted to a string.
-@see hep.aida.bin.BinFunction1D
-@see hep.aida.bin.BinFunctions1D
+@see cern.hep.aida.bin.BinFunction1D
+@see cern.hep.aida.bin.BinFunctions1D
 */
-public String toTitleString(DoubleMatrix3D matrix, String[] sliceNames, String[] rowNames, String[] columnNames, String sliceAxisName, String rowAxisName, String columnAxisName, String title, hep.aida.bin.BinFunction1D[] aggr) {
+public String toTitleString(DoubleMatrix3D matrix, String[] sliceNames, String[] rowNames, String[] columnNames, String sliceAxisName, String rowAxisName, String columnAxisName, String title, cern.hep.aida.bin.BinFunction1D[] aggr) {
 	if (matrix.size()==0) return "Empty matrix";
 	StringBuffer buf = new StringBuffer();
 	for (int i=0; i<matrix.slices(); i++) {

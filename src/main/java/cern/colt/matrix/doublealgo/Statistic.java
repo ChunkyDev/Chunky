@@ -10,15 +10,15 @@ package cern.colt.matrix.doublealgo;
 
 import cern.colt.function.DoubleDoubleFunction;
 import cern.colt.matrix.*;
+import cern.hep.aida.bin.DynamicBin1D;
 import cern.jet.random.engine.RandomEngine;
-import hep.aida.bin.DynamicBin1D;
 /**
 Basic statistics operations on matrices.
 Computation of covariance, correlation, distance matrix.
 Random sampling views.
 Conversion to histograms with and without OLAP cube operators.
 Conversion to bins with retrieval of statistical bin measures.
-Also see {@link cern.jet.stat} and {@link hep.aida.bin}, in particular {@link hep.aida.bin.DynamicBin1D}.
+Also see {@link cern.jet.stat} and {@link cern.hep.aida.bin}, in particular {@link cern.hep.aida.bin.DynamicBin1D}.
 <p>
 Examples:
 <table border="1" cellspacing="0" dwcopytype="CopyTableRow">
@@ -138,10 +138,10 @@ protected Statistic() {}
  * @param result the matrix to hold the aggregation results.
  * @return <tt>result</tt> (for convenience only).
  * @see Formatter
- * @see hep.aida.bin.BinFunction1D
- * @see hep.aida.bin.BinFunctions1D
+ * @see cern.hep.aida.bin.BinFunction1D
+ * @see cern.hep.aida.bin.BinFunctions1D
  */
-public static DoubleMatrix2D aggregate(DoubleMatrix2D matrix, hep.aida.bin.BinFunction1D[] aggr, DoubleMatrix2D result) {
+public static DoubleMatrix2D aggregate(DoubleMatrix2D matrix, cern.hep.aida.bin.BinFunction1D[] aggr, DoubleMatrix2D result) {
 	DynamicBin1D bin = new DynamicBin1D();
 	double[] elements = new double[matrix.rows()];
 	cern.colt.list.DoubleArrayList values = new cern.colt.list.DoubleArrayList(elements);
@@ -279,7 +279,7 @@ public static DoubleMatrix2D covariance(DoubleMatrix2D matrix) {
 }
 /**
 2-d OLAP cube operator; Fills all cells of the given vectors into the given histogram.
-If you use hep.aida.ref.Converter.toString(histo) on the result, the OLAP cube of x-"column" vs. y-"column" , summing the weights "column" will be printed.
+If you use cern.hep.aida.ref.Converter.toString(histo) on the result, the OLAP cube of x-"column" vs. y-"column" , summing the weights "column" will be printed.
 For example, aggregate sales by product by region.
 <p>
 Computes the distinct values of x and y, yielding histogram axes that capture one distinct value per bin.
@@ -313,7 +313,7 @@ Y 5   |  30  53  51  52  57  39  65  61  55  49  22 |  534
 @return the histogram containing the cube.
 @throws IllegalArgumentException if <tt>x.size() != y.size() || y.size() != weights.size()</tt>.
 */
-public static hep.aida.IHistogram2D cube(DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D weights) {
+public static cern.hep.aida.IHistogram2D cube(DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D weights) {
 	if (x.size() != y.size() || y.size() != weights.size()) throw new IllegalArgumentException("vectors must have same size");
 	
 	double epsilon = 1.0E-9;
@@ -328,7 +328,7 @@ public static hep.aida.IHistogram2D cube(DoubleMatrix1D x, DoubleMatrix1D y, Dou
 	// since bins are right-open [from,to) we need an additional dummy bin so that the last distinct value does not fall into the overflow bin
 	if (distinct.size()>0) distinct.add(distinct.get(distinct.size()-1) + epsilon);
 	distinct.trimToSize();
-	hep.aida.IAxis xaxis = new hep.aida.ref.VariableAxis(distinct.elements());
+	cern.hep.aida.IAxis xaxis = new cern.hep.aida.ref.VariableAxis(distinct.elements());
 
 	// compute distinct values of y
 	y.toArray(vals);
@@ -337,14 +337,14 @@ public static hep.aida.IHistogram2D cube(DoubleMatrix1D x, DoubleMatrix1D y, Dou
 	// since bins are right-open [from,to) we need an additional dummy bin so that the last distinct value does not fall into the overflow bin
 	if (distinct.size()>0) distinct.add(distinct.get(distinct.size()-1) + epsilon);
 	distinct.trimToSize();
-	hep.aida.IAxis yaxis = new hep.aida.ref.VariableAxis(distinct.elements());
+	cern.hep.aida.IAxis yaxis = new cern.hep.aida.ref.VariableAxis(distinct.elements());
 
-	hep.aida.IHistogram2D histo = new hep.aida.ref.Histogram2D("Cube",xaxis,yaxis);
+	cern.hep.aida.IHistogram2D histo = new cern.hep.aida.ref.Histogram2D("Cube",xaxis,yaxis);
 	return histogram(histo,x,y,weights);
 }
 /**
 3-d OLAP cube operator; Fills all cells of the given vectors into the given histogram.
-If you use hep.aida.ref.Converter.toString(histo) on the result, the OLAP cube of x-"column" vs. y-"column" vs. z-"column", summing the weights "column" will be printed.
+If you use cern.hep.aida.ref.Converter.toString(histo) on the result, the OLAP cube of x-"column" vs. y-"column" vs. z-"column", summing the weights "column" will be printed.
 For example, aggregate sales by product by region by time.
 <p>
 Computes the distinct values of x and y and z, yielding histogram axes that capture one distinct value per bin.
@@ -352,7 +352,7 @@ Then fills the histogram.
 @return the histogram containing the cube.
 @throws IllegalArgumentException if <tt>x.size() != y.size() || x.size() != z.size() || x.size() != weights.size()</tt>.
 */
-public static hep.aida.IHistogram3D cube(DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D z, DoubleMatrix1D weights) {
+public static cern.hep.aida.IHistogram3D cube(DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D z, DoubleMatrix1D weights) {
 	if (x.size() != y.size() || x.size() != z.size() || x.size() != weights.size()) throw new IllegalArgumentException("vectors must have same size");
 	
 	double epsilon = 1.0E-9;
@@ -367,7 +367,7 @@ public static hep.aida.IHistogram3D cube(DoubleMatrix1D x, DoubleMatrix1D y, Dou
 	// since bins are right-open [from,to) we need an additional dummy bin so that the last distinct value does not fall into the overflow bin
 	if (distinct.size()>0) distinct.add(distinct.get(distinct.size()-1) + epsilon);
 	distinct.trimToSize();
-	hep.aida.IAxis xaxis = new hep.aida.ref.VariableAxis(distinct.elements());
+	cern.hep.aida.IAxis xaxis = new cern.hep.aida.ref.VariableAxis(distinct.elements());
 
 	// compute distinct values of y
 	y.toArray(vals);
@@ -376,7 +376,7 @@ public static hep.aida.IHistogram3D cube(DoubleMatrix1D x, DoubleMatrix1D y, Dou
 	// since bins are right-open [from,to) we need an additional dummy bin so that the last distinct value does not fall into the overflow bin
 	if (distinct.size()>0) distinct.add(distinct.get(distinct.size()-1) + epsilon);
 	distinct.trimToSize();
-	hep.aida.IAxis yaxis = new hep.aida.ref.VariableAxis(distinct.elements());
+	cern.hep.aida.IAxis yaxis = new cern.hep.aida.ref.VariableAxis(distinct.elements());
 
 	// compute distinct values of z
 	z.toArray(vals);
@@ -385,9 +385,9 @@ public static hep.aida.IHistogram3D cube(DoubleMatrix1D x, DoubleMatrix1D y, Dou
 	// since bins are right-open [from,to) we need an additional dummy bin so that the last distinct value does not fall into the overflow bin
 	if (distinct.size()>0) distinct.add(distinct.get(distinct.size()-1) + epsilon);
 	distinct.trimToSize();
-	hep.aida.IAxis zaxis = new hep.aida.ref.VariableAxis(distinct.elements());
+	cern.hep.aida.IAxis zaxis = new cern.hep.aida.ref.VariableAxis(distinct.elements());
 
-	hep.aida.IHistogram3D histo = new hep.aida.ref.Histogram3D("Cube",xaxis,yaxis,zaxis);
+	cern.hep.aida.IHistogram3D histo = new cern.hep.aida.ref.Histogram3D("Cube",xaxis,yaxis,zaxis);
 	return histogram(histo,x,y,z,weights);
 }
 /**
@@ -490,7 +490,7 @@ public static DoubleMatrix2D distance(DoubleMatrix2D matrix, VectorVectorFunctio
  * Fills all cells of the given vector into the given histogram.
  * @return <tt>histo</tt> (for convenience only).
  */
-public static hep.aida.IHistogram1D histogram(hep.aida.IHistogram1D histo, DoubleMatrix1D vector) {
+public static cern.hep.aida.IHistogram1D histogram(cern.hep.aida.IHistogram1D histo, DoubleMatrix1D vector) {
 	for (int i=vector.size(); --i >= 0; ) {
 		histo.fill(vector.getQuick(i));
 	}
@@ -501,7 +501,7 @@ public static hep.aida.IHistogram1D histogram(hep.aida.IHistogram1D histo, Doubl
  * @return <tt>histo</tt> (for convenience only).
  * @throws IllegalArgumentException if <tt>x.size() != y.size()</tt>.
  */
-public static hep.aida.IHistogram2D histogram(hep.aida.IHistogram2D histo, DoubleMatrix1D x, DoubleMatrix1D y) {
+public static cern.hep.aida.IHistogram2D histogram(cern.hep.aida.IHistogram2D histo, DoubleMatrix1D x, DoubleMatrix1D y) {
 	if (x.size() != y.size()) throw new IllegalArgumentException("vectors must have same size");
 	for (int i=x.size(); --i >= 0; ) {
 		histo.fill(x.getQuick(i), y.getQuick(i));
@@ -513,7 +513,7 @@ public static hep.aida.IHistogram2D histogram(hep.aida.IHistogram2D histo, Doubl
  * @return <tt>histo</tt> (for convenience only).
  * @throws IllegalArgumentException if <tt>x.size() != y.size() || y.size() != weights.size()</tt>.
  */
-public static hep.aida.IHistogram2D histogram(hep.aida.IHistogram2D histo, DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D weights) {
+public static cern.hep.aida.IHistogram2D histogram(cern.hep.aida.IHistogram2D histo, DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D weights) {
 	if (x.size() != y.size() || y.size() != weights.size()) throw new IllegalArgumentException("vectors must have same size");
 	for (int i=x.size(); --i >= 0; ) {
 		histo.fill(x.getQuick(i), y.getQuick(i), weights.getQuick(i));
@@ -525,7 +525,7 @@ public static hep.aida.IHistogram2D histogram(hep.aida.IHistogram2D histo, Doubl
  * @return <tt>histo</tt> (for convenience only).
  * @throws IllegalArgumentException if <tt>x.size() != y.size() || x.size() != z.size() || x.size() != weights.size()</tt>.
  */
-public static hep.aida.IHistogram3D histogram(hep.aida.IHistogram3D histo, DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D z, DoubleMatrix1D weights) {
+public static cern.hep.aida.IHistogram3D histogram(cern.hep.aida.IHistogram3D histo, DoubleMatrix1D x, DoubleMatrix1D y, DoubleMatrix1D z, DoubleMatrix1D weights) {
 	if (x.size() != y.size() || x.size() != z.size() || x.size() != weights.size()) throw new IllegalArgumentException("vectors must have same size");
 	for (int i=x.size(); --i >= 0; ) {
 		histo.fill(x.getQuick(i), y.getQuick(i), z.getQuick(i), weights.getQuick(i));

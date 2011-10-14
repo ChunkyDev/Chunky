@@ -317,7 +317,7 @@ public static void demo3(int size, Object value) {
 	timer.stop().display();
 
 	timer.reset().start();
-	corejava.Format format = new corejava.Format("%G");
+	cern.corejava.Format format = new cern.corejava.Format("%G");
 	buf = new StringBuffer();
 	for (int i=size; --i >= 0; ) {
 		for (int j=size; --j >= 0; ) {
