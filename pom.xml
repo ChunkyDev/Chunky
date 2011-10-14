@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.getchunky</groupId>
   <artifactId>Chunky</artifactId>
-  <version>Buddha-SNAPSHOT</version>
+  <version>Colombo-SNAPSHOT</version>
   <name>Chunky</name>
   <url>http://build.blockface.org/</url>
   <repositories>
