@@ -9,6 +9,7 @@ import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author dumptruckman
@@ -71,18 +72,20 @@ public class PermissionChain {
             return accessLevel;
         }
 
-        Collection<ChunkyGroup> groups = permObject.getGroups().values();
+        Collection<HashSet<ChunkyGroup>> groups = permObject.getGroups().values();
 
-        for (ChunkyGroup group : groups) {
-            permission = group.hasPerm(object, flag);
-            if (permission != null) {
-                accessLevel = AccessLevel.DIRECT_GROUP_PERMISSION;
-                accessLevel.setDenied(true);
-                if (permission) {
-                    accessLevel.setDenied(false);
+        for (HashSet<ChunkyGroup> groupsOfType : groups) {
+            for (ChunkyGroup group : groupsOfType) {
+                permission = group.hasPerm(object, flag);
+                if (permission != null) {
+                    accessLevel = AccessLevel.DIRECT_GROUP_PERMISSION;
+                    accessLevel.setDenied(true);
+                    if (permission) {
+                        accessLevel.setDenied(false);
+                        return accessLevel;
+                    }
                     return accessLevel;
                 }
-                return accessLevel;
             }
         }
 
@@ -100,16 +103,18 @@ public class PermissionChain {
             }
         }
 
-        for (ChunkyGroup group : groups) {
-            permission = group.hasPerm(object.getOwner(), flag);
-            if (permission != null) {
-                accessLevel = AccessLevel.GLOBAL_GROUP_PERMISSION;
-                accessLevel.setDenied(true);
-                if (permission) {
-                    accessLevel.setDenied(false);
+        for (HashSet<ChunkyGroup> groupsOfType : groups) {
+            for (ChunkyGroup group : groupsOfType) {
+                permission = group.hasPerm(object.getOwner(), flag);
+                if (permission != null) {
+                    accessLevel = AccessLevel.GLOBAL_GROUP_PERMISSION;
+                    accessLevel.setDenied(true);
+                    if (permission) {
+                        accessLevel.setDenied(false);
+                        return accessLevel;
+                    }
                     return accessLevel;
                 }
-                return accessLevel;
             }
         }
 
