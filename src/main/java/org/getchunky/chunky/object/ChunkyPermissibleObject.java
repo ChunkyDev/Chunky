@@ -51,37 +51,4 @@ public abstract class ChunkyPermissibleObject extends ChunkyObject {
             DatabaseManager.getDatabase().updatePermissions(this, object, perms);
         }
     }
-
-    public JSONObject getGroupsMap() {
-        try {
-            if (!getData().has("groups")) {
-                getData().put("groups", new JSONObject());
-            }
-            return getData().getJSONObject("groups");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public HashMap<String, ChunkyGroup> getGroups() {
-        try {
-            if (!getData().has("groups")) {
-                getData().put("groups", new JSONObject());
-            }
-            HashMap<String, ChunkyGroup> groups = new HashMap<String, ChunkyGroup>();
-            if (getData().getJSONObject("groups").length() > 0) {
-                for (int i = 0; i < getData().getJSONObject("groups").names().length(); i++) {
-                    String id = getData().getJSONObject("groups").get(getData().getJSONObject("groups").names().get(i).toString()).toString();
-                    ChunkyObject object = ChunkyManager.getObject(id);
-                    if (object != null)
-                        groups.put(getData().getJSONObject("groups").names().get(i).toString(), (ChunkyGroup) object);
-                }
-            }
-            return groups;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

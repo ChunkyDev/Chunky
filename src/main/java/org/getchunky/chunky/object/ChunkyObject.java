@@ -318,4 +318,8 @@ public abstract class ChunkyObject extends ChunkyPersistable {
             groupsOfType.remove(group);
         }
     }
+
+    public HashMap<String, HashSet<ChunkyGroup>> getGroups() {
+        return groups;
+    }
 }
