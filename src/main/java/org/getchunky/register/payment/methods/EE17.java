@@ -1,9 +1,9 @@
-package com.nijikokun.register.payment.methods;
+package org.getchunky.register.payment.methods;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.api.Economy;
-import com.nijikokun.register.payment.Method;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.register.payment.Method;
 
 /**
  * Essentials 17 Implementation of Method

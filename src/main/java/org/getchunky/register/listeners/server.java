@@ -1,12 +1,12 @@
-package com.nijikokun.register.listeners;
+package org.getchunky.register.listeners;
 
 // Imports for MyPlugin
 
-import com.nijikokun.register.Register;
-import com.nijikokun.register.payment.Methods;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.ServerListener;
+import org.getchunky.register.Register;
+import org.getchunky.register.payment.Methods;
 
 // Bukkit Imports
 

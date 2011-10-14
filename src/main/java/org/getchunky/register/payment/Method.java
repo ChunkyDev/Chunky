@@ -1,4 +1,4 @@
-package com.nijikokun.register.payment;
+package org.getchunky.register.payment;
 
 import org.bukkit.plugin.Plugin;
 

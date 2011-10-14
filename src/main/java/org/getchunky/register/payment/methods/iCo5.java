@@ -1,12 +1,12 @@
-package com.nijikokun.register.payment.methods;
+package org.getchunky.register.payment.methods;
 
 import com.iConomy.iConomy;
 import com.iConomy.system.Account;
 import com.iConomy.system.BankAccount;
 import com.iConomy.system.Holdings;
 import com.iConomy.util.Constants;
-import com.nijikokun.register.payment.Method;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.register.payment.Method;
 
 /**
  * iConomy 5 Implementation of Method

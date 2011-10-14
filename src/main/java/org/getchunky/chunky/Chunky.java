@@ -1,7 +1,5 @@
 package org.getchunky.chunky;
 
-import com.nijikokun.register.payment.Method;
-import com.nijikokun.register.payment.Methods;
 import org.blockface.bukkitstats.CallHome;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,6 +17,8 @@ import org.getchunky.chunky.module.SimpleChunkyModuleManager;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
+import org.getchunky.register.payment.Method;
+import org.getchunky.register.payment.Methods;
 
 import java.io.IOException;
 

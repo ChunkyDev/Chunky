@@ -1,4 +1,4 @@
-package com.nijikokun.register.payment;
+package org.getchunky.register.payment;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -42,13 +42,13 @@ public class Methods {
      * Implement all methods along with their respective name & class.
      */
     private static void _init() {
-        addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo6());
-        addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo5());
-        addMethod("iConomy", new com.nijikokun.register.payment.methods.iCo4());
-        addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE6());
-        addMethod("BOSEconomy", new com.nijikokun.register.payment.methods.BOSE7());
-        addMethod("Essentials", new com.nijikokun.register.payment.methods.EE17());
-        addMethod("Currency", new com.nijikokun.register.payment.methods.MCUR());
+        addMethod("iConomy", new org.getchunky.register.payment.methods.iCo6());
+        addMethod("iConomy", new org.getchunky.register.payment.methods.iCo5());
+        addMethod("iConomy", new org.getchunky.register.payment.methods.iCo4());
+        addMethod("BOSEconomy", new org.getchunky.register.payment.methods.BOSE6());
+        addMethod("BOSEconomy", new org.getchunky.register.payment.methods.BOSE7());
+        addMethod("Essentials", new org.getchunky.register.payment.methods.EE17());
+        addMethod("Currency", new org.getchunky.register.payment.methods.MCUR());
         Dependencies.add("MultiCurrency");
     }
 

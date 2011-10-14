@@ -1,9 +1,9 @@
-package com.nijikokun.register.payment.methods;
+package org.getchunky.register.payment.methods;
 
-import com.nijikokun.register.payment.Method;
 import me.ashtheking.currency.Currency;
 import me.ashtheking.currency.CurrencyList;
 import org.bukkit.plugin.Plugin;
+import org.getchunky.register.payment.Method;
 
 /**
  * MultiCurrency Method implementation.
