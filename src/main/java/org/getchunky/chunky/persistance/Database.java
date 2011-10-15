@@ -7,6 +7,10 @@ import org.getchunky.chunky.permission.PermissionRelationship;
 
 public interface Database {
 
+    public boolean isLoaded();
+
+    public void setLoaded();
+
     public boolean connect(Plugin plugin);
 
     public void disconnect();

@@ -21,6 +21,8 @@ public class DatabaseManager {
         Logging.info("Loaded permissions.");
         database.loadAllGroups();
         Logging.info("Loaded groups.");
+        
+        database.setLoaded();
         return true;
     }
 

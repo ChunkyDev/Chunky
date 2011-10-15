@@ -14,6 +14,16 @@ import java.util.HashMap;
 
 public abstract class SQLDB implements Database {
 
+    private boolean loaded = false;
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded() {
+        loaded = true;
+    }
+
     public abstract ResultSet query(String query);
 
     private boolean iterateData(ResultSet data) {
@@ -58,7 +68,8 @@ public abstract class SQLDB implements Database {
     }
 
     public void updateObject(ChunkyObject object) {
-        query(QueryGen.updateObject(object));
+        if (isLoaded())
+            query(QueryGen.updateObject(object));
     }
 
     private Object createObject(String className) {
@@ -131,48 +142,58 @@ public abstract class SQLDB implements Database {
 
 
     public void updatePermissions(ChunkyObject permObject, ChunkyObject object, PermissionRelationship perms) {
-        query(QueryGen.updatePermissions(permObject, object, perms));
+        if (isLoaded())
+            query(QueryGen.updatePermissions(permObject, object, perms));
     }
 
     public void removeAllPermissions(ChunkyObject object) {
-        query(QueryGen.removeAllPermissions(object));
+        if (isLoaded())
+            query(QueryGen.removeAllPermissions(object));
     }
 
     public void removePermissions(ChunkyObject permissible, ChunkyObject object) {
-        query(QueryGen.removePermissions(permissible, object));
+        if (isLoaded())
+            query(QueryGen.removePermissions(permissible, object));
     }
 
     public void addOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        query(QueryGen.addOwnership(owner, ownable));
+        if (isLoaded())
+            query(QueryGen.addOwnership(owner, ownable));
     }
 
     public void removeOwnership(ChunkyObject owner, ChunkyObject ownable) {
-        query(QueryGen.removeOwnership(owner, ownable));
+        if (isLoaded())
+            query(QueryGen.removeOwnership(owner, ownable));
 
     }
 
     public void updateDefaultPermissions(ChunkyObject object, PermissionRelationship perms) {
-        Logging.debug("Updating default perms for " + object);
-        query(QueryGen.updatePermissions(object, object, perms));
+        if (isLoaded())
+            query(QueryGen.updatePermissions(object, object, perms));
     }
 
     public void addGroupMember(ChunkyGroup group, ChunkyObject member) {
-        query(QueryGen.addGroupMember(group, member));
+        if (isLoaded())
+            query(QueryGen.addGroupMember(group, member));
     }
 
     public void removeGroupMember(ChunkyGroup group, ChunkyObject member) {
-        query(QueryGen.removeGroupMember(group, member));
+        if (isLoaded())
+            query(QueryGen.removeGroupMember(group, member));
     }
 
     public void removeGroup(ChunkyGroup group) {
-        query(QueryGen.removeGroup(group));
+        if (isLoaded())
+            query(QueryGen.removeGroup(group));
     }
 
     public void deleteObject(ChunkyObject chunkyObject) {
-        query(QueryGen.deleteAllOwnership(chunkyObject));
-        query(QueryGen.deleteAllPermissions(chunkyObject));
-        query(QueryGen.deleteObject(chunkyObject));
-        if (chunkyObject instanceof ChunkyGroup)
-            removeGroup((ChunkyGroup)chunkyObject);
+        if (isLoaded()) {
+            query(QueryGen.deleteAllOwnership(chunkyObject));
+            query(QueryGen.deleteAllPermissions(chunkyObject));
+            query(QueryGen.deleteObject(chunkyObject));
+            if (chunkyObject instanceof ChunkyGroup)
+                removeGroup((ChunkyGroup)chunkyObject);
+        }
     }
 }
