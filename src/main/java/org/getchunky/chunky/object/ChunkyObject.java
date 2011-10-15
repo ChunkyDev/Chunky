@@ -287,6 +287,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
             groups.put(group.getType(), groupsOfType);
         }
         groupsOfType.add(group);
+        DatabaseManager.getDatabase().addGroupMember(group, this);
     }
 
     protected void _addGroup(ChunkyGroup group) {
@@ -304,6 +305,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         if (groupsOfType != null) {
             groupsOfType.remove(group);
         }
+        DatabaseManager.getDatabase().removeGroupMember(group, this);
     }
 
     protected void _removeGroup(ChunkyGroup group) {

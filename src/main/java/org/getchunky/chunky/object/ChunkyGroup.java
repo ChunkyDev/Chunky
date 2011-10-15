@@ -1,8 +1,6 @@
 package org.getchunky.chunky.object;
 
-import org.getchunky.chunky.ChunkyManager;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.getchunky.chunky.persistance.DatabaseManager;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +24,7 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
             members.put(member.getType(), membersOfType);
         }
         membersOfType.add(member);
+        DatabaseManager.getDatabase().addGroupMember(this, member);
     }
 
     protected void _addMember(ChunkyObject member) {
@@ -43,6 +42,7 @@ public class ChunkyGroup extends ChunkyPermissibleObject {
         if (membersOfType != null) {
             membersOfType.remove(member);
         }
+        DatabaseManager.getDatabase().removeGroupMember(this, member);
     }
 
     protected void _removeMember(ChunkyObject member) {
