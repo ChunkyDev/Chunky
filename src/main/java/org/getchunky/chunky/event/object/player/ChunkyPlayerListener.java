@@ -27,4 +27,7 @@ public class ChunkyPlayerListener extends ChunkyObjectListener {
 
     public void onPlayerChunkClaim(ChunkyPlayerChunkClaimEvent event) {
     }
+
+    public void onPlayerClaimLimitQuery(ChunkyPlayerClaimLimitQueryEvent event) {
+    }
 }

@@ -144,6 +144,8 @@ public class ChunkyEvent implements Serializable {
 
         PLAYER_CHUNK_CLAIM(Category.PLAYER),
 
+        PLAYER_CLAIM_LIMIT_QUERY(Category.PLAYER),
+
         /**
          * COMMAND EVENTS
          */

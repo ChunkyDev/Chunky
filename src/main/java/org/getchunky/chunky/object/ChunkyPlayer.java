@@ -7,6 +7,7 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
+import org.getchunky.chunky.event.object.player.ChunkyPlayerClaimLimitQueryEvent;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.permission.AccessLevel;
@@ -21,6 +22,12 @@ import java.util.HashSet;
 public class ChunkyPlayer extends ChunkyPermissibleObject {
 
     private static HashSet<ChunkyPlayer> claimMode = new HashSet<ChunkyPlayer>();
+
+    private static String BONUS_CHUNK_CLAIMS = "bonus chunks claims";
+    private static String FIRST_LOGIN_TIME = "first login time";
+    private static String LAST_LOGIN_TIME = "last login time";
+    private static String LAST_LOGOUT_TIME = "last logout time";
+    private static String COMMAND_MAP_ID = "command map id";
 
     public static HashSet<ChunkyPlayer> getClaimModePlayers() {
         return claimMode;
@@ -56,7 +63,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         if (event.isCancelled()) return;
         if (Permissions.CHUNKY_CLAIM.hasPerm(this)) {
             // Grab the chunk claim limit for the player
-            int chunkLimit = getClaimLimit();
+            int chunkLimit = getChunkClaimLimit();
             if (Permissions.PLAYER_NO_CHUNK_LIMIT.hasPerm(this) ||
                     !this.getOwnables().containsKey(ChunkyChunk.class.getName()) ||
                     this.getOwnables().get(ChunkyChunk.class.getName()).size() < chunkLimit) {
@@ -78,48 +85,39 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         }
     }
 
-    public Integer getClaimLimit() {
-        Integer limit;
-        if (getData().has("chunk claim limit")) {
-            limit = getData().optInt("chunk claim limit");
-        } else {
-            limit = Config.getPlayerChunkLimitDefault();
-            setClaimLimit(limit);
-        }
-        return limit;
+    public Integer getChunkClaimLimit() {
+        ChunkyPlayerClaimLimitQueryEvent event = new ChunkyPlayerClaimLimitQueryEvent(this, Config.getPlayerChunkLimitDefault() + getData().optInt(BONUS_CHUNK_CLAIMS));
+        Chunky.getModuleManager().callEvent(event);
+        return event.getLimit();
     }
 
-    public void setClaimLimit(Integer limit) {
-        getData().put("chunk claim limit", limit);
+    public void setBonusChunkClaims(Integer limit) {
+        getData().put(BONUS_CHUNK_CLAIMS, limit);
         save();
     }
 
-    public void defaultClaimLimit() {
-        getData().remove("chunk claim limit");
-    }
-
     public Long getFirstLoginTime() {
-        return getData().optLong("first login time");
+        return getData().optLong(FIRST_LOGIN_TIME);
     }
 
     public Long getLastLoginTime() {
-        return getData().optLong("last login time");
+        return getData().optLong(LAST_LOGIN_TIME);
     }
 
     public Long getLastLogoutTime() {
-        return getData().optLong("last logout time");
+        return getData().optLong(LAST_LOGOUT_TIME);
     }
 
     public MapView getCommandMap() {
         MapView map = null;
-        Short mapId = (short) getData().optInt("command map id");
+        Short mapId = (short) getData().optInt(COMMAND_MAP_ID);
         if (mapId == null) {
             map = Bukkit.getServer().createMap(Bukkit.getServer().getWorlds().get(0));
-            getData().put("command map id", map.getId());
+            getData().put(COMMAND_MAP_ID, map.getId());
         } else {
             map = Bukkit.getServer().getMap(mapId);
             if (map == null) {
-                getData().remove("command map id");
+                getData().remove(COMMAND_MAP_ID);
                 Logging.warning("Commmand map id for player pointed to an invalid map");
                 map = getCommandMap();
             }

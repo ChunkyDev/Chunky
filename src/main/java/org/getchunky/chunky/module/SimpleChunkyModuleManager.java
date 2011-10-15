@@ -159,6 +159,13 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
                     }
                 };
 
+            case PLAYER_CLAIM_LIMIT_QUERY:
+                return new ChunkyEventExecutor() {
+                    public void execute(ChunkyListener listener, ChunkyEvent event) {
+                        ((ChunkyPlayerListener) listener).onPlayerClaimLimitQuery((ChunkyPlayerClaimLimitQueryEvent) event);
+                    }
+                };
+
             // Command Events
             case COMMAND_PROCESS:
                 return new ChunkyEventExecutor() {
