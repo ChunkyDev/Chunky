@@ -1,6 +1,5 @@
 package org.getchunky.chunky.object;
 
-import com.iConomy.net.Database;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.event.object.ChunkyObjectNameEvent;
@@ -11,7 +10,6 @@ import org.getchunky.chunky.persistance.ChunkyPersistable;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -112,7 +110,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
      * @param o object to become owned.
      * @return true if this object did not already own o.
      */
-    private boolean addOwnable(ChunkyObject o, boolean persist) {
+    private boolean addOwnable(ChunkyObject o) {
         if (o == null)
             throw new IllegalArgumentException();
 
@@ -124,14 +122,14 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         }
         if (ownables.containsKey(o.getType())) {
             Boolean exists = ownables.get(o.getType()).add(o);
-            if (exists && persist) DatabaseManager.getDatabase().addOwnership(this, o);
+            if (exists) DatabaseManager.getDatabase().addOwnership(this, o);
             return exists;
         } else {
             HashSet<ChunkyObject> ownables = new HashSet<ChunkyObject>();
             ownables.add(o);
             this.ownables.put(o.getType(), ownables);
-            if (persist)
-                DatabaseManager.getDatabase().addOwnership(this, o);
+            
+            DatabaseManager.getDatabase().addOwnership(this, o);
             return true;
         }
     }
@@ -163,7 +161,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         o.ownables = new HashMap<String, HashSet<ChunkyObject>>();
         for (String key : reposess.keySet()) {
             for (ChunkyObject co : reposess.get(key)) {
-                this.addOwnable(co, true);
+                this.addOwnable(co);
             }
         }
     }
@@ -207,10 +205,6 @@ public abstract class ChunkyObject extends ChunkyPersistable {
      * @param keepChildren false transfers the object's children to current owner.
      */
     public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions) {
-        setOwner(object, keepChildren, clearPermissions, true);
-    }
-
-    public final void setOwner(ChunkyObject object, Boolean keepChildren, boolean clearPermissions, boolean persist) {
         if (owner != null) {
             if (keepChildren)
                 owner.removeOwnable(this);
@@ -218,7 +212,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
                 owner.removeOwnableAndTakeChildren(this);
         }
         if (object != null) {
-            if (object.addOwnable(this, persist))
+            if (object.addOwnable(this))
                 owner = object;
         } else {
             owner = null;

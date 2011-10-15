@@ -136,7 +136,7 @@ public abstract class SQLDB implements Database {
             }
             Logging.debug(ownable.getId());
             Logging.debug(owner.getId());
-            ownable.setOwner(owner, true, false, false);
+            ownable.setOwner(owner, true, false);
         }
     }
 

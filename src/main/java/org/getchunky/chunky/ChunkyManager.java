@@ -202,25 +202,13 @@ public class ChunkyManager {
     }
 
     /**
-     * Allows you to set permissions for an object without having the ChunkyObjects.  This WILL persist changes.
+     * Allows you to set permissions for an object without having the ChunkyObjects.  This will optionally persist changes.
      *
      * @param object     Object being interacted with
      * @param permObject Object doing the interacting
      * @param flags      Flag Set to change permissions to
      */
     public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags) {
-        setPermissions(object, permObject, flags, true);
-    }
-
-    /**
-     * Allows you to set permissions for an object without having the ChunkyObjects.  This will optionally persist changes.
-     *
-     * @param object     Object being interacted with
-     * @param permObject Object doing the interacting
-     * @param flags      Flag Set to change permissions to
-     * @param persist    Whether or not to persist these changes.  Generally you should persist the changes.
-     */
-    public static void setPermissions(ChunkyObject object, ChunkyObject permObject, HashMap<PermissionFlag, Boolean> flags, boolean persist) {
         if (flags == null) {
             ChunkyManager.getPermissions(object, permObject).clearFlags();
             DatabaseManager.getDatabase().removePermissions(object, permObject);
@@ -230,8 +218,9 @@ public class ChunkyManager {
         for (Map.Entry<PermissionFlag, Boolean> flag : flags.entrySet()) {
             perms.setFlag(flag.getKey(), flag.getValue());
         }
-        if (persist)
-            DatabaseManager.getDatabase().updatePermissions(permObject, object, perms);
+
+        // persist
+        DatabaseManager.getDatabase().updatePermissions(permObject, object, perms);
     }
 
     /**
