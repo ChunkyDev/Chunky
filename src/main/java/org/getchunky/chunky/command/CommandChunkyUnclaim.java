@@ -1,6 +1,5 @@
 package org.getchunky.chunky.command;
 
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.getchunky.chunky.ChunkyManager;
@@ -11,7 +10,6 @@ import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.bukkit.Permissions;
-import org.getchunky.chunky.util.Logging;
 
 /**
  * @author dumptruckman, SwearWord
@@ -29,18 +27,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
             return;
         }
         if (Permissions.CHUNKY_UNCLAIM.hasPerm(player)) {
-            ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(player);
-            ChunkyChunk chunkyChunk;
-            Location location = player.getLocation();
-            chunkyChunk = ChunkyManager.getChunkyChunk(location);
-            if (!chunkyChunk.isOwned() || (!chunkyChunk.isOwnedBy(chunkyPlayer) && !Permissions.ADMIN_UNCLAIM.hasPerm(player))) {
-                Language.CHUNK_NOT_OWNED.bad(player, chunkyChunk.getOwner().getName());
-                return;
-            }
-            chunkyChunk.setOwner(chunkyPlayer.getOwner(), true, true);
-            chunkyChunk.setName("");
-            Logging.debug(chunkyPlayer.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
-            Language.CHUNK_UNCLAIMED.good(player, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
+            ChunkyManager.getChunkyPlayer(player).unclaimCurrentChunk();
         } else {
             Language.NO_COMMAND_PERMISSION.bad(player);
         }
@@ -50,9 +37,7 @@ public class CommandChunkyUnclaim implements ChunkyCommandExecutor {
 
     private void unclaimAll(ChunkyPlayer player) {
         for (ChunkyObject obj : player.getOwnables().get(ChunkyChunk.class.getName())) {
-            ChunkyChunk chunk = (ChunkyChunk) obj;
-            chunk.setOwner(player.getOwner(), true, true);
-            chunk.setName("");
+            player.unclaimChunk((ChunkyChunk) obj);
         }
     }
 }

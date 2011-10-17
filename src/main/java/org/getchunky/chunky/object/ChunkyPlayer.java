@@ -7,6 +7,7 @@ import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkClaimEvent;
+import org.getchunky.chunky.event.object.player.ChunkyPlayerChunkUnclaimEvent;
 import org.getchunky.chunky.event.object.player.ChunkyPlayerClaimLimitQueryEvent;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
 import org.getchunky.chunky.locale.Language;
@@ -56,7 +57,10 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public void claimCurrentChunk() {
-        ChunkyChunk chunkyChunk = this.getCurrentChunk();
+        this.claimChunk(this.getCurrentChunk());
+    }
+
+    public void claimChunk(ChunkyChunk chunkyChunk) {
         ChunkyPlayerChunkClaimEvent event = new ChunkyPlayerChunkClaimEvent(this, chunkyChunk, AccessLevel.UNOWNED);
         event.setCancelled(false);
         Chunky.getModuleManager().callEvent(event);
@@ -83,6 +87,25 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         } else {
             Language.NO_COMMAND_PERMISSION.bad(this);
         }
+    }
+
+    public void unclaimCurrentChunk() {
+        this.unclaimChunk(this.getCurrentChunk());
+    }
+
+    public void unclaimChunk(ChunkyChunk chunkyChunk) {
+        ChunkyPlayerChunkUnclaimEvent event = new ChunkyPlayerChunkUnclaimEvent(this, chunkyChunk, AccessLevel.UNOWNED);
+        event.setCancelled(false);
+        Chunky.getModuleManager().callEvent(event);
+        if (event.isCancelled()) return;
+        if (!chunkyChunk.isOwned() || (!chunkyChunk.isOwnedBy(this) && !Permissions.ADMIN_UNCLAIM.hasPerm(this))) {
+            Language.CHUNK_NOT_OWNED.bad(this, chunkyChunk.getOwner().getName());
+            return;
+        }
+        chunkyChunk.setOwner(this.getOwner(), true, true);
+        chunkyChunk.setName("");
+        Logging.debug(this.getName() + " claimed " + chunkyChunk.getCoord().getX() + ":" + chunkyChunk.getCoord().getZ());
+        Language.CHUNK_UNCLAIMED.good(this, chunkyChunk.getCoord().getX(), chunkyChunk.getCoord().getZ());
     }
 
     public Integer getChunkClaimLimit() {
