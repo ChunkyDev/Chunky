@@ -58,7 +58,7 @@ public class ChunkyChunk extends ChunkyLocationObject {
         return getRelative(face.getModX() * distance, face.getModZ() * distance);
     }
     
-    public ChunkyChunk[] getDirectlyAdjacentChunks(ChunkyChunk chunk) {
+    public ChunkyChunk[] getDirectlyAdjacentChunks() {
         ChunkyChunk[] chunks = new ChunkyChunk[4];
         chunks[0] = this.getRelative(ChunkFace.NORTH);
         chunks[0] = this.getRelative(ChunkFace.EAST);
