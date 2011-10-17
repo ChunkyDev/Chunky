@@ -49,7 +49,7 @@ public class CommandChunkyGroupAdd implements ChunkyCommandExecutor {
             return;
         }
 
-        targetPlayer.addGroup(group);
+        targetPlayer.addToGroup(group);
         Language.GROUP_ADD.good(chunkyPlayer, targetPlayer.getName(), group.getName());
     }
 }

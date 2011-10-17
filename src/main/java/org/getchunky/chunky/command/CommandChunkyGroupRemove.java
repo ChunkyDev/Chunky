@@ -49,7 +49,7 @@ public class CommandChunkyGroupRemove implements ChunkyCommandExecutor {
             return;
         }
 
-        targetPlayer.removeGroup(group);
+        targetPlayer.removeFromGroup(group);
         Language.GROUP_REMOVE.good(chunkyPlayer, targetPlayer.getName(), group.getName());
     }
 }

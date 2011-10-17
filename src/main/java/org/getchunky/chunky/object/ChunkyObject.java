@@ -279,7 +279,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         return ownables;
     }
 
-    public void addGroup(ChunkyGroup group) {
+    public void addToGroup(ChunkyGroup group) {
         group._addMember(this);
         HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
         if (groupsOfType == null) {
@@ -299,7 +299,7 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         groupsOfType.add(group);
     }
 
-    public void removeGroup(ChunkyGroup group) {
+    public void removeFromGroup(ChunkyGroup group) {
         group._removeMember(this);
         HashSet<ChunkyGroup> groupsOfType = groups.get(group.getType());
         if (groupsOfType != null) {

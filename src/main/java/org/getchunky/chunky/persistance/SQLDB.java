@@ -116,7 +116,7 @@ public abstract class SQLDB implements Database {
             }
             ChunkyObject member = ChunkyManager.getObject(memberType, memberId);
             if (group != null && member != null)
-                member.addGroup((ChunkyGroup)group);
+                member.addToGroup((ChunkyGroup) group);
         }
     }
 
