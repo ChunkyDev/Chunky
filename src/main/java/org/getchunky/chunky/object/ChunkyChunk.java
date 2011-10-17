@@ -1,5 +1,6 @@
 package org.getchunky.chunky.object;
 
+import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
@@ -40,5 +41,29 @@ public class ChunkyChunk extends ChunkyLocationObject {
 
     public String getChunkDisplayName() {
         return Config.getChunkDisplayName(this);
+    }
+
+    public ChunkyChunk getRelative(final int modX, final int modZ) {
+        return ChunkyManager.getChunkyChunk(new ChunkyCoordinates(
+                this.getCoord().getWorld(),
+                this.getCoord().getX() + modX,
+                this.getCoord().getZ() + modZ));
+    }
+
+    public ChunkyChunk getRelative(ChunkFace face) {
+        return getRelative(face, 1);
+    }
+
+    public ChunkyChunk getRelative(ChunkFace face, int distance) {
+        return getRelative(face.getModX() * distance, face.getModZ() * distance);
+    }
+    
+    public ChunkyChunk[] getDirectlyAdjacentChunks(ChunkyChunk chunk) {
+        ChunkyChunk[] chunks = new ChunkyChunk[4];
+        chunks[0] = this.getRelative(ChunkFace.NORTH);
+        chunks[0] = this.getRelative(ChunkFace.EAST);
+        chunks[0] = this.getRelative(ChunkFace.SOUTH);
+        chunks[0] = this.getRelative(ChunkFace.WEST);
+        return chunks;
     }
 }
