@@ -1,7 +1,6 @@
 package org.getchunky.chunky.object;
 
 import org.getchunky.chunky.config.Config;
-import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.util.Logging;
 import org.json.JSONException;
 
@@ -40,8 +39,6 @@ public class ChunkyChunk extends ChunkyLocationObject {
     }
 
     public String getChunkDisplayName() {
-        String name = Config.getChunkDisplayName(this);
-        if (name.isEmpty()) name = Language.UNREGISTERED_CHUNK_NAME.getString();
-        return name;
+        return Config.getChunkDisplayName(this);
     }
 }

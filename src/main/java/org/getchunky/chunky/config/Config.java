@@ -165,6 +165,7 @@ public class Config {
     }
 
     public static String getChunkDisplayName(ChunkyChunk cChunk) {
+        if (cChunk.getName().isEmpty() && cChunk.getOwner() == null) return Language.UNREGISTERED_CHUNK_NAME.getString();
         String nameFormat = getChunkNameFormat();
         String chunkName = cChunk.getName();
         String ownerName = "";
