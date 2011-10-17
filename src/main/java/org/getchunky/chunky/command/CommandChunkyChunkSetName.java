@@ -41,11 +41,8 @@ public class CommandChunkyChunkSetName implements ChunkyCommandExecutor {
             return;
         }
 
-        String name = "";
-        for (String arg : args) {
-            if (!name.isEmpty()) name += " ";
-            name += arg;
-        }
+        String name = Language.combineStringArray(args, " ");
+        if (name.equalsIgnoreCase("clear")) name = "";
 
         cChunk.setName(name);
         Language.CHUNK_NAME_CHANGED.good(cPlayer, name);
