@@ -12,12 +12,14 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent {
     private ChunkyChunk toChunk;
     private ChunkyChunk fromChunk;
     private String message;
+    private String toChunkDisplayName;
 
     public ChunkyPlayerChunkChangeEvent(final ChunkyPlayer chunkyPlayer, final ChunkyChunk toChunk, final ChunkyChunk fromChunk, final String message) {
         super(Type.PLAYER_CHUNK_CHANGE, chunkyPlayer);
         this.toChunk = toChunk;
         this.fromChunk = fromChunk;
         this.message = message;
+        toChunkDisplayName = toChunk.getChunkDisplayName();
     }
 
     /**
@@ -49,8 +51,19 @@ public class ChunkyPlayerChunkChangeEvent extends ChunkyPlayerEvent {
 
     /**
      * Sets the message that is sent to the player on a chunk change.
+     *
+     * @param message Message to set for this chunk change
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * Gets the name that would be displayed for the to chunk if the previous chunk's display name is different.
+     *
+     * @return display name of to chunk
+     */
+    public String getToChunkDisplayName() {
+        return this.toChunkDisplayName;
     }
 }
