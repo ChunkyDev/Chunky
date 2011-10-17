@@ -49,11 +49,11 @@ public class PlayerEvents extends PlayerListener {
         } else if (fromChunk.isOwned()) {
             if (fromChunk.getOwner().equals(toChunk.getOwner())) {
                 if (!fromChunk.getName().equals(toChunk.getName()))
-                    message += Config.getChunkDisplayName(toChunk);
+                    message += toChunk.getChunkDisplayName();
             } else
-                message += Config.getChunkDisplayName(toChunk);
+                message += toChunk.getChunkDisplayName();
         } else
-            message += Config.getChunkDisplayName(toChunk);
+            message += toChunk.getChunkDisplayName();
 
         ChunkyPlayerChunkChangeEvent event = new ChunkyPlayerChunkChangeEvent(chunkyPlayer, toChunk, fromChunk, message);
         Chunky.getModuleManager().callEvent(event);
