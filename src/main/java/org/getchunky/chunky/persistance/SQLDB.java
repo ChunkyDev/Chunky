@@ -78,8 +78,8 @@ public abstract class SQLDB implements Database {
             Class classDefinition = Class.forName(className);
             object = classDefinition.newInstance();
         } catch (Exception e) {
-            Logging.debug(e.getMessage());
-            Logging.debug("Failed to load object of type:" + className);
+            Logging.warning(e.getMessage());
+            Logging.warning("Failed to load object of type:" + className);
         }
         return object;
     }
