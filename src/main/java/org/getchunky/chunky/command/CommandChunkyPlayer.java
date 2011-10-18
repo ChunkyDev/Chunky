@@ -51,7 +51,13 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
         if (lLastDate != 0) {
             sLastDate = new Date(lLastDate).toString();
         }
-        Language.PLAYER_MENU_TITLE.normal(sender, chunkyPlayer.getName(), sFirstDate, sLastDate);
+
+        Language.PLAYER_MENU_TITLE.normal(sender,
+                chunkyPlayer.getName(),
+                sFirstDate,
+                sLastDate,
+                chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName()).size(),
+                chunkyPlayer.getChunkClaimLimit());
         HashSet<ChunkyObject> chunks = chunkyPlayer.getOwnables().get(ChunkyChunk.class.getName());
 
         if (chunks != null && chunks.size() > 0) {
