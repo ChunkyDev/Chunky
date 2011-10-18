@@ -61,9 +61,9 @@ public class ChunkyChunk extends ChunkyLocationObject {
     public ChunkyChunk[] getDirectlyAdjacentChunks() {
         ChunkyChunk[] chunks = new ChunkyChunk[4];
         chunks[0] = this.getRelative(ChunkFace.NORTH);
-        chunks[0] = this.getRelative(ChunkFace.EAST);
-        chunks[0] = this.getRelative(ChunkFace.SOUTH);
-        chunks[0] = this.getRelative(ChunkFace.WEST);
+        chunks[1] = this.getRelative(ChunkFace.EAST);
+        chunks[2] = this.getRelative(ChunkFace.SOUTH);
+        chunks[3] = this.getRelative(ChunkFace.WEST);
         return chunks;
     }
 }
