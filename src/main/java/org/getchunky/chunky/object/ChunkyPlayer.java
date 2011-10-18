@@ -56,6 +56,13 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
         return player;
     }
 
+    public boolean isOnline() {
+        try {
+            getPlayer();
+            return true;
+        } catch (ChunkyPlayerOfflineException e) {return false;}
+    }
+
     public void claimCurrentChunk() {
         this.claimChunk(this.getCurrentChunk());
     }
