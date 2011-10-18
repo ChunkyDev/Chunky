@@ -253,7 +253,7 @@ player:
     - '&8|----------&9%1&8----------|'
     - '&7First joined: &f%2'
     - '&7Last seen: &f%3'
-    - '&4/&5 Chunks owned.'
+    - '%4/%5 Chunks owned.'
     owned_chunks:
     - '&aOwned Chunks:'
     
