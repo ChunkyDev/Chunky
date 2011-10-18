@@ -41,12 +41,7 @@ public class ChunkyPlayer extends ChunkyPermissibleObject {
     }
 
     public ChunkyChunk getCurrentChunk() {
-        if (this.currentChunk == null) {
-            try {
-                this.currentChunk = ChunkyManager.getChunkyChunk(getPlayer().getLocation());
-            } catch (Exception ignore) {
-            }
-        }
+        try {this.currentChunk = ChunkyManager.getChunkyChunk(getPlayer().getLocation());} catch (Exception ignore) {}
         return this.currentChunk;
     }
 
