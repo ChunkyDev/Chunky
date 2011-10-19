@@ -330,7 +330,7 @@ public enum Language {
      */
     public static void sendMessage(ChunkyPlayer chunkyPlayer, String message, Object... args) {
         try {
-            sendMessage(chunkyPlayer.getPlayer(), message);
+            sendMessage(chunkyPlayer.getPlayer(), message, args);
         } catch (ChunkyPlayerOfflineException ignore) {
         }
     }
