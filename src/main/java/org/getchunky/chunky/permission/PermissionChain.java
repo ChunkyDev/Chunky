@@ -2,6 +2,7 @@ package org.getchunky.chunky.permission;
 
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
+import org.getchunky.chunky.module.ChunkyPermissions;
 import org.getchunky.chunky.object.ChunkyGroup;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPermissibleObject;
@@ -53,7 +54,7 @@ public class PermissionChain {
             }
         }
 
-        if (object.isOwnedBy(permObject)) {
+        if (object.isOwnedBy(permObject) || permObject.hasPerm(object, ChunkyPermissions.OWNER)) {
             accessLevel = AccessLevel.OWNER;
             accessLevel.setDenied(true);
             if (object.isDirectlyOwnedBy(permObject)) accessLevel = AccessLevel.DIRECT_OWNER;
