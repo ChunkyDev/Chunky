@@ -166,6 +166,16 @@ public abstract class ChunkyObject extends ChunkyPersistable {
         }
     }
 
+    public final void removeChildren() {
+        //Removes all children.
+
+        HashMap<String, HashSet<ChunkyObject>> reposess = this.getOwnables();
+        this.ownables = new HashMap<String, HashSet<ChunkyObject>>();
+        for (String key : reposess.keySet()) {
+            for (ChunkyObject co : reposess.get(key)) {
+                co.setOwner(null, true, true);}}
+    }
+
     /**
      * Checks if o is owned by this object.
      *
@@ -210,6 +220,9 @@ public abstract class ChunkyObject extends ChunkyPersistable {
                 owner.removeOwnable(this);
             else
                 owner.removeOwnableAndTakeChildren(this);
+        }
+        else if(!keepChildren) {
+            this.removeChildren();
         }
         if (object != null) {
             if (object.addOwnable(this))
