@@ -72,7 +72,7 @@ public class CommandChunkyPermission implements ChunkyCommandExecutor {
 
             // Determine if command sender is chunk owner or admin to continue
             ChunkyObject chunkOwner = cChunk.getOwner();
-            if (chunkOwner == null || !cPlayer.equals(chunkOwner)) {
+            if (chunkOwner == null || !cChunk.isOwnedBy(cPlayer) || !cPlayer.hasPerm(cChunk, ChunkyPermissions.OWNER)) {
                 if (!Permissions.ADMIN_SETPERM.hasPerm(cPlayer)) {
                     if (chunkOwner != null) {
                         Language.CHUNK_OWNED.bad(cPlayer, chunkOwner.getName());

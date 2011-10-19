@@ -18,6 +18,7 @@ public class ChunkyPermissions {
     public static PermissionFlag DESTROY = new PermissionFlag("Destroy", "D");
     public static PermissionFlag ITEM_USE = new PermissionFlag("Item Use", "I");
     public static PermissionFlag SWITCH = new PermissionFlag("Switch", "S");
+    public static PermissionFlag OWNER = new PermissionFlag("Owner", "O");
 
     static {
         Field[] fields = ChunkyPermissions.class.getFields();
