@@ -16,17 +16,7 @@ public class ServerEvents extends ServerListener {
     @Override
     public void onServerCommand(ServerCommandEvent event) {
         String[] commands = event.getCommand().split("\\s");
-        ChunkyCommand chunkyCommand = Chunky.getModuleManager().getCommandByName(commands[0]);
-        if (chunkyCommand == null) return;
-
-        String currentName = commands[0];
-        int i;
-        for (i = 1; i < commands.length; i++) {
-            currentName += "." + commands[i];
-            ChunkyCommand currentCommand = chunkyCommand.getChild(currentName);
-            if (currentCommand == null) break;
-            chunkyCommand = currentCommand;
-        }
+        Chunky.getModuleManager().parseCommand(event.getSender(), commands);
     }
 
     @Override

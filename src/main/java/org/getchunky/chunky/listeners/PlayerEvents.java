@@ -90,6 +90,8 @@ public class PlayerEvents extends PlayerListener {
         Chunky.getModuleManager().parseCommand(event.getPlayer(), commands);
     }
 
+
+
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!ChunkyManager.getChunkyWorld(event.getPlayer().getWorld().getName()).isEnabled()) return;
