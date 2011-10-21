@@ -28,6 +28,8 @@ public class ChunkyCommand {
     private HashMap<String, ChunkyCommand> children = new HashMap<String, ChunkyCommand>();
     private String chatName;
 
+    private PermissionSubCommand permissionSubCommand = null;
+
     /**
      * Creates a Command that is registrable with Chunky.
      *
@@ -347,6 +349,19 @@ public class ChunkyCommand {
     public ChunkyCommand setCombineQuotedArgs(Boolean combineQuotedArgs) {
         this.combiningQuotedArgs = combineQuotedArgs;
         return this;
+    }
+
+    public ChunkyCommand registerForPermissionSubCommand(PermissionSubCommand permSubCommand) {
+        this.permissionSubCommand = permSubCommand;
+        return this;
+    }
+
+    public boolean hasPermissionSubCommand() {
+        return this.permissionSubCommand != null;
+    }
+
+    public PermissionSubCommand getPermissionSubCommand() {
+        return this.permissionSubCommand;
     }
 
     /**

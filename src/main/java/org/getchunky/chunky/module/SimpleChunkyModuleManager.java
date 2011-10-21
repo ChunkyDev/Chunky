@@ -362,6 +362,26 @@ public class SimpleChunkyModuleManager implements ChunkyModuleManager {
 
         String[] args = argsList.toArray(new String[argsList.size()]);
         if (!argsList.isEmpty()) {
+            if (chunkyCommand.hasPermissionSubCommand()) {
+                boolean hasPermSub = false;
+                if (chunkyCommand.getPermissionSubCommand().canHaveSpecifiedPermissible() && argsList.size() > 1) {
+                    if (argsList.get(1).equalsIgnoreCase("p")
+                            || argsList.get(1).equalsIgnoreCase("perm")
+                            || argsList.get(1).equalsIgnoreCase("permission")) {
+                        chunkyCommand.getPermissionSubCommand().setPermissibleString(argsList.get(0));
+                        hasPermSub = true;
+                    }
+                } else {
+                    if (argsList.get(0).equalsIgnoreCase("p")
+                            || argsList.get(0).equalsIgnoreCase("perm")
+                            || argsList.get(0).equalsIgnoreCase("permission")) {
+                        hasPermSub = true;
+                    }
+                }
+                if (hasPermSub) {
+                    
+                }
+            }
             if (argsList.get(0).equalsIgnoreCase("help")) {
                 ChunkyCommandEvent event = new ChunkyCommandEvent(ChunkyEvent.Type.COMMAND_HELP, sender, chunkyCommand, label, args);
                 callEvent(event);

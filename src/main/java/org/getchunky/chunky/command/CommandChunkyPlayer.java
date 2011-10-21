@@ -6,15 +6,13 @@ import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyCommandExecutor;
+import org.getchunky.chunky.module.PermissionSubCommand;
 import org.getchunky.chunky.object.ChunkyChunk;
 import org.getchunky.chunky.object.ChunkyObject;
 import org.getchunky.chunky.object.ChunkyPlayer;
 import org.getchunky.chunky.permission.PermissionRelationship;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dumptruckman, SwearWord
@@ -120,6 +118,27 @@ public class CommandChunkyPlayer implements ChunkyCommandExecutor {
                 Language.YOUR_PERMISSIONS.normal(sender, Language.SOMEONES_PROPERTY.getString(chunkyPlayer.getName()));
                 Language.sendMessage(sender, perms.toLongString());
             }
+        }
+    }
+
+
+    public static class PermissionSubCommand extends org.getchunky.chunky.module.PermissionSubCommand {
+
+        protected Collection<ChunkyObject> getPermissibles() {
+            Collection<ChunkyObject> players = new ArrayList<ChunkyObject>();
+
+            if (getPermissibleString() == null) {
+                players.add(this.getSendingPlayer());
+            } else {
+                ChunkyPlayer chunkyPlayer = ChunkyManager.getChunkyPlayer(getPermissibleString());
+                if (chunkyPlayer == null) {
+                    setErrorStrings(Language.NO_SUCH_PLAYER.getStrings(getPermissibleString()));
+                    return players;
+                }
+                players.add(chunkyPlayer);
+            }
+
+            return players;
         }
     }
 

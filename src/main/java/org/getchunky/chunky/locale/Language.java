@@ -262,6 +262,10 @@ public enum Language {
         return (formatString(list.get(0).toString(), args));
     }
 
+    public List<String> getStrings(Object... args) {
+        return getStrings(this, args);
+    }
+
     public String getString(Object... args) {
         return getString(this, args);
     }

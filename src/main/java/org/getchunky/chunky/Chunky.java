@@ -217,6 +217,9 @@ public class Chunky extends JavaPlugin {
                     .setDescription(Language.getString(Language.CMD_CHUNKY_PLAYER_DESC))
                     .setAliases("pl")
                     .setHelpLines(Language.getStrings(Language.CMD_CHUNKY_PLAYER_HELP))
+                    .registerForPermissionSubCommand(
+                            new CommandChunkyPlayer.PermissionSubCommand()
+                                    .setCanHaveSpecifiedPermissible(true))
                     .register();
 
             // /chunky player set
