@@ -2,7 +2,8 @@ package org.getchunky.chunky.locale;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.util.config.Configuration;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.exceptions.ChunkyPlayerOfflineException;
@@ -176,7 +177,7 @@ public enum Language {
         return path;
     }
 
-    private static Configuration language;
+    private static FileConfiguration language;
 
     /**
      * Loads the language data into memory and sets defaults
@@ -197,13 +198,12 @@ public enum Language {
         }
 
         // Load the language file into memory
-        language = new Configuration(languageFile);
-        language.load();
+        language = YamlConfiguration.loadConfiguration(languageFile);
 
-        language.setProperty("last_run_build", Chunky.getBuildNumber());
+        language.set("last_run_build", Chunky.getBuildNumber());
 
         // Saves the configuration from memory to file
-        language.save();
+        language.save(languageFile);
     }
 
     public static String formatString(String string, Object... args) {
@@ -231,7 +231,7 @@ public enum Language {
      */
     public static List<String> getStrings(Language path, Object... args) {
         // Gets the messages for the path submitted
-        List<Object> list = language.getList(path.getPath());
+        List list = language.getList(path.getPath());
 
         List<String> message = new ArrayList<String>();
         if (list == null) {
@@ -253,7 +253,7 @@ public enum Language {
     }
 
     public static String getString(Language language, Object... args) {
-        List<Object> list = Language.language.getList(language.getPath());
+        List list = Language.language.getList(language.getPath());
         if (list == null) {
             Logging.warning("Missing language for: " + language.getPath());
             return "";

@@ -1,5 +1,8 @@
 package org.getchunky.chunky.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author dumptruckman, SwearWord
  */
@@ -37,12 +40,16 @@ public enum ConfigPath {
 
     private String path;
     private Object def;
-    private String[] comments;
+    private List<String> comments;
 
     ConfigPath(String path, Object def, String... comments) {
         this.path = path;
         this.def = def;
-        this.comments = comments;
+        if (comments == null) {
+            this.comments = null;
+        } else {
+            this.comments = Arrays.asList(comments);
+        }
     }
 
     /**
@@ -68,13 +75,13 @@ public enum ConfigPath {
      *
      * @return The comments for a config path
      */
-    public String[] getComments() {
+    public List<String> getComments() {
         if (comments != null) {
             return comments;
         }
 
         String[] comments = new String[1];
         comments[0] = "";
-        return comments;
+        return Arrays.asList(comments);
     }
 }

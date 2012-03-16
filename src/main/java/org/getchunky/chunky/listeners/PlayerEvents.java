@@ -1,8 +1,15 @@
 package org.getchunky.chunky.listeners;
 
 import org.bukkit.Location;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
 import org.getchunky.chunky.config.Config;
@@ -20,9 +27,9 @@ import org.getchunky.chunky.util.MinecraftTools;
 /**
  * @author dumptruckman, SwearWord
  */
-public class PlayerEvents extends PlayerListener {
+public class PlayerEvents implements Listener {
 
-    @Override
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerMove(PlayerMoveEvent event) {
         if (event.isCancelled()) return;
         if (!ChunkyManager.getChunkyWorld(event.getTo().getWorld().getName()).isEnabled()) return;
@@ -65,7 +72,7 @@ public class PlayerEvents extends PlayerListener {
         }
     }
 
-    @Override
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         cPlayer.setCurrentChunk(ChunkyManager.getChunkyChunk(event.getPlayer().getLocation()));
@@ -76,14 +83,14 @@ public class PlayerEvents extends PlayerListener {
         cPlayer.getData().put("last login time", currentTime);
     }
 
-    @Override
+    @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         ChunkyPlayer.getClaimModePlayers().remove(ChunkyManager.getChunkyPlayer(event.getPlayer()));
         ChunkyPlayer cPlayer = ChunkyManager.getChunkyPlayer(event.getPlayer());
         cPlayer.getData().put("last logout time", System.currentTimeMillis());
     }
 
-    @Override
+    @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (event.isCancelled()) return;
         String[] commands = event.getMessage().split("\\s");
@@ -92,7 +99,7 @@ public class PlayerEvents extends PlayerListener {
 
 
 
-    @Override
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (!ChunkyManager.getChunkyWorld(event.getPlayer().getWorld().getName()).isEnabled()) return;
 

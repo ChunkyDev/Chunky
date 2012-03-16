@@ -1,7 +1,8 @@
 package org.getchunky.chunky.listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.getchunky.chunky.Chunky;
 import org.getchunky.chunky.ChunkyManager;
@@ -14,9 +15,9 @@ import org.getchunky.chunky.permission.AccessLevel;
 import org.getchunky.chunky.permission.PermissionChain;
 import org.getchunky.chunky.util.Logging;
 
-public class BlockEvents extends BlockListener {
+public class BlockEvents implements Listener {
 
-    @Override
+    @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 
@@ -34,7 +35,7 @@ public class BlockEvents extends BlockListener {
         event.setCancelled(chunkyEvent.isCancelled());
     }
 
-    @Override
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (!ChunkyManager.getChunkyWorld(event.getBlock().getWorld().getName()).isEnabled()) return;
 

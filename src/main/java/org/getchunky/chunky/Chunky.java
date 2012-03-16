@@ -1,15 +1,36 @@
 package org.getchunky.chunky;
 
-import org.blockface.bukkitstats.CallHome;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getchunky.chunky.command.*;
+import org.getchunky.chunky.command.CommandAddfriend;
+import org.getchunky.chunky.command.CommandChunky;
+import org.getchunky.chunky.command.CommandChunkyAdmin;
+import org.getchunky.chunky.command.CommandChunkyAdminChunklimit;
+import org.getchunky.chunky.command.CommandChunkyAdminDisableworld;
+import org.getchunky.chunky.command.CommandChunkyAdminEnableworld;
+import org.getchunky.chunky.command.CommandChunkyChunk;
+import org.getchunky.chunky.command.CommandChunkyChunkSet;
+import org.getchunky.chunky.command.CommandChunkyChunkSetName;
+import org.getchunky.chunky.command.CommandChunkyClaim;
+import org.getchunky.chunky.command.CommandChunkyGroup;
+import org.getchunky.chunky.command.CommandChunkyGroupAdd;
+import org.getchunky.chunky.command.CommandChunkyGroupRemove;
+import org.getchunky.chunky.command.CommandChunkyPermission;
+import org.getchunky.chunky.command.CommandChunkyPlayer;
+import org.getchunky.chunky.command.CommandChunkyPlayerSet;
+import org.getchunky.chunky.command.CommandChunkyPlayerSetMode;
+import org.getchunky.chunky.command.CommandChunkyUnclaim;
+import org.getchunky.chunky.command.CommandRemovefriend;
 import org.getchunky.chunky.config.Config;
 import org.getchunky.chunky.event.ChunkyEvent;
 import org.getchunky.chunky.exceptions.ChunkyUnregisteredException;
-import org.getchunky.chunky.listeners.*;
+import org.getchunky.chunky.listeners.BlockEvents;
+import org.getchunky.chunky.listeners.ChunkyCommandEvents;
+import org.getchunky.chunky.listeners.ChunkyObjectEvents;
+import org.getchunky.chunky.listeners.ChunkyPlayerEvents;
+import org.getchunky.chunky.listeners.PlayerEvents;
+import org.getchunky.chunky.listeners.ServerEvents;
 import org.getchunky.chunky.locale.Language;
 import org.getchunky.chunky.module.ChunkyCommand;
 import org.getchunky.chunky.module.ChunkyModuleManager;
@@ -17,8 +38,6 @@ import org.getchunky.chunky.module.SimpleChunkyModuleManager;
 import org.getchunky.chunky.permission.bukkit.Permissions;
 import org.getchunky.chunky.persistance.DatabaseManager;
 import org.getchunky.chunky.util.Logging;
-import org.getchunky.register.payment.Method;
-import org.getchunky.register.payment.Methods;
 
 import java.io.IOException;
 
@@ -56,9 +75,6 @@ public class Chunky extends JavaPlugin {
     final public void onEnable() {
         //Load INSTANCE for other classes.
         INSTANCE = this;
-
-        //Call Home
-        CallHome.load(this);
 
         // Grab the PluginManager
         final PluginManager pm = getServer().getPluginManager();
@@ -109,9 +125,6 @@ public class Chunky extends JavaPlugin {
         registerBukkitEvents();
         registerChunkyEvents();
 
-        //Load Economy
-        Methods.setMethod(this.getServer().getPluginManager());
-
         // Register Commands
         registerChunkyCommands();
 
@@ -138,35 +151,18 @@ public class Chunky extends JavaPlugin {
     }
 
     /**
-     * Returns the Payment Method (Register)
-     *
-     * @return Payment Method
-     */
-    public static Method getMethod() {
-        return Methods.getMethod();
-    }
-
-    /**
      * Registers all the bukkit events related to this plugin.
      */
     final private void registerBukkitEvents() {
         PluginManager pm = this.getServer().getPluginManager();
         // Player events.
-        pm.registerEvent(Event.Type.PLAYER_MOVE, playerEvents, Event.Priority.Highest, this);
-        pm.registerEvent(Event.Type.PLAYER_JOIN, playerEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_QUIT, playerEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_INTERACT, playerEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, playerEvents, Event.Priority.Normal, this);
+        pm.registerEvents(playerEvents, this);
 
         // Block events.
-        pm.registerEvent(Event.Type.BLOCK_BREAK, blockEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.BLOCK_PLACE, blockEvents, Event.Priority.Normal, this);
+        pm.registerEvents(blockEvents, this);
 
         // Server events
-        pm.registerEvent(Event.Type.PLUGIN_ENABLE, serverEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLUGIN_DISABLE, serverEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.SERVER_COMMAND, serverEvents, Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.MAP_INITIALIZE, serverEvents, Event.Priority.Normal, this);
+        pm.registerEvents(serverEvents, this);
     }
 
     /**

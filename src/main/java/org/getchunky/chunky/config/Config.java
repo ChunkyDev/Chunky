@@ -20,7 +20,7 @@ import static org.getchunky.chunky.config.ConfigPath.*;
 public class Config {
 
     private static Chunky plugin;
-    private static CommentedConfiguration config;
+    private static CommentedYamlConfiguration config;
     private static HashSet<String> SWITCHABLES;
     private static HashSet<String> USABLES;
 
@@ -43,7 +43,7 @@ public class Config {
         }
 
         // Load the configuration file into memory
-        config = new CommentedConfiguration(new File(plugin.getDataFolder(), "config.yml"));
+        config = new CommentedYamlConfiguration(new File(plugin.getDataFolder(), "config.yml"), true);
         config.load();
 
         // Sets defaults config values
@@ -61,8 +61,8 @@ public class Config {
     private static void setDefaults() {
         for (ConfigPath path : ConfigPath.values()) {
             config.addComment(path.getPath(), path.getComments());
-            if (config.getString(path.getPath()) == null) {
-                config.setProperty(path.getPath(), path.getDefault());
+            if (config.getConfig().getString(path.getPath()) == null) {
+                config.getConfig().set(path.getPath(), path.getDefault());
             }
         }
     }
@@ -74,15 +74,15 @@ public class Config {
     }
 
     private static Boolean getBoolean(ConfigPath path) {
-        return config.getBoolean(path.getPath(), (Boolean) path.getDefault());
+        return config.getConfig().getBoolean(path.getPath(), (Boolean) path.getDefault());
     }
 
     private static Integer getInt(ConfigPath path) {
-        return config.getInt(path.getPath(), (Integer) path.getDefault());
+        return config.getConfig().getInt(path.getPath(), (Integer) path.getDefault());
     }
 
     private static String getString(ConfigPath path) {
-        return config.getString(path.getPath(), (String) path.getDefault());
+        return config.getConfig().getString(path.getPath(), (String) path.getDefault());
     }
 
     /**
@@ -91,7 +91,7 @@ public class Config {
      * @return Language file name
      */
     public static String getLanguageFileName() {
-        return config.getString(LANGUAGE.getPath());
+        return config.getConfig().getString(LANGUAGE.getPath());
     }
 
     /**
