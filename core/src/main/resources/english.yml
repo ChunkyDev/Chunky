@@ -1,0 +1,285 @@
+# English language file.  If you translate these messages, please provide a copy
+# of your translations on the forum page!  Do not modify this file, your changes
+# will be overwritten.  If you'd like to change the english version make a file
+# named english2.yml or something.
+#
+# Use & to indicate color codes
+# Use %1, %2, %3, to indicate position of variables.. This is of course limited
+# to specific message
+
+
+generic:
+  error:
+  - '[Error]'
+  success:
+  - '[Success]'
+  info:
+  - '[Info]'
+  help:
+  - '[Help]'
+  in_game_only:
+  - 'Only in game players may use this feature!'
+  your_property:
+  - 'your property'
+  all_specific_players:
+  - 'all specific players'
+  all_their_current_property:
+  - 'all their current property'
+  your_current_property:
+  - 'your current property'
+  someones_property:
+  - '%1''s property'
+  this_chunk:
+  - 'this chunk'
+  everyone:
+  - 'everyone'
+  their_property:
+  - 'their property'
+  no_one:
+  - 'no one'
+  chunk_at:
+  - 'chunk at [%1]'
+  feature_nyi:
+  - 'Sorry, that feature is not yet implemented.'
+    
+  
+
+command:
+  no_permission:
+  - 'You do not have permission to access this command!'
+  world_disabled:
+  - 'Chunky is diabled in this world!'
+  help:
+  - 'Help for command: %1 (%2)'
+  list:
+  - 'Sub-command list for: %1 (%2)'
+  
+  chunky:
+    description:
+    - '&e=== Chunky Information ==='
+    - '&fVersion: %1", "Loaded Modules - %2'
+    - 'You can use &ehelp&f or &e?&f after chunky sub-commands'
+    - '&e/chunky <sub-cmd> help&f and &e/chunky <sub-cmd> ?&f'
+    - 'Try typing &6/chunky help'
+    help:
+    - 'This command contains the main functions of Chunky.'
+    - 'Type &6/chunky ? &fto see a list of sub-commands!'
+    
+    claim:
+      description:
+      - 'Claims the chunk the user stands in.'
+      help:
+      - 'Claims the chunk you are standing in.'
+    
+    unclaim:
+      description:
+      - 'Unclaims the chunk the user stands in.'
+      help:
+      - 'Unclaims the chunk you are standing in.'
+      
+    permission:
+      description:
+      - 'Allows you to set permissions for other players and eventually groups.'
+      help:
+      - '&eUsage: /chunky permission <this|all|global> <[<+|->flags]|[clear]> <name|all|global>'
+      - '&ethis: &fPermissions for chunk you are in.'
+      - '&eall: &fPermissions for all your current chunks.'
+      - '&eglobal: &fPermissions for all your current and any new chunks.'
+      - '&eflags: &fType of permission to give. Explained below. Separate each with comma.'
+      - '&eb: &fbuild - &ed: &fdestroy - &ei: &fitem use - &es: &fswitch'
+      - '&eclear: &fremoves all flags. (use instead of +/-flags)'
+      - '&ename: &fName of player to given permission to.'
+      - '&eall: &fAny players you have set permissions specifically for.'
+      - '&eglobal: &fPermissions for everyone else. (un-set players)'
+      - '&eExample: &f"&e/c p all +b,d dumptruckman&f" adds build/destroy permission for all your currently owned chunks to dumptruckman'
+      add_subtract:
+      - 'You must specify whether to allow or deny these flags with a + or -.'
+      help_reminder:
+      - 'Type &e/chunky permission help&f for help.'
+      specify_flags:
+      - 'Make sure to specify the flags! (Example: +b,d,i,s)'
+      
+    player:
+      description:
+      - 'Contains sub-commands related to players and info regarding yourself'
+      help:
+      - 'This command will tell you a little about yourself and contains some sub-commands related to players.'
+      
+      set:
+        description:
+        - 'Sets properties for you.'
+        help:
+        - 'Type &e/chunky player set ?&f to see a list of what you can set.'
+        
+        mode:
+          description:
+          - 'Setup modes for you.'
+          help:
+          - 'Allows you to set modes on yourself.'
+          - 'Modes available: &eclaim&f - claim as you walk, &eclear&f - turns off modes'
+      
+    chunk:
+      description:
+      - 'Information about the chunk you are in.'
+      help:
+      - 'This command will tell you a little about the chunk you are standing in.'
+      
+      set:
+        description:
+        - 'Sets properties for current chunk'
+        help:
+        - 'Type &e/chunky chunk set ?&f to see a list of what you can set.'
+        
+        name:
+          description:
+          - 'Changes the name of the current chunk.'
+          help:
+          - 'Usage: &e/chunky chunk set name <name> &f names the chunk <name>'
+          
+    group:
+      description:
+      - 'Contains commands for managing groups.'
+      help:
+      - 'Type &e/chunky group ?&f for a list of sub-commands.'
+      
+      add:
+        description:
+        - 'Adds a player to a group.'
+        help:
+        - 'Usage: &e/chunky group add <player> <group>'
+        - 'Adds the specified player to the specified group.'
+        - 'Example: &e/chunky group add dumptruckman friends'
+      remove:
+        description:
+        - 'Removes a player from a group.'
+        help:
+        - 'Usage: &e/chunky group remove <player> <group>'
+        - 'Removes the specified player from the specified group.'
+        - 'Example: &e/chunky group remove dumptruckman friends'
+        
+    admin:
+      help:
+      - 'Type &e/chunky admin ?&f for a list of sub-commands.'
+      description:
+      - 'Contains admin-only commands.'
+      
+      chunk_limit:
+        help:
+        - 'Allows you to set a player''s chunk claim limit.'
+        - 'Usage: &e/chunky admin chunklimit <amount> <name>'
+        description:
+        - 'Sets chunk claim limits.'
+        
+      enable_world:
+        help:
+        - 'Allows you to enable chunky for your current world or a named world'
+        description:
+        - 'Enables Chunky per world.'
+        
+      disable_world:
+        help:
+        - 'Allows you to disable chunky for your current world or a named world'
+        description:
+        - 'Disables Chunky per world.'
+  
+  addfriend:
+    help:
+    - 'An easy way to add someone to your friends list.'
+    - 'Usage: &e/addfriend <name>'
+  
+  rmfriend:
+    help:
+    - 'An easy way to remove someone from your friends list.'
+    - 'Usage: &e/removefriend <name>'
+    
+      
+      
+chunk:
+  unowned_chunk_name:
+  - '(Wilderness)'
+  no_such_chunks:
+  - 'You own no chunks named: %1'
+  chunks_named:
+  - 'chunks named: %1'
+  owned:
+  - 'This chunk is owned by: %1'
+  not_owned:
+  - 'This chunk is not owned!'
+  name_changed:
+  - 'Changed name of chunk to: %1'
+  none_owned:
+  - 'You do not own any chunks!'
+  limit:
+  - 'You have claimed your maximum amount of chunks! (%1)'
+  claimed:
+  - 'You have claimed chunk at [%1, %2]!'
+  unclaimed:
+  - 'You have unclaimed chunk at [%1, %2]!'
+
+  menu:
+    title:
+    - '&8|----------&9%1&8----------|'
+    owner:
+    - '&aChunk Owner: &f%1'
+  
+  
+  
+permission:
+  not_set:
+  - 'NA'
+  none:
+  - 'NONE'
+  check:
+  - 'Permissions on %1 are [%2] for %3'
+  for_you:
+  - '%1 set [%2] permissions for you on %3'
+  status:
+  - 'BUILD: %1 | DESTROY: %2 | ITEMUSE: %4 | SWITCH: %3'
+  player:
+  - '&aPlayer Permissions for %1: &f%2'
+  default:
+  - '&aDefault Permissions for %1:'
+  yours:
+  - '&aYour permissions for %1:'
+  
+  
+  
+player:
+  no_such_player:
+  - 'There is no player named: %1'
+  
+  menu:
+    title:
+    - '&8|----------&9%1&8----------|'
+    - '&7First joined: &f%2'
+    - '&7Last seen: &f%3'
+    - '%4/%5 Chunks owned.'
+    owned_chunks:
+    - '&aOwned Chunks:'
+    
+  mode:
+    set:
+    - 'Set player mode!'
+    - 'Type &e/chunky player set mode clear&f to turn off'
+    clear:
+    - 'Cleared player mode!'
+    
+    
+    
+group:
+  no_such_group:
+  - 'There is no group named: %1'
+  add:
+  - 'Added %1 to group: %2'
+  remove:
+  - 'Removed %1 from group: %2'
+  
+  
+  
+world:
+  no_such_world:
+  - 'There is no world named: %1'
+  world_enabled:
+  - 'Enabled Chunky for world: %1'
+  world_disabled:
+  - 'Disabled Chunky for world: %1'
