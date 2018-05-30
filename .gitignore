@@ -1,0 +1,52 @@
+# Eclipse stuff
+/.classpath
+/.project
+/.settings
+/.checkstyle
+
+# netbeans
+/nbproject
+
+# gradle
+/.gradle
+
+# maven
+/target
+dependency-reduced-pom.xml
+
+# vim
+.*.sw[a-p]
+
+# various other potential build files
+/build
+/bin
+/out
+/dist
+/manifest.mf
+
+/world
+
+# Mac filesystem dust
+*.DS_Store
+
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Fern's utils
+uploadtoserver.sh
+
+# Testing files:
+debug.log
+
+# Doxygen
+/docs/html
+debug.txt
+
+.gradle/
+anonymous-logging/
+javadoc/pom.xml.versionsBackup
+build/
+pluginbase-core/logging/debug/
